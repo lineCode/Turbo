@@ -1,0 +1,9 @@
+#ifndef TURBO_EVENT_H_INCLUDED
+#define TURBO_EVENT_H_INCLUDED
+
+namespace EVENT
+{
+
+}
+
+#endif // TURBO_EVENT_H_INCLUDED
