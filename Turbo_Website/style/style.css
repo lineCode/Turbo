@@ -105,7 +105,7 @@ div.navbar
 
 	text-align:						center;
 
-	border-bottom:					2px solid transparent;
+	border-bottom:					2px solid #444444;
 	background-color:				#333333;
 }
 
@@ -133,7 +133,7 @@ div.navbar
  */
 .navbar ol > li
 {
-	margin:							0px 0px 0px 0px;
+	margin:							0px 0px 0px -1px;
     padding:						0px 0px 0px 0px;
 
 	max-height:						48px;
@@ -183,7 +183,7 @@ div.navbar
 
 .navbar ol > li a:hover
 {
-	padding: 						0px 100px 0px 100px;
+	padding: 						0px 50px 0px 50px;
     border-bottom:					2px solid #FFFF00;
 	background-color:				#555555;
 }
@@ -194,13 +194,14 @@ div.navbar
 .navbar li ol
 {
     position:						absolute;
-    left:							0;
     top:							50px;
+
+	margin:							0px 0px 0px 0px;
+    padding:						0px 0px 0px 0px;
 
     z-index:						1;
     visibility:						hidden;
     opacity:						0;
-    display:						inline-block;
 
     -webkit-transition:				200ms ease;
     -moz-transition:				200ms ease;
