@@ -5,6 +5,7 @@
 
 namespace TURBO
 {
+	const static Float PI = 3.14156;
 
 }
 
