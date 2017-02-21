@@ -1,0 +1,232 @@
+/*
+
+Element
+{
+	//position
+	position:
+	bottom:
+	left:
+	right:
+	top:
+
+	//organization
+	margin:
+	padding:
+
+	//size
+	max-height:
+	min-height:
+	height:
+	max-width:
+	min-width:
+	width:
+
+	//layout
+	display:
+	float:
+
+	//visibility
+	z-index:
+    visibility:
+    opacity:
+
+	//text
+
+	//color
+
+	//animation
+
+	//transition
+}
+
+*/
+
+html
+{
+	color:							#FFFFFF;
+	font-family:					Verdana, Geneva, sans-serif;
+	font-size:						12pt;
+	background-color: 				#000000;
+}
+
+body
+{
+	margin:							50px 0px 0px 0px;
+	padding:						0px 0px 0px 0px;
+}
+
+h1
+{
+	font-size:						18pt;
+}
+
+h2
+{
+	font-size:						16pt;
+}
+
+h3
+{
+	font-size:						14pt;
+}
+
+p
+{
+	font-size:						12pt;
+}
+
+a, a:visited
+{
+	text-decoration:				none;
+
+	color:							#FFFFFFF;
+}
+
+a:hover
+{
+	text-decoration:				underline;
+}
+
+div.navbar
+{
+	position: 						absolute;
+	left:							0px;
+	top:							0px;
+
+	margin:							0px 0px 0px 0px;
+	padding:						0px 0px 0px 0px;
+
+	max-height:						48px;
+	min-height:						48px;
+	height:							48px;
+	max-width:						100%;
+	min-width:						100%;
+	width:							100%;
+
+	text-align:						center;
+
+	border-bottom:					2px solid transparent;
+	background-color:				#333333;
+}
+
+/**
+ * Top level navbar
+ */
+.navbar ol
+{
+    margin:							0px 25% 0px 25%;
+    padding:						0px 0px 0px 0px;
+
+    max-height:						49px;
+	min-height:						49px;
+	height:							49px;
+    max-width:						50%;
+	min-width:						600px;
+	width:							50%;
+
+    list-style:						none;
+    text-align: 					center;
+}
+
+/**
+ * Top level navigation elements
+ */
+.navbar ol > li
+{
+	margin:							0px 0px 0px 0px;
+    padding:						0px 0px 0px 0px;
+
+	max-height:						48px;
+	min-height:						48px;
+	height:							48px;
+	max-width:						auto;
+	min-width:						auto;
+	width:							auto;
+
+    display: 						inline-block;
+}
+
+.navbar ol > li:hover
+{
+
+}
+
+.navbar ol > li:hover ol
+{
+	max-width:						auto;
+	min-width:						auto;
+	width:							auto;
+
+    visibility:						visible;
+    opacity:						1;
+
+}
+
+/**
+ * Top level links
+ */
+.navbar ol > li a
+{
+    margin:							0px 0px 0px 0px;
+    padding:						0px 50px 0px 50px;
+
+    display:						block;
+    line-height:					48px;
+    text-align:						left;
+    border-left:					1px solid #595959;
+    border-right:					1px solid #595959;
+    border-bottom:					2px solid transparent;
+    color:							#FFFFFF;
+
+    transition:						all 200ms;
+}
+
+.navbar ol > li a:hover
+{
+	padding: 						0px 100px 0px 100px;
+    border-bottom:					2px solid #FFFF00;
+	background-color:				#555555;
+}
+
+/**
+ * Sub level navbar
+ */
+.navbar li ol
+{
+    position:						absolute;
+    left:							0;
+    top:							50px;
+
+    z-index:						1;
+    visibility:						hidden;
+    opacity:						0;
+    display:						inline-block;
+
+    -webkit-transition:				200ms ease;
+    -moz-transition:				200ms ease;
+    -o-transition:					200ms ease;
+    transition:						200ms ease;
+}
+
+/**
+ * Sub level navbar elements
+ */
+
+
+/**
+ * Sub level links
+ */
+.navbar li ol a
+{
+	padding:						0px 50px 0px 25px;
+
+	border-left:					2px solid #595959;
+	background-color:				#444444;
+}
+
+.navbar li ol a:hover
+{
+	border-left:					2px solid #FFFF00;
+	border-bottom:					2px solid transparent;
+	background-color:				#555555;
+}
