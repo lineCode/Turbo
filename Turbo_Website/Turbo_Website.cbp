@@ -55,6 +55,9 @@
 		<Unit filename="style/style_docu.css">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="style/style_guide.css">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

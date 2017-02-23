@@ -11,7 +11,11 @@
 
 namespace TURBO
 {
-
+	enum class FILE_STATE
+	{
+		CLOSED = 0,
+		OPEN = 1
+	};
 }
 
 

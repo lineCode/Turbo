@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/style.css"/>
 	</head>
 	<body>
 		<nav>
@@ -22,13 +22,45 @@
 			</div>
 		</nav>
 		<div class="page">
-			<table>
-				<tr>
-					<th></th>
-					<th></th>
-					<th></th>
-				</tr>
-			</table>
+			<div class="grid">
+                <div class="grid-box-1xn">
+					<div class="docu-selection">
+                        <table>
+                        	<tr>
+                        		<td>Show:</td>
+                        		<td>
+                        			<select>
+                        				<option>all</option>
+                        				<option>Modules</option>
+                        				<option>Packages</option>
+                        				<option>Classes</option>
+                        				<option>Interfaces</option>
+                        				<option>constants</option>
+                        			</select>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td>Order</td>
+                        		<td>
+                        			<select>
+                        				<option>by name</option>
+                        				<option>by module</option>
+                        				<option>by package</option>
+                        				<option>by importance</option>
+                        			</select>
+                        		</td>
+                        	</tr>
+                        </table>
+					</div>
+                </div>
+                <div class="grid-box-nxn">
+					<div class="docu-content">
+                        <?php
+                            echo "here comes the content";
+                        ?>
+					</div>
+                </div>
+			</div>
 		</div>
 	</body>
 </html>

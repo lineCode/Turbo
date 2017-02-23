@@ -1,79 +1,251 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/style_guide.css"/>
 	</head>
 	<body>
 		<nav>
 			<div class="navbar">
                 <ol>
+
+                		<a href="../index.html" id="navbar-icon-left">
+                			<img id="navbar-icon" src="../resources/icon/turbo.png"/>
+						</a>
                 	<li>
 						<a href="javascript:void(0);">Code</a>
 						<ol>
-							<a href="javascript:void(0);">CodeViewer</a>
-							<a href="javascript:void(0);">GitHub</a>
+							<a href="./codeviewer.html">Code-Viewer</a>
+							<a href="./documentation.html">Documentation</a>
+							<a href="https://www.github.com/styinx/Turbo">GitHub</a>
+							<a href="">Style-Guide</a>
 						</ol>
                 	</li><li>
                 		<a href="javascript:void(0);">Contact</a>
                 	</li><li>
                 		<a href="javascript:void(0);">Forum</a>
                 	</li>
+						<a href="../index.html" id="navbar-icon-right">
+                			<img id="navbar-icon" src="../resources/icon/arrow-up.png"/>
+						</a>
                 </ol>
 			</div>
 		</nav>
 		<div class="page">
-			<table border="1px">
-				<tr>
-					<th>Type</th>
-					<th>Description</th>
-					<th>Example</th>
-				</tr>
-				<tr>
-					<td>Classes and Structs</td>
-					<td>Mixed case</td>
-					<td>UIMenu</td>
-				</tr>
-				<tr>
-					<td>Interfaces</td>
-					<td>Capital I and mixed case</td>
-					<td>IShape</td>
-				</tr>
-				<tr>
-					<td>Enums</td>
-					<td>upper case letter, separated by underscore</td>
-					<td>FILE_STATE {OPEN, CLOSED, ...}</td>
-				</tr>
-				<tr>
-					<td>Iterators</td>
-					<td>i and underscore</td>
-					<td>i_file_buffer</td>
-				</tr>
-				<tr>
-					<td>global Constant</td>
-					<td>upper case letter, separated by underscore</td>
-					<td>FILE_PATH</td>
-				</tr>
-				<tr>
-					<td>Variables</td>
-					<td>name with underscore</td>
-					<td>file_counter</td>
-				</tr>
-				<tr>
-					<td>Member variables</td>
-					<td>m and underscore, separating word with underscore</td>
-					<td>m_file_size</td>
-				</tr>
-				<tr>
-					<td>Pointers</td>
-					<td>p and underscore</td>
-					<td>p_file_handle</td>
-				</tr>
-				<tr>
-					<td>local constants</td>
-					<td>c and underscore</td>
-					<td>c_class_counter</td>
-				</tr>
-			</table>
+			<div class="grid">
+				<div class="grid-box-nxn">
+					<div class="style-guide-table">
+						<div class="" style="margin: 0% 10% 0% 10%;">
+							<ol>
+								<li>
+									<a href="#introduction">Introduction</a>
+									<ol>
+										<li></li>
+									</ol>
+								</li>
+								<li>
+									<a href="#files">Files</a>
+									<ol>
+										<li><a href="#files_naming">Naming</a></li>
+									</ol>
+								</li>
+								<li>
+									Indentation
+									<ol>
+										<li></li>
+									</ol>
+								</li>
+								<li>
+									Classes
+									<ol>
+										<li></li>
+									</ol>
+								</li>
+								<li>
+									<a href="#naming">Naming</a>
+									<ol>
+										<li><a href="#naming_namespaces">Namespaces</a></li>
+										<li><a href="#naming_classes_and_structures">Classes and Structures</a></li>
+										<li><a href="#naming_interfaces">Interfaces</a></li>
+										<li><a href="#naming_enums">Enums</a></li>
+										<li><a href="#naming_iterators">Iterators</a></li>
+										<li><a href="#naming_global-constants">global Constants</a></li>
+										<li><a href="#naming_variables">Variables</a></li>
+										<li><a href="#naming_member-variables">member Variables</a></li>
+										<li><a href="#naming_pointers">Pointers</a></li>
+										<li><a href="#naming_local-constants">local Constants</a></li>
+									</ol>
+								</li>
+							</ol>
+						</div>
+						<table id="introduction">
+							<tr>
+								<td colspan="100%"><h1>Introduction</h1></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+						<table id="#files">
+							<tr>
+								<td colspan="100%"><h1>Files</h1></td>
+							</tr>
+							<tr>
+								<td id="files_naming"><b>Naming</b></td>
+								<td>
+									In general the whole Project consists of multiple modules which again contain several packages.
+									The namespaces are equivalent to the module names and files in the module represent the packages.
+
+									The Turbo files are separated by source and header files.
+									Header files are in the include folder of the containing module and source files are in the
+									source folder of the containing module.
+
+									<ul>
+										<li>
+											Turbo:
+											<ul>
+												<li>
+													include
+													<ul>
+														<li>APP</li>
+														<li>
+															GUI
+															<ul>
+                                                                <li>GUIObject.h</li>
+															</ul>
+														</li>
+														<li>EXTERN</li>
+													</ul>
+													source
+													<ul>
+														<li>APP</li>
+														<li>
+															GUI
+															<ul>
+                                                                <li>GUIObject.cpp</li>
+															</ul>
+														</li>
+														<li>EXTERN</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						</table>
+						<table id="#indentation">
+							<tr>
+								<td colspan="100%"><h1>Indentation</h1></td>
+							</tr>
+							<tr>
+								<th></th>
+								<th></th>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+						<table id="#classes">
+							<tr>
+								<td colspan="100%"><h1>Classes</h1></td>
+							</tr>
+						</table>
+						<table id="naming">
+							<tr>
+								<td colspan="100%"><h1>Naming</h1></td>
+							</tr>
+							<tr>
+								<th>Type</th>
+								<th>Documentation</th>
+							</tr>
+							<tr>
+								<td id="#naming_namespaces"><b>Namespaces</b></td>
+								<td>
+									<br><br>
+									upper case letter, separated by underscore<br><br>
+									<span id="examples">Examples:</span> GUI
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_classes_and_structures"><b>Classes and Structs</b></td>
+								<td>
+									<br><br>
+									Classes and Structures represent the more complex data types.
+									Turbo uses mixed case for naming these.<br><br>
+									<span id="examples">Examples:</span> UIMenu, PathFinder, ResourceManager
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_interfaces"><b>Interfaces</b></td>
+								<td>
+									<br><br>
+									Capital I and mixed case<br><br>
+									<span id="examples">Examples:</span> IShape, IComparator
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_enums"><b>Enums</b></td>
+								<td>
+									<br><br>
+									upper case letter, separated by underscore<br><br>
+									<span id="examples">Examples:</span> FILE_STATE {OPEN, CLOSED, ...}
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_iterators"><b>Iterators</b></td>
+								<td>
+									<br><br>
+									i and underscore<br><br>
+									<span id="examples">Examples:</span> i_file_buffer
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_global-constants"><b>global Constant</b></td>
+								<td>
+									<br><br>
+									upper case letter, separated by underscore<br><br>
+									<span id="examples">Examples:</span> FILE_PATH
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_variables"><b>Variables</b></td>
+								<td>
+									<br><br>
+									name with underscore<br><br>
+									<span id="examples">Examples:</span> file_counter
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_member-variables"><b>Member variables</b></td>
+								<td>
+									<br><br>
+									m and underscore, separating word with underscore<br><br>
+									<span id="examples">Examples:</span> m_file_size
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_pointers"><b>Pointers</b></td>
+								<td>
+									<br><br>
+									p and underscore<br><br>
+									<span id="examples">Examples:</span> p_file_handle
+								</td>
+							</tr>
+							<tr>
+								<td id="naming_local-constants"><b>local constants</b></td>
+								<td>
+									<br><br>
+									c and underscore<br><br>
+									<span id="examples">Examples:</span> c_class_counter
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

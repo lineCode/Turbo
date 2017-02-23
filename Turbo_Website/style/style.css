@@ -24,6 +24,9 @@ Element
 	//layout
 	display:
 	float:
+	overflow:
+	cellpadding:
+	cell-spacing
 
 	//visibility
 	z-index:
@@ -31,8 +34,15 @@ Element
     opacity:
 
 	//text
+	font-family:
+	font-size:
+	text-align:
+	text-decoration:
 
 	//color
+	border:
+	color:
+	background:
 
 	//animation
 
@@ -87,6 +97,38 @@ a:hover
 	text-decoration:				underline;
 }
 
+table
+{
+	margin:							auto;
+
+	width:							100%;
+
+	cell-spacing:					0;
+	cellpadding:					0;
+
+	border:							none;
+}
+
+tr
+{
+
+}
+
+th
+{
+	font-size:						14pt;
+	font-weight:					bold;
+}
+
+td
+{
+
+}
+
+/**
+ * Special elements
+ */
+
 div.navbar
 {
 	position: 						absolute;
@@ -114,7 +156,7 @@ div.navbar
  */
 .navbar ol
 {
-    margin:							0px 25% 0px 25%;
+    margin:							auto;
     padding:						0px 0px 0px 0px;
 
     max-height:						49px;
@@ -199,6 +241,10 @@ div.navbar
 	margin:							0px 0px 0px 0px;
     padding:						0px 0px 0px 0px;
 
+   	max-width:						auto;
+	min-width:						auto;
+	width:							auto;
+
     z-index:						1;
     visibility:						hidden;
     opacity:						0;
@@ -221,13 +267,118 @@ div.navbar
 {
 	padding:						0px 50px 0px 25px;
 
+	text-align:						left;
+
 	border-left:					2px solid #595959;
 	background-color:				#444444;
 }
 
 .navbar li ol a:hover
 {
+	padding:						0px 50px 0px 25px;
+
+	text-align:						center;
+
 	border-left:					2px solid #FFFF00;
 	border-bottom:					2px solid transparent;
 	background-color:				#555555;
 }
+
+#navbar-icon-left
+{
+	position: 						absolute;
+	left:							0px;
+	top:							0px;
+
+	width:							auto;
+
+	display:						inline-block;
+}
+
+#navbar-icon-right
+{
+	position: 						fixed;
+	right:							0px;
+	top:							0px;
+
+	width:							auto;
+
+	display:						inline-block;
+}
+
+/**
+ * Main page elements
+ */
+
+div.page
+{
+	margin:							0px 0px 0px 0px;
+	padding:						0px 0px 0px 0px;
+
+	max-width:						100%;
+	min-width:						100%;
+	width:							100%;
+
+	overflow:						auto;
+}
+
+div.grid
+{
+	margin:							0px 0px 0px 0px;
+	padding:						0px 0px 0px 0px;
+
+	max-width:						100%;
+	min-width:						100%;
+	width:							100%;
+
+	display:						inline-block;
+}
+
+/* x * y*/
+div.grid-box-1xn
+{
+
+}
+
+div.grid-box-1x1
+{
+
+}
+
+/* x * y */
+div.grid-box-nx1
+{
+	margin:							0px 0px 0px 0px;
+	padding:						0px 0px 0px 0px;
+
+	max-width:						100%;
+	min-width:						100%;
+	width:							100%;
+}
+
+div.grid-box-nxn
+{
+	margin:							0px 0px 0px 0px;
+	padding:						0px 0px 0px 0px;
+
+	max-width:						100%;
+	min-width:						100%;
+	width:							100%;
+
+	max-height:						auto;
+	min-height:						100%;
+	width:							auto;
+}
+
+/**
+ * Attribute classes
+ */
+
+div.center
+{
+	text-align:						center;
+}
+
+/**
+ * Style and Colors
+ */

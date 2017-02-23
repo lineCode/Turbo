@@ -1,0 +1,20 @@
+-window
+-renderer(static)
+-font
+-texture
+-text 
+-sprite
+	-guiobject
+		-widget
+	-gameobject 
+
+-actionhandler
+	- key function -> action 
+	- function function -> action
+	
++-------------------------------------------------------+
+| Turbo -- Window/Event
+|    |  \
+|    |   GUI/input
+|   Logic  
++-------------------------------------------------------+
