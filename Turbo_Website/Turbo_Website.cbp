@@ -43,7 +43,13 @@
 		<Unit filename="php/include/ini.php">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="php/src/script/script_docu.php">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="script/script.js">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="script/script_docu.js">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="style/style.css">

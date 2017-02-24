@@ -50,15 +50,15 @@
 									</ol>
 								</li>
 								<li>
-									Indentation
+									<a href="#indentation">Indentation</a>
 									<ol>
 										<li></li>
 									</ol>
 								</li>
 								<li>
-									Classes
+									<a href="#classes">Classes</a>
 									<ol>
-										<li></li>
+										<li><a href="#classes_inheritance">Inheritance</a></li>
 									</ol>
 								</li>
 								<li>
@@ -87,7 +87,7 @@
 								<td></td>
 							</tr>
 						</table>
-						<table id="#files">
+						<table id="files">
 							<tr>
 								<td colspan="100%"><h1>Files</h1></td>
 							</tr>
@@ -135,22 +135,34 @@
 								</td>
 							</tr>
 						</table>
-						<table id="#indentation">
+						<table id="indentation">
 							<tr>
 								<td colspan="100%"><h1>Indentation</h1></td>
-							</tr>
-							<tr>
-								<th></th>
-								<th></th>
 							</tr>
 							<tr>
 								<td></td>
 								<td></td>
 							</tr>
 						</table>
-						<table id="#classes">
+						<table id="classes">
 							<tr>
 								<td colspan="100%"><h1>Classes</h1></td>
+							</tr>
+							<tr>
+								<td id="classes_inheritance">Inheritance</td>
+								<td>
+									space after classname followed by ': ', then comes the base class
+									<div class="code">
+										<?php
+											$code = ""
+												. "class Instance : public Object"
+												. "{"
+													. "..."
+												. "}";
+											echo parseCode($code);
+										?>
+									</div>
+								</td>
 							</tr>
 						</table>
 						<table id="naming">
@@ -162,7 +174,7 @@
 								<th>Documentation</th>
 							</tr>
 							<tr>
-								<td id="#naming_namespaces"><b>Namespaces</b></td>
+								<td id="naming_namespaces"><b>Namespaces</b></td>
 								<td>
 									<br><br>
 									upper case letter, separated by underscore<br><br>
@@ -192,6 +204,18 @@
 									<br><br>
 									upper case letter, separated by underscore<br><br>
 									<span id="examples">Examples:</span> FILE_STATE {OPEN, CLOSED, ...}
+									<div class="code">
+										<?php
+											$code = ""
+												. "enum class FILE_STATE"
+												. "{"
+													. "OPEN = 1,"
+													. "CLOSED = 2,"
+													. "..."
+												. "}";
+											echo parseCode($code);
+										?>
+									</div>
 								</td>
 							</tr>
 							<tr>
