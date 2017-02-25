@@ -1,3 +1,13 @@
+-TURBO
+	-system
+	-app
+
+-EXTERN:
+	-time
+	-directory
+	-parser
+	-regex
+
 -window
 -renderer(static)
 -font
@@ -12,9 +22,3 @@
 	- key function -> action 
 	- function function -> action
 	
-+-------------------------------------------------------+
-| Turbo -- Window/Event
-|    |  \
-|    |   GUI/input
-|   Logic  
-+-------------------------------------------------------+

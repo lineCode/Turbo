@@ -1,0 +1,143 @@
+div.selection
+{
+	position: fixed;
+	left: 50px;
+	top: 100px;
+
+	width: 200px;
+	height: auto;
+}
+
+div.format
+{
+	position: relative;
+	width: 800pt;
+	margin-left: calc(50% - 400pt);
+	margin-right: calc(50% - 400pt);
+}
+
+#code
+{
+	padding: 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+div.code
+{
+	position: relative;
+
+	width: calc(100% - 2px);
+	height: calc(100%);
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+
+	border: 1px solid #000000;
+	border-radius: 2px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+
+	color: #DDDDDD;
+	background-color: #111111;
+
+	font-family: Courier New, Courier;
+	font-size: 11pt;
+	line-height: 11pt;
+}
+
+.code border
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	float: left;
+	width: 8ch;
+	height: calc(100%);
+	padding: 0px 3px 0px 5px;
+	background-color: #222222;
+}
+
+.code tab
+{
+	padding: 0px 0px 0px 4ch;
+}
+
+.code docu
+{
+	width: auto;
+
+	margin: 0px 0px 0px 5ch;
+	padding: 0px 45ch 0px 45ch;
+
+	color: #990000;
+	background-color: #999999;
+	text-decoration: underline;
+
+	font-weight: bold;
+}
+
+.code line
+{
+	z-index: 2;
+	position: relative;
+	width: 4ch;
+	float: left;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 3px 0px 5px;
+
+	color: #0050AA;
+	background-color: #222222;
+
+	text-align: left;
+	font-weight: bold;
+}
+
+.code preprocessor
+{
+	color: #00DD00;
+	font-style: italic;
+}
+
+.code operator
+{
+	color: #009900;
+	font-weight: bold;
+}
+
+.code keyword
+{
+	color: #0055AA;
+	font-weight: bold;
+}
+
+.code customType
+{
+	color: #990000;
+	font-weight: bold;
+}
+
+.code type
+{
+	color: #0088AA;
+	font-weight: bold;
+}
+
+.code comment
+{
+	color: #FF8800;
+	font-style: italic;
+}
+
+.code number
+{
+	color: #AA33AA;
+}
+
+.code char
+{
+	color: #990066;
+}
+
+.code string
+{
+	color: #FFFF00;
+}
