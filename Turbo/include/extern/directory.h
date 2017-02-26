@@ -25,6 +25,7 @@ namespace EXTERN
 	class Directory
 	{
 	private:
+		const string			TAG = "Directory";
 		std::list<std::string> 	dirs;
 		list<std::string>	 	files;
 

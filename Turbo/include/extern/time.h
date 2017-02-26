@@ -23,6 +23,9 @@ namespace EXTERN
 	**/
 	class Timer
 	{
+	private:
+		const string 		TAG = "Timer";
+
 	protected:
 		TIMER_STATE			timer_state;
 		Uint64 				timer_value;
@@ -46,6 +49,7 @@ namespace EXTERN
 	class AppTimer : public Timer
 	{
 	private:
+		const string	TAG = "AppTimer";
 		Uint32			frame_counter;
 		Uint64 			frame_time;
         Uint16 			fps;

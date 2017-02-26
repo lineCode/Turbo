@@ -25,13 +25,12 @@ bool SDL::initSDL()
     {
         this->initState["SDL"] = true;
         success = true;
-        Log::log(this->TAG, LOG_00_00, log_state::log);
+        Log::log(this->TAG, "Init SDL", TURBO::LOG_TYPE::LOG);
     }
     else
     {
-		Log::error(this->TAG, ERR_00_00 + TAB + SDL_GetError(), log_state::error);
+		Log::error(this->TAG, "Error at initSDL(): " + SDL_GetError(), TURBO::LOG_TYPE::ERROR);
     }
-
     return success;
 }
 
@@ -44,13 +43,12 @@ bool SDL::quitSDL()
 		SDL_Quit();
 		this->initState["SDL"] = false;
 		success = true;
-		Log::log(this->TAG, LOG_00_01, log_state::log);
+		Log::log(this->TAG, "Quit SDL", TURBO::LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, ERR_00_01 + TAB + SDL_GetError(), log_state::error);
+		Log::error(this->TAG, "Error at quitSDL(): " + SDL_GetError(), TURBO::LOG_TYPE::ERROR);
 	}
-
     return success;
 }
 
@@ -64,11 +62,11 @@ bool SDL::initIMAGE()
         {
             this->initState["IMG"] = true;
             success = true;
-            Log::log(this->TAG, LOG_01_00, log_state::log);
+            Log::log(this->TAG, "Init SDL_IMG", TURBO::LOG_TYPE::LOG);
         }
         else
         {
-			Log::error(this->TAG, ERR_01_00 + TAB + IMG_GetError(), log_state::error);
+			Log::error(this->TAG, "Error at InitIMAGE(): " + IMG_GetError(), TURBO::LOG_TYPE::ERROR);
         }
     }
     return success;
@@ -83,13 +81,12 @@ bool SDL::quitIMAGE()
 		IMG_Quit();
 		this->initState["IMG"] = false;
 		success = true;
-		Log::log(this->TAG, LOG_01_01, log_state::log);
+		Log::log(this->TAG, "Quit SDL_IMG", TURBO::LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, ERR_01_01 + TAB + IMG_GetError(), log_state::error);
+		Log::error(this->TAG, "Error at quitIMAGE(): " + IMG_GetError(), TURBO::LOG_TYPE::ERROR);
 	}
-
     return success;
 }
 
@@ -103,14 +100,13 @@ bool SDL::initTTF()
         {
             this->initState["TTF"] = true;
             success = true;
-            Log::log(this->TAG, LOG_02_00, log_state::log);
+            Log::log(this->TAG, "Init SDL_TTF", TURBO::LOG_TYPE::LOG);
         }
         else
         {
-			Log::error(this->TAG, ERR_02_00 + TAB + TTF_GetError(), log_state::error);
+			Log::error(this->TAG, "Error at initTTF(): " + TTF_GetError(), TURBO::LOG_TYPE::ERROR);
         }
     }
-
     return success;
 }
 
@@ -123,13 +119,12 @@ bool SDL::quitTTF()
 		TTF_Quit();
 		this->initState["TTF"] = false;
 		success = true;
-		Log::log(this->TAG, LOG_02_01, log_state::log);
+		Log::log(this->TAG, "Quit SDL_TTF", TURBO::LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, ERR_02_01 + TAB + TTF_GetError(), log_state::error);
+		Log::error(this->TAG, "Error at quitTTF(): " + TTF_GetError(), TURBO::LOG_TYPE::LOG);
 	}
-
     return success;
 }
 
@@ -146,15 +141,14 @@ bool SDL::initMIXER()
 			{
 				this->initState["MIX"] = true;
 				success = true;
-				Log::log(this->TAG, LOG_03_00, log_state::log);
+				Log::log(this->TAG, "Init SDL_MIX", TURBO::LOG_TYPE::LOG);
 			}
         }
         else
         {
-			Log::error(this->TAG, ERR_03_00 + TAB + Mix_GetError(), log_state::error);
+			Log::error(this->TAG, "Error at initMIXER(): " + Mix_GetError(), TURBO::LOG_TYPE::ERROR);
         }
     }
-
     return success;
 }
 
@@ -167,11 +161,11 @@ bool SDL::quitMIXER()
 		Mix_Quit();
 		this->initState["MIX"] = false;
 		success = true;
-		Log::log(this->TAG, LOG_03_01, log_state::log);
+		Log::log(this->TAG, "Quit SDL_MIX", TURBO::LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, ERR_03_01 + TAB + Mix_GetError(), log_state::error);
+		Log::error(this->TAG, "Error at SDL_MIX(): " + Mix_GetError(), TURBO::LOG_TYPE::ERROR);
 	}
 
     return success;
@@ -187,14 +181,13 @@ bool SDL::initNET()
         {
             this->initState["NET"] = true;
             success = true;
-            Log::log(this->TAG, LOG_04_00, log_state::log);
+            Log::log(this->TAG, "Init SDL_NET", TURBO::LOG_TYPE::LOG);
         }
         else
         {
-			Log::error(this->TAG, ERR_04_00 + TAB + SDLNet_GetError(), log_state::error);
+			Log::error(this->TAG, "Error at initNET(): " + SDLNet_GetError(), TURBO::LOG_TYPE::ERROR);
         }
     }
-
     return success;
 }
 
@@ -207,11 +200,11 @@ bool SDL::quitNET()
 		SDLNet_Quit();
 		this->initState["NET"] = false;
 		success = true;
-		Log::log(this->TAG, LOG_04_01, log_state::log);
+		Log::log(this->TAG, "Quit SDL_NET", TURBO::LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, ERR_04_01 + TAB + SDLNet_GetError(), log_state::error);
+		Log::error(this->TAG, "Error at quitNET(): " + SDLNet_GetError(), TURBO::LOG_TYPE::LOG);
 	}
 
     return success;

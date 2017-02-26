@@ -31,18 +31,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="code/documentation.html">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="code/style_guide.html">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="code/documentation.html" />
+		<Unit filename="code/style_guide.html" />
 		<Unit filename="index.html">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="php/include/ini.php">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="php/include/lib/code/directory.php" />
+		<Unit filename="php/include/lib/code/parser.php" />
 		<Unit filename="php/src/script/script_docu.php">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

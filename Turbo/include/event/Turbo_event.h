@@ -3,6 +3,22 @@
 
 namespace EVENT
 {
+	/**
+	*** @class EventListener
+	***
+	***
+	**/
+	class EventListener
+	{
+	private:
+		const string TAG = "EventListener";
+
+	protected:
+
+	public:
+		EventListener();
+		~EventListener();
+	};
 
 }
 

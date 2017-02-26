@@ -11,6 +11,9 @@ namespace EXTERN
 	template<typename T>
 	class Parser
 	{
+	private:
+		const string TAG = "Parser";
+
 	public:
 		FILE_STATE 		file_state;
 		std::fstream 	handle;
@@ -42,6 +45,7 @@ namespace EXTERN
 	class ConfigParser : public Parser<Config>
 	{
 	private:
+		const string TAG = "ConfigParser";
 		std::map<std::string, std::map<std::string, std::string>> 	dict;
         Config					config;
 
@@ -64,6 +68,7 @@ namespace EXTERN
 	class XMLParser : public Parser<XML>
 	{
 	private:
+		const string			TAG = "XMLParser";
 		XML 					xml;
 
 	public:

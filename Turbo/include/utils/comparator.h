@@ -4,10 +4,14 @@
 namespace UTILS
 {
 	template <typename T>
-	class Comparator
+	class IComparator
 	{
 	private:
-		int a;
+		const string TAG = "IComparator";
+
+	public:
+		virtual Uint8 compare(T t1, T t2);
+		virtual Uint8 compareTo(T t);
 	};
 }
 

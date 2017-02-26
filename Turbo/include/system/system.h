@@ -10,6 +10,9 @@ namespace SYSTEM
 	**/
     class System
     {
+	private:
+		const string TAG = "System";
+
     public:
         static void run(string path, string prefix, string flags);
     };
@@ -21,6 +24,9 @@ namespace SYSTEM
 	**/
     class SDL
     {
+	private:
+		const string TAG = "SDL";
+
     private:
         std::map<std::string, bool> initState = { {"SDL", false}, {"IMG", false}, {"TTF", false},
                                                   {"MIX", false}, {"NET", false}};
@@ -52,6 +58,7 @@ namespace SYSTEM
     class Platform
     {
     private:
+    	const string	TAG = "Platform";
     	string 			name;
     	string 			version;
     	int				cpu;

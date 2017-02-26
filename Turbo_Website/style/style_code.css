@@ -1,27 +1,3 @@
-div.selection
-{
-	position: fixed;
-	left: 50px;
-	top: 100px;
-
-	width: 200px;
-	height: auto;
-}
-
-div.format
-{
-	position: relative;
-	width: 800pt;
-	margin-left: calc(50% - 400pt);
-	margin-right: calc(50% - 400pt);
-}
-
-#code
-{
-	padding: 0px;
-	margin: 0px 0px 0px 0px;
-}
-
 div.code
 {
 	position: relative;
@@ -33,7 +9,7 @@ div.code
 
 	border: 1px solid #000000;
 	border-radius: 2px;
-	overflow-x: scroll;
+	overflow-x: auto;
 	overflow-y: hidden;
 
 	color: #DDDDDD;
@@ -41,7 +17,7 @@ div.code
 
 	font-family: Courier New, Courier;
 	font-size: 11pt;
-	line-height: 11pt;
+	line-height: 12pt;
 }
 
 .code border
