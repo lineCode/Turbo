@@ -1,6 +1,19 @@
 #ifndef SYSTEM_H_INCLUDED
 #define SYSTEM_H_INCLUDED
 
+/**
+*** @module     EXTERN
+*** @author		Christoph Zorn
+*** @date		24.02.2017
+***
+*** @brief		:
+***
+***
+**/
+
+#include "extern/time.h"
+#include "utils/log.h"
+
 namespace SYSTEM
 {
     /**
@@ -11,10 +24,10 @@ namespace SYSTEM
     class System
     {
 	private:
-		const string TAG = "System";
+		const std::string TAG = "System";
 
     public:
-        static void run(string path, string prefix, string flags);
+        static void run(std::string path, std::string prefix, std::string flags);
     };
 
     /**
@@ -25,7 +38,7 @@ namespace SYSTEM
     class SDL
     {
 	private:
-		const string TAG = "SDL";
+		const std::string TAG = "SDL";
 
     private:
         std::map<std::string, bool> initState = { {"SDL", false}, {"IMG", false}, {"TTF", false},
@@ -58,21 +71,21 @@ namespace SYSTEM
     class Platform
     {
     private:
-    	const string	TAG = "Platform";
-    	string 			name;
-    	string 			version;
-    	int				cpu;
-		int 			cpuLogical;
-		int				cpuVirtual;
-		int 			ram;
+    	const std::string	TAG = "Platform";
+    	std::string 		name;
+    	std::string 		version;
+    	Uint8			    cpu;
+		Uint8 			    cpuLogical;
+		Uint8			    cpuVirtual;
+		Uint32 			    ram;
 
     public:
     	Platform();
-    	string 			getPlatform();
-    	string 			getVersion();
-    	int 			getCpuLogical();
-    	int 			getCpuVirtual();
-    	int 			getRamAbsolute();
+    	std::string 		getPlatform();
+    	std::string 		getVersion();
+    	Uint8 			    getCpuLogical();
+    	Uint8 			    getCpuVirtual();
+    	Uint32 			    getRamAbsolute();
     	~Platform();
     };
 }

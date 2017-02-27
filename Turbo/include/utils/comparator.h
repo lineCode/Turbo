@@ -1,6 +1,16 @@
 #ifndef COMPARATOR_H_INCLUDED
 #define COMPARATOR_H_INCLUDED
 
+/**
+*** @package 	comparator
+*** @author		Christoph Zorn
+*** @date		24.02.2017
+***
+*** @brief
+***
+***
+**/
+
 namespace UTILS
 {
 	template <typename T>

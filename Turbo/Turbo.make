@@ -5,20 +5,20 @@ CFLAGS := -c -Wall -Werror
 CPPFLAGS := -std=gnu++11 -std=c++11
 LDFLAGS := -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net
 
-MDLS := turbo gui event logic audio extern
+MDLS := audio event extern gui logic net system turbo utils
 DEB := Debug
 REL := Release
 TAR := $(DEB)
 SRCD := $(addprefix source/, $(MDLS)) source
 DEPD := $(addprefix include/, $(MDLS)) include
 OBJD := $(addprefix obj/$(TAR)/source/, $(MDLS))
-INCD := ./include
-LIBD := ./lib
+INCD := -I./include -IC:/Libs/SDL/include
+LIBD := -L./lib -LC:/Libs/SDL/lib
 
 MKOBJD := $(subst /,\,$(OBJD))
 
 TARGET := $(DEBD)
-OUT := out.exe
+OUT := Turbo.exe
 SRC := $(foreach sdir, $(SRCD), $(wildcard $(sdir)/*.cpp))
 DEP := $(foreach ddir, $(DEPD), $(wildcard $(ddir)/*.h))
 OBJ := $(SRC:%.cpp=obj/$(TAR)/%.o)
@@ -31,11 +31,11 @@ all: $(OUT)
 
 #Link
 $(OUT): $(OBJ)
-	$(CC) $(CPPFLAGS) $(OBJ) -o $(OUT) -L $(LIBD) $(LDFLAGS)
+	$(CC) $(CPPFLAGS) $(OBJ) -o $(OUT) $(LIBD) $(LDFLAGS)
 
 #Compile
 obj/Debug/source/%.o: source/%.cpp
-	$(CC) $(CPPFLAGS) $(CFLAGS) $< -I $(INCD) -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $< $(INCD) -o $@
 
 #Directories
 dirs:

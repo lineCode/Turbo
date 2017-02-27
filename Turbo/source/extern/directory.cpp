@@ -11,7 +11,7 @@ Directory::Directory(string directory)
 	{
 		while((entry = readdir(dir)) != NULL)
 		{
-			if(entry->d_name != "." && entry->d_name != "..")
+			if(entry->d_name != (string)"." && entry->d_name != (string)"..")
 			{
 				if(this->isDir(entry->d_name))
 				{

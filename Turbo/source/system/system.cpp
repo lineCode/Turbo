@@ -1,6 +1,10 @@
 #include "system/system.h"
 
+using namespace TURBO;
 using namespace SYSTEM;
+
+using UTILS::Log;
+using UTILS::LOG_TYPE;
 
 void System::run(string file, string prefix, string flags)
 {
@@ -11,9 +15,6 @@ void System::run(string file, string prefix, string flags)
 
 SDL::SDL() : timer()
 {
-	Log::clear(LOGFILE);
-	Log::clear(ERRFILE);
-	Log::clear(WARFILE);
     this->init();
 }
 
@@ -25,11 +26,11 @@ bool SDL::initSDL()
     {
         this->initState["SDL"] = true;
         success = true;
-        Log::log(this->TAG, "Init SDL", TURBO::LOG_TYPE::LOG);
+        Log::log(this->TAG, "Init SDL", LOG_TYPE::LOG);
     }
     else
     {
-		Log::error(this->TAG, "Error at initSDL(): " + SDL_GetError(), TURBO::LOG_TYPE::ERROR);
+		Log::error(this->TAG, ("Error at initSDL(): " + (string)SDL_GetError()), LOG_TYPE::ERROR);
     }
     return success;
 }
@@ -43,11 +44,11 @@ bool SDL::quitSDL()
 		SDL_Quit();
 		this->initState["SDL"] = false;
 		success = true;
-		Log::log(this->TAG, "Quit SDL", TURBO::LOG_TYPE::LOG);
+		Log::log(this->TAG, "Quit SDL", LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, "Error at quitSDL(): " + SDL_GetError(), TURBO::LOG_TYPE::ERROR);
+		Log::error(this->TAG, ("Error at quitSDL(): " + (string)SDL_GetError()), LOG_TYPE::ERROR);
 	}
     return success;
 }
@@ -58,15 +59,15 @@ bool SDL::initIMAGE()
 
     if(this->initState["SDL"] == true)
     {
-        if(IMG_Init(IMG_INIT_FLAGS))
+        if(IMG_Init(SDL_IMG_INIT_FLAGS))
         {
             this->initState["IMG"] = true;
             success = true;
-            Log::log(this->TAG, "Init SDL_IMG", TURBO::LOG_TYPE::LOG);
+            Log::log(this->TAG, "Init SDL_IMG", LOG_TYPE::LOG);
         }
         else
         {
-			Log::error(this->TAG, "Error at InitIMAGE(): " + IMG_GetError(), TURBO::LOG_TYPE::ERROR);
+			Log::error(this->TAG, ("Error at InitIMAGE(): " + (string)IMG_GetError()), LOG_TYPE::ERROR);
         }
     }
     return success;
@@ -81,11 +82,11 @@ bool SDL::quitIMAGE()
 		IMG_Quit();
 		this->initState["IMG"] = false;
 		success = true;
-		Log::log(this->TAG, "Quit SDL_IMG", TURBO::LOG_TYPE::LOG);
+		Log::log(this->TAG, "Quit SDL_IMG", LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, "Error at quitIMAGE(): " + IMG_GetError(), TURBO::LOG_TYPE::ERROR);
+		Log::error(this->TAG, ("Error at quitIMAGE(): " + (string)IMG_GetError()), LOG_TYPE::ERROR);
 	}
     return success;
 }
@@ -100,11 +101,11 @@ bool SDL::initTTF()
         {
             this->initState["TTF"] = true;
             success = true;
-            Log::log(this->TAG, "Init SDL_TTF", TURBO::LOG_TYPE::LOG);
+            Log::log(this->TAG, "Init SDL_TTF", LOG_TYPE::LOG);
         }
         else
         {
-			Log::error(this->TAG, "Error at initTTF(): " + TTF_GetError(), TURBO::LOG_TYPE::ERROR);
+			Log::error(this->TAG, ("Error at initTTF(): " + (string)TTF_GetError()), LOG_TYPE::ERROR);
         }
     }
     return success;
@@ -119,11 +120,11 @@ bool SDL::quitTTF()
 		TTF_Quit();
 		this->initState["TTF"] = false;
 		success = true;
-		Log::log(this->TAG, "Quit SDL_TTF", TURBO::LOG_TYPE::LOG);
+		Log::log(this->TAG, "Quit SDL_TTF", LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, "Error at quitTTF(): " + TTF_GetError(), TURBO::LOG_TYPE::LOG);
+		Log::error(this->TAG, ("Error at quitTTF(): " + (string)TTF_GetError()), LOG_TYPE::LOG);
 	}
     return success;
 }
@@ -134,19 +135,19 @@ bool SDL::initMIXER()
 
     if(this->initState["SDL"] == true)
     {
-        if(Mix_Init(MIX_INIT_FLAGS) == 0)
+        if(Mix_Init(SDL_MIX_INIT_FLAGS) == 0)
         {
-        	if(Mix_OpenAudio(GAME::SOUND_FREQUENCY, GAME::SOUND_FORMAT,
-							 GAME::SOUND_STEREO_CHANNEL, GAME::SOUND_CHUNK_SIZE) == 0)
+        	if(Mix_OpenAudio(SDL_MIX_FREQUENCY, SDL_MIX_FORMAT,
+							 SDL_MIX_STEREO_CHANNEL, SDL_MIX_CHUNK_SIZE) == 0)
 			{
 				this->initState["MIX"] = true;
 				success = true;
-				Log::log(this->TAG, "Init SDL_MIX", TURBO::LOG_TYPE::LOG);
+				Log::log(this->TAG, "Init SDL_MIX", LOG_TYPE::LOG);
 			}
         }
         else
         {
-			Log::error(this->TAG, "Error at initMIXER(): " + Mix_GetError(), TURBO::LOG_TYPE::ERROR);
+			Log::error(this->TAG, ("Error at initMIXER(): " + (string)Mix_GetError()), LOG_TYPE::ERROR);
         }
     }
     return success;
@@ -161,11 +162,11 @@ bool SDL::quitMIXER()
 		Mix_Quit();
 		this->initState["MIX"] = false;
 		success = true;
-		Log::log(this->TAG, "Quit SDL_MIX", TURBO::LOG_TYPE::LOG);
+		Log::log(this->TAG, "Quit SDL_MIX", LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, "Error at SDL_MIX(): " + Mix_GetError(), TURBO::LOG_TYPE::ERROR);
+		Log::error(this->TAG, ("Error at SDL_MIX(): " + (string)Mix_GetError()), LOG_TYPE::ERROR);
 	}
 
     return success;
@@ -181,11 +182,11 @@ bool SDL::initNET()
         {
             this->initState["NET"] = true;
             success = true;
-            Log::log(this->TAG, "Init SDL_NET", TURBO::LOG_TYPE::LOG);
+            Log::log(this->TAG, "Init SDL_NET", LOG_TYPE::LOG);
         }
         else
         {
-			Log::error(this->TAG, "Error at initNET(): " + SDLNet_GetError(), TURBO::LOG_TYPE::ERROR);
+			Log::error(this->TAG, ("Error at initNET(): " + (string)SDLNet_GetError()), LOG_TYPE::ERROR);
         }
     }
     return success;
@@ -200,11 +201,11 @@ bool SDL::quitNET()
 		SDLNet_Quit();
 		this->initState["NET"] = false;
 		success = true;
-		Log::log(this->TAG, "Quit SDL_NET", TURBO::LOG_TYPE::LOG);
+		Log::log(this->TAG, "Quit SDL_NET", LOG_TYPE::LOG);
 	}
 	else
 	{
-		Log::error(this->TAG, "Error at quitNET(): " + SDLNet_GetError(), TURBO::LOG_TYPE::LOG);
+		Log::error(this->TAG, ("Error at quitNET(): " + (string)SDLNet_GetError()), LOG_TYPE::LOG);
 	}
 
     return success;
@@ -256,12 +257,17 @@ string Platform::getPlatform()
 	return this->name;
 }
 
-int Platform::getCpuLogical()
+Uint8 Platform::getCpuLogical()
 {
-	return this->cpu;
+	return this->cpuLogical;
 }
 
-int Platform::getRamAbsolute()
+Uint8 Platform::getCpuVirtual()
+{
+    return this->cpuVirtual;
+}
+
+Uint32 Platform::getRamAbsolute()
 {
     return this->ram;
 }

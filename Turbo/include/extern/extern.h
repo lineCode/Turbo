@@ -1,6 +1,8 @@
 #ifndef EXTERN_H_INCLUDED
 #define EXTERN_H_INCLUDED
 
+#include "Turbo_constants.h"
+
 namespace EXTERN
 {
     /**

@@ -1,6 +1,18 @@
 #ifndef PARSER_H_INCLUDED
 #define PARSER_H_INCLUDED
 
+/**
+*** @package 	parser
+*** @author		Christoph Zorn
+*** @date		24.02.2017
+***
+*** @brief		The parser package contains
+***
+***
+**/
+
+#include "extern/extern.h"
+
 namespace EXTERN
 {
 	/**
@@ -9,23 +21,23 @@ namespace EXTERN
 	*** @var
 	**/
 	template<typename T>
-	class Parser
+	class IParser
 	{
 	private:
-		const string TAG = "Parser";
+		const std::string TAG = "Parser";
 
 	public:
 		FILE_STATE 		file_state;
 		std::fstream 	handle;
 
-		Parser(std::string file = "", bool read = true)
+		IParser(std::string file = "", bool read = true)
 		{
 			if(this->file_state <= FILE_STATE::CLOSED)
 			{
 				this->file_state = FILE_STATE::OPENED;
 			}
 		};
-		~Parser()
+		~IParser()
 		{
 			if(this->file_state >= FILE_STATE::OPENED)
 			{
@@ -42,21 +54,21 @@ namespace EXTERN
 	***
 	***
 	**/
-	class ConfigParser : public Parser<Config>
+	class ConfigParser : public IParser<Config>
 	{
 	private:
-		const string TAG = "ConfigParser";
+		const std::string 		TAG = "ConfigParser";
 		std::map<std::string, std::map<std::string, std::string>> 	dict;
         Config					config;
 
 	public:
 		ConfigParser(string file = "", bool read = true);
 		~ConfigParser();
-		Config 					read(string file = "");
-		bool 					write(string file, Config config, string extra = "",
+		Config 					read(std::string file = "");
+		bool 					write(std::string file, Config config, std::string extra = "",
 									  std::ios::openmode flags = std::ios::out | std::ios::trunc);
 		std::map<std::string,std::map<std::string, std::string>> getDict();
-		Config 					getSection(string caption);
+		Config 					getSection(std::string caption);
 		Config					getConfig();
 	};
 
@@ -65,10 +77,10 @@ namespace EXTERN
 	***
 	***
 	**/
-	class XMLParser : public Parser<XML>
+	class XMLParser : public IParser<XML>
 	{
 	private:
-		const string			TAG = "XMLParser";
+		const std::string		TAG = "XMLParser";
 		XML 					xml;
 
 	public:
@@ -86,7 +98,7 @@ namespace EXTERN
 		std::map<std::string, std::string> 	parseKVP(std::string line);
 		XML 		  		  * parseFile(std::fstream & stream, std::string buffer = "");
 		XML 					read(std::string file = "");
-		bool 					write(std::string file, GAME::XML xml, std::string prepend = "",
+		bool 					write(std::string file, XML xml, std::string prepend = "",
 								      std::ios::openmode flags = std::ios::out | std::ios::trunc);
 		XML						getXML();
 		~XMLParser();

@@ -14,9 +14,8 @@ string trim(const string & str, const string & whitespace = " \t")
     return str.substr(strBegin, strRange);
 }
 
-ConfigParser::ConfigParser(string file, bool read) : Parser(file)
+ConfigParser::ConfigParser(string file, bool read) : IParser(file)
 {
-	this->open(file);
 	if(read)
 		this->read(file);
 }
@@ -102,11 +101,10 @@ ConfigParser::~ConfigParser()
 
 }
 
-XMLParser::XMLParser(string file, bool read) : Parser(file)
+XMLParser::XMLParser(string file, bool read) : IParser(file)
 {
 	if(read)
 	{
-		this->open(file);
 		this->xml = this->read(file);
 	}
 }

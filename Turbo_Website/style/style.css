@@ -275,9 +275,7 @@ div.navbar
 
 .navbar li ol a:hover
 {
-	padding:						0px 50px 0px 25px;
-
-	text-align:						center;
+	padding:						0px 25px 0px 50px;
 
 	border-left:					2px solid #FFFF00;
 	border-bottom:					2px solid transparent;

@@ -11,6 +11,8 @@
 ***
 **/
 
+#include "extern/extern.h"
+
 namespace EXTERN
 {
 	/**
@@ -35,14 +37,14 @@ namespace EXTERN
 	public:
 		Timer();
 		Uint64 				getTicks();
-		void 				start();
+		Uint64 				start();
 		Uint64 				pause();
 		Uint64 				resume();
 		Uint64 				stop();
         Uint64 				getTime();
         static void			sleep(Uint32 microseconds = 0);
-		static std::string 	getTimeToString(Sint64 time = -1,
-											std::string format = "hh:mm:ss DD:MM:YYYY");
+		static std::string 	getTimeToString(Uint64 timestamp = 0,
+											std::string format = "%H:%M:%S %D-%m-%Y");
 		~Timer();
 	};
 
@@ -50,6 +52,7 @@ namespace EXTERN
 	{
 	private:
 		const string	TAG = "AppTimer";
+		const Uint16	FPS_LOCK = 120;
 		Uint32			frame_counter;
 		Uint64 			frame_time;
         Uint16 			fps;

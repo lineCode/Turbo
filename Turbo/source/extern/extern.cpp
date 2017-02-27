@@ -38,7 +38,7 @@ XML XML::findTag(string tag)
 			{
 				if(result.isEmpty())
 				{
-					result = child->findXML(tag);
+					result = child->findTag(tag);
 				}
 				else
 				{
@@ -49,7 +49,7 @@ XML XML::findTag(string tag)
 	}
 	else if(this->next != nullptr)
 	{
-		result = this->next->findXML(tag);
+		result = this->next->findTag(tag);
 	}
 	return result;
 }

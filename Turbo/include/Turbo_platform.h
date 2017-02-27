@@ -1,14 +1,29 @@
+/********************
+** TURBO **
+*********************
+**
+** This project ...
+**
+*********************/
+
 #ifndef TURBO_PLATFORM_H_INCLUDED
 #define TURBO_PLATFORM_H_INCLUDED
 
-#if defined WIN32 || defined __WIN32__ || defined WINDOWS || defined _WIN32 || defined __MINGW32__
-	#define PLATFORM "WINDOWS"
-#elifdef __APPLE__
+#if defined WIN32
+	#if defined WIN64
+		#define PLATFORM "WINDOWS 64"
+	#else
+		#define PLATFORM "WINDOWS 32"
+	#endif
+#elif defined __APPLE__
 	#define PLATFORM "MAC OS"
-#elifdef __linux__
-	#define PLATFORM "LINUX
+#elif defined __linux__
+	#define PLATFORM "LINUX"
+#elif defined __unix__
+	#define PLATFORM "UNIX"
 #else
 	#define PLATFORM "UNDEFINED"
+#endif
 
 /// C Libraries
 
@@ -45,28 +60,39 @@
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_net.h"
 
+typedef unsigned char 		Uint8;
+typedef signed char 		Sint8;
+typedef unsigned short 		Uint16;
+typedef signed short 		Sint16;
+typedef unsigned int 		Uint32;
+typedef signed int 			Sint32;
+typedef unsigned long long 	Uint64;
+typedef signed long long 	Sint64;
+
+using std::cerr;
+using std::cout;
+using std::endl;
+using std::fstream;
+using std::ifstream;
+using std::ofstream;
+using std::left;
+using std::right;
+using std::setw;
+
+using std::string;
+using std::istringstream;
+using std::function;
+
+using std::array;
+using std::map;
+using std::list;
+using std::pair;
+using std::queue;
+using std::vector;
+
 namespace TURBO
 {
-	typedef unsigned char 		Uint8;
-	typedef signed char 		Sint8;
-	typedef unsigned short 		Uint16;
-	typedef signed short 		Sint16;
-	typedef unsigned int 		Uint32;
-	typedef signed int 			Sint32;
-	typedef unsigned long long 	Uint64;
-	typedef signed long long 	Sint64;
 
-	enum class LOG_TYPE : Uint8
-	{
-		NOTHING = 0,
-		VERBOSE = 1,
-		ERROR 	= 2,
-		WARNING = 3,
-		LOG		= 4,
-		CONSOLE = 5,
-		DEBUG	= 6,
-		RELEASE = 7
-	};
 }
 
 #endif // TURBO_PLATFORM_H_INCLUDED

@@ -11,8 +11,9 @@
 ***
 **/
 
-/// C Libraries
 #include <dirent.h>
+
+#include "extern/extern.h"
 
 namespace EXTERN
 {
@@ -25,9 +26,9 @@ namespace EXTERN
 	class Directory
 	{
 	private:
-		const string			TAG = "Directory";
+		const std::string		TAG = "Directory";
 		std::list<std::string> 	dirs;
-		list<std::string>	 	files;
+		std::list<std::string>	files;
 
 	public:
 		Directory(std::string dir);
