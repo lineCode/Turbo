@@ -1,6 +1,5 @@
 -TURBO
-	-system
-	-app
+	-app hauptprogramm neue apps erben von klasse
 
 -EXTERN:
 	-time
@@ -9,7 +8,7 @@
 	-regex
 
 -window
--renderer(static)
+-renderer(static) evtl singleston, 1 gui renderer, 1 logic renderer
 -font
 -texture
 -text 
@@ -21,4 +20,3 @@
 -actionhandler
 	- key function -> action 
 	- function function -> action
-	

@@ -144,6 +144,8 @@ div.navbar
 	max-width:						100%;
 	min-width:						100%;
 	width:							100%;
+	
+	z-index:						100;
 
 	text-align:						center;
 
@@ -287,8 +289,11 @@ div.navbar
 	position: 						absolute;
 	left:							0px;
 	top:							0px;
+	
+	padding:						5px;
 
-	width:							auto;
+	max-width:						50px;
+    max-height:						50px;
 
 	display:						inline-block;
 }
@@ -299,9 +304,16 @@ div.navbar
 	right:							0px;
 	top:							0px;
 
-	width:							auto;
+	padding:						5px;
+
+	max-width:						50px;
+    max-height:						50px;
 
 	display:						inline-block;
+	z-index:						99;
+	
+	border:							1px solid #FFFF00;
+	background-color:				#AAAA00;
 }
 
 /**
