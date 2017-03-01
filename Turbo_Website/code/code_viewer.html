@@ -2,6 +2,14 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="../style/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/style_guide.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/style_code.css"/>
+		<script type="text/javascript" src="../script/script.js"></script>
+		<?php
+			include_once(dirname(__FILE__) . "/../php/include/lib/code/parser.php");
+
+			$parser = new CodeParser("");
+		?>
 	</head>
 	<body>
 		<nav>
@@ -32,7 +40,7 @@
 		</nav>
 		<div class="page">
 			<div class="grid">
-                <div class="grid-box-1xn">
+			    <div class="grid-box-1xn">
 					<div class="docu-selection">
                         <table>
                         	<tr>
@@ -62,13 +70,14 @@
                         </table>
 					</div>
                 </div>
-                <div class="grid-box-nxn">
-					<div class="docu-content">
+				<div class="grid-box-nxn">
+                    <div class="code">
                         <?php
-                            echo "here comes the content";
+                            $parser = new CodeParser(dirname(__FILE__) . "/style_guide.html");
+                            echo $parser->highlightCode();
                         ?>
-					</div>
-                </div>
+                    </div>
+				</div>
 			</div>
 		</div>
 	</body>

@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Turbo.make" />
 		<Unit filename="include/Turbo.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -67,6 +68,9 @@
 		<Unit filename="include/gui/gui_object.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/gui/gui_widget.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="include/system/system.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -100,7 +104,10 @@
 		<Unit filename="source/geometry/geometry.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="source/geometry/gui_object.cpp">
+		<Unit filename="source/gui/gui_object.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="source/gui/gui_widget.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/main.cpp">

@@ -2,15 +2,19 @@ div.code
 {
 	position: relative;
 
+	min-width: auto;
+	max-width: 100%;
 	width: calc(100% - 2px);
-	height: calc(100%);
+	min-height: auto;
+	max-height: auto;
+	height: auto;
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
 
 	border: 1px solid #000000;
 	border-radius: 2px;
 	overflow-x: auto;
-	overflow-y: hidden;
+	overflow-y: auto;
 
 	color: #DDDDDD;
 	background-color: #111111;

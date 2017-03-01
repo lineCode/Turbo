@@ -128,11 +128,11 @@
 		}
 
 		/* A function to do sth */
-		public function highlightCode($text)
+		public function highlightCode($text = "")
 		{
 			$echo = "";
 			$i = 1;
-			if($text == "")
+			if(@$text == "")
 				$lines = explode("\n", $this->buffer);
 			else
 				$lines = explode("\n", $text);

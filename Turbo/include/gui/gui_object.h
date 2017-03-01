@@ -1,12 +1,25 @@
 #ifndef GUI_OBJECT_H_INCLUDED
 #define GUI_OBJECT_H_INCLUDED
 
+/**
+*** @package    gui_object
+*** @author     Christoph Zorn
+*** @date       24.02.2017
+***
+*** @brief      The module gui contains
+***
+***
+**/
+
 #include "gui/gui.h"
 
 namespace GUI
 {
     /**
     *** @class IGUIObject
+    ***
+    *** @brief This is the base class for all objects that are drawn above the game
+    ***        screen. Every base object can only contain one child object.
     ***
     *** @var
     **/
@@ -20,15 +33,24 @@ namespace GUI
         IGUIObject        * prev    = nullptr;
 
     protected:
-        bool                sizeChanged;
+        bool                size_changed;
         GEOMETRY::Rectangle dimension;
+        Uint32              margin[4];
+        Uint32              padding[4];
+        SDL_Color           background_color;
+        SDL_Color           border_color;
+        SDL_Color           text_color;
 
     public:
         IGUIObject(GEOMETRY::Rectangle dimension);
         virtual void        update() = 0;
         virtual void        draw() = 0;
+        virtual bool        setParent(IGUIObject * object);
+        virtual bool        setChild(IGUIObject * object);
+        virtual bool        setNext(IGUIObject * object);
+        virtual bool        setPrev(IGUIObject * object);
         virtual void        setPosition(GEOMETRY::Point position);
-        virtual bool        setDragable(bool dragable);
+        virtual void        setDragable(bool dragable);
         virtual void        resize(GEOMETRY::Rectangle dimension);
         ~IGUIObject();
     };
@@ -41,7 +63,7 @@ namespace GUI
     class Widget : protected IGUIObject
     {
     private:
-        const string TAG = "Widget";
+        const string        TAG = "Widget";
 
     protected:
 
@@ -51,7 +73,6 @@ namespace GUI
         virtual void        removeWidget(Widget * w) = 0;
         ~Widget();
     };
-
 }
 
 #endif // GUI_OBJECT_H_INCLUDED

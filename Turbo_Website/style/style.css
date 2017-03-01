@@ -144,7 +144,7 @@ div.navbar
 	max-width:						100%;
 	min-width:						100%;
 	width:							100%;
-	
+
 	z-index:						100;
 
 	text-align:						center;
@@ -289,11 +289,11 @@ div.navbar
 	position: 						absolute;
 	left:							0px;
 	top:							0px;
-	
-	padding:						5px;
 
-	max-width:						50px;
-    max-height:						50px;
+	padding:						0px;
+
+	max-width:						70px;
+    max-height:						70px;
 
 	display:						inline-block;
 }
@@ -311,7 +311,7 @@ div.navbar
 
 	display:						inline-block;
 	z-index:						99;
-	
+
 	border:							1px solid #FFFF00;
 	background-color:				#AAAA00;
 }
@@ -347,7 +347,9 @@ div.grid
 /* x * y*/
 div.grid-box-1xn
 {
-
+    max-height:						100%;
+	min-height:						100%;
+	width:							auto;
 }
 
 div.grid-box-1x1

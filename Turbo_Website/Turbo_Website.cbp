@@ -31,6 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="code/code_viewer.html">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="code/documentation.html" />
 		<Unit filename="code/style_guide.html" />
 		<Unit filename="index.html">
