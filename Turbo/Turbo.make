@@ -3,7 +3,7 @@
 # creates a new directory
 f_mkdir		 = mkdir
 # searches for all folders in the first argument
-f_subdirs	 = $(1) $(foreach sub_dir, $(wildcard $(1)/*), $(call f_subdirs, $(src_dir)/$(sub_dir)))
+f_subdirs	 = $(1) $(foreach sub_dir, $(wildcard $(1)/*), $(call f_subdirs, $(src_dir)$(sub_dir)))
 # searches for all files with the ending in the first argument
 f_subfiles	 = $(1)
 
@@ -22,11 +22,11 @@ MDLS 		:= audio event extern gui logic net system turbo utils
 DEB 		:= Debug
 REL 		:= Release
 TAR 		:= $(DEB)
-SRCD 		:= $(call f_subdirs,$(SOURCEDIR))
-DEPD 		:= $(call f_subdirs,$(INCLUDEDIR))
+SRCD 		:= $(foreach d, $(MDLS), $(addprefix $(SOURCEDIR)/, $(d))) $(SOURCEDIR)
+DEPD 		:= $(foreach d, $(MDLS), $(addprefix $(INCLUDEDIR)/ ,$(d))) $(INCLUDEDIR)
 OBJD 		:= $(addprefix $(OBJECTDIR)/$(TAR)/$(SOURCEDIR)/, $(MDLS))
 INCD 		:= -I./include -IC:/Libs/SDL/include
-LIBD 		:= -L./lib -LC:/Libs/SDL/lib
+LIBD 		:= -L./lib -LC:/Libs/SDL2/lib
 
 MKOBJD 		:= $(subst /,\,$(OBJD))
 
@@ -37,6 +37,9 @@ DEP 		:= $(foreach ddir, $(DEPD), $(wildcard $(ddir)/*.h))
 OBJ 		:= $(SRC:%.cpp=obj/$(TAR)/%.o)
 
 MKOBJ 		:= $(subst /,\,$(OBJ))
+
+test := $(call f_subdirs,$(SOURCEDIR))
+tester :=  $(foreach sdir, $(test), $(wildcard $(sdir)/*.cpp))
 
 Debug: all
 
@@ -50,6 +53,9 @@ $(OUT): $(OBJ)
 
 #Compile
 obj/Debug/source/%.o: source/%.cpp
+	@echo $(SRC)
+	@echo =======
+	@echo $(tester)
 	@echo Create OBJ File: $?
 	@echo ================
 	$(CC) $(CPPFLAGS) $(CFLAGS) $? $(INCD) -o $@

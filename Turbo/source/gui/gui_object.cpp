@@ -52,6 +52,7 @@ IGUIObject::~IGUIObject()
 }
 
 Widget::Widget()
+	: IGUIObject(GEOMETRY::Rectangle())
 {
 
 }

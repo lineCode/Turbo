@@ -60,7 +60,7 @@ namespace GUI
     ***
     *** @var
     **/
-    class GUIRenderer<PLACEHOLDER> : public IRenderer
+    class GUIRenderer : public IRenderer<PLACEHOLDER>
     {
     private:
         const string TAG = "GUIRenderer";
@@ -77,7 +77,7 @@ namespace GUI
     ***
     *** @var
     **/
-    class GameRenderer<PLACEHOLDER> : public IRenderer
+    class GameRenderer : public IRenderer<PLACEHOLDER>
     {
     private:
         const string TAG = "GameRenderer";
