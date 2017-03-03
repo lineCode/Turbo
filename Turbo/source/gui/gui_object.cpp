@@ -1,8 +1,10 @@
 #include "gui/gui_object.h"
 
 using namespace GUI;
+using GEOMETRY::Rectangle;
 
 IGUIObject::IGUIObject(Rectangle dimension)
+	: dimension(dimension)
 {
 
 }
@@ -50,9 +52,9 @@ IGUIObject::~IGUIObject()
 {
 
 }
-
-Widget::Widget()
-	: IGUIObject(GEOMETRY::Rectangle())
+/*
+Widget::Widget(Rectangle dimension)
+	: IGUIObject(dimension)
 {
 
 }
@@ -61,3 +63,4 @@ Widget::~Widget()
 {
 
 }
+*/

@@ -45,10 +45,10 @@ namespace GUI
         IGUIObject(GEOMETRY::Rectangle dimension);
         virtual void        update() = 0;
         virtual void        draw() = 0;
-        virtual bool        setParent(IGUIObject * object);
-        virtual bool        setChild(IGUIObject * object);
-        virtual bool        setNext(IGUIObject * object);
-        virtual bool        setPrev(IGUIObject * object);
+        virtual void        setParent(IGUIObject * object);
+        virtual void        setChild(IGUIObject * object);
+        virtual void        setNext(IGUIObject * object);
+        virtual void        setPrev(IGUIObject * object);
         virtual void        setPosition(GEOMETRY::Point position);
         virtual void        setDragable(bool dragable);
         virtual void        resize(GEOMETRY::Rectangle dimension);
@@ -60,6 +60,7 @@ namespace GUI
     ***
     *** @var
     **/
+    /*
     class Widget : protected IGUIObject
     {
     private:
@@ -68,11 +69,12 @@ namespace GUI
     protected:
 
     public:
-        Widget();
+        Widget(Rectangle dimension);
         virtual void        addWidget(Widget * w) = 0;
         virtual void        removeWidget(Widget * w) = 0;
         ~Widget();
     };
+    */
 }
 
 #endif // GUI_OBJECT_H_INCLUDED

@@ -3,10 +3,9 @@
 # creates a new directory
 f_mkdir		 = mkdir
 # searches for all folders in the first argument
-f_subdirs	 = $(1) $(foreach sub_dir, $(wildcard $(1)/*), $(call f_subdirs, $(src_dir)$(sub_dir)))
-# searches for all files with the ending in the first argument
-f_subfiles	 = $(1)
-
+f_subdirs	 = $(1) $(foreach sub_dir, $(wildcard $(1)/*), $(call f_subdirs, $(sub_dir)))
+# searches for all files in subfolders with the ending in the first argument
+f_subfiles	 = $(1) $(2) $(foreach sub_dir, $(wildcard $(1)/*$(2)), $(call f_subfiles, $(sub_dir), $(2)))
 #============================================
 
 INCLUDEDIR	:= include
@@ -40,6 +39,7 @@ MKOBJ 		:= $(subst /,\,$(OBJ))
 
 test := $(call f_subdirs,$(SOURCEDIR))
 tester :=  $(foreach sdir, $(test), $(wildcard $(sdir)/*.cpp))
+testf := $(call f_subfiles, $(SOURCEDIR))
 
 Debug: all
 
@@ -53,9 +53,6 @@ $(OUT): $(OBJ)
 
 #Compile
 obj/Debug/source/%.o: source/%.cpp
-	@echo $(SRC)
-	@echo =======
-	@echo $(tester)
 	@echo Create OBJ File: $?
 	@echo ================
 	$(CC) $(CPPFLAGS) $(CFLAGS) $? $(INCD) -o $@
