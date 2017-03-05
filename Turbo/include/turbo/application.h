@@ -23,14 +23,20 @@ namespace TURBO
     class Application
     {
     private:
-        const string    TAG = "Application";
+        const string        TAG = "Application";
 
     protected:
-        SYSTEM::SDL     sdl;
+        SYSTEM::SDL         sdl;
+        EXTERN::AppTimer    timer;
+        bool                running = true;
 
     public:
         Application();
-        unsigned int    run();
+        void                eventLoop();
+        void                registerCallbacks();
+        void                mainLoop();
+        unsigned int        run();
+        void                stop();
         ~Application();
     };
 

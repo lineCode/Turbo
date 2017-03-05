@@ -7,10 +7,11 @@ Point::Point()
 
 }
 
-Point::Point(Point & p)
-{
-    this = &p;
-}
+//Point::Point(Point & p)
+//    : x(p.getX()), y(p.getY()), z(p.getZ())
+//{
+//
+//}
 
 Point::Point(double x)
     : x(x)
@@ -28,6 +29,44 @@ Point::Point(double x, double y, double z)
     : x(x), y(y), z(z)
 {
 
+}
+
+Point Point::operator=(Point & p)
+{
+    return p;
+}
+
+Point Point::operator+(Point p)
+{
+    Point pr = Point();
+
+    pr.setX(this->x + p.getX());
+    pr.setY(this->y + p.getY());
+    pr.setZ(this->z + p.getZ());
+
+    return pr;
+}
+
+Point Point::operator*(double factor)
+{
+    Point p = Point();
+
+    p.setX(this->x * factor);
+    p.setY(this->y * factor);
+    p.setZ(this->z * factor);
+
+    return p;
+}
+
+Point Point::operator*(Point p)
+{
+    Point pr = Point();
+
+    pr.setX(this->x * p.getX());
+    pr.setY(this->y * p.getY());
+    pr.setZ(this->z * p.getZ());
+
+    return pr;
 }
 
 void Point::add(double x)
@@ -48,14 +87,29 @@ void Point::add(double x, double y, double z)
     this->z += z;
 }
 
+void Point::setX(double x)
+{
+    this->x = x;
+}
+
 double Point::getX()
 {
     return this->x;
 }
 
+void Point::setY(double y)
+{
+    this->y = y;
+}
+
 double Point::getY()
 {
     return this->y;
+}
+
+void Point::setZ(double z)
+{
+    this->z = z;
 }
 
 double Point::getZ()
@@ -65,7 +119,7 @@ double Point::getZ()
 
 double Point::getDistance(Point p)
 {
-    return sqrt(pow(this->x-p.getX(), 2.0), pow(this->y-p.getY(), 2.0), pow(this->z-p.getZ(), 2.0));
+    return sqrt(pow(this->x-p.getX(), 2.0) + pow(this->y-p.getY(), 2.0) + pow(this->z-p.getZ(), 2.0));
 }
 
 Point::~Point()
@@ -79,6 +133,12 @@ Line::Line()
 
 }
 
+//Line::Line(Line & line)
+//    : p1(line.getFirst()), p2(line.getSecond())
+//{
+//
+//}
+
 Line::Line(Point p1, Point p2)
     : p1(p1), p2(p2)
 {
@@ -89,6 +149,11 @@ Line::Line(double x1, double y1, double x2, double y2)
     : p1(x1, y1), p2(x2, y2)
 {
 
+}
+
+Line Line::operator=(Line & l)
+{
+    return l;
 }
 
 double Line::getWeight()
@@ -134,7 +199,6 @@ vector<Line> IShape::getEdges()
 Point IShape::getVertice(Uint16 i)
 {
     Point p = Point();
-
     if(this->vertices.size() <= i)
     {
         p = this->vertices.at(i);
@@ -145,7 +209,6 @@ Point IShape::getVertice(Uint16 i)
 Line IShape::getEdge(Uint16 i)
 {
     Line l = Line();
-
     if(this->edges.size() <= i)
     {
         l = this->edges.at(i);
@@ -170,15 +233,16 @@ IShape::~IShape()
 }
 
 Triangle::Triangle()
-    : p1(0, 0, 0), p2(0, 0, 0), p3(0, 0, 0)
+    : IShape(), p1(0, 0, 0), p2(0, 0, 0), p3(0, 0, 0)
 {
 
 }
 
-Triangle::Triangle(Triangle & t)
-{
-    this = &t;
-}
+//Triangle::Triangle(Triangle & t)
+//    : p1(t.getVertice(0)), p2(t.getVertice(1)), p3(t.getVertice(2))
+//{
+//
+//}
 
 Triangle::Triangle(Point p1, Point p2, Point p3)
     : p1(p1), p2(p2), p3(p3)
@@ -188,15 +252,15 @@ Triangle::Triangle(Point p1, Point p2, Point p3)
 
 double Triangle::getWidth()
 {
-    double left = min(min(p1.getX() < p2.getX()), p3.getX());
-    double right = max(max(p1.getX() < p2.getX()), p3.getX());
+    double left = min(min(p1.getX(), p2.getX()), p3.getX());
+    double right = max(max(p1.getX(),p2.getX()), p3.getX());
     return abs(left - right);
 }
 
 double Triangle::getLength()
 {
-    double top = min(min(p1.getY() < p2.getY()), p3.getY());
-    double bot = max(max(p1.getY() < p2.getY()), p3.getY());
+    double top = min(min(p1.getY(), p2.getY()), p3.getY());
+    double bot = max(max(p1.getY(), p2.getY()), p3.getY());
     return abs(top - bot);
 }
 
@@ -228,17 +292,18 @@ Triangle::~Triangle()
 }
 
 Rectangle::Rectangle()
-    : p1(0, 0, 0), p2(0, 0, 0), p3(0, 0, 0), p4(0, 0, 0)
+    : IShape(), p1(0, 0, 0), p2(0, 0, 0), p3(0, 0, 0), p4(0, 0, 0)
 {
 
 }
 
-Rectangle::Rectangle(Rectangle & r)
-{
-    this = &r;
-}
+//Rectangle::Rectangle(Rectangle & r)
+//    : p1(r.p1), p2(r.p2)), p3(r.p3)), p4(r.p4)
+//{
+//
+//}
 
-Rectangle(Point p1, Point p2, Point p3, Point p4)
+Rectangle::Rectangle(Point p1, Point p2, Point p3, Point p4)
     : p1(p1), p2(p2), p3(p3), p4(p4)
 {
 
@@ -250,17 +315,27 @@ Rectangle::Rectangle(double x, double y, double w, double h)
 
 }
 
+double Rectangle::getX()
+{
+    return this->p1.getX();
+}
+
+double Rectangle::getY()
+{
+    return this->p1.getY();
+}
+
 double Rectangle::getWidth()
 {
-    double left = min(min(p1.getX() < p2.getX()), p3.getX());
-    double right = max(max(p1.getX() < p2.getX()), p3.getX());
+    double left = min(min(p1.getX(), p2.getX()), p3.getX());
+    double right = max(max(p1.getX(), p2.getX()), p3.getX());
     return abs(left - right);
 }
 
 double Rectangle::getLength()
 {
-    double top = min(min(p1.getY() < p2.getY()), p3.getY());
-    double bot = max(max(p1.getY() < p2.getY()), p3.getY());
+    double top = min(min(p1.getY(), p2.getY()), p3.getY());
+    double bot = max(max(p1.getY(), p2.getY()), p3.getY());
     return abs(top - bot);
 }
 
@@ -271,12 +346,12 @@ double Rectangle::getHeight()
 
 double Rectangle::getArea()
 {
-    return (this->edges.at(0).getLength() * this->edges.at(1).getLength());
+    return (this->getEdges().at(0).getLength() * this->getEdges().at(1).getLength());
 }
 
 double Rectangle::getScope()
 {
-    return 2*(length + width);
+    return 2*(this->getEdges().at(0).getLength() + this->getEdges().at(1).getLength());
 }
 
 double Rectangle::getVolume()

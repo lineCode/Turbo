@@ -11,10 +11,13 @@
 ***
 **/
 
-#include "Turbo_constants.h"
+#include "Turbo_main.h"
 
 namespace UTILS
 {
+	/**
+	*** @enum LOG_TYPE
+	**/
     enum class LOG_TYPE : Uint8
 	{
 		NOTHING = 0,

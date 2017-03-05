@@ -9,6 +9,7 @@ Timer::Timer()
 
 Uint64 Timer::getTicks()
 {
+	//TODO
 	return SDL_GetTicks();
 }
 
@@ -64,7 +65,8 @@ Uint64 Timer::getTime()
 
 void Timer::sleep(Uint32 milliseconds)
 {
-	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+	SDL_Delay(milliseconds);
+	//TODOstd::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
 string Timer::getTimeToString(Uint64 timestamp, string format)
@@ -86,9 +88,10 @@ Timer::~Timer()
 	this->stop();
 }
 
-AppTimer::AppTimer() : Timer()
+AppTimer::AppTimer(Uint16 fps_lock)
+	: Timer(), fps_lock(fps_lock)
 {
-
+	this->initFPSCounter();
 }
 
 void AppTimer::initFPSCounter()
@@ -101,9 +104,9 @@ long AppTimer::calcDelay(long start, long stop)
 {
 	long time_ival = stop - start;
 
-	if(time_ival < 1000 / FPS_LOCK)
+	if(time_ival < (1000 / this->fps_lock))
 	{
-		SDL_Delay((1000 / FPS_LOCK) - time_ival);
+		this->sleep((1000 / this->fps_lock) - time_ival);
 	}
 	return time_ival;
 }

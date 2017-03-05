@@ -2,11 +2,20 @@
 
 using namespace GUI;
 using GEOMETRY::Rectangle;
+using GEOMETRY::Point;
 
 IGUIObject::IGUIObject(Rectangle dimension)
-	: dimension(dimension)
+    : dimension(dimension)
 {
 
+}
+
+void IGUIObject::draw(IRenderer & renderer)
+{
+    for(Texture texture : this->textures)
+    {
+        renderer.draw(texture);
+    }
 }
 
 void IGUIObject::setParent(IGUIObject * object)
@@ -33,17 +42,17 @@ void IGUIObject::setPrev(IGUIObject * object)
     this->prev = object;
 }
 
-void IGUIObject::setPosition(GEOMETRY::Point position)
-{
-
-}
-
 void IGUIObject::setDragable(bool dragable)
 {
 
 }
 
-void IGUIObject::resize(GEOMETRY::Rectangle dimension)
+void IGUIObject::setPosition(Point position)
+{
+
+}
+
+void IGUIObject::resize(Rectangle dimension)
 {
 
 }
@@ -52,9 +61,9 @@ IGUIObject::~IGUIObject()
 {
 
 }
-/*
+
 Widget::Widget(Rectangle dimension)
-	: IGUIObject(dimension)
+    : IGUIObject(dimension)
 {
 
 }
@@ -63,4 +72,3 @@ Widget::~Widget()
 {
 
 }
-*/

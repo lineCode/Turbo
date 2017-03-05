@@ -13,50 +13,50 @@ namespace TURBO
 
 	/// SDL constants
 
-	const Uint32	BORDERLESS				    = SDL_WINDOW_BORDERLESS;
-	const Uint32	FULLSCREEN				    = SDL_WINDOW_FULLSCREEN;
+	const Uint32	    BORDERLESS				= SDL_WINDOW_BORDERLESS;
+	const Uint32	    FULLSCREEN				= SDL_WINDOW_FULLSCREEN;
 
-    const Uint32 	SDL_INIT_FLAGS 			    = SDL_INIT_EVERYTHING;
-    const Uint32	SDL_IMG_INIT_FLAGS 		    = IMG_INIT_PNG;
-    const Uint32 	SDL_MIX_INIT_FLAGS 		    = MIX_INIT_MOD; //| MIX_INIT_OGG
-    const Uint32 	SDL_WINDOW_FLAGS 		    = SDL_WINDOW_SHOWN; // | SDL_WINDOW_BORDERLESS;
-    const Uint32 	SDL_RENDER_FLAGS 		    = SDL_RENDERER_ACCELERATED;
+    const Uint32 	    SDL_INIT_FLAGS 			= SDL_INIT_EVERYTHING;
+    const Uint32	    SDL_IMG_INIT_FLAGS 		= IMG_INIT_PNG;
+    const Uint32 	    SDL_MIX_INIT_FLAGS 		= MIX_INIT_MOD; //| MIX_INIT_OGG
+    const Uint32 	    SDL_WINDOW_FLAGS 		= SDL_WINDOW_SHOWN; // | SDL_WINDOW_BORDERLESS;
+    const Uint32 	    SDL_RENDER_FLAGS 		= SDL_RENDERER_ACCELERATED;
 
-    const Uint32 	SDL_IMG_PIXEL_FORMAT	    = SDL_PIXELFORMAT_RGBA8888;
-    const Uint32	SDL_IMG_TEXTURE_ACCESS	    = SDL_TEXTUREACCESS_TARGET;
+    const std::string   SDL_IMG_FILE_FILTER     = "BMP,GIF,JPEG,LBM,PCX,PNG,PNM,TGA,TIFF,WEBP,XCF,XPM,XV";
+    const Uint32 	    SDL_IMG_PIXEL_FORMAT	= SDL_PIXELFORMAT_RGBA8888;
+    const Uint32	    SDL_IMG_TEXTURE_ACCESS	= SDL_TEXTUREACCESS_TARGET;
 
-    const Uint32	SDL_MIX_FREQUENCY		    = 44100;
-	const Sint32    SDL_MIX_FORMAT              = MIX_DEFAULT_FORMAT;
-    const int       SDL_MIX_STEREO_CHANNEL      = 2;
-    const int 		SDL_MIX_DEFAULT_CHANNEL	    = -1;
-    const int       SDL_MIX_CHUNK_SIZE    	    = 4096;
-    const int       SDL_MIX_MAX_VOL       	    = MIX_MAX_VOLUME;
-    const int       SDL_MIX_MIN_VOL       	    = 0;
+    const std::string   SDL_MIX_FILE_FILTER     = "WAV,VOC,MP3,OGG,FLAC,MIDI,IMF";
+    const Uint32	    SDL_MIX_FREQUENCY		= 44100;
+	const Sint32        SDL_MIX_FORMAT          = MIX_DEFAULT_FORMAT;
+    const int           SDL_MIX_STEREO_CHANNEL  = 2;
+    const int 		    SDL_MIX_DEFAULT_CHANNEL	= -1;
+    const int           SDL_MIX_CHUNK_SIZE    	= 4096;
+    const int           SDL_MIX_MAX_VOL       	= MIX_MAX_VOLUME;
+    const int           SDL_MIX_MIN_VOL       	= 0;
 
 
     /// Turbo constants
 
-    const std::string 	TURBO_PATH_SCRIPT       = "src/script/";
+    const Uint16        TURBO_FPS_LOCK          = 120;
+
+    const std::string 	TURBO_PATH_SCRIPT       = "source/script/";
 
 	const std::string 	TURBO_PATH_DATA			= "data/";
     const std::string 	TURBO_PATH_FONT			= "data/font/";
-    const std::string 	TURBO_PATH_IMAGE		= "data/img/";
-    const std::string 	TURBO_PATH_SPRITE		= "data/img/sprites/";
-    const std::string 	TURBO_PATH_GAME 		= "data/game/";
-    const std::string 	TURBO_PATH_LAYOUT		= "data/layout/";
-    const std::string 	TURBO_PATH_MAP 			= "data/map/";
-    const std::string 	TURBO_PATH_MUSIC        = "data/sound/music/";
-    const std::string 	TURBO_PATH_SOUND        = "data/sound/sounds/";
-    const std::string 	TURBO_PATH_TEXT         = "data/text/";
-    const std::string	TURBO_PATH_SAVES		= "data/saves/";
-    const std::string	TURBO_PATH_SCREENSHOT	= "data/screenshots/";
+    const std::string 	TURBO_PATH_IMAGE		= "data/image/";
+    const std::string 	TURBO_PATH_SPRITE		= "data/image/sprites/";
+    const std::string 	TURBO_PATH_MUSIC        = "data/audio/music/";
+    const std::string 	TURBO_PATH_SOUND        = "data/audio/sounds/";
+    const std::string	TURBO_PATH_SAVES		= "data/save/";
+    const std::string	TURBO_PATH_SCREENSHOT	= "data/screenshot/";
     const std::string 	TURBO_PATH_XML 			= "data/xml/";
+    const std::string 	TURBO_PATH_XML_AUDIO 	= "data/xml/audio/";
     const std::string 	TURBO_PATH_XML_FONT 	= "data/xml/font/";
-    const std::string 	TURBO_PATH_XML_IMAGE 	= "data/xml/img/";
     const std::string	TURBO_PATH_XML_GAME		= "data/xml/game/";
+    const std::string 	TURBO_PATH_XML_IMAGE 	= "data/xml/image/";
     const std::string 	TURBO_PATH_XML_LAYOUT	= "data/xml/layout/";
     const std::string 	TURBO_PATH_XML_MAP 		= "data/xml/map/";
-    const std::string 	TURBO_PATH_XML_SOUND 	= "data/xml/sound/";
     const std::string 	TURBO_PATH_XML_TEXT 	= "data/xml/text/";
 
     const std::string   TURBO_LOGFILE           = TURBO_PATH_DATA + "log.txt";

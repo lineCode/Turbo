@@ -31,14 +31,20 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Turbo.make" />
+		<Unit filename="Turbo.Windows.make" />
 		<Unit filename="include/Turbo.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/Turbo_constants.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/Turbo_main.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="include/Turbo_platform.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include/audio/audio.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/event/event.h">
@@ -86,6 +92,9 @@
 		<Unit filename="include/utils/utils.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="source/audio/audio.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="source/event/event_listener.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -102,6 +111,9 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/geometry/geometry.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="source/gui/gui.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/gui/gui_object.cpp">

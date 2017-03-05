@@ -1,7 +1,7 @@
 #ifndef GEOMETRY_H_INCLUDED
 #define GEOMETRY_H_INCLUDED
 
-#include "Turbo_constants.h"
+#include "Turbo_main.h"
 
 namespace GEOMETRY
 {
@@ -13,7 +13,7 @@ namespace GEOMETRY
     class Point
     {
     private:
-        const string    TAG = "Point";
+        const std::string    TAG = "Point";
         double          x = 0;
         double          y = 0;
         double          z = 0;
@@ -22,15 +22,22 @@ namespace GEOMETRY
 
     public:
         Point();
-        Point(Point & p);
+        //Point(Point & p);
         Point(double x);
         Point(double x, double y);
         Point(double x, double y, double z);
+        Point           operator=(Point & p);
+        Point           operator+(Point p);
+        Point           operator*(double factor);
+        Point           operator*(Point p);
         void            add(double x);
         void            add(double x, double y);
         void            add(double x, double y, double z);
+        void 		    setX(double x);
         double 		    getX();
+        void 		    setY(double y);
         double 		    getY();
+        void 		    setZ(double z);
         double 		    getZ();
         double          getDistance(Point p);
 		bool		    isEmpty();
@@ -45,7 +52,7 @@ namespace GEOMETRY
     class Line
     {
     private:
-        const string    TAG = "Line";
+        const std::string    TAG = "Line";
         double          weight = 0;
         Point           p1;
 		Point           p2;
@@ -54,14 +61,34 @@ namespace GEOMETRY
 
     public:
         Line();
+        //Line(Line & line);
         Line(Point p1, Point p2);
 		Line(double x1, double y1, double x2, double y2);
+		Line            operator=(Line & l);
 		double          getWeight();
 		double          getLength();
 		Point           getFirst();
 		Point           getSecond();
         ~Line();
     };
+
+    /**
+    *** @class Vector
+    ***
+    *** @var
+    **/
+    class Vector
+    {
+    private:
+        const std::string TAG = "Vector";
+
+    protected:
+
+    public:
+        Vector();
+        ~Vector();
+    };
+
 
     /**
     *** @class IShape
@@ -133,10 +160,10 @@ namespace GEOMETRY
     ***
     *** @var
     **/
-    class Triangle : protected IShape
+    class Triangle : public IShape
     {
     private:
-        const string    TAG = "Triangle";
+        const std::string    TAG = "Triangle";
         Point           p1;
 		Point           p2;
 		Point           p3;
@@ -145,7 +172,7 @@ namespace GEOMETRY
 
     public:
         Triangle();
-        Triangle(Triangle & t);
+        //Triangle(Triangle & t);
         Triangle(Point p1, Point p2, Point p3);
 		Triangle(double x1, double y1, double x2, double y2, double x3, double y3);
 		double          getWidth();
@@ -162,10 +189,10 @@ namespace GEOMETRY
     ***
     *** @var
     **/
-    class Rectangle : protected IShape
+    class Rectangle : public IShape
     {
     private:
-        const string    TAG = "Rectangle";
+        const std::string    TAG = "Rectangle";
         Point           p1;
 		Point           p2;
 		Point           p3;
@@ -175,9 +202,11 @@ namespace GEOMETRY
 
     public:
         Rectangle();
-        Rectangle(Rectangle & r);
+        //Rectangle(Rectangle & r);
         Rectangle(Point p1, Point p2, Point p3, Point p4);
         Rectangle(double x, double y, double w, double h);
+        double          getX();
+        double          getY();
         double          getWidth();
 		double          getLength();
 		double          getHeight();

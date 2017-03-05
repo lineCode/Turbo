@@ -2,10 +2,10 @@
 	-app hauptprogramm neue apps erben von klasse
 
 -EXTERN:
-	-time
-	-directory
-	-parser
 	-regex
+
+-Event:
+	-sdlmod
 
 -window
 -renderer(static) evtl singleston, 1 gui renderer, 1 logic renderer
@@ -20,3 +20,5 @@
 -actionhandler
 	- key function -> action 
 	- function function -> action
+
+check freeing pointers at sdl structures

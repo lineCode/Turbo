@@ -1,7 +1,7 @@
 #ifndef EXTERN_H_INCLUDED
 #define EXTERN_H_INCLUDED
 
-#include "Turbo_constants.h"
+#include "Turbo_main.h"
 
 namespace EXTERN
 {
@@ -11,9 +11,9 @@ namespace EXTERN
 	enum class TIMER_STATE : Uint8
 	{
 		STOPPED = 0,
-		STARTED = 1,
-		PAUSED 	= 2,
-		IDLE	= 3
+		IDLE	= 1,
+		STARTED = 2,
+		PAUSED 	= 3
 	};
 
 	/**

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-5589"?>
+<Layout>
+	<Widget w="400" h="300">
+		<VBox w="100%" h="100%">
+			<HBox>
+				<ItemSlot type="helmet" w="3#col"/>
+			</HBox>
+			<HBox>
+				<ItemSlot type="shoulderplates" w="1#col"/>
+				<ItemSlot type="neck" w="1#col"/>
+				<ItemSlot type="empty" w="1#col"/>
+			</HBox>
+			<HBox>
+				<ItemSlot type="gloves" w="1#col"/>
+				<ItemSlot type="chest" w="1#col"/>
+				<ItemSlot type="armrests" w="1#col"/>
+			</HBox>
+		</VBox>
+	</Widget>
+</Layout>

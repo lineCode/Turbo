@@ -23,13 +23,35 @@ namespace EVENT
 	class IEventListener
 	{
 	private:
-		const string TAG = "IEventListener";
+		const std::string TAG = "IEventListener";
+
+	protected:
+		std::map<Uint32, std::vector<std::function<void()>>> callback;
+
+	public:
+		IEventListener();
+		virtual void registerCallback(Uint32 code, std::function<void> callback) = 0;
+		virtual void callCallback(Uint32 code) = 0;
+		~IEventListener();
+	};
+
+	/**
+	*** @class KeyboardListener
+	***
+	*** @var
+	**/
+	class KeyboardListener : public IEventListener
+	{
+	private:
+	    const std::string TAG = "KeyboardListener";
 
 	protected:
 
 	public:
-		IEventListener();
-		~IEventListener();
+	    KeyboardListener();
+	    void registerCallback(Uint32 code, std::function<void()> callback);
+		void callCallback(Uint32 code);
+	    ~KeyboardListener();
 	};
 
 }

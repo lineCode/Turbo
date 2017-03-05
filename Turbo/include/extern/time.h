@@ -29,7 +29,7 @@ namespace EXTERN
 		const string 		TAG = "Timer";
 
 	protected:
-		TIMER_STATE			timer_state;
+		TIMER_STATE			timer_state = TIMER_STATE::STOPPED;
 		Uint64 				timer_value;
 		Uint64				ival_start;
 		Uint64				ival_stop;
@@ -52,13 +52,13 @@ namespace EXTERN
 	{
 	private:
 		const string	TAG = "AppTimer";
-		const Uint16	FPS_LOCK = 120;
+		Uint16			fps_lock;
 		Uint32			frame_counter;
 		Uint64 			frame_time;
         Uint16 			fps;
 
 	public:
-		AppTimer();
+		AppTimer(Uint16 fps_lock);
 		void 	initFPSCounter();
 		long 	calcDelay(long start, long stop);
         int 	calcFPS();

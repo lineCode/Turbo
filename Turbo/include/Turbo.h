@@ -2,6 +2,8 @@
 #define TURBO_H_INCLUDED
 
 #include "system/system.h"
+#include "gui/gui_object.h"
+#include "audio/audio.h"
 
 using UTILS::LOG_TYPE;
 

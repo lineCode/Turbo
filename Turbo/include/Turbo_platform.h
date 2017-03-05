@@ -90,6 +90,9 @@ using std::pair;
 using std::queue;
 using std::vector;
 
+using std::min;
+using std::max;
+
 namespace TURBO
 {
 

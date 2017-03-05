@@ -31,6 +31,7 @@ namespace GUI
         IGUIObject        * child   = nullptr;
         IGUIObject        * next    = nullptr;
         IGUIObject        * prev    = nullptr;
+        std::vector<Texture> textures;
 
     protected:
         bool                size_changed;
@@ -44,13 +45,13 @@ namespace GUI
     public:
         IGUIObject(GEOMETRY::Rectangle dimension);
         virtual void        update() = 0;
-        virtual void        draw() = 0;
+        virtual void        draw(IRenderer & renderer);
         virtual void        setParent(IGUIObject * object);
         virtual void        setChild(IGUIObject * object);
         virtual void        setNext(IGUIObject * object);
         virtual void        setPrev(IGUIObject * object);
-        virtual void        setPosition(GEOMETRY::Point position);
         virtual void        setDragable(bool dragable);
+        virtual void        setPosition(GEOMETRY::Point position);
         virtual void        resize(GEOMETRY::Rectangle dimension);
         ~IGUIObject();
     };
@@ -60,7 +61,6 @@ namespace GUI
     ***
     *** @var
     **/
-    /*
     class Widget : protected IGUIObject
     {
     private:
@@ -69,12 +69,12 @@ namespace GUI
     protected:
 
     public:
-        Widget(Rectangle dimension);
+        Widget(GEOMETRY::Rectangle dimension);
         virtual void        addWidget(Widget * w) = 0;
         virtual void        removeWidget(Widget * w) = 0;
         ~Widget();
     };
-    */
+
 }
 
 #endif // GUI_OBJECT_H_INCLUDED
