@@ -9,27 +9,30 @@
 #ifndef TURBO_PLATFORM_H_INCLUDED
 #define TURBO_PLATFORM_H_INCLUDED
 
-#if defined WIN32
-	#if defined WIN64
-		#define PLATFORM "WINDOWS 64"
-	#else
-		#define PLATFORM "WINDOWS 32"
-	#endif
-#elif defined __APPLE__
-	#define PLATFORM "MAC OS"
-#elif defined __linux__
-	#define PLATFORM "LINUX"
-#elif defined __unix__
-	#define PLATFORM "UNIX"
-#else
-	#define PLATFORM "UNDEFINED"
-#endif
+//#ifndef PLATFORM
+//	#if defined WIN32
+//		#if defined WIN64
+//			#define PLATFORM "WINDOWS 64"
+//		#else
+//			#define PLATFORM "WINDOWS 32"
+//		#endif
+//	#elif defined __APPLE__
+//		#define PLATFORM "MAC OS"
+//	#elif defined __linux__
+//		#define PLATFORM "LINUX"
+//	#elif defined __unix__
+//		#define PLATFORM "UNIX"
+//	#else
+//		#define PLATFORM "UNDEFINED"
+//	#endif
+//#endif
 
 /// C Libraries
 
 /// C++ Libraries
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
@@ -51,7 +54,8 @@
 #include <vector>
 
 /// Scripting Libraries
-//#include "script/Python.h"
+#include "Python/Python.h"
+
 
 /// Third Party Libraries
 #include "SDL2/SDL.h"

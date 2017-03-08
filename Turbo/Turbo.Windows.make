@@ -61,13 +61,13 @@ endif
 CC 			:= g++
 CFLAGS 		:= -c -Wall -Werror
 CPPFLAGS 	:= -std=gnu++11 -std=c++11
-LDFLAGS 	:= -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net
+LDFLAGS 	:= -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net -lpython34
 
 INCLUDEDIR	:= include
 SOURCEDIR	:= source
 OBJECTDIR	:= obj
-LIBD 		:= -L./lib -LC:/Libs/SDL2/lib
-INCD 		:= -I./include -IC:/Libs/SDL/include
+LIBD 		:= -L./lib
+INCD 		:= -I./include
 
 DEB 		:= Debug
 REL 		:= Release
@@ -78,7 +78,7 @@ HEADERS		:= $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /s /m *.h /c "cm
 OBJECTS		:= $(SOURCES:%.cpp=$(OBJECTDIR)/$(TARGET)/%.o)
 OUT 		:= Turbo_$(TARGET).exe
 
-MDLS 		:= audio event extern gui logic net system turbo utils geometry
+MDLS 		:= audio event extern gui logic net script system turbo utils geometry
 SRCD 		:= $(foreach d, $(MDLS), $(addprefix $(SOURCEDIR)/, $(d))) $(SOURCEDIR)
 DEPD 		:= $(foreach d, $(MDLS), $(addprefix $(INCLUDEDIR)/ ,$(d))) $(INCLUDEDIR)
 OBJD 		:= $(addprefix $(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/, $(MDLS))

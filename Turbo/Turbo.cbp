@@ -77,6 +77,7 @@
 		<Unit filename="include/gui/gui_widget.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/script/Turbo_script.h" />
 		<Unit filename="include/system/system.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -123,6 +124,9 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/main.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="source/script/Turbo_script.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/system/system.cpp">
