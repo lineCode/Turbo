@@ -36,5 +36,14 @@ int main(int argc, char ** argv)
 //    return result;
 
     Python py = Python();
+    Window window = Window("Test", Rectangle(50, 50, 600, 400), TURBO::SDL_WINDOW_FLAGS);
+    SDL_Event event;
+    while(SDL_WaitEvent(&event))
+    {
+        if(event.type == SDL_QUIT)
+            break;
+        else
+            continue;
+    }
     return 0;
 }

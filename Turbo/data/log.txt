@@ -1,5 +1,5 @@
-Mon Mar 06 00:22:56 2017 [LOG] SDL                  Init SDL
-Mon Mar 06 00:22:56 2017 [LOG] SDL                  Init SDL_IMG
-Mon Mar 06 00:22:56 2017 [LOG] SDL                  Init SDL_TTF
-Mon Mar 06 00:22:57 2017 [LOG] SDL                  Init SDL_MIX
-Mon Mar 06 00:22:57 2017 [LOG] SDL                  Init SDL_NET
+Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_NET
+Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_MIX
+Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_TTF
+Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_IMG
+Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL
