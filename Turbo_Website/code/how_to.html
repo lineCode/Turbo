@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/style_how_to.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/style_code.css"/>
+		<script type="text/javascript" src="../script/script.js"></script>
+		<?php
+			include_once(dirname(__FILE__) . "/../php/include/lib/code/parser.php");
+
+			$parser = new CodeParser("");
+		?>
+	</head>
+	<body>
+		<nav>
+			<div class="navbar">
+                <ol>
+
+                		<a href="../index.html" id="navbar-icon-left">
+                			<img id="navbar-icon-left" src="../resources/icons/turbo.png"/>
+						</a>
+                	<li>
+						<a href="javascript:void(0);">Code</a>
+						<ol>
+							<a href="./code_viewer.html">Code-Viewer</a>
+							<a href="./documentation.html">Documentation</a>
+							<a href="https://www.github.com/styinx/Turbo">GitHub</a>
+							<a href="./style_guide.html">Style-Guide</a>
+							<a href="./how_to.html">Use Turbo</a>
+						</ol>
+                	</li><li>
+                		<a href="javascript:void(0);">Contact</a>
+                	</li><li>
+                		<a href="javascript:void(0);">Forum</a>
+                	</li>
+						<a href="#" id="navbar-icon-right">
+                			<img id="navbar-icon-right" src="../resources/icons/arrow-up.png"/>
+						</a>
+                </ol>
+			</div>
+		</nav>
+		<div class="page">
+			<div class="grid">
+				<div class="grid-box-1xn left"></div>
+			    <div class="grid-box-auto">
+			    	<div class="introduction">
+                        <p>
+							In order to get Turbo to run on your system you should need
+							to know about the following things:<br>
+							<ul>
+								<li>You know how to write C++ Code</li>
+								<li>You know what a compiler is</li>
+								<li>You know how to compile C++ Code</li>
+							</ul><br>
+
+							The following points are good to have but are not really necessary:<br>
+							<ul>
+								<li>You got some knowledge about Python</li>
+								<li>You know how to compile programs with a makefile</li>
+							</ul><br>
+
+							The first step to include Turbo into your game you need to download
+							one of the following resources.If you are familiar with the
+							listed points above you should be able to setup Turbo on any system
+							with any compiler, otherwise it is <b><u>important</u></b> that you
+							use the MinGW-Compiler on Windows:<br><br>
+							<table style="border:1px solid white;width:auto; left: 5px; margin: 10px; padding: 10px;">
+								<tr>
+									<td>Only sources:</td>
+									<td><a href="'">Link</a></td>
+									<td>*.cpp and *.h files</td>
+									<td>
+										<ul>
+											<li>include</li>
+											<li>source</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Sources and Libraries:</td>
+									<td><a href="'">Link</a></td>
+									<td>*.cpp and *.h files, *.a and *.dll files</td>
+									<td>
+										<ul>
+											<li>include</li>
+											<li>lib</li>
+											<li>source</li>
+										</ul>
+									</td>
+								</tr>
+							</table><br><br>
+
+							If you have downloaded the package you wanted, it is time to extract the
+							contents of the .zip file into your project. To check if everything is okay
+							you can execute this command via the console:<br><br>
+							<div class="code">
+								<?php
+									$code = "\tmake -f Turbo.Windows.make";
+									echo $parser->highlightCode($code);
+								?>
+							</div><br>
+							If this command was successful an executable should now be in the
+							executed directory.<br><br>
+
+							Additional Notes:<br>
+							The Python library is included by default...oder auch nicht.<br><br>
+
+							<div class="center">
+								<b><u>If there are any problems, let us know in the forum or take a look in the
+								contact section.</u></b>
+							</div>
+						</p>
+			    	</div>
+					<div class="grid-box-1xn right"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
