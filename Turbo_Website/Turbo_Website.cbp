@@ -35,7 +35,16 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="code/documentation.html" />
+		<Unit filename="code/examples.html" />
+		<Unit filename="code/faq.html" />
+		<Unit filename="code/how_to.html" />
 		<Unit filename="code/style_guide.html" />
+		<Unit filename="contact/contact.html">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="forum/forum.html">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="index.html">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

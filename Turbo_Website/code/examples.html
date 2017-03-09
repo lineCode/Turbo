@@ -42,8 +42,8 @@
 		<div class="page">
 			<div class="grid">
 				<div class="grid-box-nxn">
+					<h3>Basic Example</h3>
 					<p>
-						This is an example how to use Turbo:<br>
 						File Structure:<br>
 						<ul>
 							<li>
@@ -86,6 +86,15 @@
 								echo "<docu>include/YourModule/YourGamePackage.h</docu><br>" . $parser->highlightCode($code);
 							?>
 						</div>
+						<br><br>
+						In order to use Turbo as your game engine you have to create a class and inherit
+						the class 'Application' from the module 'turbo'. If you followed the install instructions
+						the turbo module should be located at './include/turbo/'. The following functions
+						are pure virtual member functions of the Application class and have to be implemented:
+						<ul>
+							<li>registerCallback()</li>
+							<li>run()</li>
+						</ul>
 						<br><br>
 						<div class="code">
 							<?php

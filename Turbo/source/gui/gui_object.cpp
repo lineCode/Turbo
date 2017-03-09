@@ -14,7 +14,7 @@ void IGUIObject::draw(IRenderer & renderer)
 {
     for(Texture texture : this->textures)
     {
-        renderer.draw(texture);
+        //renderer.draw(texture);
     }
 }
 
