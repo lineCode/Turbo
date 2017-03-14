@@ -108,6 +108,10 @@
 		private $customType = '#\b(XML|Config|EventSignal|app_state|log_state|timer_state|render_state|music_state|file_state|BlendType|RendererFlipType|FontRenderType|EventType|EventType|ObserverType|TextureType|XMLType|LayerType|Uint32|Sint16|int32_t)\b#';
 		private $keyword = '#\b(break|case|class|continue|const|default|do|else|enum|for|if|include|namespace|private|protected|public|return|static|struct|switch|using|while)\b#';
 
+		/**
+		 * Load a file and save content to buffer
+		 * @param $file : filename
+		 */
 		public function __construct($file)
 		{
 			if($file != "")
@@ -127,7 +131,11 @@
 			$this->operator = '#[' . $this->brackets . $this->signs . ']#';
 		}
 
-		/* A function to do sth */
+		/**
+		 * Parses either the class buffer or the text given in the function
+		 * line by line and tags recognized keywords
+		 * @param text : text to tag
+		 */
 		public function highlightCode($text = "")
 		{
 			$echo = "";

@@ -2,24 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="php\include\ini.php" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="code\how_to.html" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="68" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="style\style.css" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5596" topLine="377" />
-		</Cursor>
-	</File>
-	<File name="php\include\lib\code\parser.php" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5586" topLine="97" />
-		</Cursor>
-	</File>
-	<File name="code\code_viewer.html" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1045" topLine="48" />
+			<Cursor1 position="527" topLine="6" />
 		</Cursor>
 	</File>
 	<File name="index.html" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -27,14 +12,14 @@
 			<Cursor1 position="1114" topLine="3" />
 		</Cursor>
 	</File>
-	<File name="code\documentation.html" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="style\style_guide.css" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="659" topLine="32" />
+			<Cursor1 position="562" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="code\examples.html" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="code\code_viewer.html" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2892" topLine="68" />
+			<Cursor1 position="1045" topLine="48" />
 		</Cursor>
 	</File>
 	<File name="script\script.js" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -42,9 +27,19 @@
 			<Cursor1 position="107" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="style\style_code.css" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="style\style.css" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="213" topLine="0" />
+			<Cursor1 position="5413" topLine="377" />
+		</Cursor>
+	</File>
+	<File name="forum\forum.html" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="462" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="php\include\ini.php" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="68" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="code\faq.html" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -52,20 +47,30 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="style\style_guide.css" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="562" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="code\how_to.html" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="527" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="code\style_guide.html" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="code\style_guide.html" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1045" topLine="16" />
 		</Cursor>
 	</File>
-	<EditorTabsLayout layout="09ffb6e858c1646a004a70d300000002=0;Turbo_Website:index.html,1;Turbo_Website:style\style.css,2;Turbo_Website:code\documentation.html,3;Turbo_Website:code\style_guide.html,4;Turbo_Website:style\style_code.css,5;Turbo_Website:code\examples.html,*6;Turbo_Website:php\include\lib\code\parser.php@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=548;besth=327;minw=548;minh=327;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=09ffb6e858c1646a004a70d300000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
+	<File name="style\style_code.css" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="213" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="code\documentation.html" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="659" topLine="32" />
+		</Cursor>
+	</File>
+	<File name="code\examples.html" open="1" top="1" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2892" topLine="68" />
+		</Cursor>
+	</File>
+	<File name="php\include\lib\code\parser.php" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6565" topLine="140" />
+		</Cursor>
+	</File>
+	<EditorTabsLayout layout="0a34bb8058c7e7d90000473a00000002=0;Turbo_Website:index.html,1;Turbo_Website:code\documentation.html,2;Turbo_Website:code\style_guide.html,3;Turbo_Website:style\style_code.css,*4;Turbo_Website:code\examples.html,5;Turbo_Website:php\src\forum\forum.php,6;Turbo_Website:forum\forum.html,7;Turbo_Website:script\script_forum.js,8;Turbo_Website:style\style_forum.css@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=548;besth=327;minw=548;minh=327;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=0a34bb8058c7e7d90000473a00000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
 </CodeBlocks_layout_file>

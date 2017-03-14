@@ -53,6 +53,9 @@
 		</Unit>
 		<Unit filename="php/include/lib/code/directory.php" />
 		<Unit filename="php/include/lib/code/parser.php" />
+		<Unit filename="php/src/forum/forum.php">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="php/src/script/script_docu.php">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -62,6 +65,9 @@
 		<Unit filename="script/script_docu.js">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="script/script_forum.js">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="style/style.css">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -69,6 +75,9 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="style/style_docu.css">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="style/style_forum.css">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="style/style_guide.css">
