@@ -2,7 +2,7 @@ div.code
 {
 	position: relative;
 
-	min-width: auto;
+	min-width: 100ch;
 	max-width: 100%;
 	width: calc(100% - 2px);
 	min-height: auto;
@@ -13,8 +13,8 @@ div.code
 
 	border: 1px solid #000000;
 	border-radius: 2px;
-	overflow-x: auto;
-	overflow-y: auto;
+
+	white-space: nowrap;
 
 	color: #DDDDDD;
 	background-color: #111111;
@@ -24,42 +24,37 @@ div.code
 	line-height: 12pt;
 }
 
-.code border
+.code margin, MARGIN__
 {
 	position: absolute;
-	left: 0px;
-	top: 0px;
-	float: left;
-	width: 8ch;
-	height: calc(100%);
-	padding: 0px 3px 0px 5px;
+	left: 100ch;
+	height: calc(100% - 2px);
+	border: 1px solid #770000;
+}
+
+.code docu, DOCU__
+{
+	display: inline-block;
+	width: 100ch;
+
+	margin: 0px 0px 0px 0px;
+	padding: 3px 0ch 3px 0ch;
+
+	border-top: 1px solid #007700;
+	border-bottom: 1px solid #007700;
+
+	color: #007700;
 	background-color: #222222;
-}
 
-.code tab
-{
-	padding: 0px 0px 0px 4ch;
-}
-
-.code docu
-{
-	width: auto;
-
-	margin: 0px 0px 0px 5ch;
-	padding: 0px 45ch 0px 45ch;
-
-	color: #990000;
-	background-color: #999999;
-	text-decoration: underline;
-
+	text-align: center;
 	font-weight: bold;
 }
 
-.code line
+.code line, LINE__
 {
 	z-index: 2;
 	position: relative;
-	width: 4ch;
+	width: 5ch;
 	float: left;
 	margin: 0px 0px 0px 0px;
 	padding: 0px 3px 0px 5px;
@@ -71,53 +66,64 @@ div.code
 	font-weight: bold;
 }
 
-.code preprocessor
+.code tab
+{
+	padding: 0px 0px 0px 4ch;
+}
+
+.code preprocessor, PREPROCESSOR__, SPECIAL__
 {
 	color: #00DD00;
 	font-style: italic;
 }
 
-.code operator
+.code operator, OPERATOR__
 {
 	color: #009900;
 	font-weight: bold;
 }
 
-.code keyword
+.code keyword, KEYWORD__
 {
 	color: #0055AA;
 	font-weight: bold;
 }
 
-.code customType
+.code customType, CUSTOMTYPE__
 {
 	color: #990000;
 	font-weight: bold;
 }
 
-.code type
+.code type, TYPE__
 {
 	color: #0088AA;
 	font-weight: bold;
 }
 
-.code comment
+.code multiComment, MULTICOMMENT__
+{
+	color: #AA33FF;
+	font-style: italic;
+}
+
+.code comment, COMMENT__
 {
 	color: #FF8800;
 	font-style: italic;
 }
 
-.code number
+.code number, number__
 {
 	color: #AA33AA;
 }
 
-.code char
+.code char, CHAR__
 {
 	color: #990066;
 }
 
-.code string
+.code string, STRING__
 {
 	color: #FFFF00;
 }

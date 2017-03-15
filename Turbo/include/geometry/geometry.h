@@ -33,12 +33,12 @@ namespace GEOMETRY
         void            add(double x);
         void            add(double x, double y);
         void            add(double x, double y, double z);
-        void 		    setX(double x);
-        double 		    getX();
-        void 		    setY(double y);
-        double 		    getY();
-        void 		    setZ(double z);
-        double 		    getZ();
+        void            setX(double x);
+        double          getX();
+        void            setY(double y);
+        double          getY();
+        void            setZ(double z);
+        double          getZ();
         double          getDistance(Point p);
 		bool		    isEmpty();
         ~Point();
@@ -111,14 +111,14 @@ namespace GEOMETRY
 
     public:
         IShape();
-		        vector<Point> 	getVertices();
-		        vector<Line>    getEdges();
-		        Point 			getVertice(Uint16 i);
-		        Line 			getEdge(Uint16 i);
+                vector<Point>   getVertices();
+                vector<Line>    getEdges();
+                Point           getVertice(Uint16 i);
+                Line            getEdge(Uint16 i);
         /**
          *
          */
-        virtual bool			isEmpty();
+        virtual bool            isEmpty();
 
         /**
          * The greatest distance between 2 points in the x coordinate
@@ -138,19 +138,19 @@ namespace GEOMETRY
         /**
          * The surface area of an object
          */
-        virtual double 			getArea() = 0;
+        virtual double          getArea() = 0;
 
         /**
          *
          * Scope of a 2D object is equivalent to the length of its edges
          */
-        virtual double 			getScope() = 0;
+        virtual double          getScope() = 0;
 
         /**
          *
          * 2D objects have no volume
          */
-        virtual double 			getVolume() = 0;
+        virtual double          getVolume() = 0;
         ~IShape();
     };
 

@@ -51,14 +51,16 @@
 		<Unit filename="php/include/ini.php">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="php/include/lib/code/directory.php" />
+		<Unit filename="php/include/lib/captcha/captcha.php" />
+		<Unit filename="php/include/lib/chart/chart.php" />
+		<Unit filename="php/include/lib/code/code_parser.php" />
 		<Unit filename="php/include/lib/code/parser.php" />
-		<Unit filename="php/src/forum/forum.php">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="php/src/script/script_docu.php">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="php/include/lib/db/database.php" />
+		<Unit filename="php/include/lib/dir/directory.php" />
+		<Unit filename="php/include/lib/email/email.php" />
+		<Unit filename="php/include/lib/html/html.php" />
+		<Unit filename="php/include/lib/session/session.php" />
+		<Unit filename="php/include/lib/time/time.php" />
 		<Unit filename="script/script.js">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
