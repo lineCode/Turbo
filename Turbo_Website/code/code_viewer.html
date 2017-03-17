@@ -6,9 +6,9 @@
 		<link rel="stylesheet" type="text/css" href="../style/style_code.css"/>
 		<script type="text/javascript" src="../script/script.js"></script>
 		<?php
-			include_once(dirname(__FILE__) . "/../php/include/lib/code/parser.php");
+			include_once(dirname(__FILE__) . "/../php/include/lib/code/code_parser.php");
 
-			$parser = new CodeParser("");
+			$parser = new CodeHighlighter("");
 		?>
 	</head>
 	<body>
@@ -56,6 +56,10 @@
                         				<option>constants</option>
                         			</select>
                         		</td>
+                        		<td>
+                        			<input type="text"/>
+                        			<button>Button</button>
+                        		</td>
                         	</tr>
                         	<tr>
                         		<td>Order</td>
@@ -67,6 +71,10 @@
                         				<option>by importance</option>
                         			</select>
                         		</td>
+                        		<td>
+                        			<input type="radio"/>
+                        			<input type="checkbox"/>
+                        		</td>
                         	</tr>
                         </table>
 					</div>
@@ -74,8 +82,8 @@
 				<div class="grid-box-nxn">
                     <div class="code">
                         <?php
-                            $parser = new CodeParser(dirname(__FILE__) . "/style_guide.html");
-                            echo $parser->highlightCode();
+                            $parser = new CodeHighlighter($_SERVER["DOCUMENT_ROOT"] . "/Turbo_Project/Turbo/source/geometry/geometry.cpp");
+                            echo $parser->highlightCode("C++");
                         ?>
                     </div>
 				</div>

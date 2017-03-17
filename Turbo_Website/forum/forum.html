@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="../style/style.css"/>
 		<link rel="stylesheet" type="text/css" href="../style/style_forum.css"/>
 		<script type="text/javascript" src="../script/script_forum.js"></script>
 	</head>
@@ -9,11 +10,12 @@
                 <?php
                 	for($i = 0; $i < 10; $i++)
                 	{
-                		echo "a<br>";
+                		echo "<div class='section'><h1>$i</h1>";
                 		for($j = 0; $j < 5; $j++)
                 		{
-                			echo "b<br>";
+                			echo "<div class='subsection'><h1>$j</h1></div>";
                 		}
+                		echo "</div>";
                 	}
                 ?>
             </div>

@@ -40,14 +40,32 @@ div.code
 	margin: 0px 0px 0px 0px;
 	padding: 3px 0ch 3px 0ch;
 
-	border-top: 1px solid #007700;
-	border-bottom: 1px solid #007700;
+	border-top: 1px solid #770000;
+	border-bottom: 1px solid #770000;
 
 	color: #007700;
 	background-color: #222222;
 
 	text-align: center;
 	font-weight: bold;
+}
+
+.code info, INFO__
+{
+	width: calc(95ch - 8px);
+	height: auto;
+
+	padding: 5px 0px 5px calc(5ch + 8px);
+
+	border-top: 1px solid #770000;
+	border-bottom: 1px solid #770000;
+
+	display: inline-block;
+
+	color: #007700;
+	background-color: #222222;
+	font-weight: bold;
+	line-height: auto;
 }
 
 .code line, LINE__

@@ -1,64 +1,6 @@
 <?php
-/*
-	More Special Character Stuff
-	\t tab (HT, TAB)
-	\n newline (LF, NL)
-	\r return (CR)
-	\f form feed (FF)
-	\a alarm (bell) (BEL)
-	\e escape (think troff) (ESC)
-	\033 octal char (think of a PDP-11)
-	\x1B hex char
-	\c[ control char
-	\l lowercase next char (think vi)
-	\u uppercase next char (think vi)
-	\L lowercase till \E (think vi)
-	\U uppercase till \E (think vi)
-	\E end case modification (think vi)
-	\Q quote (disable) pattern metacharacters till \E
+	include_once(dirname(__FILE__) . "/../time/time.php");
 
-	Even More Special Characters
-	\w Match a "word" character (alphanumeric plus "_")
-	\W Match a non-word character
-	\s Match a whitespace character
-	\S Match a non-whitespace character
-	\d Match a digit character
-	\D Match a non-digit character
-	\b Match a word boundary
-	\B Match a non-(word boundary)
-	\A Match only at beginning of string
-	\Z Match only at end of string, or before newline at the end
-	\z Match only at end of string
-	\G Match only where previous m//g left off (works only with /g)
-
-	Special Character Definitions
-	\ Quote the next metacharacter
-	^ Match the beginning of the line
-	. Match any character (except newline)
-	$ Match the end of the line (or before newline at the end)
-	| Alternation
-	() Grouping
-	[] Character class
-	* Match 0 or more times
-	+ Match 1 or more times
-	? Match 1 or 0 times
-	{n} Match exactly n times
-	{n,} Match at least n times
-	{n,m} Match at least n but not more than m times
-	[abc]     A single character: a, b or c
-	[^abc]     Any single character but a, b, or c
-	[a-z]     Any single character in the range a-z
-	[a-zA-Z]     Any single character in the range a-z or A-Z
-	(...)     Capture everything enclosed
-	(a|b)     a or b
-	a?     Zero or one of a
-	a*     Zero or more of a
-	a+     One or more of a
-	a?		Zero or one of a
-	a{3}     Exactly 3 of a
-	a{3,}     3 or more of a
-	a{3,6}     Between 3 and 6 of a
-*/
 	class CodeHighlighter
 	{
 		private $preprocessor 	= '%^#.*%';
@@ -74,6 +16,7 @@
 
 		private $tags 		= array	(
 										"docu"			=> "DOCU__",
+										"info"			=> "INFO__",
 										"line"			=> "LINE__",
 										"comment"		=> "COMMENT__",
 										"multiComment"	=> "MULTICOMMENT__",
@@ -103,7 +46,7 @@
 																							. "(auto|break|goto|if|union|volatile|while)"
 																						 . ")\b#",
 																		"type" 			=> "#\b(bool|char|double|float|int|long|s(hort|igned)|unsigned|vo(id|latile))\b#",
-																		"customType" 	=> "",
+																		"customType" 	=> "(time)",
 																		"lineComment"	=> "#//.*\n#",
 																		"multiComment"	=> array("#/\*#", "#\*/#"),
 																		"special"		=> "%#.*\n%"
@@ -131,7 +74,7 @@
 																						 . ")\b#",
 																		"type" 			=> "#\b(bool|(w)?c(har(16|32)?(_t)?)|double|float|int|long|void)\b#",
 																		"customType" 	=> "#\b(st(ring|d))\b#",
-																		"lineComment"	=> "#//\b.*\n#",
+																		"lineComment"	=> "#//.*\n#",
 																		"multiComment"	=> array("#/\*#", "#\*/#"),
 																		"special"		=> "%^\#.*\n%"
 																	),
@@ -227,13 +170,14 @@
 																		"special"		=> ""
 																	)
 									);
+		private $timer = null;
+		private $exec_time = 0;
 
-		public function __construct($file, $language = "C++")
+		public function __construct($file = "")
 		{
 			if($file != "")
 			{
 				$this->filename = $file;
-				$this->language = $language;
 				$this->filetype = substr($file, strrpos($file, '.') + 1);
 				$this->handle = fopen($this->filename, "r");
 
@@ -251,24 +195,22 @@
 			Takes an input string which represents the code file and converts the contents to
 			html text with css tags.
 			@lang : Code Language
-			@text : Code content
+			@text : Code content if no file is set in constructor
 		*/
 		public function highlightCode($lang = "C++", $text = "")
 		{
+			$timer			= new Timer();
 			$language 		= $this->languages[$lang];
 			$code 			= "";
 			$line_counter 	= 1;
 			$lines			= array();
 			$is_comment 	= false;
 
-			if(@$text == "")
+			if(@$text != "")
 			{
-				$lines = explode("\n", $this->buffer);
+				$this->buffer = $text;
 			}
-			else
-			{
-				$lines = explode("\n", $text);
-			}
+			$lines = explode("\n", $this->buffer);
 
 			$code = $this->tagDocu($this->filename, count($lines));
 
@@ -280,7 +222,7 @@
 
 				if($is_comment)
 				{
-					if(preg_match($language["multiComment"][1], $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->singleMatch($language["multiComment"][1], $line, $matches))
 					{
 						$is_comment = false;
 						$parsed_line = substr($line, 0, $matches[0][1] + strlen($matches[0][0]));
@@ -306,19 +248,19 @@
 						continue;
 					}
 				}
-				if(preg_match($language["special"], $line, $matches, PREG_OFFSET_CAPTURE))
+				if($this->singleMatch($language["special"], $line, $matches))
 				{
 					$parsed_line = $this->tagLine($line, "special");
 					$line = $parsed_line;
 					$parsed_line = "";
 				}
-				else if(preg_match($language["lineComment"], $line, $matches, PREG_OFFSET_CAPTURE))
+				else if($this->singleMatch($language["lineComment"], $line, $matches))
 				{
 					$parsed_line = $this->tagLine($line, "comment");
 					$line = $parsed_line;
 					$parsed_line = "";
 				}
-				else if(preg_match($language["multiComment"][0], $line, $matches, PREG_OFFSET_CAPTURE))
+				else if($this->singleMatch($language["multiComment"][0], $line, $matches))
 				{
 					$is_comment = true;
 					$line = substr($line, 0, $matches[0][1]) . "<" . $this->tags["multiComment"] . ">"
@@ -326,31 +268,31 @@
 				}
 				else
 				{
-					if(preg_match_all($this->operator, $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->multiMatch($this->operator, $line, $matches))
 					{
 						$line = $this->tagLineMatches($line, $matches, "operator");
 					}
-					if(preg_match_all($this->number, $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->multiMatch($this->number, $line, $matches))
 					{
 						$line = $this->tagLineMatches($line, $matches, "number");
 					}
-					if(preg_match_all($language["keyword"], $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->multiMatch($language["keyword"], $line, $matches))
 					{
 						$line = $this->tagLineMatches($line, $matches, "keyword");
 					}
-					if(preg_match_all($language["type"], $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->multiMatch($language["type"], $line, $matches))
 					{
 						$line = $this->tagLineMatches($line, $matches, "type");
 					}
-					if(preg_match_all($language["customType"], $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->multiMatch($language["customType"], $line, $matches))
 					{
 						$line = $this->tagLineMatches($line, $matches, "customType");
 					}
-					if(preg_match_all($this->string, $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->multiMatch($this->string, $line, $matches))
 					{
 						$line = $this->tagLineMatches($line, $matches, "string");
 					}
-					if(preg_match_all($this->char, $line, $matches, PREG_OFFSET_CAPTURE))
+					if($this->multiMatch($this->char, $line, $matches))
 					{
 						$line = $this->tagLineMatches($line, $matches, "char");
 					}
@@ -362,19 +304,38 @@
 				$code .= "<br>";
 				$line_counter++;
 			}
+			$this->exec_time = $timer->stop();
+			$code .= $this->tagInfo();
 			return $code;
 		}
 
-		public function cutTags($line)
+		private function singleMatch($pattern, $subject, & $matches)
 		{
-			if(substr_count($line, '<') == 2)
+			if($pattern != "" && $subject != "")
 			{
-				return substr($line, strpos($line, '>') + 1, strrpos($line, '<') - strpos($line, '>'));
+				if(preg_match($pattern, $subject, $matches, PREG_OFFSET_CAPTURE))
+				{
+					return true;
+				}
 			}
-			else
+			return false;
+		}
+
+		private function multiMatch($pattern, $subject, & $matches)
+		{
+			if($pattern != "" && $subject != "")
 			{
-				return $line;
+				if(preg_match_all($pattern, $subject, $matches, PREG_OFFSET_CAPTURE))
+				{
+					return true;
+				}
 			}
+			return false;
+		}
+
+		public function getExecTime()
+		{
+			return $this->exec_time;
 		}
 
 		public function tagDocu($filename, $lines)
@@ -391,6 +352,15 @@
 				. "</docu>"
 				. "<margin></margin><br>";
 			return $docu;
+		}
+
+		public function tagInfo()
+		{
+			$info = ""
+				. "<info>"
+					. "Execution time: " . $this->exec_time . " s"
+				. "</info>";
+			return $info;
 		}
 
 		public function tagLine($line, $tag)
@@ -435,14 +405,6 @@
 				$string .= ">" . $word . "</" . $tag . ">";
 			}
 			return $string;
-		}
-
-		public function color($word, $value)
-		{
-			if(!empty($word) && !empty($value))
-			{
-				return "<font color='" . $value . "'>" . $word . "</font>";
-			}
 		}
 	}
 ?>

@@ -80,6 +80,56 @@ h3
 	font-size:						14pt;
 }
 
+button
+{
+    border:                         1px solid #777777;
+    border-radius:                  1px;
+
+    background-color:               #555555;
+    color:                          #FFFFFF;
+}
+
+button:hover
+{
+    border:                         1px solid #888888;
+
+    background-color:               #666666;
+}
+
+select
+{
+    border:                         1px solid #777777;
+    border-radius:                  1px;
+
+    background-color:               #555555;
+    color:                          #FFFFFF;
+}
+
+select:hover
+{
+    border:                         1px solid #888888;
+    background-color:               #666666;
+}
+
+input[type="text"]
+{
+    border:                         1px solid #777777;
+    border-radius:                  1px;
+
+    background-color:               #555555;
+    color:                          #FFFFFF;
+}
+
+input[type="radio"]
+{
+
+}
+
+input[type="checkbox"]
+{
+
+}
+
 p
 {
 	font-size:						12pt;
