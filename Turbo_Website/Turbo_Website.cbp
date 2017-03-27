@@ -42,7 +42,17 @@
 		<Unit filename="contact/contact.html">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="forum/admin.html">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="forum/entry.html">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="forum/forum.html">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="forum/subsection.html" />
+		<Unit filename="forum/topic.html">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="index.html">
@@ -56,11 +66,23 @@
 		<Unit filename="php/include/lib/code/code_parser.php" />
 		<Unit filename="php/include/lib/code/parser.php" />
 		<Unit filename="php/include/lib/db/database.php" />
+		<Unit filename="php/include/lib/db/default_forum.php">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="php/include/lib/dir/directory.php" />
 		<Unit filename="php/include/lib/email/email.php" />
 		<Unit filename="php/include/lib/html/html.php" />
 		<Unit filename="php/include/lib/session/session.php" />
 		<Unit filename="php/include/lib/time/time.php" />
+		<Unit filename="php/source/forum/forum.php" />
+		<Unit filename="php/source/forum/manager.php">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="php/source/script/script_docu.php" />
+		<Unit filename="php/source/script/script_forum.php">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="php/source/script/script_setup.php" />
 		<Unit filename="script/script.js">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -80,6 +102,9 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="style/style_forum.css">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="style/style_forum_admin.css">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="style/style_guide.css">

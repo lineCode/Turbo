@@ -48,11 +48,11 @@
 		{
 			$table = "<table>";
 
+			$cols = (count($headers) > count($values)) ? count($headers) : count($values);
+
 			if($alignment == null)
 			{
-				$alignment = array();
-				foreach($headers as $header)
-					array_push($alignment, "lc");
+				$alignment = array_fill(0, $cols, "lc");
 			}
 
 			foreach($alignment as &$align)
@@ -68,22 +68,29 @@
 			}
 
 			$index = 0;
-			foreach($headers as $header)
+			if($headers != null)
 			{
-				$table .= "<th" . $alignment[$index] . ">" . $header . "</th>";
-				$index++;
-			}
-
-			foreach($values as $row => $col)
-			{
-				$index = 0;
 				$table .= "<tr>";
-				foreach($col as $c)
+				foreach($headers as $header)
 				{
-					$table .= "<td" . $alignment[$index] . ">" . $header . "</td>";
+					$table .= "<th" . $alignment[$index] . ">" . $header . "</th>";
 					$index++;
 				}
 				$table .= "</tr>";
+			}
+			if($values != null)
+			{
+				foreach($values as $row => $col)
+				{
+					$index = 0;
+					$table .= "<tr>";
+					foreach($col as $c)
+					{
+						$table .= "<td" . $alignment[$index] . ">" . $header . "</td>";
+						$index++;
+					}
+					$table .= "</tr>";
+				}
 			}
 
 			return $table . "</table>";
