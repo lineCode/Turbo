@@ -43,7 +43,16 @@ int main(int argc, char ** argv)
         if(event.type == SDL_QUIT)
             break;
         else
-            continue;
+        {
+            if(event.key.keysym.sym == SDLK_ESCAPE)
+            {
+                break;
+            }
+            if(event.key.keysym.sym == SDLK_a)
+            {
+                py.runCommand("for i in range(0, 10, 1):\n    print(i ,end=' ')\nprint('end')");
+            }
+        }
     }
     return 0;
 }

@@ -4,14 +4,16 @@ using namespace SCRIPT;
 
 Python::Python()
 {
-    Py_SetPythonHome((wchar_t*)"C:/Libs/Python");
+    //TODO???Py_SetPythonHome((wchar_t*)"C:/Libs/Python");
     Py_Initialize();
-    PyRun_SimpleString("from time import time,ctime\n"
-        "print('Today is', ctime(time()))\n");
-    Py_Finalize();
+}
+
+void Python::runCommand(string command)
+{
+    PyRun_SimpleString(command.c_str());
 }
 
 Python::~Python()
 {
-
+    Py_Finalize();
 }

@@ -19,6 +19,7 @@ namespace SCRIPT
 
     public:
         Python();
+        void runCommand(std::string command);
         ~Python();
     };
 
