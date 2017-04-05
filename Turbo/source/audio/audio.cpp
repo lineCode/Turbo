@@ -6,7 +6,7 @@ using EXTERN::XML;
 Chunk::Chunk(string file_path, bool is_xml)
 	: file_path(file_path)
 {
-	if(is_xml)
+	if(is_xml && EXTERN::Directory::fileExists(file_path))
     {
         if(EXTERN::Directory::isType(file_path, "xml"))
         {

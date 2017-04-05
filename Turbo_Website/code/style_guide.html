@@ -8,9 +8,9 @@
 		<script type="text/javascript" src="../script/script.js"></script>
 		<noscript>It seems like you have disabled your Javascript. Please enable JavaScript to get full experience</noscript>
 		<?php
-			include_once(dirname(__FILE__) . "/../php/include/lib/code/parser.php");
+			include_once(dirname(__FILE__) . "/../php/include/lib/parser/code_parser.php");
 
-			$parser = new CodeParser("");
+			$parser = new CodeHighlighter("");
 		?>
 	</head>
 	<body>
@@ -22,332 +22,341 @@
                 			<img id="navbar-icon-left" src="../resources/icons/turbo.png"/>
 						</a>
                 	<li>
+                		<a href="../index.html">Home</a>
+                	</li><li>
 						<a href="javascript:void(0);">Code</a>
 						<ol>
 							<a href="./code_viewer.html">Code-Viewer</a>
 							<a href="./documentation.html">Documentation</a>
+							<a href="./examples.html">Examples</a>
 							<a href="https://www.github.com/styinx/Turbo">GitHub</a>
+							<a href="./faq.html">FAQ</a>
 							<a href="./style_guide.html">Style-Guide</a>
 							<a href="./how_to.html">Use Turbo</a>
 						</ol>
                 	</li><li>
-                		<a href="javascript:void(0);">Contact</a>
+                		<a href="../contact/contact.html">Contact</a>
                 	</li><li>
-                		<a href="javascript:void(0);">Forum</a>
+                		<a href="../forum/forum.html">Forum</a>
                 	</li>
-						<a href="#" id="navbar-icon-right">
+						<a href="#">
                 			<img id="navbar-icon-right" src="../resources/icons/arrow-up.png"/>
 						</a>
                 </ol>
 			</div>
 		</nav>
 		<div class="page">
-			<div class="grid">
-				<div class="grid-box-nxn">
-					<div class="style-guide-table">
-						<div class="" style="margin: 0% 10% 0% 10%;">
-							<ol>
-								<li>
-									<a href="#introduction">Introduction</a>
-									<ol>
-										<li></li>
-									</ol>
-								</li>
-								<li>
-									<a href="#files">Files</a>
-									<ol>
-										<li><a href="#files_naming">Naming</a></li>
-									</ol>
-								</li>
-								<li>
-									<a href="#comments">Comments</a>
-									<ol>
-										<li></li>
-									</ol>
-								</li>
-								<li>
-									<a href="#indentation">Indentation</a>
-									<ol>
-										<li></li>
-									</ol>
-								</li>
-								<li>
-									<a href="#classes">Classes</a>
-									<ol>
-										<li><a href="#classes_inheritance">Inheritance</a></li>
-									</ol>
-								</li>
-								<li>
-									<a href="#naming">Naming</a>
-									<ol>
-										<li><a href="#naming_namespaces">Namespaces</a></li>
-										<li><a href="#naming_classes_and_structures">Classes and Structures</a></li>
-										<li><a href="#naming_interfaces">Interfaces</a></li>
-										<li><a href="#naming_enums">Enums</a></li>
-										<li><a href="#naming_global-constants">global Constants</a></li>
-										<li><a href="#naming_variables">Variables</a></li>
-									</ol>
-								</li>
-							</ol>
+			<main>
+				<div class="grid">
+					<div class="left">
+
+					</div>
+					<div class="center-box">
+						<div class="style-guide-table">
+							<div class="" style="margin: 0% 10% 0% 10%;">
+								<ol>
+									<li>
+										<a href="#introduction">Introduction</a>
+										<ol>
+											<li></li>
+										</ol>
+									</li>
+									<li>
+										<a href="#files">Files</a>
+										<ol>
+											<li><a href="#files_naming">Naming</a></li>
+										</ol>
+									</li>
+									<li>
+										<a href="#comments">Comments</a>
+										<ol>
+											<li></li>
+										</ol>
+									</li>
+									<li>
+										<a href="#indentation">Indentation</a>
+										<ol>
+											<li></li>
+										</ol>
+									</li>
+									<li>
+										<a href="#classes">Classes</a>
+										<ol>
+											<li><a href="#classes_inheritance">Inheritance</a></li>
+										</ol>
+									</li>
+									<li>
+										<a href="#naming">Naming</a>
+										<ol>
+											<li><a href="#naming_namespaces">Namespaces</a></li>
+											<li><a href="#naming_classes_and_structures">Classes and Structures</a></li>
+											<li><a href="#naming_interfaces">Interfaces</a></li>
+											<li><a href="#naming_enums">Enums</a></li>
+											<li><a href="#naming_global-constants">global Constants</a></li>
+											<li><a href="#naming_variables">Variables</a></li>
+										</ol>
+									</li>
+								</ol>
+							</div>
+							<table id="introduction">
+								<tr>
+									<td colspan="100%"><h1>Introduction</h1></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+							<table id="files">
+								<tr>
+									<td colspan="100%"><h1>Files</h1></td>
+								</tr>
+								<tr>
+									<td colspan="100%">
+										In general the whole Project consists of multiple modules which again contain several packages.
+										The namespaces are equivalent to the module names and files in the module represent the packages.
+
+										The Turbo files are separated by source and header files.
+										Header files are in the include folder of the containing module and source files are in the
+										source folder of the containing module.
+
+										<ul>
+											<li>
+												Turbo:
+												<ul>
+													<li>
+														include
+														<ul>
+															<li>APP</li>
+															<li>
+																GUI
+																<ul>
+																	<li>GUIObject.h</li>
+																</ul>
+															</li>
+															<li>EXTERN</li>
+														</ul>
+														source
+														<ul>
+															<li>APP</li>
+															<li>
+																GUI
+																<ul>
+																	<li>GUIObject.cpp</li>
+																</ul>
+															</li>
+															<li>EXTERN</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+									<td id="files_naming"><b>Naming</b></td>
+									<td>
+										<br><br>
+										File names should have underscores, when the file name gets to complex:<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<span id="good">Good</span><br>
+										abstract_schedule_manager.h<br><br>
+										<span id="bad">Bad</span><br>
+										abstractScheduleManager.h<br>
+									</td>
+								</tr>
+							</table>
+							<table id="comments">
+								<tr>
+									<td colspan="100%"><h1>Comments</h1></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+							<table id="indentation">
+								<tr>
+									<td colspan="100%"><h1>Indentation</h1></td>
+								</tr>
+								<tr>
+									<td colspan="100%">
+										Brackets of a control block are always aligned to each other and always at the next line
+										after the definition of a function, class, ... .<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<span id="good">Good</span>
+										<div class="code">
+											<?php
+												$code = ""
+													. "class IShape\n"
+													. "{\n"
+														. "\t...\n"
+													. "}\n\n"
+													. "Example::Example(int value)\n"
+														. "\t: member(value)\n"
+													. "{\n"
+														. "\t...\n"
+													. "}";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+										<br>
+										<span id="bad">Bad</span>
+										<div class="code">
+											<?php
+												$code = ""
+													. "class IShape\n"
+													. "\t{\n"
+														. "\t...\n"
+													. "\t}";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+							</table>
+							<table id="classes">
+								<tr>
+									<td colspan="100%"><h1>Classes</h1></td>
+								</tr>
+								<tr>
+									<td id="classes_inheritance"><b>Inheritance</b></td>
+									<td>
+										<br><br>
+										space after classname followed by ': ', then comes the base class <br><br>
+										<span id="examples">Examples:</span><br><br>
+										<div class="code">
+											<?php
+												$code = ""
+													. "class Instance : public Object\n"
+													. "{\n"
+														. "\t...\n"
+													. "}";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+							</table>
+							<table id="naming">
+								<tr>
+									<td colspan="100%"><h1>Naming</h1></td>
+								</tr>
+								<tr>
+									<td id="naming_namespaces"><b>Namespaces</b></td>
+									<td>
+										<br><br>
+										upper case letter, separated by underscore<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<div class="code">
+											<?php
+												$code = ""
+													. "namespace GUI\n"
+													. "{\n"
+														. "\t...\n"
+													. "}";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td id="naming_classes_and_structures"><b>Classes and Structs</b></td>
+									<td>
+										<br><br>
+										Classes and Structures represent the more complex data types.
+										Turbo uses mixed case for naming these.<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<div class="code">
+											<?php
+												$code = ""
+													. "class ResourceManager\n"
+													. "{\n"
+														. "\t...\n"
+													. "}\n\n"
+													. "struct User\n"
+													. "{\n"
+														. "\t...\n"
+													. "}";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td id="naming_interfaces"><b>Interfaces</b></td>
+									<td>
+										<br><br>
+										Capital I and mixed case<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<div class="code">
+											<?php
+												$code = ""
+													. "class IShape\n"
+													. "{\n"
+														. "\t...\n"
+													. "}";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td id="naming_enums"><b>Enums</b></td>
+									<td>
+										<br><br>
+										upper case letter, separated by underscore<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<div class="code">
+											<?php
+												$code = ""
+													. "enum class FILE_STATE\n"
+													. "{\n"
+														. "\tOPEN = 1,\n"
+														. "\tCLOSED = 2,\n"
+														. "\t...\n"
+													. "}";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td id="naming_global-constants"><b>global Constant</b></td>
+									<td>
+										<br><br>
+										upper case letter, separated by underscore<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<div class="code">
+											<?php
+												$code = ""
+													. "#define FILE_PATH \"./src/\"\n"
+													. "const string FILE_NAME = \"test.txt\";";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td id="naming_variables"><b>Variables</b></td>
+									<td>
+										<br><br>
+										name with underscore<br><br>
+										<span id="examples">Examples:</span><br><br>
+										<div class="code">
+											<?php
+												$code = ""
+													. "int file_counter = 0;\n"
+													. "float interest_rate = 0.2;";
+												echo $parser->highlightCode("C++", $code, array(0, 0));
+											?>
+										</div>
+									</td>
+								</tr>
+							</table>
 						</div>
-						<table id="introduction">
-							<tr>
-								<td colspan="100%"><h1>Introduction</h1></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-							</tr>
-						</table>
-						<table id="files">
-							<tr>
-								<td colspan="100%"><h1>Files</h1></td>
-							</tr>
-							<tr>
-								<td colspan="100%">
-									In general the whole Project consists of multiple modules which again contain several packages.
-									The namespaces are equivalent to the module names and files in the module represent the packages.
-
-									The Turbo files are separated by source and header files.
-									Header files are in the include folder of the containing module and source files are in the
-									source folder of the containing module.
-
-									<ul>
-										<li>
-											Turbo:
-											<ul>
-												<li>
-													include
-													<ul>
-														<li>APP</li>
-														<li>
-															GUI
-															<ul>
-                                                                <li>GUIObject.h</li>
-															</ul>
-														</li>
-														<li>EXTERN</li>
-													</ul>
-													source
-													<ul>
-														<li>APP</li>
-														<li>
-															GUI
-															<ul>
-                                                                <li>GUIObject.cpp</li>
-															</ul>
-														</li>
-														<li>EXTERN</li>
-													</ul>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</td>
-							</tr>
-								<td id="files_naming"><b>Naming</b></td>
-								<td>
-									<br><br>
-									File names should have underscores, when the file name gets to complex:<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<span id="good">Good</span><br>
-									abstract_schedule_manager.h<br><br>
-									<span id="bad">Bad</span><br>
-									abstractScheduleManager.h<br>
-								</td>
-							</tr>
-						</table>
-						<table id="comments">
-							<tr>
-								<td colspan="100%"><h1>Comments</h1></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-							</tr>
-						</table>
-						<table id="indentation">
-							<tr>
-								<td colspan="100%"><h1>Indentation</h1></td>
-							</tr>
-							<tr>
-								<td colspan="100%">
-									Brackets of a control block are always aligned to each other and always at the next line
-									after the definition of a function, class, ... .<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<span id="good">Good</span>
-									<div class="code">
-										<?php
-											$code = ""
-												. "class IShape\n"
-												. "{\n"
-													. "\t...\n"
-												. "}\n\n"
-												. "Example::Example(int value)\n"
-													. "\t: member(value)\n"
-												. "{\n"
-													. "\t...\n"
-												. "}";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-									<br>
-									<span id="bad">Bad</span>
-									<div class="code">
-										<?php
-											$code = ""
-												. "class IShape\n"
-												. "\t{\n"
-													. "\t...\n"
-												. "\t}";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-						</table>
-						<table id="classes">
-							<tr>
-								<td colspan="100%"><h1>Classes</h1></td>
-							</tr>
-							<tr>
-								<td id="classes_inheritance"><b>Inheritance</b></td>
-								<td>
-									<br><br>
-									space after classname followed by ': ', then comes the base class <br><br>
-									<span id="examples">Examples:</span><br><br>
-									<div class="code">
-										<?php
-											$code = ""
-												. "class Instance : public Object\n"
-												. "{\n"
-													. "\t...\n"
-												. "}";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-						</table>
-						<table id="naming">
-							<tr>
-								<td colspan="100%"><h1>Naming</h1></td>
-							</tr>
-							<tr>
-								<td id="naming_namespaces"><b>Namespaces</b></td>
-								<td>
-									<br><br>
-									upper case letter, separated by underscore<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<div class="code">
-										<?php
-											$code = ""
-												. "namespace GUI\n"
-												. "{\n"
-													. "\t...\n"
-												. "}";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td id="naming_classes_and_structures"><b>Classes and Structs</b></td>
-								<td>
-									<br><br>
-									Classes and Structures represent the more complex data types.
-									Turbo uses mixed case for naming these.<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<div class="code">
-										<?php
-											$code = ""
-												. "class ResourceManager\n"
-												. "{\n"
-													. "\t...\n"
-												. "}\n\n"
-												. "struct User\n"
-												. "{\n"
-													. "\t...\n"
-												. "}";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td id="naming_interfaces"><b>Interfaces</b></td>
-								<td>
-									<br><br>
-									Capital I and mixed case<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<div class="code">
-										<?php
-											$code = ""
-												. "class IShape\n"
-												. "{\n"
-													. "\t...\n"
-												. "}";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td id="naming_enums"><b>Enums</b></td>
-								<td>
-									<br><br>
-									upper case letter, separated by underscore<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<div class="code">
-										<?php
-											$code = ""
-												. "enum class FILE_STATE\n"
-												. "{\n"
-													. "\tOPEN = 1,\n"
-													. "\tCLOSED = 2,\n"
-													. "\t...\n"
-												. "}";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td id="naming_global-constants"><b>global Constant</b></td>
-								<td>
-									<br><br>
-									upper case letter, separated by underscore<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<div class="code">
-										<?php
-											$code = ""
-												. "#define FILE_PATH \"./src/\"\n"
-												. "const string FILE_NAME = \"test.txt\";";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td id="naming_variables"><b>Variables</b></td>
-								<td>
-									<br><br>
-									name with underscore<br><br>
-									<span id="examples">Examples:</span><br><br>
-									<div class="code">
-										<?php
-											$code = ""
-												. "int file_counter = 0;\n"
-												. "float interest_rate = 0.2;";
-											echo $parser->highlightCode($code);
-										?>
-									</div>
-								</td>
-							</tr>
-						</table>
 					</div>
 				</div>
-			</div>
+			</main>
 		</div>
 	</body>
 </html>

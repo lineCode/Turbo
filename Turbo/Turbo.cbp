@@ -138,6 +138,9 @@
 		<Unit filename="source/utils/log.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="test/include/test.h" />
+		<Unit filename="test/source/main.cpp" />
+		<Unit filename="test/source/test.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

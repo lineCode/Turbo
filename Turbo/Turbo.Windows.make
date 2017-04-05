@@ -49,10 +49,12 @@ endif
 #=======================================================================================
 
 ifeq ($(OS_NAME),WINDOWS)
-	RM 		:= del
+	OUTFILE	:= exe
+	RM 		:= del -f
 	RMDIR	:= rmdir
 	MKDIR	:= mkdir
 else
+	OUTFILE	:= out
 	RM 		:= rm
 	RMDIR	:= rmdir
 	MKDIR	:= mkdir
@@ -78,17 +80,16 @@ REL 		:= Release
 PROJECT		:= Turbo
 TARGET 		:= $(DEB)
 
-SOURCES		:= $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /s /m *.cpp /c "cmd /c echo @relpath"))))
-HEADERS		:= $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /s /m *.h /c "cmd /c echo @relpath"))))
-OBJECTS		:= $(SOURCES:%.cpp=$(OBJECTDIR)/$(TARGET)/%.o)
-OUT 		:= $(PROJECT)_$(TARGET).exe
+SOURCES		:= $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /p $(SOURCEDIR) /s /m *.cpp /c "cmd /c echo @relpath"))))
+HEADERS		:= $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /p $(INCLUDEDIR) /s /m *.h /c "cmd /c echo @relpath"))))
+OBJECTS		:= $(SOURCES:%.cpp=$(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/%.o)
+DEPENDS		:= $(OBJECTS:%.o=%.d)
+OUT 		:= $(PROJECT)_$(TARGET).$(OUTFILE)
 
-MDLS 		:= audio event extern gui logic net script system turbo utils geometry
+MDLS 		:= $(shell dir $(SOURCEDIR) /ad /b) $(SOURCEDIR)
 SRCD 		:= $(foreach d, $(MDLS), $(addprefix $(SOURCEDIR)/, $(d))) $(SOURCEDIR)
 DEPD 		:= $(foreach d, $(MDLS), $(addprefix $(INCLUDEDIR)/ ,$(d))) $(INCLUDEDIR)
 OBJD 		:= $(addprefix $(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/, $(MDLS))
-MKOBJ 		:= $(subst /,\,$(OBJECTS))
-MKOBJD 		:= $(subst /,\,$(OBJD))
 
 #=======================================================================================
 # Build
@@ -103,31 +104,34 @@ $(OUT): $(OBJECTS)
 	@echo +=====================
 	@echo [ Create taget file: ] $(OUT)
 	@echo ======================
-	$(CC) $(CPPFLAGS) $(CCFLAGS) $(OBJECTS) -o $(OUT) $(INCD) $(LIBD) $(LDFLAGS)
+	@$(CC) $(CPPFLAGS) $(CCFLAGS) $(OBJECTS) -o $(OUT) $(INCD) $(LIBD) $(LDFLAGS)
 	@echo =======================
 	@echo [ Successfully build: ] $(PROJECT)
 	@echo =======================
 
 #Compile
 
+
+#-include $(DEPENDS)
 #$(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/%.o: $(SOURCEDIR)/%.cpp $(INCLUDEDIR)/%.h
 $(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/%.o: $(SOURCEDIR)/%.cpp
 	@echo +======================
 	@echo [ Create object file: ] $@
 	@echo =======================
-	$(CC) $(CPPFLAGS) $(CFLAGS) $< $(INCD) -o $@
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $< $(INCD) -o $@
+
 
 #Directories
 dirs:
 	@echo +========================
 	@echo [ Creating directories: ]
 	@echo =========================
-	mkdir $(MKOBJD)
+	@$(MKDIR) $(subst /,\,$(OBJD))
 
 #Clean
 clean:
-	@echo -=========================
-	@echo [ Cleaning object files: ]
-	@echo ==========================
-	-$RM $(MKOBJ) $(OUT)
-	-$RMDIR $(MKOBJD)
+	@echo -==========================
+	@echo [ Cleaning object folder: ]
+	@echo ===========================
+	@$(RM) $(subst /,\,$(DEPENDS)) $(subst /,\,$(OBJECTS)) $(OUT) 2>nul
+	@$(RMDIR) $(subst /,\,$(OBJD))

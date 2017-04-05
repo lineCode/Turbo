@@ -78,6 +78,12 @@ bool Directory::isFile(string name)
 	return success;
 }
 
+bool Directory::fileExists(string name)
+{
+	fstream f(name);
+	return f.good();
+}
+
 bool Directory::isType(string name, string type)
 {
 	bool success = false;

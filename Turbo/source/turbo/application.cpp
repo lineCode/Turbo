@@ -18,6 +18,7 @@ void Application::eventLoop()
         {
         case SDL_QUIT:
             {
+                this->stop();
                 break;
             }
         case SDL_WINDOWEVENT:
@@ -74,5 +75,5 @@ void Application::stop()
 
 Application::~Application()
 {
-    this->sdl.~SDL();
+
 }

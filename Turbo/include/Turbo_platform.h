@@ -9,23 +9,23 @@
 #ifndef TURBO_PLATFORM_H_INCLUDED
 #define TURBO_PLATFORM_H_INCLUDED
 
-//#ifndef PLATFORM
-//	#if defined WIN32
-//		#if defined WIN64
-//			#define PLATFORM "WINDOWS 64"
-//		#else
-//			#define PLATFORM "WINDOWS 32"
-//		#endif
-//	#elif defined __APPLE__
-//		#define PLATFORM "MAC OS"
-//	#elif defined __linux__
-//		#define PLATFORM "LINUX"
-//	#elif defined __unix__
-//		#define PLATFORM "UNIX"
-//	#else
-//		#define PLATFORM "UNDEFINED"
-//	#endif
-//#endif
+#ifndef TURBO_PLATFORM
+	#if defined WIN32
+		#if defined WIN64
+			#define TURBO_PLATFORM "WINDOWS 64"
+		#else
+			#define TURBO_PLATFORM "WINDOWS 32"
+		#endif
+	#elif defined __APPLE__
+		#define TURBO_PLATFORM "MAC OS"
+	#elif defined __linux__
+		#define TURBO_PLATFORM "LINUX"
+	#elif defined __unix__
+		#define TURBO_PLATFORM "UNIX"
+	#else
+		#define TURBO_PLATFORM "UNDEFINED"
+	#endif
+#endif
 
 /// C Libraries
 

@@ -8,51 +8,22 @@ using namespace SCRIPT;
 
 int main(int argc, char ** argv)
 {
-//    Application app = Application();
-//
-//    Window window = Window("Test", Rectangle(50, 50, 500, 300), TURBO::SDL_WINDOW_FLAGS);
-//    GameRenderer game_renderer = GameRenderer(window, TURBO::SDL_RENDER_FLAGS);
-//    game_renderer.setDrawColor(TURBO::BLUE);
-//
-////    int i = 0;
-////    while(i < 100)
-////    {
-////        cout << i << endl;
-////        game_renderer.clear();
-////
-////        game_renderer.present();
-////        SDL_Delay(200);
-////        i++;
-////    }
-//    Sprite sp(TURBO::TURBO_PATH_XML_IMAGE + "image_test.xml", true);
-//    Font fo(TURBO::TURBO_PATH_XML_FONT + "font_test.xml", true);
-//    Chunk ch(TURBO::TURBO_PATH_XML_AUDIO + "sound/sound_test.xml", true);
-//    //Music mu(TURBO::TURBO_PATH_XML_AUDIO + "music/music_test.xml", true);
-//
-//    //ch.play(0, 1000);
-//    SDL_Delay(200);
-//    //mu.play(0);
-//    int result = app.run();
-//    return result;
+    Application app = Application();
 
-    Python py = Python();
-    Window window = Window("Test", Rectangle(50, 50, 600, 400), TURBO::SDL_WINDOW_FLAGS);
-    SDL_Event event;
-    while(SDL_WaitEvent(&event))
-    {
-        if(event.type == SDL_QUIT)
-            break;
-        else
-        {
-            if(event.key.keysym.sym == SDLK_ESCAPE)
-            {
-                break;
-            }
-            if(event.key.keysym.sym == SDLK_a)
-            {
-                py.runCommand("for i in range(0, 10, 1):\n    print(i ,end=' ')\nprint('end')");
-            }
-        }
-    }
-    return 0;
+    Window window = Window("Test", Rectangle(50, 50, 500, 300), TURBO::SDL_WINDOW_FLAGS);
+    GameRenderer game_renderer = GameRenderer(window, TURBO::SDL_RENDER_FLAGS);
+    game_renderer.setDrawColor(TURBO::BLUE);
+
+    Sprite sp(TURBO::TURBO_PATH_XML_IMAGE + "image_test.xml", true);
+    Font fo(TURBO::TURBO_PATH_XML_FONT + "font_test.xml", true);
+    Chunk ch(TURBO::TURBO_PATH_XML_AUDIO + "sound/chunk_test.xml", true);
+    Music mu(TURBO::TURBO_PATH_XML_AUDIO + "music/music_test.xml", true);
+
+    Mix_Volume(0, 50);
+    Mix_VolumeMusic(50);
+
+    //ch.play(0, 100000);
+    mu.play(1);
+    int result = app.run();
+    return result;
 }

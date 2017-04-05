@@ -1,5 +1,10 @@
-Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_NET
-Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_MIX
-Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_TTF
-Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL_IMG
-Wed Mar 08 18:38:57 2017 [LOG] SDL                  Quit SDL
+Tue Apr 04 20:37:35 2017 [LOG] SDL                  Init SDL
+Tue Apr 04 20:37:35 2017 [LOG] SDL                  Init SDL_IMG
+Tue Apr 04 20:37:35 2017 [LOG] SDL                  Init SDL_TTF
+Tue Apr 04 20:37:36 2017 [LOG] SDL                  Init SDL_MIX
+Tue Apr 04 20:37:36 2017 [LOG] SDL                  Init SDL_NET
+Tue Apr 04 20:37:40 2017 [LOG] SDL                  Quit SDL_NET
+Tue Apr 04 20:37:40 2017 [LOG] SDL                  Quit SDL_MIX
+Tue Apr 04 20:37:40 2017 [LOG] SDL                  Quit SDL_TTF
+Tue Apr 04 20:37:40 2017 [LOG] SDL                  Quit SDL_IMG
+Tue Apr 04 20:37:41 2017 [LOG] SDL                  Quit SDL

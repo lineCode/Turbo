@@ -60,11 +60,11 @@
 			{
 				require_once(dirname(__FILE__) . "/../../include/lib/db/default_forum.php");
 
-				foreach($DB_DEFAULT as $table)
+				foreach($DB_DEFAULT as $table => $vals)
 				{
-					$this->db->createTable($table, 	$DB_DEFAULT[$forum][0], $DB_DEFAULT[$forum][1],
-													$DB_DEFAULT[$forum][2], $DB_DEFAULT[$forum][3],
-													$DB_DEFAULT[$forum][4], $DB_DEFAULT[$forum][5]);
+					$this->db->createTable($table, 	$DB_DEFAULT[$table][0], $DB_DEFAULT[$table][1],
+													$DB_DEFAULT[$table][2], $DB_DEFAULT[$table][3],
+													$DB_DEFAULT[$table][4], $DB_DEFAULT[$table][5]);
 				}
 			}
 			else
