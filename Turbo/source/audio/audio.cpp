@@ -4,9 +4,8 @@ using namespace AUDIO;
 using EXTERN::XML;
 
 Chunk::Chunk(string file_path, bool is_xml)
-	: file_path(file_path)
 {
-	if(is_xml && EXTERN::Directory::fileExists(file_path))
+	if(is_xml)
     {
         if(EXTERN::Directory::isType(file_path, "xml"))
         {
@@ -25,7 +24,7 @@ Chunk::Chunk(string file_path, bool is_xml)
     }
     this->file_path = file_path;
 
-    if(EXTERN::Directory::hasFilter(file_path, "wav"))
+    if(EXTERN::Directory::isType(file_path, "wav"))
     {
         this->chunk = Mix_LoadWAV(file_path.c_str());
 		this->state = MEDIA_STATE::IDLE;
@@ -68,7 +67,6 @@ Chunk::~Chunk()
 }
 
 Music::Music(string file_path, bool is_xml)
-	: file_path(file_path)
 {
 	if(is_xml)
     {
@@ -91,8 +89,11 @@ Music::Music(string file_path, bool is_xml)
 
     if(EXTERN::Directory::hasFilter(file_path, TURBO::SDL_MIX_FILE_FILTER))
     {
-        this->music = Mix_LoadMUS(file_path.c_str());
-		this->state = MEDIA_STATE::IDLE;
+        if(EXTERN::Directory::isFile(file_path))
+        {
+            this->music = Mix_LoadMUS(file_path.c_str());
+            this->state = MEDIA_STATE::IDLE;
+        }
     }
 }
 

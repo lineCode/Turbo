@@ -14,89 +14,71 @@ string trim(const string & str, const string & whitespace = " \t")
     return str.substr(strBegin, strRange);
 }
 
-ConfigParser::ConfigParser(string file, bool read) : IParser(file)
+INIParser::INIParser(string file, bool read) : IParser(file)
 {
 	if(read)
 		this->read(file);
 }
 
-Config ConfigParser::read(string file)
+INI INIParser::read(string file)
 {
-	Config config;
-
     string line;
     ifstream in(file, std::ios::in);
 
     while(getline(in, line))
     {
+        string caption = "";
         if(line.find('[') != string::npos)
         {
-            string caption = line.substr(1, line.find(']')-1);
-
-            while(getline(in, line) != NULL)
-            {
-                if(!line.empty())
-                {
-                    string option, value;
-                    char equals;
-                    istringstream ss(line);
-
-                    ss >> option >> equals >> value;
-                    this->dict[caption][option] = value;
-                }
-                else
-                {
-                    break;
-                }
-            }
+           	caption = line.substr(1, line.find(']')-1);
         }
+		while(getline(in, line) != NULL)
+		{
+			if(!line.empty())
+			{
+				string option, value;
+				char equals;
+				istringstream ss(line);
+
+				ss >> option >> equals >> value;
+				this->config.kvp[caption][option] = value;
+			}
+			else
+			{
+				break;
+			}
+		}
     }
-	return config;
+	return this->config;
 }
 
-bool ConfigParser::write(string file, Config config, string extra, std::ios::openmode flags)
+bool INIParser::write(string file, INI config, string extra, std::ios::openmode flags)
 {
 	bool success = false;
 
 	ofstream out(file, flags);
-    out << '[' << config.caption << ']' << endl;
-    success = true;
 
-    for(const auto & kvp : config.kvp)
-    {
-        out << kvp.first << " = " << kvp.second << "\n";
-    }
-
+	for(const auto & caption : config.kvp)
+	{
+		if(caption.first != "")
+		{
+			out << '[' << caption.first << ']' << endl;
+		}
+		for(const auto & kvp : caption.second)
+		{
+			out << kvp.first << " = " << kvp.second << "\n";
+		}
+		success = true;
+	}
 	return success;
 }
 
-map<string, map<string, string>> ConfigParser::getDict()
-{
-	return this->dict;
-}
-
-Config ConfigParser::getSection(string caption)
-{
-	Config config;
-
-	if(!this->dict[caption].empty())
-	{
-		config.caption = caption;
-		for(const auto & kvp : this->dict[caption])
-		{
-			config.kvp[kvp.first] = kvp.second;
-		}
-	}
-
-	return config;
-}
-
-Config ConfigParser::getConfig()
+INI INIParser::getINI()
 {
 	return this->config;
 }
 
-ConfigParser::~ConfigParser()
+INIParser::~INIParser()
 {
 
 }

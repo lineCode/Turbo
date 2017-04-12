@@ -26,18 +26,23 @@ namespace EXTERN
 	};
 
     /**
-    *** @struct Config
+    *** @struct INI
     ***
-    *** @var
+    *** @brief  The INI structure represents the contents of an .ini file
+    ***         it is quite helpful to load settings or configurations
     **/
-    struct Config
+    struct INI
     {
-    	std::string 		caption     = "";
-    	std::map<std::string, std::string> kvp;
+    	std::map<std::string, std::map<std::string, std::string>> kvp;
 
 		string 				getValue(std::string key);
+		string 				getValue(std::string caption, std::string key);
 		int 				getValueAsInt(std::string key);
+		int 				getValueAsInt(std::string caption, std::string key);
+		float 				getValueAsFloat(std::string key);
+		float 				getValueAsFloat(std::string caption, std::string key);
 		void 				setValue(std::string key, std::string value);
+		void 				setValue(std::string caption, std::string key, std::string value);
     	bool 				isEmpty();
     };
 

@@ -73,7 +73,10 @@ bool Directory::isFile(string name)
 
 	if(!Directory::isDir(name))
 	{
-		success = true;
+		if(Directory::fileExists(name))
+		{
+			success = true;
+		}
 	}
 	return success;
 }

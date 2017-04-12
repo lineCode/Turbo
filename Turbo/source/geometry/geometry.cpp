@@ -156,6 +156,11 @@ Line Line::operator=(Line & l)
     return l;
 }
 
+void Line::setWeight(double w)
+{
+    this->weight = w;
+}
+
 double Line::getWeight()
 {
     return this->weight;
@@ -315,9 +320,19 @@ Rectangle::Rectangle(double x, double y, double w, double h)
 
 }
 
+void Rectangle::setX(double x)
+{
+    this->p1.setX(x);
+}
+
 double Rectangle::getX()
 {
     return this->p1.getX();
+}
+
+void Rectangle::setY(double y)
+{
+    this->p1.setY(y);
 }
 
 double Rectangle::getY()
@@ -325,18 +340,35 @@ double Rectangle::getY()
     return this->p1.getY();
 }
 
+double Rectangle::setWidth(double w)
+{
+    this->p2.setX(w);
+    this->p3.setX(w);
+}
+
 double Rectangle::getWidth()
 {
-    double left = min(min(p1.getX(), p2.getX()), p3.getX());
-    double right = max(max(p1.getX(), p2.getX()), p3.getX());
+    double left = min(min(min(p1.getX(), p2.getX()), p3.getX()), p4.getX());
+    double right = max(max(max(p1.getX(), p2.getX()), p3.getX()), p4.getX());
     return abs(left - right);
+}
+
+void Rectangle::setLength(double l)
+{
+    this->p3.setY(l);
+    this->p4.setY(l);
 }
 
 double Rectangle::getLength()
 {
-    double top = min(min(p1.getY(), p2.getY()), p3.getY());
-    double bot = max(max(p1.getY(), p2.getY()), p3.getY());
+    double top = min(min(min(p1.getY(), p2.getY()), p3.getY()), p4.getY());
+    double bot = max(max(max(p1.getY(), p2.getY()), p3.getY()), p4.getY());
     return abs(top - bot);
+}
+
+void Rectangle::setHeight(double h)
+{
+
 }
 
 double Rectangle::getHeight()
@@ -344,14 +376,29 @@ double Rectangle::getHeight()
     return 0;
 }
 
+void Rectangle::setArea(double a)
+{
+
+}
+
 double Rectangle::getArea()
 {
     return (this->getEdges().at(0).getLength() * this->getEdges().at(1).getLength());
 }
 
+void Rectangle::getScope(double s)
+{
+
+}
+
 double Rectangle::getScope()
 {
     return 2*(this->getEdges().at(0).getLength() + this->getEdges().at(1).getLength());
+}
+
+void Rectangle::setVolume(double v)
+{
+
 }
 
 double Rectangle::getVolume()

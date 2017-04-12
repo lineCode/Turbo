@@ -89,7 +89,10 @@ Sprite::Sprite(string file_path, bool is_xml)
 
     if(EXTERN::Directory::hasFilter(file_path, TURBO::SDL_IMG_FILE_FILTER))
     {
-        this->surface = IMG_Load(file_path.c_str());
+        if(EXTERN::Directory::isFile(file_path))
+        {
+            this->surface = IMG_Load(file_path.c_str());
+        }
     }
 }
 
@@ -127,7 +130,7 @@ Font::Font(std::string file_path, bool is_xml)
     }
     this->file_path = file_path;
 
-    if(EXTERN::Directory::hasFilter(file_path, "ttf"))
+    if(EXTERN::Directory::isType(file_path, "ttf"))
     {
         this->font = TTF_OpenFont(file_path.c_str(), 12);
     }
@@ -165,7 +168,30 @@ Font::~Font()
         TTF_CloseFont(this->font);
     }
 }
+/*
+Rectangle Text::getSize(string text, Font & font)
+{
+    Rectangle rect;
+    int w = 0;
+    int h = 0;
 
+    if(TTF_SizeText(font, text.c_str(), &w, &h) == 0)
+    {
+        rect = Rectangle(0, 0, w, h);
+    }
+    else
+    {
+        Log::error(this->tag, TTF_GetError());
+    }
+
+    return rect;
+}
+
+Rectangle Text::getSizeUTF8(string text, Font & font)
+{
+
+}
+*/
 Texture::Texture(IRenderer & renderer, Sprite & sprite)
 {
     if(sprite.getSurface() != nullptr)

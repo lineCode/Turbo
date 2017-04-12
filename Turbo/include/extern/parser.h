@@ -54,22 +54,19 @@ namespace EXTERN
 	***
 	***
 	**/
-	class ConfigParser : public IParser<Config>
+	class INIParser : public IParser<INI>
 	{
 	private:
-		const std::string 		TAG = "ConfigParser";
-		std::map<std::string, std::map<std::string, std::string>> 	dict;
-        Config					config;
+		const std::string 	TAG = "INIParser";
+        INI					config;
 
 	public:
-		ConfigParser(string file = "", bool read = true);
-		~ConfigParser();
-		Config 					read(std::string file = "");
-		bool 					write(std::string file, Config config, std::string extra = "",
-									  std::ios::openmode flags = std::ios::out | std::ios::trunc);
-		std::map<std::string,std::map<std::string, std::string>> getDict();
-		Config 					getSection(std::string caption);
-		Config					getConfig();
+		INIParser(string file = "", bool read = true);
+		~INIParser();
+		INI 				read(std::string file = "");
+		bool 				write(std::string file, INI config, std::string extra = "",
+								  std::ios::openmode flags = std::ios::out | std::ios::trunc);
+		INI					getINI();
 	};
 
 	/**

@@ -2,6 +2,55 @@
 
 using namespace EXTERN;
 
+string INI::getValue(string key)
+{
+	return this->kvp[""][key];
+}
+
+string INI::getValue(string caption, string key)
+{
+	return this->kvp[caption][key];
+}
+
+int INI::getValueAsInt(string key)
+{
+	return stoi(this->kvp[""][key]);
+}
+
+int INI::getValueAsInt(string caption, string key)
+{
+	return stoi(this->kvp[caption][key]);
+}
+
+float INI::getValueAsFloat(string key)
+{
+	return stof(this->kvp[""][key]);
+}
+
+float INI::getValueAsFloat(string caption, string key)
+{
+	return stof(this->kvp[caption][key]);
+}
+
+void INI::setValue(string key, string value)
+{
+	this->kvp[""][key] = value;
+}
+
+void INI::setValue(string caption, string key, string value)
+{
+	this->kvp[caption][key] = value;
+}
+
+bool INI::isEmpty()
+{
+	if(this->kvp.size() == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
 string XML::getValue(string key)
 {
 	return this->kvp[key];
@@ -21,7 +70,9 @@ XML XML::findTag(string tag)
 {
 	XML result;
 	if(this->tag == tag)
+	{
 		result = *this;
+	}
 	else if(this->children.size() > 0)
 	{
 		for(XML * child : this->children)

@@ -65,6 +65,7 @@ namespace GEOMETRY
         Line(Point p1, Point p2);
 		Line(double x1, double y1, double x2, double y2);
 		Line            operator=(Line & l);
+		void            setWeight(double w);
 		double          getWeight();
 		double          getLength();
 		Point           getFirst();
@@ -185,9 +186,12 @@ namespace GEOMETRY
     };
 
     /**
-    *** @class Rectangle
+    *** @class  Rectangle
     ***
-    *** @var
+    *** @var    p1 top left
+    *** @var    p2 top right
+    *** @var    p3 bottom right
+    *** @var    p4 bottom left
     **/
     class Rectangle : public IShape
     {
@@ -205,13 +209,21 @@ namespace GEOMETRY
         //Rectangle(Rectangle & r);
         Rectangle(Point p1, Point p2, Point p3, Point p4);
         Rectangle(double x, double y, double w, double h);
+        double          setX(double x);
         double          getX();
+        void            setY(double y);
         double          getY();
+        void            setWidth(double w);
         double          getWidth();
+		void            setLength(double l);
 		double          getLength();
+		void            setHeight(double h);
 		double          getHeight();
+        void            setArea(double a);
         double          getArea();
+        void            setScope(double s);
         double          getScope();
+        void            setVolume(double v);
         double          getVolume();
         ~Rectangle();
     };
