@@ -144,9 +144,10 @@ namespace GUI
         ~Font();
     };
 
-    //GEOMETRY::Rectangle getSize(std::string text, Font & font);
-    //GEOMETRY::Rectangle getSizeUTF8(std::string text, Font & font);
-    //GEOMETRY::Rectangle getSizeUNICODE(std::string text, Font & font);
+    //int                   getFontHeight(Font & font);
+    //GEOMETRY::Rectangle   getSize(std::string text, Font & font);
+    //GEOMETRY::Rectangle   getSizeUTF8(std::string text, Font & font);
+    //GEOMETRY::Rectangle   getSizeUNICODE(std::string text, Font & font);
 
 
     /**

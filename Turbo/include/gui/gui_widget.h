@@ -1,6 +1,16 @@
 #ifndef GUI_WIDGET_H_INCLUDED
 #define GUI_WIDGET_H_INCLUDED
 
+/**
+*** @package 	gui_widget
+*** @author		Christoph Zorn
+*** @date		24.02.2017
+***
+*** @brief		The gui_widget package contains all UI layout widgets:
+***
+***
+**/
+
 #include "gui/gui_object.h"
 
 namespace GUI
@@ -106,6 +116,16 @@ namespace GUI
         Grid();
         ~Grid();
     };
+
+    /*
+        combobox
+        slider
+        scrollbar
+        frame
+        checkbox
+        radio
+        tabwidget
+    */
 
 }
 

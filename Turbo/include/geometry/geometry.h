@@ -209,7 +209,7 @@ namespace GEOMETRY
         //Rectangle(Rectangle & r);
         Rectangle(Point p1, Point p2, Point p3, Point p4);
         Rectangle(double x, double y, double w, double h);
-        double          setX(double x);
+        void            setX(double x);
         double          getX();
         void            setY(double y);
         double          getY();

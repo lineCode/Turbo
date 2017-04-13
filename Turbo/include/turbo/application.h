@@ -16,6 +16,24 @@
 namespace TURBO
 {
     /**
+    *** @class  Settings
+    ***
+    *** @brief
+    **/
+    class Settings
+    {
+    private:
+        const string TAG = "Settings";
+
+    protected:
+
+    public:
+        Settings(string file_path = TURBO::TURBO_SETTINGSFILE);
+        ~Settings();
+    };
+
+
+    /**
     *** @class Application
     ***
     *** @var
@@ -28,6 +46,7 @@ namespace TURBO
     protected:
         SYSTEM::SDL         sdl;
         EXTERN::AppTimer    timer;
+        Settings            settings;
         bool                running = true;
 
     public:

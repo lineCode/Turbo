@@ -57,9 +57,9 @@ namespace GUI
     };
 
     /**
-    *** @class Widget
+    *** @class  Widget
     ***
-    *** @var
+    *** @brief  The class Widget represents interactive layout items such as a button, combobox a.o.
     **/
     class Widget : protected IGUIObject
     {

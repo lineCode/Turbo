@@ -64,6 +64,7 @@ namespace TURBO
     const std::string   TURBO_ERRFILE           = TURBO_PATH_DATA + "err.txt";
     const std::string   TURBO_DEBFILE           = TURBO_PATH_DATA + "deb.txt";
     const std::string   TURBO_INFOFILE          = TURBO_PATH_DATA + "info.txt";
+    const std::string   TURBO_SETTINGSFILE      = TURBO_PATH_DATA + "settings.ini";
 
     /// Other
 

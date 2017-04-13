@@ -3,8 +3,18 @@
 using namespace TURBO;
 using UTILS::Log;
 
+Settings::Settings(string file_path)
+{
+
+}
+
+Settings::~Settings()
+{
+
+}
+
 Application::Application()
-    : sdl(), timer(TURBO_FPS_LOCK)
+    : sdl(), timer(TURBO_FPS_LOCK), settings()
 {
 
 }

@@ -1,6 +1,16 @@
 #ifndef EXTERN_H_INCLUDED
 #define EXTERN_H_INCLUDED
 
+/**
+*** @module 	extern
+*** @author		Christoph Zorn
+*** @date		24.02.2017
+***
+*** @brief		The extern module contains
+***
+***
+**/
+
 #include "Turbo_main.h"
 
 namespace EXTERN

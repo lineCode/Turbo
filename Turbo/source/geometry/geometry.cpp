@@ -340,7 +340,7 @@ double Rectangle::getY()
     return this->p1.getY();
 }
 
-double Rectangle::setWidth(double w)
+void Rectangle::setWidth(double w)
 {
     this->p2.setX(w);
     this->p3.setX(w);
@@ -386,7 +386,7 @@ double Rectangle::getArea()
     return (this->getEdges().at(0).getLength() * this->getEdges().at(1).getLength());
 }
 
-void Rectangle::getScope(double s)
+void Rectangle::setScope(double s)
 {
 
 }

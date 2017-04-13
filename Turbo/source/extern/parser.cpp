@@ -23,30 +23,30 @@ INIParser::INIParser(string file, bool read) : IParser(file)
 INI INIParser::read(string file)
 {
     string line;
+	string caption = "";
     ifstream in(file, std::ios::in);
 
-    while(getline(in, line))
+    while(getline(in, line) != nullptr)
     {
-        string caption = "";
-        if(line.find('[') != string::npos)
-        {
-           	caption = line.substr(1, line.find(']')-1);
-        }
-		while(getline(in, line) != NULL)
-		{
-			if(!line.empty())
-			{
-				string option, value;
-				char equals;
-				istringstream ss(line);
+		char symbol;
+		string option, value;
+		istringstream ss(line);
 
-				ss >> option >> equals >> value;
-				this->config.kvp[caption][option] = value;
-			}
-			else
+    	if(line.empty())
+		{
+			continue;
+		}
+		else
+		{
+			if((line.find('[') != string::npos) && (line.find(']') != string::npos))
 			{
-				break;
+				ss >> caption;
+				caption = caption.substr(1, caption.length() - 2);
+				continue;
 			}
+
+			ss >> option >> symbol >> value;
+			this->config.kvp[caption][option] = value;
 		}
     }
 	return this->config;
