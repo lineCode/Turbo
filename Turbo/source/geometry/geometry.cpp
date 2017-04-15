@@ -7,12 +7,6 @@ Point::Point()
 
 }
 
-//Point::Point(Point & p)
-//    : x(p.getX()), y(p.getY()), z(p.getZ())
-//{
-//
-//}
-
 Point::Point(double x)
     : x(x)
 {
@@ -29,11 +23,6 @@ Point::Point(double x, double y, double z)
     : x(x), y(y), z(z)
 {
 
-}
-
-Point Point::operator=(Point & p)
-{
-    return p;
 }
 
 Point Point::operator+(Point p)
@@ -133,12 +122,6 @@ Line::Line()
 
 }
 
-//Line::Line(Line & line)
-//    : p1(line.getFirst()), p2(line.getSecond())
-//{
-//
-//}
-
 Line::Line(Point p1, Point p2)
     : p1(p1), p2(p2)
 {
@@ -149,11 +132,6 @@ Line::Line(double x1, double y1, double x2, double y2)
     : p1(x1, y1), p2(x2, y2)
 {
 
-}
-
-Line Line::operator=(Line & l)
-{
-    return l;
 }
 
 void Line::setWeight(double w)
@@ -243,12 +221,6 @@ Triangle::Triangle()
 
 }
 
-//Triangle::Triangle(Triangle & t)
-//    : p1(t.getVertice(0)), p2(t.getVertice(1)), p3(t.getVertice(2))
-//{
-//
-//}
-
 Triangle::Triangle(Point p1, Point p2, Point p3)
     : p1(p1), p2(p2), p3(p3)
 {
@@ -302,20 +274,14 @@ Rectangle::Rectangle()
 
 }
 
-//Rectangle::Rectangle(Rectangle & r)
-//    : p1(r.p1), p2(r.p2)), p3(r.p3)), p4(r.p4)
-//{
-//
-//}
-
 Rectangle::Rectangle(Point p1, Point p2, Point p3, Point p4)
-    : p1(p1), p2(p2), p3(p3), p4(p4)
+    : IShape(), p1(p1), p2(p2), p3(p3), p4(p4)
 {
 
 }
 
 Rectangle::Rectangle(double x, double y, double w, double h)
-    : p1(x, y), p2(x+w, y), p3(x+w, y+h), p4(x, y+h)
+    : IShape(), p1(x, y), p2(x+w, y), p3(x+w, y+h), p4(x, y+h)
 {
 
 }

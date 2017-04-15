@@ -3,8 +3,8 @@
 using namespace GUI;
 using GEOMETRY::Rectangle;
 
-Button::Button(string title)
-    : Widget(Rectangle())
+Button::Button(string title, Rectangle dimension)
+    : Widget(dimension)
 {
 
 }
@@ -14,8 +14,8 @@ Button::~Button()
 
 }
 
-Label::Label(string title)
-    : Widget(Rectangle())
+Label::Label(string title, Rectangle dimension)
+    : Widget(dimension)
 {
 
 }
@@ -26,7 +26,7 @@ Label::~Label()
 }
 
 Input::Input()
-    : Widget(Rectangle())
+    : Widget()
 {
 
 }
@@ -37,7 +37,7 @@ Input::~Input()
 }
 
 List::List()
-    : Widget(Rectangle())
+    : ILayoutWidget()
 {
 
 }
@@ -48,7 +48,7 @@ List::~List()
 }
 
 Table::Table()
-    : Widget(Rectangle())
+    : ILayoutWidget()
 {
 
 }
@@ -59,7 +59,7 @@ Table::~Table()
 }
 
 Grid::Grid()
-    : Widget(Rectangle())
+    : ILayoutWidget()
 {
 
 }

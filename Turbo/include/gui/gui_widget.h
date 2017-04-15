@@ -28,7 +28,8 @@ namespace GUI
     protected:
 
     public:
-        Button(std::string title);
+        Button(std::string title = "", GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
+        Button(std::string title = "", int x = 0, int y = 0, int w = 0, int h = 0);
         ~Button();
     };
 
@@ -45,7 +46,8 @@ namespace GUI
     protected:
 
     public:
-        Label(std::string title);
+        Label(std::string title = "", GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
+        Label(std::string title = "", int x = 0, int y = 0, int w = 0, int h = 0);
         ~Label();
     };
 
@@ -71,7 +73,7 @@ namespace GUI
     ***
     *** @var
     **/
-    class List : public Widget
+    class List : public ILayoutWidget
     {
     private:
         const std::string TAG = "List";
@@ -88,7 +90,7 @@ namespace GUI
     ***
     *** @var
     **/
-    class Table : public Widget
+    class Table : public ILayoutWidget
     {
     private:
         const std::string TAG = "Table";
@@ -105,7 +107,7 @@ namespace GUI
     ***
     *** @var
     **/
-    class Grid : public Widget
+    class Grid : public ILayoutWidget
     {
     private:
         const std::string TAG = "Grid";

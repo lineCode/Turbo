@@ -22,8 +22,8 @@ int main(int argc, char ** argv)
     Mix_Volume(-1, 5);
     Mix_VolumeMusic(5);
 
-    //ch.play(0, 100000);
-    mu.play(1);
+    ch.play(0, 0);
+    mu.play(0);
     int result = app.run();
     return result;
 }

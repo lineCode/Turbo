@@ -4,21 +4,25 @@
 -EXTERN:
 	-regex
 
--Event:
+-EVENT:
 	-sdlmod
 
--window
--renderer(static) evtl singleston, 1 gui renderer, 1 logic renderer
--font
--texture
--text 
--sprite
-	-guiobject
-		-widget
-	-gameobject 
+	-actionhandler
+		- key function -> action 
+		- function function -> action
 
--actionhandler
-	- key function -> action 
-	- function function -> action
+-GUI
+	-window
+	-renderer
+		-(static) evtl singleston, 1 gui renderer, 1 logic renderer
+	-font
+	-texture
+	-text 
+	-sprite
+		-guiobject
+			-iguiobject
+				-next/prev
+		-gameobject 
 
 check freeing pointers at sdl structures
+

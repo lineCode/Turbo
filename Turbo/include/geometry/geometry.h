@@ -13,7 +13,7 @@ namespace GEOMETRY
     class Point
     {
     private:
-        const std::string    TAG = "Point";
+         std::string    TAG = "Point";
         double          x = 0;
         double          y = 0;
         double          z = 0;
@@ -22,11 +22,9 @@ namespace GEOMETRY
 
     public:
         Point();
-        //Point(Point & p);
         Point(double x);
         Point(double x, double y);
         Point(double x, double y, double z);
-        Point           operator=(Point & p);
         Point           operator+(Point p);
         Point           operator*(double factor);
         Point           operator*(Point p);
@@ -52,7 +50,7 @@ namespace GEOMETRY
     class Line
     {
     private:
-        const std::string    TAG = "Line";
+         std::string    TAG = "Line";
         double          weight = 0;
         Point           p1;
 		Point           p2;
@@ -61,10 +59,9 @@ namespace GEOMETRY
 
     public:
         Line();
-        //Line(Line & line);
+
         Line(Point p1, Point p2);
 		Line(double x1, double y1, double x2, double y2);
-		Line            operator=(Line & l);
 		void            setWeight(double w);
 		double          getWeight();
 		double          getLength();
@@ -81,7 +78,7 @@ namespace GEOMETRY
     class Vector
     {
     private:
-        const std::string TAG = "Vector";
+         std::string TAG = "Vector";
 
     protected:
 
@@ -101,21 +98,21 @@ namespace GEOMETRY
     class IShape
     {
     private:
-        const string    TAG = "IShape";
-        vector<Point>   vertices;
-        vector<Line>    edges;
-        double          width = 0;
-        double          length = 0;
-        double          height = 0;
+        std::string         TAG = "IShape";
+        std::vector<Point>  vertices;
+        std::vector<Line>   edges;
+        double              width = 0;
+        double              length = 0;
+        double              height = 0;
 
     protected:
 
     public:
         IShape();
-                vector<Point>   getVertices();
-                vector<Line>    getEdges();
-                Point           getVertice(Uint16 i);
-                Line            getEdge(Uint16 i);
+                std::vector<Point>      getVertices();
+                std::vector<Line>       getEdges();
+                Point                   getVertice(Uint16 i);
+                Line                    getEdge(Uint16 i);
         /**
          *
          */
@@ -164,7 +161,7 @@ namespace GEOMETRY
     class Triangle : public IShape
     {
     private:
-        const std::string    TAG = "Triangle";
+         std::string    TAG = "Triangle";
         Point           p1;
 		Point           p2;
 		Point           p3;
@@ -173,7 +170,6 @@ namespace GEOMETRY
 
     public:
         Triangle();
-        //Triangle(Triangle & t);
         Triangle(Point p1, Point p2, Point p3);
 		Triangle(double x1, double y1, double x2, double y2, double x3, double y3);
 		double          getWidth();
@@ -196,7 +192,7 @@ namespace GEOMETRY
     class Rectangle : public IShape
     {
     private:
-        const std::string    TAG = "Rectangle";
+         std::string    TAG = "Rectangle";
         Point           p1;
 		Point           p2;
 		Point           p3;
@@ -206,7 +202,6 @@ namespace GEOMETRY
 
     public:
         Rectangle();
-        //Rectangle(Rectangle & r);
         Rectangle(Point p1, Point p2, Point p3, Point p4);
         Rectangle(double x, double y, double w, double h);
         void            setX(double x);
@@ -227,6 +222,24 @@ namespace GEOMETRY
         double          getVolume();
         ~Rectangle();
     };
+
+    /*
+    *
+    *** @class  Cube
+    ***
+    *** @brief
+    **
+    class Cube
+    {
+    private:
+        const string TAG = "Cube";
+
+    protected:
+
+    public:
+        Cube();
+        ~Cube();
+    };*/
 
 }
 
