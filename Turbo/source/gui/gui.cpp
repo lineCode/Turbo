@@ -37,10 +37,20 @@ SDL_Renderer * IRenderer::getRenderer()
     return this->renderer;
 }
 
+SDL_Color IRenderer::getResetColor()
+{
+    return this->reset_color;
+}
+
 void IRenderer::setDrawColor(SDL_Color color)
 {
     SDL_SetRenderDrawColor(this->renderer, color.r, color.g, color.b, color.a);
 }
+
+//void IRenderer::draw(Texture & texture)
+//{
+//    SDL_RenderCopyEx(this->renderer, texture.getTexture(), NULL, NULL, 0, NULL, SDL_FLIP_NONE);
+//}
 
 void IRenderer::present()
 {
@@ -139,6 +149,11 @@ Font::Font(std::string file_path, bool is_xml)
 TTF_Font * Font::getFont()
 {
     return this->font;
+}
+
+int Font::getHeight()
+{
+    return TTF_FontHeight(this->font);
 }
 
 void Font::setOutline(Uint8 outline)

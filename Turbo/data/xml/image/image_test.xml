@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-5589"?>
 <layout>
 	<Sprite relPath="./data/image/Turbo.png">
-		
+		<Animation name="test" x="0" y="0" w="128" h="64" frames="4" f_width="32" f_height="64" cols="1">
+			
+		</Animation>
 	</Sprite>
 </layout>

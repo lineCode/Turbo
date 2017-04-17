@@ -14,7 +14,7 @@ Settings::~Settings()
 }
 
 Application::Application()
-    : sdl(), timer(TURBO_FPS_LOCK), settings()
+    : sdl(), timer(TURBO_FPS_LOCK), settings(), overlay()
 {
 
 }

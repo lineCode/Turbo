@@ -34,14 +34,15 @@ namespace GUI
     **/
     struct Animation
     {
-        Uint32 top_offset   = 0;
-        Uint32 left_offset  = 0;
-        Uint32 frames       = 0;
-        Uint32 frame_time   = 0;
-        Uint32 curr_frame   = 0;
-        Uint32 frame_width  = 0;
-        Uint32 frame_height = 0;
-        Uint32 frame_cols   = 0; //TODO better remove
+        std::string name            = "";
+        Uint32      top_offset      = 0;
+        Uint32      left_offset     = 0;
+        Uint32      frames          = 0;
+        Uint32      frame_time      = 0;
+        Uint32      curr_frame      = 0;
+        Uint32      frame_width     = 0;
+        Uint32      frame_height    = 0;
+        Uint32      frame_cols      = 0; //TODO better remove
     };
 
     /**
@@ -78,6 +79,7 @@ namespace GUI
     private:
         const std::string   TAG         = "IRenderer";
         SDL_Renderer      * renderer    = nullptr;
+        SDL_Color           reset_color = {0, 0, 0, 255};
 
     protected:
         //TODOstd::list<Texture>  scene_objects;
@@ -85,8 +87,9 @@ namespace GUI
     public:
         IRenderer(Window & window, Uint32 flags);
         SDL_Renderer      * getRenderer();
+        SDL_Color           getResetColor();
         virtual void        setDrawColor(SDL_Color color);
-        //TODOvirtual void        draw(Texture texture);
+        //TODOvirtual void        draw(Texture & texture);
         virtual void        present();
         virtual void        clear();
         ~IRenderer();
@@ -137,6 +140,7 @@ namespace GUI
     public:
         Font(std::string file_path, bool xml = true);
         TTF_Font          * getFont();
+        int                 getHeight();
         void                setOutline(Uint8 outline);
         void                setKerning(Uint8 kerning);
         void                setHinting(Uint8 hinting);
@@ -144,7 +148,6 @@ namespace GUI
         ~Font();
     };
 
-    //int                   getFontHeight(Font & font);
     //GEOMETRY::Rectangle   getSize(std::string text, Font & font);
     //GEOMETRY::Rectangle   getSizeUTF8(std::string text, Font & font);
     //GEOMETRY::Rectangle   getSizeUNICODE(std::string text, Font & font);

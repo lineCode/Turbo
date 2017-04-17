@@ -2,7 +2,7 @@
 #define TURBO_H_INCLUDED
 
 #include "system/system.h"
-#include "gui/gui_object.h"
+#include "gui/gui_widget.h"
 #include "audio/audio.h"
 #include "script/Turbo_script.h"
 

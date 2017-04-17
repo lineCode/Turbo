@@ -24,6 +24,32 @@ int main(int argc, char ** argv)
 
     ch.play(0, 0);
     mu.play(0);
-    int result = app.run();
-    return result;
+
+    Widget widget = Widget(Rectangle(0, 0, 100, 50));
+    Button button = Button("Click", Rectangle(0, 0, 50, 50));
+    widget.setChild(&button);
+
+    bool running = true;
+    while(running == true)
+    {
+        SDL_Event event;
+        while(SDL_PollEvent(&event))
+        {
+            switch(event.type)
+            {
+            case SDL_QUIT:
+                {
+                    running = false;
+                    break;
+                }
+            }
+            game_renderer.clear();
+            widget.draw(game_renderer);
+            game_renderer.present();
+        }
+    }
+    return 0;
+
+//    int result = app.run();
+//    return result;
 }

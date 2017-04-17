@@ -12,9 +12,23 @@ IGUIObject::IGUIObject(Rectangle dimension)
 
 void IGUIObject::draw(IRenderer & renderer)
 {
-    for(Texture texture : this->textures)
+    SDL_Rect rect;
+    rect.x = dimension.getX();
+    rect.y = dimension.getX();
+    rect.w = dimension.getWidth();
+    rect.h = dimension.getLength();
+    renderer.setDrawColor(this->background_color);
+    SDL_RenderFillRect(renderer.getRenderer(), &rect);
+    renderer.setDrawColor(this->border_color);
+    SDL_RenderDrawRect(renderer.getRenderer(), &rect);
+    renderer.setDrawColor(renderer.getResetColor());
+//    for(auto texture : this->textures)
+//    {
+//        renderer.draw(texture);
+//    }
+    if(this->child != nullptr)
     {
-        //renderer.draw(texture);
+        this->child->draw(renderer);
     }
 }
 
@@ -29,8 +43,6 @@ bool IGUIObject::hasParent()
 
 void IGUIObject::setParent(IGUIObject * object)
 {
-    object->removeChild();
-    object->setChild(this);
     this->parent = object;
 }
 
@@ -55,8 +67,6 @@ bool IGUIObject::hasChild()
 
 void IGUIObject::setChild(IGUIObject * object)
 {
-    object->removeParent();
-    object->setParent(this);
     this->child = object;
 }
 

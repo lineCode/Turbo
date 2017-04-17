@@ -15,6 +15,36 @@
 
 namespace GUI
 {
+
+    /**
+    *** @enum HAlignment
+    **/
+    enum class HAlignment : Uint8
+    {
+        LEFT    = 0,
+        CENTER  = 1,
+        RIGHT   = 2
+    };
+
+    /**
+    *** @enum VAlignment
+    **/
+    enum class VAlignment : Uint8
+    {
+        CENTER  = 0,
+        TOP     = 1,
+        BOTTOM  = 2
+    };
+
+    /**
+    *** @enum Adjustment
+    **/
+    enum class Adjustment : Uint8
+    {
+        FILL    = 0,
+        NORMAL  = 1
+    };
+
     /**
     *** @class IGUIObject
     ***
@@ -34,18 +64,21 @@ namespace GUI
         std::vector<Texture>    textures;
 
     protected:
-        bool                    is_resized;
-        bool                    is_dragable;
-        GEOMETRY::Rectangle     dimension;
-        Uint32                  margin[4];
-        Uint32                  padding[4];
-        SDL_Color               background_color;
-        SDL_Color               border_color;
-        SDL_Color               text_color;
+        bool                    is_resized          = false;
+        bool                    is_dragable         = false;
+        GEOMETRY::Rectangle     dimension           = GEOMETRY::Rectangle();
+        HAlignment              h_align             = HAlignment::LEFT;
+        VAlignment              v_align             = VAlignment::CENTER;
+        Adjustment              adjustment          = Adjustment::FILL;
+        Uint16                  margin[4]           = {0, 0, 0, 0};
+        Uint16                  padding[4]          = {0, 0, 0, 0};
+        SDL_Color               background_color    = {0, 0, 0, 0};
+        SDL_Color               border_color        = {0, 0, 0, 0};
+        SDL_Color               text_color          = {0, 0, 0, 255};
 
     public:
         IGUIObject(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
-        virtual void            update() = 0;
+        //virtual void            update() = 0;
         virtual void            draw(IRenderer & renderer);
         virtual bool            hasParent();
         virtual void            setParent(IGUIObject * object);
@@ -76,7 +109,7 @@ namespace GUI
     *** @brief  The class Widget represents interactive items such as a button,
     ***         combobox a.o., it is also the base class for ILayoutWidget
     **/
-    class Widget : protected IGUIObject
+    class Widget : public IGUIObject
     {
     private:
         const string            TAG = "Widget";

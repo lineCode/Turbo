@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-5589"?>
+<Button>
+	<margin top="0" right="0" bottom="0" left="0"/>
+	<padding top="0" right="0" bottom="0" left="0"/>
+	<background_color r="0" g="0" b="0" a="0"/>
+	<border_color r="0" g="0" b="0" a="0"/>
+	<text_color r="0" g="0" b="0" a="255"/>
+</Button>
+<Label>
+	<margin top="0" right="0" bottom="0" left="0"/>
+	<padding top="0" right="0" bottom="0" left="0"/>
+	<background_color r="0" g="0" b="0" a="0"/>
+	<border_color r="0" g="0" b="0" a="0"/>
+	<text_color r="0" g="0" b="0" a="255"/>
+</Label>
