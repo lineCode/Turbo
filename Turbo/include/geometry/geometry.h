@@ -39,6 +39,7 @@ namespace GEOMETRY
         double          getZ();
         double          getDistance(Point p);
 		bool		    isEmpty();
+		SDL_Point       toSDL_Point();
         ~Point();
     };
 
@@ -220,6 +221,7 @@ namespace GEOMETRY
         double          getScope();
         void            setVolume(double v);
         double          getVolume();
+        SDL_Rect        toSDL_Rect();
         ~Rectangle();
     };
 

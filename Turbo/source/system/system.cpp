@@ -20,6 +20,12 @@ SDL::SDL() : timer()
 	Log::clear(TURBO_ERRFILE);
 	Log::clear(TURBO_DEBFILE);
 	Log::clear(TURBO_INFOFILE);
+
+	//version = SDL_GetVersion();
+	//revision = SDL_GetRevision();
+	//base_path = SDL_GetBasePath();
+	//rel_path = SDL_GetPrefPath();
+
     this->init();
 }
 
@@ -216,6 +222,18 @@ bool SDL::quitNET()
     return success;
 }
 
+string SDL::getVersion()
+{
+    return "";
+    //return SDL_GetVersion();
+}
+
+string SDL::getRevision()
+{
+    return "";
+    //return SDL_GetRevision() + std::to_string(SDL_GetRevisionNumber());
+}
+
 bool SDL::init()
 {
 	bool success = false;
@@ -252,24 +270,49 @@ SDL::~SDL()
 
 Platform::Platform()
 {
-	this->name = SDL_GetPlatform();
+	this->platform = SDL_GetPlatform();
 	this->cpu = SDL_GetCPUCount();
 	this->ram = SDL_GetSystemRAM();
 }
 
 string Platform::getPlatform()
 {
-	return this->name;
+	return this->platform;
+}
+
+Uint16 Platform::getAudioDevices()
+{
+    return SDL_GetNumAudioDevices(0);
+}
+
+Uint16 Platform::getAudioDrivers()
+{
+    return SDL_GetNumAudioDrivers();
+}
+
+Uint16 Platform::getDisplayModes()
+{
+    return SDL_GetNumDisplayModes(0);
+}
+
+Uint16 Platform::getVideoDisplays()
+{
+    return SDL_GetNumVideoDisplays();
+}
+
+Uint16 Platform::getVideoDrivers()
+{
+    return SDL_GetNumVideoDrivers();
 }
 
 Uint8 Platform::getCpuLogical()
 {
-	return this->cpuLogical;
+	return this->cpu_logical;
 }
 
 Uint8 Platform::getCpuVirtual()
 {
-    return this->cpuVirtual;
+    return this->cpu_virtual;
 }
 
 Uint32 Platform::getRamAbsolute()

@@ -12,16 +12,13 @@ IGUIObject::IGUIObject(Rectangle dimension)
 
 void IGUIObject::draw(IRenderer & renderer)
 {
-    SDL_Rect rect;
-    rect.x = dimension.getX();
-    rect.y = dimension.getX();
-    rect.w = dimension.getWidth();
-    rect.h = dimension.getLength();
+    SDL_Rect rect = this->dimension.toSDL_Rect();
     renderer.setDrawColor(this->background_color);
     SDL_RenderFillRect(renderer.getRenderer(), &rect);
     renderer.setDrawColor(this->border_color);
     SDL_RenderDrawRect(renderer.getRenderer(), &rect);
     renderer.setDrawColor(renderer.getResetColor());
+
 //    for(auto texture : this->textures)
 //    {
 //        renderer.draw(texture);
@@ -140,6 +137,12 @@ void IGUIObject::setPosition(Point position)
     Rectangle rect = Rectangle(position.getX(), position.getY(), this->dimension.getWidth(),
                                this->dimension.getHeight());
     this->dimension = rect;
+}
+
+Point IGUIObject::getPosition()
+{
+    Point p = Point(this->dimension.getX(), this->dimension.getY());
+    return p;
 }
 
 void IGUIObject::setSize(Rectangle dimension)

@@ -1,6 +1,7 @@
 #include "turbo/application.h"
 
 using TURBO::Application;
+using SYSTEM::Platform;
 using namespace GUI;
 using namespace GEOMETRY;
 using namespace AUDIO;
@@ -28,6 +29,13 @@ int main(int argc, char ** argv)
     Widget widget = Widget(Rectangle(0, 0, 100, 50));
     Button button = Button("Click", Rectangle(0, 0, 50, 50));
     widget.setChild(&button);
+
+    SYSTEM::Platform p = Platform();
+    cout << p.getDisplayModes() << endl;
+    cout << p.getAudioDevices() << endl;
+    cout << p.getPlatform() << endl;
+    cout << p.getVideoDrivers() << endl;
+    cout << p.getVideoDisplays() << endl;
 
     bool running = true;
     while(running == true)

@@ -18,6 +18,8 @@ namespace GUI
 
     /**
     *** @enum HAlignment
+    ***
+    *** @brief  Describes the horizontal alignment of a widget
     **/
     enum class HAlignment : Uint8
     {
@@ -27,7 +29,9 @@ namespace GUI
     };
 
     /**
-    *** @enum VAlignment
+    *** @enum   VAlignment
+    ***
+    *** @brief  Describes the vertical alignment of a widget
     **/
     enum class VAlignment : Uint8
     {
@@ -37,19 +41,23 @@ namespace GUI
     };
 
     /**
-    *** @enum Adjustment
+    *** @enum   Adjustment
+    ***
+    *** @brief  The enum Adjustment describes the behavior of a widget within another
+    ***         widget
     **/
     enum class Adjustment : Uint8
     {
-        FILL    = 0,
-        NORMAL  = 1
+        FILL        = 0,    // use all available space
+        NORMAL      = 1,    // use the absolute dimensions if they are fitting
+        DECREASE    = 2     // use the minimal required space
     };
 
     /**
-    *** @class IGUIObject
+    *** @class  IGUIObject
     ***
-    *** @brief This is the base class for all objects that are drawn above the game
-    ***        screen. Every base object can only contain one child object.
+    *** @brief  This is the base class for all gui objects.
+    ***         Every base object can only contain one child object.
     ***
     *** @var
     **/
@@ -66,6 +74,8 @@ namespace GUI
     protected:
         bool                    is_resized          = false;
         bool                    is_dragable         = false;
+
+        // Style Properties
         GEOMETRY::Rectangle     dimension           = GEOMETRY::Rectangle();
         HAlignment              h_align             = HAlignment::LEFT;
         VAlignment              v_align             = VAlignment::CENTER;
@@ -98,6 +108,7 @@ namespace GUI
         virtual void            removePrev();
         virtual void            setDragable(bool dragable);
         virtual void            setPosition(GEOMETRY::Point position);
+        virtual GEOMETRY::Point getPosition();
         virtual void            setSize(GEOMETRY::Rectangle dimension);
         virtual GEOMETRY::Rectangle getSize();
         ~IGUIObject();
@@ -126,18 +137,22 @@ namespace GUI
     /**
     *** @class  ILayoutWidget
     ***
-    *** @brief  The ILayoutWidget is the base class for all layout widgets
+    *** @brief  The ILayoutWidget is the base class for all layout widgets such as
+    ***         a grid, vbox, hbox and a list
     **/
     class ILayoutWidget : public Widget
     {
     private:
         const string            TAG = "ILayoutWidget";
 
+        std::vector<Widget *>   children;
+
     protected:
 
     public:
         ILayoutWidget();
         virtual void            addWidget(Widget * w);
+        //virtual Widget *        getWidgets();
         virtual void            removeWidget(Widget * w);
         virtual void            removeWidget();
         ~ILayoutWidget();

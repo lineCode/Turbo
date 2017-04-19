@@ -39,12 +39,14 @@ namespace SYSTEM
     class SDL
     {
 	private:
-		const std::string TAG = "SDL";
-
-    private:
+		const std::string           TAG = "SDL";
         std::map<std::string, bool> initState = { {"SDL", false}, {"IMG", false}, {"TTF", false},
                                                   {"MIX", false}, {"NET", false}};
 		EXTERN::Timer               timer;
+		std::string                 version;
+		std::string                 revision;
+		std::string                 base_path;
+		std::string                 pref_path;
 
 		bool initSDL();
         bool quitSDL();
@@ -59,6 +61,10 @@ namespace SYSTEM
 
     public:
         SDL();
+        std::string getBasePath();
+        std::string getPrefPath();
+        std::string getVersion();
+        std::string getRevision();
         bool init();
         bool quit();
         ~SDL();
@@ -73,17 +79,31 @@ namespace SYSTEM
     {
     private:
     	const std::string	TAG = "Platform";
-    	std::string 		name;
-    	std::string 		version;
+    	std::string 		platform;
+
+    	Uint16              audio_devices;
+    	Uint16              audio_drivers;
+    	Uint16              display_modes;
+    	Uint16              video_displays;
+    	Uint16              video_drivers;
+
+    	Uint16              curr_audio_driver;
+    	Uint16              curr_display_mode;
+    	Uint16              curr_video_driver;
+
     	Uint8			    cpu;
-		Uint8 			    cpuLogical;
-		Uint8			    cpuVirtual;
+		Uint8 			    cpu_logical;
+		Uint8			    cpu_virtual;
 		Uint32 			    ram;
 
     public:
     	Platform();
     	std::string 		getPlatform();
-    	std::string 		getVersion();
+    	Uint16              getAudioDevices();
+    	Uint16              getAudioDrivers();
+    	Uint16              getDisplayModes();
+    	Uint16              getVideoDisplays();
+    	Uint16              getVideoDrivers();
     	Uint8 			    getCpuLogical();
     	Uint8 			    getCpuVirtual();
     	Uint32 			    getRamAbsolute();

@@ -54,7 +54,7 @@ namespace GUI
     /**
     *** @class Input
     ***
-    *** @var
+    *** @brief
     **/
     class Input : public Widget
     {
@@ -66,6 +66,57 @@ namespace GUI
     public:
         Input();
         ~Input();
+    };
+
+    /**
+    *** @class  RadioButton
+    ***
+    *** @brief
+    **/
+    class RadioButton : public Widget
+    {
+    private:
+        const std::string TAG = "RadioButton";
+
+    protected:
+
+    public:
+        RadioButton();
+        ~RadioButton();
+    };
+
+    /**
+    *** @class  Checkbox
+    ***
+    *** @brief
+    **/
+    class Checkbox : public Widget
+    {
+    private:
+        const std::string TAG = "Checkbox";
+
+    protected:
+
+    public:
+        Checkbox();
+        ~Checkbox();
+    };
+
+    /**
+    *** @class  Frame
+    ***
+    *** @brief
+    **/
+    class Frame : public Widget
+    {
+    private:
+        const std::string TAG = "Frame";
+
+    protected:
+
+    public:
+        Frame();
+        ~Frame();
     };
 
     /**
@@ -123,9 +174,6 @@ namespace GUI
         combobox
         slider
         scrollbar
-        frame
-        checkbox
-        radio
         tabwidget
     */
 

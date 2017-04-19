@@ -111,6 +111,14 @@ double Point::getDistance(Point p)
     return sqrt(pow(this->x-p.getX(), 2.0) + pow(this->y-p.getY(), 2.0) + pow(this->z-p.getZ(), 2.0));
 }
 
+SDL_Point Point::toSDL_Point()
+{
+    SDL_Point p;
+    p.x = this->x;
+    p.y = this->y;
+    return p;
+}
+
 Point::~Point()
 {
 
@@ -370,6 +378,16 @@ void Rectangle::setVolume(double v)
 double Rectangle::getVolume()
 {
     return 0;
+}
+
+SDL_Rect Rectangle::toSDL_Rect()
+{
+    SDL_Rect rect;
+    rect.x = this->p1.getX();
+    rect.y = this->p1.getY();
+    rect.w = this->p3.getX();
+    rect.h = this->p3.getY();
+    return rect;
 }
 
 Rectangle::~Rectangle()
