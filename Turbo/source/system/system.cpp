@@ -21,10 +21,12 @@ SDL::SDL() : timer()
 	Log::clear(TURBO_DEBFILE);
 	Log::clear(TURBO_INFOFILE);
 
-	//version = SDL_GetVersion();
-	//revision = SDL_GetRevision();
-	//base_path = SDL_GetBasePath();
-	//rel_path = SDL_GetPrefPath();
+	//this->version = this->getVersion();
+	//this->revision = this->getRevision();
+	//this->base_path = this->getBasePath();
+	//cout << this->version << endl;
+	//cout << this->revision << endl;
+//	pref_path = this->createPrefPath();
 
     this->init();
 }
@@ -222,16 +224,29 @@ bool SDL::quitNET()
     return success;
 }
 
-string SDL::getVersion()
+string SDL::getBasePath()
 {
-    return "";
-    //return SDL_GetVersion();
+    char * base_path = SDL_GetBasePath();
+    return base_path;
+}
+
+string SDL::createPrefPath(string prefix, string dirname)
+{
+    char * pref_path = SDL_GetPrefPath(prefix.c_str(), dirname.c_str());
+    return pref_path;
 }
 
 string SDL::getRevision()
 {
-    return "";
-    //return SDL_GetRevision() + std::to_string(SDL_GetRevisionNumber());
+    return SDL_GetRevision() + std::to_string(SDL_GetRevisionNumber());
+}
+
+string SDL::getVersion()
+{
+    SDL_version * v = nullptr;
+    SDL_GetVersion(v);
+    Uint8 version = v->major;
+    return "" + version;
 }
 
 bool SDL::init()

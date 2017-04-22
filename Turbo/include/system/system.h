@@ -43,10 +43,10 @@ namespace SYSTEM
         std::map<std::string, bool> initState = { {"SDL", false}, {"IMG", false}, {"TTF", false},
                                                   {"MIX", false}, {"NET", false}};
 		EXTERN::Timer               timer;
-		std::string                 version;
-		std::string                 revision;
 		std::string                 base_path;
 		std::string                 pref_path;
+		std::string                 revision;
+		std::string                 version;
 
 		bool initSDL();
         bool quitSDL();
@@ -62,9 +62,9 @@ namespace SYSTEM
     public:
         SDL();
         std::string getBasePath();
-        std::string getPrefPath();
-        std::string getVersion();
+        std::string createPrefPath(std::string prefix, std::string dirname);
         std::string getRevision();
+        std::string getVersion();
         bool init();
         bool quit();
         ~SDL();

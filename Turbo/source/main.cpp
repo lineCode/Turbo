@@ -2,6 +2,7 @@
 
 using TURBO::Application;
 using SYSTEM::Platform;
+using SYSTEM::SDL;
 using namespace GUI;
 using namespace GEOMETRY;
 using namespace AUDIO;
@@ -14,7 +15,7 @@ int main(int argc, char ** argv)
     Window window = Window("Test", Rectangle(50, 50, 500, 300), TURBO::SDL_WINDOW_FLAGS);
     GameRenderer game_renderer = GameRenderer(window, TURBO::SDL_RENDER_FLAGS);
     game_renderer.setDrawColor(TURBO::BLUE);
-
+/*
     Sprite sp(TURBO::TURBO_PATH_XML_IMAGE + "image_test.xml", true);
     Font fo(TURBO::TURBO_PATH_XML_FONT + "font_test.xml", true);
     Chunk ch(TURBO::TURBO_PATH_XML_AUDIO + "sound/chunk_test.xml", true);
@@ -30,13 +31,17 @@ int main(int argc, char ** argv)
     Button button = Button("Click", Rectangle(0, 0, 50, 50));
     widget.setChild(&button);
 
+    SYSTEM::SDL sdl = SDL();
     SYSTEM::Platform p = Platform();
+    cout << sdl.getBasePath() << endl;
+    cout << sdl.getRevision() << endl;
+    cout << sdl.getVersion() << endl;
     cout << p.getDisplayModes() << endl;
     cout << p.getAudioDevices() << endl;
     cout << p.getPlatform() << endl;
     cout << p.getVideoDrivers() << endl;
     cout << p.getVideoDisplays() << endl;
-
+*/
     bool running = true;
     while(running == true)
     {
@@ -52,12 +57,12 @@ int main(int argc, char ** argv)
                 }
             }
             game_renderer.clear();
-            widget.draw(game_renderer);
+//            widget.draw(game_renderer);
             game_renderer.present();
         }
     }
-    return 0;
+//    return 0;
 
-//    int result = app.run();
-//    return result;
+    int result = app.run();
+    return result;
 }
