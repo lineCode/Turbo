@@ -46,6 +46,23 @@ namespace GUI
     };
 
     /**
+    *** @struct Color
+    ***
+    *** @brief
+    **/
+    struct Color
+    {
+        Uint8 r = 0;
+        Uint8 g = 0;
+        Uint8 b = 0;
+        Uint8 a = 255;
+
+        Color(Uint8 r = 0, Uint8 g = 0, Uint8 b = 0, Uint8 a = 255);
+        Color toGrayscale();
+        SDL_Color toSDL_Color();
+    };
+
+    /**
     *** @class Window
     ***
     *** @var
@@ -61,7 +78,13 @@ namespace GUI
 
     public:
         Window(std::string title, GEOMETRY::Rectangle dimension, Uint32 flags);
-        SDL_Window       * getWindow();
+        SDL_Window        * getWindow();
+        void                setBordered(bool bordered);
+        bool                isBordered();
+        void                setFulllscreen(bool fullscreen);
+        bool                isFullscreen();
+        void                setBrightness(float brightness);
+        float               getBrightness();
         ~Window();
     };
 
@@ -79,7 +102,8 @@ namespace GUI
     private:
         const std::string   TAG         = "IRenderer";
         SDL_Renderer      * renderer    = nullptr;
-        SDL_Color           reset_color = {0, 0, 0, 255};
+        Color               reset_color = {0, 0, 0, 255};
+        Color               draw_color  = {0, 0, 0, 0};
 
     protected:
         //TODOstd::list<Texture>  scene_objects;
@@ -87,8 +111,18 @@ namespace GUI
     public:
         IRenderer(Window & window, Uint32 flags);
         SDL_Renderer      * getRenderer();
-        SDL_Color           getResetColor();
-        virtual void        setDrawColor(SDL_Color color);
+        void                setResetColor(Color color);
+        Color               getResetColor();
+        Color               getDrawColor();
+        void                setDrawColor(Color color);
+        void                drawPoint(Point p, Color color);
+        void                drawLine(Line l, Color color);
+        void                drawTriangle(Triangle t, Color color);
+        //void                drawFilledTriangle(Triangle t, Color color);
+        void                drawRectangle(Rectangle r, Color color);
+        void                drawFilledRectangle(Rectangle r, Color color);
+        void                drawShape(IShape s, Color color);
+        //void                drawFilledShape(IShape s, Color color);
         //TODOvirtual void        draw(Texture & texture);
         virtual void        present();
         virtual void        clear();
@@ -171,10 +205,31 @@ namespace GUI
     public:
         Texture(IRenderer & renderer, Sprite & sprite);
         bool setTextureFromText(IRenderer & renderer, Font & font, std::string text,
-                                RENDER_MODE mode, SDL_Color color_fg,
-                                SDL_Color color_bg = TURBO::TRANSPARENT);
+                                RENDER_MODE mode, Color color_fg,
+                                Color color_bg = {0, 0, 0, 0});
         ~Texture();
     };
+
+    /**
+    *** @class  Cursor
+    ***
+    *** @brief
+    **/
+    class Cursor
+    {
+    private:
+        const string TAG = "Cursor";
+
+        SDL_Cursor * cursor;
+
+    protected:
+
+    public:
+        Cursor();
+        void showCursor(bool show);
+        ~Cursor();
+    };
+
 
 
     /**

@@ -6,7 +6,7 @@
 *** @author     Christoph Zorn
 *** @date       24.02.2017
 ***
-*** @brief      The module gui contains
+*** @brief      The module gui_object contains
 ***
 ***
 **/
@@ -48,9 +48,9 @@ namespace GUI
     **/
     enum class Adjustment : Uint8
     {
-        FILL        = 0,    // use all available space
+        MAXIMUM     = 0,    // use all available space
         NORMAL      = 1,    // use the absolute dimensions if they are fitting
-        DECREASE    = 2     // use the minimal required space
+        MINIMUM     = 2     // use the minimal required space
     };
 
     /**
@@ -64,7 +64,7 @@ namespace GUI
     class IGUIObject
     {
     private:
-        const string            TAG     = "IGUIObject";
+        const std::string       TAG     = "IGUIObject";
         IGUIObject            * parent  = nullptr;
         IGUIObject            * child   = nullptr;
         IGUIObject            * next    = nullptr;
@@ -79,12 +79,12 @@ namespace GUI
         GEOMETRY::Rectangle     dimension           = GEOMETRY::Rectangle();
         HAlignment              h_align             = HAlignment::LEFT;
         VAlignment              v_align             = VAlignment::CENTER;
-        Adjustment              adjustment          = Adjustment::FILL;
+        Adjustment              adjustment          = Adjustment::MAXIMUM;
         Uint16                  margin[4]           = {0, 0, 0, 0};
         Uint16                  padding[4]          = {0, 0, 0, 0};
-        SDL_Color               background_color    = {0, 0, 0, 0};
-        SDL_Color               border_color        = {0, 0, 0, 0};
-        SDL_Color               text_color          = {0, 0, 0, 255};
+        Color                   background_color    = {0, 0, 0, 0};
+        Color                   border_color        = {0, 0, 0, 0};
+        Color                   text_color          = {0, 0, 0, 255};
 
     public:
         IGUIObject(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
@@ -123,12 +123,13 @@ namespace GUI
     class Widget : public IGUIObject
     {
     private:
-        const string            TAG = "Widget";
+        const std::string            TAG = "Widget";
 
     protected:
 
     public:
         Widget(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
+        Widget(std::string xml_file);
         virtual void            addWidget(Widget * w);
         virtual void            removeWidget();
         ~Widget();
@@ -143,7 +144,7 @@ namespace GUI
     class ILayoutWidget : public Widget
     {
     private:
-        const string            TAG = "ILayoutWidget";
+        const std::string            TAG = "ILayoutWidget";
 
         std::vector<Widget *>   children;
 

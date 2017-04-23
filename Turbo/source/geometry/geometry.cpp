@@ -142,6 +142,26 @@ Line::Line(double x1, double y1, double x2, double y2)
 
 }
 
+void Line::setX(double x)
+{
+    this->p1.setX(x);
+}
+
+double Line::getX()
+{
+    return this->p1.getX();
+}
+
+void Line::setY(double y)
+{
+    this->p1.setY(y);
+}
+
+double Line::getY()
+{
+    return this->p1.getY();
+}
+
 void Line::setWeight(double w)
 {
     this->weight = w;
@@ -233,6 +253,26 @@ Triangle::Triangle(Point p1, Point p2, Point p3)
     : p1(p1), p2(p2), p3(p3)
 {
 
+}
+
+void Triangle::setX(double x)
+{
+    this->p1.setX(x);
+}
+
+double Triangle::getX()
+{
+    return this->p1.getX();
+}
+
+void Triangle::setY(double y)
+{
+    this->p1.setY(y);
+}
+
+double Triangle::getY()
+{
+    return this->p1.getY();
 }
 
 double Triangle::getWidth()

@@ -137,7 +137,7 @@ bool SDL::quitTTF()
 	}
 	else
 	{
-		Log::error(this->TAG, ("Error at quitTTF(): " + (string)TTF_GetError()), LOG_TYPE::LOG);
+		Log::error(this->TAG, ("Error at quitTTF(): " + (string)TTF_GetError()), LOG_TYPE::ERROR);
 	}
     return success;
 }
@@ -218,7 +218,7 @@ bool SDL::quitNET()
 	}
 	else
 	{
-		Log::error(this->TAG, ("Error at quitNET(): " + (string)SDLNet_GetError()), LOG_TYPE::LOG);
+		Log::error(this->TAG, ("Error at quitNET(): " + (string)SDLNet_GetError()), LOG_TYPE::ERROR);
 	}
 
     return success;

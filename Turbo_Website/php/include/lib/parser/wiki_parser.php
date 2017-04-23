@@ -2,41 +2,44 @@
 
 	class WikiHighlighter
 	{
-		private $tags 		= array	(
-										"header1"       => "h1",
-										"header2"       => "h2",
-										"header3"       => "h3",
-										"bold"			=> "b",
-										"italic"		=> "i",
-										"underlined"	=> "u",
-										"crossed"		=> "s",
-										"tab"			=> "tab",
-										"quote"	        => "quote",
-										"control"       => "control",
-										"reference"	    => "reference",
-										"link"          => "link",
-										"image"         => "image",
-										"table"         => "table"
-									);
+		private $tags 		= array
+		(
+			"header1"       => "h1",
+			"header2"       => "h2",
+			"header3"       => "h3",
+			"bold"			=> "b",
+			"italic"		=> "i",
+			"underlined"	=> "u",
+			"crossed"		=> "s",
+			"tab"			=> "tab",
+			"quote"	        => "quote",
+			"control"       => "control",
+			"reference"	    => "reference",
+			"link"          => "link",
+			"image"         => "image",
+			"table"         => "table"
+		);
 
-		private $types 	= array	(
-                                    "DEFAULT"   => 	array	(
-                                                                "header1"       => "#(^|\s)\+[^\+]+\+($|\s)#",
-                                                                "header2"       => "#(^|\s)\+{2}[^\+]+\+{2}($|\s)#",
-                                                                "header3"       => "#(^|\s)\+{3}[^\+]+\+{3}($|\s)#",
-                                                                "bold" 		    => "#\*.+\*#",
-                                                                "italic"        => "#'.+'#",
-                                                                "underlined"    => "#_.+_#",
-                                                                "crossed"       => "#-.+-#",
-                                                                "tab"       	=> "#(^|\s)>[^\n<>]+[^\n<>]#",
-                                                                "quote"         => "#(^|\s)>.+(:.+)?<($|\s)#",
-                                                                "control"       => "%#.+(:.+)?#%",
-                                                                "reference"     => "#\s%.+:.+%\s#",
-                                                                "link"          => "#\s[(.+)?:.+]\s#",
-                                                                "image"         => "#\s{.+:?.+:?.+}\s#",
-                                                                "table"         => "##"
-                                                            ),
-                                );
+		private $types 	= array
+		(
+			"DEFAULT"   => 	array
+			(
+				"header1"       => "#(^|\s)\+[^\+]+\+($|\s)#",
+				"header2"       => "#(^|\s)\+{2}[^\+]+\+{2}($|\s)#",
+				"header3"       => "#(^|\s)\+{3}[^\+]+\+{3}($|\s)#",
+				"bold" 		    => "#\*.+\*#",
+				"italic"        => "#'.+'#",
+				"underlined"    => "#_.+_#",
+				"crossed"       => "#-.+-#",
+				"tab"       	=> "#(^|\s)>[^\n<>]+[^\n<>]#",
+				"quote"         => "#(^|\s)>.+(:.+)?<($|\s)#",
+				"control"       => "%#.+(:.+)?#%",
+				"reference"     => "#\s%.+:.+%\s#",
+				"link"          => "#\s[(.+)?:.+]\s#",
+				"image"         => "#\s{.+:?.+:?.+}\s#",
+				"table"         => "##"
+			),
+		);
 		private $timer = null;
 		private $exec_time = 0;
 

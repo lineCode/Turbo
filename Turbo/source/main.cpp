@@ -14,8 +14,8 @@ int main(int argc, char ** argv)
 
     Window window = Window("Test", Rectangle(50, 50, 500, 300), TURBO::SDL_WINDOW_FLAGS);
     GameRenderer game_renderer = GameRenderer(window, TURBO::SDL_RENDER_FLAGS);
-    game_renderer.setDrawColor(TURBO::BLUE);
-/*
+    game_renderer.setDrawColor((Color)TURBO::BLUE);
+
     Sprite sp(TURBO::TURBO_PATH_XML_IMAGE + "image_test.xml", true);
     Font fo(TURBO::TURBO_PATH_XML_FONT + "font_test.xml", true);
     Chunk ch(TURBO::TURBO_PATH_XML_AUDIO + "sound/chunk_test.xml", true);
@@ -33,6 +33,7 @@ int main(int argc, char ** argv)
 
     SYSTEM::SDL sdl = SDL();
     SYSTEM::Platform p = Platform();
+    /*
     cout << sdl.getBasePath() << endl;
     cout << sdl.getRevision() << endl;
     cout << sdl.getVersion() << endl;
@@ -61,8 +62,5 @@ int main(int argc, char ** argv)
             game_renderer.present();
         }
     }
-//    return 0;
-
-    int result = app.run();
-    return result;
+    return 0;
 }

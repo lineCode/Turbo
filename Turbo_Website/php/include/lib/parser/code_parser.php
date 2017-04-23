@@ -14,162 +14,170 @@
 		private $string			= '#"[^"]*"#';
 		private $char			= '#\'[^\']*\'#';
 
-		private $tags 		= array	(
-										"docu"			=> "DOCU__",
-										"info"			=> "INFO__",
-										"line"			=> "LINE__",
-										"comment"		=> "COMMENT__",
-										"multiComment"	=> "MULTICOMMENT__",
-										"operator"		=> "OPERATOR__",
-										"preprocessor"	=> "PREPROCESSOR__",
-										"string"		=> "STRING__",
-										"char"			=> "CHAR__",
-										"number"		=> "NUMBER__",
-										"type"			=> "TYPE__",
-										"customType"	=> "CUSTOMTYPE__",
-										"keyword"		=> "KEYWORD__",
-										"special"		=> "SPECIAL__"
-									);
+		private $tags 		= array
+		(
+			"docu"			=> "DOCU__",
+			"info"			=> "INFO__",
+			"line"			=> "LINE__",
+			"comment"		=> "COMMENT__",
+			"multiComment"	=> "MULTICOMMENT__",
+			"operator"		=> "OPERATOR__",
+			"preprocessor"	=> "PREPROCESSOR__",
+			"string"		=> "STRING__",
+			"char"			=> "CHAR__",
+			"number"		=> "NUMBER__",
+			"type"			=> "TYPE__",
+			"customType"	=> "CUSTOMTYPE__",
+			"keyword"		=> "KEYWORD__",
+			"special"		=> "SPECIAL__"
+		);
 
-		private $languages 	= array	(
-										"C" 			=> 	array	(
-																		"file" 			=> "#.*(\.c|\.h)#",
-																		"keyword" 		=> "#\b("
-																							. "(c(ase|on(st|tinue)))|"
-																							. "(d(efault|o))|"
-																							. "(e(lse|num|xtern))|"
-																							. "(f(alse|or))|"
-																							. "(n(amespace|ew))|"
-																							. "(re(gister|turn))|"
-																							. "(s(izeof|t(atic|ruct)|witch))|"
-																							. "(t(rue|ypedef))|"
-																							. "(auto|break|goto|if|union|volatile|while)"
-																						 . ")\b#",
-																		"type" 			=> "#\b(bool|char|double|float|int|long|s(hort|igned)|unsigned|vo(id|latile))\b#",
-																		"customType" 	=> "(time)",
-																		"lineComment"	=> "#//.*\n#",
-																		"multiComment"	=> array("#/\*#", "#\*/#"),
-																		"special"		=> "%#.*\n%"
-																	),
-										"C++" 			=> 	array	(
-																		"file" 			=> "#.*(\.c|\.cpp|\.cc|\.h\|\.hpp|\.hh)#",
-																		"keyword" 		=> "#\b("
-																							. "(a(nd(_eq)?|lign(as|of)|sm|uto))|"
-																							. "(b(it(and|or)|reak))|"
-																							. "(c(a(se|tch)|lass|o(mpl|n(st(_cast|expr)?|tinue))))|"
-																							. "(d(e(cltype|fault|lete)|o|ynamic_cast))|"
-																							. "(e(lse|num|x(p(licit|ort)|tern)))|"
-																							. "(f(alse|inal|or|riend))|"
-																							. "(i(f|nline))|"
-																							. "(n(amespace|ew|o(t(_eq)?|except)|ullptr))|"
-																							. "(o(perator|r(_eq)?|verride))|"
-																							. "(p(r(ivate|otected)|ublic))|"
-																							. "(re(gister|interpret_cast|turn))|"
-																							. "(s(izeof|t(atic(_(cast|assert))?|ruct)|witch))|"
-																							. "(t(emplate|h(is|r(ead_local|ow))|r(ue|y)|ype(def|id|name)))|"
-																							. "(u(nion|sing))|"
-																							. "(v(irtual|olatile))|"
-																							. "(goto|mutable|xor(_eq)?|while)|"
-																							. "(__(DATE|FILE|LINE|STDC(_VERSION)?|TIME)__)"
-																						 . ")\b#",
-																		"type" 			=> "#\b(bool|(w)?c(har(16|32)?(_t)?)|double|float|int|long|void)\b#",
-																		"customType" 	=> "#\b(st(ring|d))\b#",
-																		"lineComment"	=> "#//.*\n#",
-																		"multiComment"	=> array("#/\*#", "#\*/#"),
-																		"special"		=> "%^\#.*\n%"
-																	),
-										"PHP"			=>	array	(
-																		"file" 			=> "#.*(\.php)#",
-																		"keyword" 		=> "#\b("
-																							. "(a(bstract|nd|rray|s))|"
-																							. "(c(a(llable|se|tch)|l(ass|one)|on(st|tinue)))|"
-																							. "(d(e(clare|fault)|ie|o))|"
-																							. "(e(cho|lse(if)?|mpty|nd(declare|for(each)?|if|switch|while)|val|x(it|tends)))|"
-																							. "(f(alse|inal|or(each)?|unction))|"
-																							. "(g(lobal|oto))|"
-																							. "(i(f|mplements|n(clude(_once)?|st(anceof|eadof)|terface)|sset))|"
-																							. "(n(amespace|ew))|"
-																							. "(p(r(i(nt|vate)|otected)|ublic))|"
-																							. "(re(quire(_once)?|turn))|"
-																							. "(s(tatic|witch))|"
-																							. "(t(hrow|r(ait|rue|y)))|"
-																							. "(u(nset|se))|"
-																							. "(break|list|(x)?or|var|while)|"
-																							. "(__(CLASS|DIR|F(ILE|UNCTION)|LINE|METHOD|NAMESPACE|TRAIT)__)"
-																						 . ")\b#",
-																		"type" 			=> "",
-																		"customType"	=> "",
-																		"lineComment"	=> "#//.*\n#",
-																		"multiComment"	=> array("#/\*#", "#\*/#"),
-																		"special"		=> ""
-																	),
-										"Python"		=>	array	(
-																		"file" 			=> "#.*(\.py)#",
-																		"keyword" 		=> "#\b("
-																							. "(a(nd|s(sert)?))|"
-																							. "(c(lass|ontinue))|"
-																							. "(d(e(f|l)))|"
-																							. "(e(l(se|if)|x(cept|ex)))|"
-																							. "(f(inally|or|rom))|"
-																							. "(i(f|mport|n|s))|"
-																							. "(p(ass|rint))|"
-																							. "(r(aise|eturn))|"
-																							. "(w(hile|ith))|"
-																							. "(break|global|lambda|not|or|try|yield)"
-																						 . ")\b#",
-																		"type" 			=> "#====#",
-																		"customType"	=> "#====#",
-																		"lineComment"	=> "%#.*\n%",
-																		"multiComment"	=> array("#'{3}#", "#'{3}#"),
-																		"special"		=> "#====#"
-																	),
-										"Java"			=>	array	(
-																		"file" 			=> "#.*(\.java)#",
-																		"keyword" 		=> "#\b("
-																							. "(a(bstract|ssert))|"
-																							. "(c(a(se|tch)|lass)|on(st|tinue)))|"
-																							. "(d(efault|o))|"
-																							. "(e(lse|num|xtends))|"
-																							. "(f(inal(ly)?|or))|"
-																							. "(i(f|m(plements|port)|n(stanceof|terface)))|"
-																							. "(n(ative|ew|ull))"
-																							. "(p(ackage|r(ivate|otected)|ublic)))|"
-																							. "(s(t(rictfp|atic)|witch|uper|ynchronized))|"
-																							. "(t(h(is|row(s)?)|r(ansient|ue|y)))|"
-																							. "(break|goto|return|volatile|while)"
-																						 . ")\b#",
-																		"type" 			=> "#\b(b(oolean|yte)|char|double|float|int|long|short|void)\b#",
-																		"customType"	=> "",
-																		"lineComment"	=> "#//.*\n#",
-																		"multiComment"	=> array("#/\*#", "#\*/#"),
-																		"special"		=> ""
-																	),
-										"JavaScript"	=>	array	(
-																		"file" 			=> "#.*(\.java)#",
-																		"keyword" 		=> "#\b("
-																							. "(a(bstract|rguments|wait))|"
-																							. "(b(reak|yte))|"
-																							. "(c(a(se|tch)|har|lass|on(st|tinue)))|"
-																							. "(d(e(bugger|fault|lete|o(uble)?)))|"
-																							. "(e(lse|num|val|x(port|tends)))|"
-																							. "(f(alse|inal(ly)?|loat|or|unction))|"
-																							. "(i(f|mp(lements|ort|n(stanceof|t(erface)?)?)))|"
-																							. "(l(et|ong))|"
-																							. "(n(ative|ew|ull))|"
-																							. "(p(ackage|r(ivate|otected)|ublic))|"
-																							. "(s(hort|tatic|uper|witch|ynchronized))|"
-																							. "(t(h(is|r(ow(s)?|ansient|ue|y))|ypeof))|"
-																							. "(v(ar|o(id|latile)))|"
-																							. "(w(hile|ith))|"
-																							. "(goto|return|yield)"
-																						 . ")\b#",
-																		"type" 			=> "",
-																		"customType"	=> "",
-																		"lineComment"	=> "#//.*\n#",
-																		"multiComment"	=> array("#/\*#", "#\*/#"),
-																		"special"		=> ""
-																	)
-									);
+		private $languages 	= array
+		(
+			"C" 			=> 	array
+			(
+				"file" 			=> "#.*(\.c|\.h)#",
+				"keyword" 		=> "#\b("
+									. "(c(ase|on(st|tinue)))|"
+									. "(d(efault|o))|"
+									. "(e(lse|num|xtern))|"
+									. "(f(alse|or))|"
+									. "(n(amespace|ew))|"
+									. "(re(gister|turn))|"
+									. "(s(izeof|t(atic|ruct)|witch))|"
+									. "(t(rue|ypedef))|"
+									. "(auto|break|goto|if|union|volatile|while)"
+								 . ")\b#",
+				"type" 			=> "#\b(bool|char|double|float|int|long|s(hort|igned)|unsigned|vo(id|latile))\b#",
+				"customType" 	=> "(time)",
+				"lineComment"	=> "#//.*\n#",
+				"multiComment"	=> array("#/\*#", "#\*/#"),
+				"special"		=> "%#.*\n%"
+			),
+			"C++" 			=> 	array
+			(
+				"file" 			=> "#.*(\.c|\.cpp|\.cc|\.h\|\.hpp|\.hh)#",
+				"keyword" 		=> "#\b("
+									. "(a(nd(_eq)?|lign(as|of)|sm|uto))|"
+									. "(b(it(and|or)|reak))|"
+									. "(c(a(se|tch)|lass|o(mpl|n(st(_cast|expr)?|tinue))))|"
+									. "(d(e(cltype|fault|lete)|o|ynamic_cast))|"
+									. "(e(lse|num|x(p(licit|ort)|tern)))|"
+									. "(f(alse|inal|or|riend))|"
+									. "(i(f|nline))|"
+									. "(n(amespace|ew|o(t(_eq)?|except)|ullptr))|"
+									. "(o(perator|r(_eq)?|verride))|"
+									. "(p(r(ivate|otected)|ublic))|"
+									. "(re(gister|interpret_cast|turn))|"
+									. "(s(izeof|t(atic(_(cast|assert))?|ruct)|witch))|"
+									. "(t(emplate|h(is|r(ead_local|ow))|r(ue|y)|ype(def|id|name)))|"
+									. "(u(nion|sing))|"
+									. "(v(irtual|olatile))|"
+									. "(goto|mutable|xor(_eq)?|while)|"
+									. "(__(DATE|FILE|LINE|STDC(_VERSION)?|TIME)__)"
+								 . ")\b#",
+				"type" 			=> "#\b(bool|(w)?c(har(16|32)?(_t)?)|double|float|int|long|void)\b#",
+				"customType" 	=> "#\b(st(ring|d))\b#",
+				"lineComment"	=> "#//.*\n#",
+				"multiComment"	=> array("#/\*#", "#\*/#"),
+				"special"		=> "%^\#.*\n%"
+			),
+			"PHP"			=>	array
+			(
+				"file" 			=> "#.*(\.php)#",
+				"keyword" 		=> "#\b("
+									. "(a(bstract|nd|rray|s))|"
+									. "(c(a(llable|se|tch)|l(ass|one)|on(st|tinue)))|"
+									. "(d(e(clare|fault)|ie|o))|"
+									. "(e(cho|lse(if)?|mpty|nd(declare|for(each)?|if|switch|while)|val|x(it|tends)))|"
+									. "(f(alse|inal|or(each)?|unction))|"
+									. "(g(lobal|oto))|"
+									. "(i(f|mplements|n(clude(_once)?|st(anceof|eadof)|terface)|sset))|"
+									. "(n(amespace|ew))|"
+									. "(p(r(i(nt|vate)|otected)|ublic))|"
+									. "(re(quire(_once)?|turn))|"
+									. "(s(tatic|witch))|"
+									. "(t(hrow|r(ait|rue|y)))|"
+									. "(u(nset|se))|"
+									. "(break|list|(x)?or|var|while)|"
+									. "(__(CLASS|DIR|F(ILE|UNCTION)|LINE|METHOD|NAMESPACE|TRAIT)__)"
+								 . ")\b#",
+				"type" 			=> "",
+				"customType"	=> "",
+				"lineComment"	=> "#//.*\n#",
+				"multiComment"	=> array("#/\*#", "#\*/#"),
+				"special"		=> ""
+			),
+			"Python"		=>	array
+			(
+				"file" 			=> "#.*(\.py)#",
+				"keyword" 		=> "#\b("
+									. "(a(nd|s(sert)?))|"
+									. "(c(lass|ontinue))|"
+									. "(d(e(f|l)))|"
+									. "(e(l(se|if)|x(cept|ex)))|"
+									. "(f(inally|or|rom))|"
+									. "(i(f|mport|n|s))|"
+									. "(p(ass|rint))|"
+									. "(r(aise|eturn))|"
+									. "(w(hile|ith))|"
+									. "(break|global|lambda|not|or|try|yield)"
+								 . ")\b#",
+				"type" 			=> "#====#",
+				"customType"	=> "#====#",
+				"lineComment"	=> "%#.*\n%",
+				"multiComment"	=> array("#'{3}#", "#'{3}#"),
+				"special"		=> "#====#"
+			),
+			"Java"			=>	array
+			(
+				"file" 			=> "#.*(\.java)#",
+				"keyword" 		=> "#\b("
+									. "(a(bstract|ssert))|"
+									. "(c(a(se|tch)|lass)|on(st|tinue)))|"
+									. "(d(efault|o))|"
+									. "(e(lse|num|xtends))|"
+									. "(f(inal(ly)?|or))|"
+									. "(i(f|m(plements|port)|n(stanceof|terface)))|"
+									. "(n(ative|ew|ull))"
+									. "(p(ackage|r(ivate|otected)|ublic)))|"
+									. "(s(t(rictfp|atic)|witch|uper|ynchronized))|"
+									. "(t(h(is|row(s)?)|r(ansient|ue|y)))|"
+									. "(break|goto|return|volatile|while)"
+								 . ")\b#",
+				"type" 			=> "#\b(b(oolean|yte)|char|double|float|int|long|short|void)\b#",
+				"customType"	=> "",
+				"lineComment"	=> "#//.*\n#",
+				"multiComment"	=> array("#/\*#", "#\*/#"),
+				"special"		=> ""
+			),
+			"JavaScript"	=>	array
+			(
+				"file" 			=> "#.*(\.java)#",
+				"keyword" 		=> "#\b("
+									. "(a(bstract|rguments|wait))|"
+									. "(b(reak|yte))|"
+									. "(c(a(se|tch)|har|lass|on(st|tinue)))|"
+									. "(d(e(bugger|fault|lete|o(uble)?)))|"
+									. "(e(lse|num|val|x(port|tends)))|"
+									. "(f(alse|inal(ly)?|loat|or|unction))|"
+									. "(i(f|mp(lements|ort|n(stanceof|t(erface)?)?)))|"
+									. "(l(et|ong))|"
+									. "(n(ative|ew|ull))|"
+									. "(p(ackage|r(ivate|otected)|ublic))|"
+									. "(s(hort|tatic|uper|witch|ynchronized))|"
+									. "(t(h(is|r(ow(s)?|ansient|ue|y))|ypeof))|"
+									. "(v(ar|o(id|latile)))|"
+									. "(w(hile|ith))|"
+									. "(goto|return|yield)"
+								 . ")\b#",
+				"type" 			=> "",
+				"customType"	=> "",
+				"lineComment"	=> "#//.*\n#",
+				"multiComment"	=> array("#/\*#", "#\*/#"),
+				"special"		=> ""
+			)
+		);
 		private $timer = null;
 		private $exec_time = 0;
 		private $filename = "";

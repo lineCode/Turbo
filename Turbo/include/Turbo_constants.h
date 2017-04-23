@@ -68,15 +68,15 @@ namespace TURBO
 
     /// Other
 
-    const SDL_Color     TRANSPARENT	            = {0x00, 0x00, 0x00, 0x00};
-    const SDL_Color     BLACK			        = {0x00, 0x00, 0x00, 0xFF};
-    const SDL_Color     RED			            = {0xFF, 0x00, 0x00, 0xFF};
-    const SDL_Color     GREEN                   = {0x00, 0xFF, 0x00, 0xFF};
-    const SDL_Color     BLUE			        = {0x00, 0x00, 0xFF, 0xFF};
-    const SDL_Color     WHITE			        = {0xFF, 0xFF, 0xFF, 0xFF};
-    const SDL_Color     YELLOW		            = {0xFF, 0xFF, 0x00, 0xFF};
-    const SDL_Color     MAGENTA		            = {0xFF, 0x00, 0xFF, 0xFF};
-    const SDL_Color     CYAN			        = {0x00, 0xFF, 0xFF, 0xFF};
+    const SDL_Color     _TRANSPARENT	            = {0x00, 0x00, 0x00, 0x00};
+    const SDL_Color     _BLACK			        = {0x00, 0x00, 0x00, 0xFF};
+    const SDL_Color     _RED			            = {0xFF, 0x00, 0x00, 0xFF};
+    const SDL_Color     _GREEN                   = {0x00, 0xFF, 0x00, 0xFF};
+    const SDL_Color     _BLUE			        = {0x00, 0x00, 0xFF, 0xFF};
+    const SDL_Color     _WHITE			        = {0xFF, 0xFF, 0xFF, 0xFF};
+    const SDL_Color     _YELLOW		            = {0xFF, 0xFF, 0x00, 0xFF};
+    const SDL_Color     _MAGENTA		            = {0xFF, 0x00, 0xFF, 0xFF};
+    const SDL_Color     _CYAN			        = {0x00, 0xFF, 0xFF, 0xFF};
 
     const std::string   LOG                     = "[LOG]";
     const std::string   WAR                     = "[WARNING]";
@@ -85,6 +85,5 @@ namespace TURBO
     const std::string   INFO                    = "[INFO]";
     const std::string   SPACE                   = " ";
 }
-
 
 #endif // TURBO_CONSTANTS_H_INCLUDED

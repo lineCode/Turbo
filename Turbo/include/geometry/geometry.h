@@ -64,6 +64,10 @@ namespace GEOMETRY
         Line(Point p1, Point p2);
 		Line(double x1, double y1, double x2, double y2);
 		void            setWeight(double w);
+        void            setX(double x);
+        double          getX();
+        void            setY(double y);
+        double          getY();
 		double          getWeight();
 		double          getLength();
 		Point           getFirst();
@@ -173,6 +177,10 @@ namespace GEOMETRY
         Triangle();
         Triangle(Point p1, Point p2, Point p3);
 		Triangle(double x1, double y1, double x2, double y2, double x3, double y3);
+        void            setX(double x);
+        double          getX();
+        void            setY(double y);
+        double          getY();
 		double          getWidth();
 		double          getLength();
 		double          getHeight();

@@ -166,6 +166,12 @@ Widget::Widget(Rectangle dimension)
 
 }
 
+Widget::Widget(std::string xml_file)
+    : IGUIObject()
+{
+
+}
+
 void Widget::addWidget(Widget * w)
 {
     this->setChild(w);

@@ -1,9 +1,29 @@
 #include "gui/gui.h"
 
 using namespace GUI;
-using GEOMETRY::Rectangle;
 using GEOMETRY::Point;
+using GEOMETRY::Line;
+using GEOMETRY::Triangle;
+using GEOMETRY::Rectangle;
 using EXTERN::XML;
+
+Color::Color(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+    : r(r), g(g), b(b), a(a)
+{
+
+}
+
+Color Color::toGrayscale()
+{
+    Color c;
+    return c;
+}
+
+SDL_Color Color::toSDL_Color()
+{
+    SDL_Color c = {this->r, this->g, this->b, this->a};
+    return c;
+}
 
 Window::Window(string title, Rectangle dimension, Uint32 flags)
     : dimension(dimension)
@@ -17,6 +37,36 @@ Window::Window(string title, Rectangle dimension, Uint32 flags)
 SDL_Window * Window::getWindow()
 {
     return this->window;
+}
+
+void Window::setBordered(bool bordered)
+{
+    SDL_SetWindowBordered(this->window, bordered);
+}
+
+bool Window::isBordered()
+{
+    return false;
+}
+
+void Window::setFulllscreen(bool fullscreen)
+{
+    SDL_SetWindowFullscreen(this->window, fullscreen);
+}
+
+bool Window::isFullscreen()
+{
+    return false;
+}
+
+void Window::setBrightness(float brightness)
+{
+    SDL_SetWindowBrightness(this->window, brightness);
+}
+
+float Window::getBrightness()
+{
+    return SDL_GetWindowBrightness(this->window);
 }
 
 Window::~Window()
@@ -37,14 +87,76 @@ SDL_Renderer * IRenderer::getRenderer()
     return this->renderer;
 }
 
-SDL_Color IRenderer::getResetColor()
+Color IRenderer::getResetColor()
 {
     return this->reset_color;
 }
 
-void IRenderer::setDrawColor(SDL_Color color)
+void IRenderer::setResetColor(Color color)
 {
+    this->reset_color = color;
+}
+
+Color IRenderer::getDrawColor()
+{
+    return this->draw_color;
+}
+
+void IRenderer::setDrawColor(Color color)
+{
+    this->draw_color = color;
     SDL_SetRenderDrawColor(this->renderer, color.r, color.g, color.b, color.a);
+}
+
+void IRenderer::drawPoint(Point p, Color color)
+{
+    Color reset = this->draw_color;
+
+    this->setDrawColor(color);
+    SDL_RenderDrawPoint(this->renderer, p.getX(), p.getY());
+    this->setDrawColor(reset);
+}
+
+void IRenderer::drawLine(Line l, Color color)
+{
+    Color reset = this->draw_color;
+
+    this->setDrawColor(color);
+    SDL_RenderDrawLine(this->renderer, l.getX(), l.getY(),
+                       l.getSecond().getX(), l.getSecond().getY());
+    this->setDrawColor(reset);
+}
+
+void IRenderer::drawTriangle(Triangle t, Color color)
+{
+    Color reset = this->draw_color;
+    SDL_Point p1 = t.getVertice(0);
+    SDL_Point p2 = t.getVertice(1);
+    SDL_Point p3 = t.getVertice(2);
+
+    this->setDrawColor(color);
+    SDL_RenderDrawLine(this->renderer, p1.x, p1.y, p2.x, p2.y);
+    SDL_RenderDrawLine(this->renderer, p2.x, p2.y, p3.x, p3.y);
+    SDL_RenderDrawLine(this->renderer, p3.x, p3.y, p1.x, p1.y);
+    this->setDrawColor(reset);
+}
+
+void IRenderer::drawRectangle(Rectangle r, Color color)
+{
+    Color reset = this->draw_color;
+
+    this->setDrawColor(color);
+    SDL_RenderDrawRect(this->renderer, &r.toSDL_Rect());
+    this->setDrawColor(reset);
+}
+
+void IRenderer::drawFilledRectangle(Rectangle r, Color color)
+{
+    Color reset = this->draw_color;
+
+    this->setDrawColor(color);
+    SDL_RenderFillRect(this->renderer, &r.toSDL_Rect());
+    this->setDrawColor(reset);
 }
 
 //void IRenderer::draw(Texture & texture)
@@ -216,7 +328,7 @@ Texture::Texture(IRenderer & renderer, Sprite & sprite)
 }
 
 bool Texture::setTextureFromText(IRenderer & renderer, Font & font, std::string text,
-                                 RENDER_MODE mode, SDL_Color color_fg, SDL_Color color_bg)
+                                 RENDER_MODE mode, Color color_fg, Color color_bg)
 {
     bool success = false;
     SDL_Surface * surface = nullptr;
@@ -225,17 +337,20 @@ bool Texture::setTextureFromText(IRenderer & renderer, Font & font, std::string 
     {
     case RENDER_MODE::SOLID:
         {
-            surface = TTF_RenderUNICODE_Solid(font.getFont(), (Uint16 *)text.c_str(), color_fg);
+            surface = TTF_RenderUNICODE_Solid(font.getFont(), (Uint16 *)text.c_str(),
+                                              color_fg.toSDL_Color());
             break;
         }
     case RENDER_MODE::SHADED:
         {
-            surface = TTF_RenderUNICODE_Shaded(font.getFont(), (Uint16 *)text.c_str(), color_fg, color_bg);
+            surface = TTF_RenderUNICODE_Shaded(font.getFont(), (Uint16 *)text.c_str(),
+                                               color_fg.toSDL_Color(), color_bg.toSDL_Color());
             break;
         }
     case RENDER_MODE::BLENDED:
         {
-            surface = TTF_RenderUNICODE_Blended(font.getFont(), (Uint16 *)text.c_str(), color_fg);
+            surface = TTF_RenderUNICODE_Blended(font.getFont(), (Uint16 *)text.c_str(),
+                                                color_fg.toSDL_Color());
             break;
         }
     }
@@ -257,6 +372,21 @@ Texture::~Texture()
     {
         SDL_DestroyTexture(this->texture);
     }
+}
+
+Cursor::Cursor()
+{
+
+}
+
+void Cursor::showCursor(bool show)
+{
+    SDL_ShowCursor(show);
+}
+
+Cursor::~Cursor()
+{
+
 }
 
 GUIRenderer::GUIRenderer(Window & window, Rectangle dimension, Uint32 flags)
