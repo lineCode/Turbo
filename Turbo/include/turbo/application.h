@@ -18,7 +18,7 @@ namespace TURBO
     /**
     *** @class  Settings
     ***
-    *** @brief
+    *** @brief  Represents all settings of created application
     **/
     class Settings
     {
@@ -48,6 +48,8 @@ namespace TURBO
         EXTERN::AppTimer    timer;
         Settings            settings;
         GUI::IGUIObject     overlay;
+        //GUI::Window         window;
+        //GUI::IRenderer      renderer;
         bool                running = true;
 
     public:

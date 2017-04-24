@@ -1,9 +1,0 @@
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/parser.h:10: warning: Empty prototype found!
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/parser.h:9: warning: member with no name found.
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/directory.h:28: warning: documented symbol `EXTERN::currdir' was not declared or defined.
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/directory.h:29: warning: documented symbol `EXTERN::dirs' was not declared or defined.
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/directory.h:30: warning: documented symbol `EXTERN::files' was not declared or defined.
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/time.h:30: warning: documented symbol `m_timer_state stores the current timer EXTERN::state' was not declared or defined.
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/time.h:31: warning: documented symbol `m_timer_value stores the milliseconds since EXTERN::creation' was not declared or defined.
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/time.h:32: warning: documented symbol `m_ival_start stores the timestamp of the last start or EXTERN::resume' was not declared or defined.
-F:/Users/Chris/Programmieren/Projekte/Turbo_Project/Turbo/include/extern/time.h:33: warning: documented symbol `m_ival_stop stores the timestamp of the last stop or EXTERN::pause' was not declared or defined.
