@@ -116,7 +116,7 @@ namespace EVENT
 
 	public:
 	    JoystickListener();
-	    void onJoyAxisMotion()
+	    void onJoyAxisMotion();
 	    void onJoyBallMotion();
 	    void onJoyHatMotion();
 	    void onJoyButtonDown();

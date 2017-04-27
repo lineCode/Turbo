@@ -29,7 +29,7 @@ namespace TURBO
 
     public:
         Default();
-        static std::map<std::string, std::map<std::string, std::string>> getDefaultSettings();
+        static EXTERN::INI getDefaultSettings();
         ~Default();
     };
 

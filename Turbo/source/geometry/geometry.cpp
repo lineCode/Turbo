@@ -108,14 +108,27 @@ double Point::getZ()
 
 double Point::getDistance(Point p)
 {
-    return sqrt(pow(this->x-p.getX(), 2.0) + pow(this->y-p.getY(), 2.0) + pow(this->z-p.getZ(), 2.0));
+    return sqrt(pow(this->x-p.getX(), 2.0) + 
+                pow(this->y-p.getY(), 2.0) + 
+                pow(this->z-p.getZ(), 2.0));
+}
+
+bool Point::isEmpty()
+{
+    if(x == 0 && y == 0 && z == 0)
+    {
+        return true;
+    }
+    return false;
 }
 
 SDL_Point Point::toSDL_Point()
 {
     SDL_Point p;
+
     p.x = this->x;
     p.y = this->y;
+
     return p;
 }
 

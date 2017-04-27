@@ -1,11 +1,58 @@
 #include "turbo/application.h"
+#include "turbo/default.h"
 
 using namespace TURBO;
 using UTILS::Log;
 
 Settings::Settings(string file_path)
+    : file_path(file_path)
 {
+    this->readSettings();
+}
 
+void Settings::setSetting(string key, string value, string caption)
+{
+    this->settings.setValue(caption, key, value);
+}
+
+string Settings::getSetting(string key, string caption)
+{
+    return this->settings.getValue(caption, key);
+}
+
+void Settings::initSettings()
+{
+    EXTERN::INI default_settings = Default::getDefaultSettings();
+
+    for(auto cap : default_settings.kvp)
+    {
+        string caption = cap.first;
+        for(auto kvp : cap.second)
+        {
+            string key = kvp.first;
+            if(this->settings.kvp[caption][key] == "")
+            {
+                this->settings.kvp[caption][key] = default_settings.kvp[caption][key];
+            }
+        }
+    }
+}
+
+void Settings::resetSettings()
+{
+    this->settings = Default::getDefaultSettings();
+}
+
+void Settings::writeSettings()
+{
+    EXTERN::INIParser parser(this->file_path, false);
+    parser.write(this->file_path, this->settings);
+}
+
+void Settings::readSettings()
+{
+    EXTERN::INIParser parser(this->file_path);
+    this->settings = parser.getINI();
 }
 
 Settings::~Settings()
@@ -14,7 +61,7 @@ Settings::~Settings()
 }
 
 Application::Application()
-    : sdl(), timer(TURBO_FPS_LOCK), settings(), overlay()
+    : sdl(), timer(TURBO_FPS_LOCK), settings(TURBO_SETTINGSFILE), overlay()
 {
 
 }
@@ -62,7 +109,7 @@ void Application::registerCallbacks()
 
 void Application::mainLoop()
 {
-    long start = this->timer.getTicks(), stop = 0;
+    Uint64 start = this->timer.getTicks(), stop = 0;
     while(this->running)
     {
         this->eventLoop();

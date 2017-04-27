@@ -26,7 +26,7 @@ namespace EXTERN
 	class Timer
 	{
 	private:
-		const string 		TAG = "Timer";
+		const std::string 		TAG = "Timer";
 
 	protected:
 		TIMER_STATE			timer_state = TIMER_STATE::STOPPED;
@@ -51,17 +51,17 @@ namespace EXTERN
 	class AppTimer : public Timer
 	{
 	private:
-		const string	TAG = "AppTimer";
-		Uint16			fps_lock;
-		Uint32			frame_counter;
+		const std::string	TAG = "AppTimer";
+		Uint64			fps_lock;
+		Uint64			frame_counter;
 		Uint64 			frame_time;
-        Uint16 			fps;
+        Uint64 			fps;
 
 	public:
-		AppTimer(Uint16 fps_lock);
+		AppTimer(Uint64 fps_lock);
 		void 	initFPSCounter();
-		long 	calcDelay(long start, long stop);
-        int 	calcFPS();
+		Uint64 	calcDelay(Uint64 start, Uint64 stop);
+        Uint64 	calcFPS();
 		~AppTimer();
 
 	};

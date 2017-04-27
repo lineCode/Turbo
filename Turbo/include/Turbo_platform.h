@@ -54,7 +54,7 @@
 #include <vector>
 
 /// Scripting Libraries
-#include "Python/Python.h"
+#include "Python.h"
 
 
 /// Third Party Libraries

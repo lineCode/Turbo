@@ -6,7 +6,8 @@
 *** @author     Christoph Zorn
 *** @date       24.02.2017
 ***
-*** @brief      The module gui_object contains
+*** @brief      The module gui_object contains the abstract definitions for display
+***             overlays
 ***
 ***
 **/
@@ -72,23 +73,22 @@ namespace GUI
         std::vector<Texture>    textures;
 
     protected:
-        bool                    is_resized          = false;
-        bool                    is_dragable         = false;
-
         // Style Properties
+        bool                    is_dragable         = false;
         GEOMETRY::Rectangle     dimension           = GEOMETRY::Rectangle();
         HAlignment              h_align             = HAlignment::LEFT;
         VAlignment              v_align             = VAlignment::CENTER;
         Adjustment              adjustment          = Adjustment::MAXIMUM;
-        Uint16                  margin[4]           = {0, 0, 0, 0};
-        Uint16                  padding[4]          = {0, 0, 0, 0};
+        std::vector<Uint16>     margin              = {0, 0, 0, 0};
+        std::vector<Uint16>     padding             = {0, 0, 0, 0};
+        std::vector<Uint8>      border              = {0, 0, 0, 0};
         Color                   background_color    = {0, 0, 0, 0};
         Color                   border_color        = {0, 0, 0, 0};
         Color                   text_color          = {0, 0, 0, 255};
 
     public:
         IGUIObject(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
-        //virtual void            update() = 0;
+        virtual void            update();
         virtual void            draw(IRenderer & renderer);
         virtual bool            hasParent();
         virtual void            setParent(IGUIObject * object);
@@ -111,6 +111,26 @@ namespace GUI
         virtual GEOMETRY::Point getPosition();
         virtual void            setSize(GEOMETRY::Rectangle dimension);
         virtual GEOMETRY::Rectangle getSize();
+        virtual void            setMargin(Uint16 t, Uint16 r, Uint16 b, Uint16 l);
+        virtual std::vector<Uint16> getMargin();
+        virtual void            setPadding(Uint16 t, Uint16 r, Uint16 b, Uint16 l);
+        virtual std::vector<Uint16> getPadding();
+        virtual void            setBorder(Uint8 t, Uint8 r, Uint8 b, Uint8 l);
+        virtual std::vector<Uint8> getBorder();
+        virtual void            setBackgroundColor(Color color);
+        virtual Color           getBackroundColor();
+        virtual void            setTextColor(Color color);
+        virtual Color           getTextColor();
+        virtual void            setBorderColor(Color color);
+        virtual Color           getBorderColor();
+        virtual void            setHAlignment(HAlignment alignment);
+        virtual HAlignment      getHAlignment();
+        virtual void            setVAlignment(VAlignment alignment);
+        virtual VAlignment      getVAlignment();
+        virtual void            setAdjustment(Adjustment adjustment);
+        virtual Adjustment      getAdjustment();
+        virtual void            setStyle(EXTERN::XML xml);
+        virtual EXTERN::XML     getStyle();
         ~IGUIObject();
     };
 

@@ -45,8 +45,8 @@ namespace EXTERN
     {
     	std::map<std::string, std::map<std::string, std::string>> kvp;
 
-		string 				getValue(std::string key);
-		string 				getValue(std::string caption, std::string key);
+		std::string			getValue(std::string key);
+		std::string			getValue(std::string caption, std::string key);
 		int 				getValueAsInt(std::string key);
 		int 				getValueAsInt(std::string caption, std::string key);
 		float 				getValueAsFloat(std::string key);
@@ -58,6 +58,8 @@ namespace EXTERN
 
     /**
     *** @struct XML
+    ***
+    *** @brief  Represents a XML structure
     **/
     struct XML
     {
@@ -75,10 +77,12 @@ namespace EXTERN
 
 		std::string 		getValue(std::string key);
 		Sint32 				getValueAsInt(std::string key);
+        float               getValueAsFloat(std::string key);
 		void 				setValue(std::string key, std::string value);
 		XML					findTag(std::string tag);
     	bool 				isEmpty();
     	void				printXML();
+        //TODO~XML();
     };
 }
 

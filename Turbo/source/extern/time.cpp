@@ -77,10 +77,13 @@ string Timer::getTimeToString(Uint64 timestamp, string format)
 	//time_info = localtime(&ti);
 	//string time_stringStrf = (string)strftime(buffer, format.c_str(), &time_info);
 
-	time_t t = time((time_t*)&timestamp);
-	time(&t);
-	string time_string = ctime(&t);
-	return time_string.substr(0, time_string.length()-1);
+    /*std::time_t temp = timestamp;
+    std::tm * t = std::gmtime(&temp);
+    std::stringstream ss; 
+
+    ss << std::put_time(t, format.c_str());
+    return ss.str();*/
+    return "[NO TIME]";
 }
 
 Timer::~Timer()
@@ -88,7 +91,7 @@ Timer::~Timer()
 	this->stop();
 }
 
-AppTimer::AppTimer(Uint16 fps_lock)
+AppTimer::AppTimer(Uint64 fps_lock)
 	: Timer(), fps_lock(fps_lock)
 {
 	this->initFPSCounter();
@@ -100,20 +103,20 @@ void AppTimer::initFPSCounter()
 	this->frame_time = this->getTicks();
 }
 
-long AppTimer::calcDelay(long start, long stop)
+Uint64 AppTimer::calcDelay(Uint64 start, Uint64 stop)
 {
-	long time_ival = stop - start;
+	Uint64 time_ival = stop - start;
 
 	if(time_ival < (1000 / this->fps_lock))
 	{
-		this->sleep((1000 / this->fps_lock) - time_ival);
+		this->sleep((Uint32)((1000 / this->fps_lock) - time_ival));
 	}
 	return time_ival;
 }
 
-int AppTimer::calcFPS()
+Uint64 AppTimer::calcFPS()
 {
-	int fps = 0, ival = 0;
+	Uint64 fps = 0, ival = 0;
 
 	if((ival = (this->getTicks() - this->frame_time)) > 1000)
 	{

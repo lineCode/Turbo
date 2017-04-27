@@ -23,12 +23,21 @@ namespace TURBO
     class Settings
     {
     private:
-        const string TAG = "Settings";
+        const std::string TAG = "Settings";
+
+        std::string file_path;
+        EXTERN::INI settings;
 
     protected:
 
     public:
-        Settings(string file_path = TURBO::TURBO_SETTINGSFILE);
+        Settings(string file_path);
+        void        setSetting(std::string key, std::string value, std::string caption = "");
+        std::string getSetting(std::string key, std::string caption = "");
+        void        initSettings();
+        void        resetSettings();
+        void        writeSettings();
+        void        readSettings();
         ~Settings();
     };
 
@@ -41,7 +50,7 @@ namespace TURBO
     class Application
     {
     private:
-        const string        TAG = "Application";
+        const std::string        TAG = "Application";
 
     protected:
         SYSTEM::SDL         sdl;

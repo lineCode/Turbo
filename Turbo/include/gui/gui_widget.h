@@ -120,6 +120,36 @@ namespace GUI
     };
 
     /**
+    *** @class  VBox
+    ***
+    *** @brief
+    **/
+    class VBox : public ILayoutWidget
+    {
+    private:
+        const std::string TAG = "VBox";
+
+    public:
+        VBox();
+        ~VBox();
+    };
+
+    /**
+    *** @class  HBox
+    ***
+    *** @brief
+    **/
+    class HBox : public ILayoutWidget
+    {
+    private:
+        const std::string TAG = "HBox";
+
+    public:
+        HBox();
+        ~HBox();
+    };
+
+    /**
     *** @class List
     ***
     *** @var

@@ -17,7 +17,7 @@ namespace UTILS
 	class IComparator
 	{
 	private:
-		const string TAG = "IComparator";
+		const std::string TAG = "IComparator";
 
 	public:
 		virtual Uint8 compare(T t1, T t2);

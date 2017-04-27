@@ -61,6 +61,11 @@ int XML::getValueAsInt(string key)
 	return atoi(this->kvp[key].c_str());
 }
 
+float XML::getValueAsFloat(string key)
+{
+    return stof(this->kvp[key]);
+}
+
 void XML::setValue(string key, string value)
 {
 	this->kvp[key] = value;
@@ -132,3 +137,15 @@ void XML::printXML()
 		this->child->printXML();
 	}
 }
+
+/*TODO
+XML::~XML()
+{
+    if(this->children.size() != 0)
+    { 
+        for(XML * child : this->children)
+        {
+            child->~XML();
+        }
+    }
+}*/

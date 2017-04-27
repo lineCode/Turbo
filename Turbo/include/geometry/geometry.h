@@ -6,14 +6,14 @@
 namespace GEOMETRY
 {
     /**
-    *** @class Point
+    *** @class  Point
     ***
-    *** @var
+    *** @brief  
     **/
     class Point
     {
     private:
-         std::string    TAG = "Point";
+        std::string    TAG = "Point";
         double          x = 0;
         double          y = 0;
         double          z = 0;
@@ -44,14 +44,14 @@ namespace GEOMETRY
     };
 
     /**
-    *** @class Line
+    *** @class  Line
     ***
-    *** @var
+    *** @brief  
     **/
     class Line
     {
     private:
-         std::string    TAG = "Line";
+        std::string    TAG = "Line";
         double          weight = 0;
         Point           p1;
 		Point           p2;
@@ -76,9 +76,9 @@ namespace GEOMETRY
     };
 
     /**
-    *** @class Vector
+    *** @class  Vector
     ***
-    *** @var
+    *** @brief  
     **/
     class Vector
     {
@@ -94,9 +94,9 @@ namespace GEOMETRY
 
 
     /**
-    *** @class IShape
+    *** @class  IShape
     ***
-    *** @brief This class represents a graph or more complex geometric structures
+    *** @brief  This class represents a graph or more complex geometric structures
     ***
     *** @var
     **/
@@ -159,14 +159,14 @@ namespace GEOMETRY
 
 
     /**
-    *** @class Triangle
+    *** @class  Triangle
     ***
-    *** @var
+    *** @brief  
     **/
     class Triangle : public IShape
     {
     private:
-         std::string    TAG = "Triangle";
+        std::string    TAG = "Triangle";
         Point           p1;
 		Point           p2;
 		Point           p3;
@@ -193,6 +193,8 @@ namespace GEOMETRY
     /**
     *** @class  Rectangle
     ***
+    *** @brief  
+    ***
     *** @var    p1 top left
     *** @var    p2 top right
     *** @var    p3 bottom right
@@ -201,7 +203,7 @@ namespace GEOMETRY
     class Rectangle : public IShape
     {
     private:
-         std::string    TAG = "Rectangle";
+        std::string    TAG = "Rectangle";
         Point           p1;
 		Point           p2;
 		Point           p3;
@@ -242,7 +244,7 @@ namespace GEOMETRY
     class Cube
     {
     private:
-        const string TAG = "Cube";
+        std::string TAG = "Cube";
 
     protected:
 

@@ -11,6 +11,8 @@
 ***
 **/
 
+#include "Turbo_main.h"
+
 namespace LOGIC
 {
     /**
@@ -21,7 +23,7 @@ namespace LOGIC
     class ILogicObject
     {
     private:
-        const string TAG = "ILogicObject";
+        const std::string TAG = "ILogicObject";
 
     protected:
 

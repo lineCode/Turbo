@@ -28,7 +28,6 @@ namespace AUDIO
         PAUSED	= 3
     };
 
-
     /**
     *** @class  Chunk
     ***
@@ -51,7 +50,6 @@ namespace AUDIO
 		void                stop();
 		~Chunk();
 	};
-
 
 	/**
 	*** @class  Music

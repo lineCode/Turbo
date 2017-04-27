@@ -5,8 +5,10 @@ using namespace EXTERN;
 string trim(const string & str, const string & whitespace = " \t")
 {
     const auto strBegin = str.find_first_not_of(whitespace);
-    if (strBegin == std::string::npos)
+    if(strBegin == std::string::npos)
+    {
         return "";
+    }
 
     const auto strEnd = str.find_last_not_of(whitespace);
     const auto strRange = strEnd - strBegin + 1;
@@ -16,8 +18,10 @@ string trim(const string & str, const string & whitespace = " \t")
 
 INIParser::INIParser(string file, bool read) : IParser(file)
 {
-	if(read)
+    if(read)
+    {
 		this->read(file);
+    }
 }
 
 INI INIParser::read(string file)
@@ -26,7 +30,7 @@ INI INIParser::read(string file)
 	string caption = "";
     ifstream in(file, std::ios::in);
 
-    while(getline(in, line) != nullptr)
+    while(getline(in, line))
     {
 		char symbol;
 		string option, value;

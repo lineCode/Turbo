@@ -41,7 +41,7 @@ SDL_Window * Window::getWindow()
 
 void Window::setBordered(bool bordered)
 {
-    SDL_SetWindowBordered(this->window, bordered);
+    SDL_SetWindowBordered(this->window, (SDL_bool)bordered);
 }
 
 bool Window::isBordered()
@@ -130,9 +130,9 @@ void IRenderer::drawLine(Line l, Color color)
 void IRenderer::drawTriangle(Triangle t, Color color)
 {
     Color reset = this->draw_color;
-    SDL_Point p1 = t.getVertice(0);
-    SDL_Point p2 = t.getVertice(1);
-    SDL_Point p3 = t.getVertice(2);
+    SDL_Point p1 = t.getVertice(0).toSDL_Point();
+    SDL_Point p2 = t.getVertice(1).toSDL_Point();
+    SDL_Point p3 = t.getVertice(2).toSDL_Point();
 
     this->setDrawColor(color);
     SDL_RenderDrawLine(this->renderer, p1.x, p1.y, p2.x, p2.y);
@@ -144,18 +144,20 @@ void IRenderer::drawTriangle(Triangle t, Color color)
 void IRenderer::drawRectangle(Rectangle r, Color color)
 {
     Color reset = this->draw_color;
+    SDL_Rect rect = r.toSDL_Rect();
 
     this->setDrawColor(color);
-    SDL_RenderDrawRect(this->renderer, &r.toSDL_Rect());
+    SDL_RenderDrawRect(this->renderer, &rect);
     this->setDrawColor(reset);
 }
 
 void IRenderer::drawFilledRectangle(Rectangle r, Color color)
 {
     Color reset = this->draw_color;
+    SDL_Rect rect = r.toSDL_Rect();
 
     this->setDrawColor(color);
-    SDL_RenderFillRect(this->renderer, &r.toSDL_Rect());
+    SDL_RenderFillRect(this->renderer, &rect);
     this->setDrawColor(reset);
 }
 

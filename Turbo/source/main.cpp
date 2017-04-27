@@ -1,8 +1,6 @@
 #include "turbo/application.h"
 
 using TURBO::Application;
-using SYSTEM::Platform;
-using SYSTEM::SDL;
 using namespace GUI;
 using namespace GEOMETRY;
 using namespace AUDIO;
@@ -24,25 +22,16 @@ int main(int argc, char ** argv)
     Mix_Volume(-1, 5);
     Mix_VolumeMusic(5);
 
-    ch.play(0, 0);
-    mu.play(0);
+    //ch.play(0, 0);
+    //mu.play(0);
 
-    Widget widget = Widget(Rectangle(0, 0, 100, 50));
+    Widget widget = Widget(Rectangle(0, 0, 125, 75));
     Button button = Button("Click", Rectangle(0, 0, 50, 50));
     widget.setChild(&button);
+    widget.setPosition(Point(50, 50));
+    widget.setBackgroundColor({0, 100, 100, 255});
+    button.setBorderColor({255, 255, 0, 255});
 
-    SYSTEM::SDL sdl = SDL();
-    SYSTEM::Platform p = Platform();
-    /*
-    cout << sdl.getBasePath() << endl;
-    cout << sdl.getRevision() << endl;
-    cout << sdl.getVersion() << endl;
-    cout << p.getDisplayModes() << endl;
-    cout << p.getAudioDevices() << endl;
-    cout << p.getPlatform() << endl;
-    cout << p.getVideoDrivers() << endl;
-    cout << p.getVideoDisplays() << endl;
-*/
     bool running = true;
     while(running == true)
     {
@@ -58,7 +47,7 @@ int main(int argc, char ** argv)
                 }
             }
             game_renderer.clear();
-//            widget.draw(game_renderer);
+            widget.draw(game_renderer);
             game_renderer.present();
         }
     }
