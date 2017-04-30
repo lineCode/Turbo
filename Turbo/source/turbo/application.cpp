@@ -63,7 +63,8 @@ Settings::~Settings()
 Application::Application()
     : sdl(), timer(TURBO_FPS_LOCK), settings(TURBO_SETTINGSFILE), overlay()
 {
-
+    this->registerEvent(SDL_KEYDOWN, std::bind(&Application::stop, this));
+    this->registerEvent(SDL_MOUSEBUTTONDOWN, std::bind(&Application::stop, this));
 }
 
 void Application::eventLoop()
@@ -75,23 +76,25 @@ void Application::eventLoop()
         {
         case SDL_QUIT:
             {
-                this->stop();
+                
                 break;
             }
         case SDL_WINDOWEVENT:
             {
                 break;
             }
-        case SDL_KEYDOWN: case SDL_KEYUP:
+        case SDL_KEYDOWN: //case SDL_KEYUP:
             {
+                EVENT::IEventListener::callEvent(SDL_KEYDOWN);
                 break;
             }
         case SDL_JOYAXISMOTION: case SDL_JOYBUTTONDOWN: case SDL_JOYBUTTONUP:
             {
                 break;
             }
-        case SDL_MOUSEMOTION: case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP:
+        case SDL_MOUSEBUTTONDOWN: //case SDL_MOUSEBUTTONUP: case SDL_MOUSEMOTION:
             {
+                EVENT::IEventListener::callEvent(SDL_MOUSEBUTTONDOWN);
                 break;
             }
         default:

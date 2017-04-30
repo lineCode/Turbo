@@ -83,13 +83,13 @@ using std::left;
 using std::right;
 using std::setw;
 
-using std::string;
-using std::istringstream;
 using std::function;
+using std::istringstream;
+using std::string;
 
 using std::array;
-using std::map;
 using std::list;
+using std::map;
 using std::pair;
 using std::queue;
 using std::vector;

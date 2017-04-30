@@ -131,7 +131,7 @@ namespace GUI
         virtual Adjustment      getAdjustment();
         virtual void            setStyle(EXTERN::XML xml);
         virtual EXTERN::XML     getStyle();
-        ~IGUIObject();
+        virtual ~IGUIObject();
     };
 
     /**
@@ -152,7 +152,7 @@ namespace GUI
         Widget(std::string xml_file);
         virtual void            addWidget(Widget * w);
         virtual void            removeWidget();
-        ~Widget();
+        virtual ~Widget();
     };
 
     /**
@@ -176,7 +176,7 @@ namespace GUI
         //virtual Widget *        getWidgets();
         virtual void            removeWidget(Widget * w);
         virtual void            removeWidget();
-        ~ILayoutWidget();
+        virtual ~ILayoutWidget();
     };
 
 }

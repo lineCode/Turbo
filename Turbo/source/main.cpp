@@ -32,7 +32,7 @@ int main(int argc, char ** argv)
     widget.setBackgroundColor({0, 100, 100, 255});
     button.setBorderColor({255, 255, 0, 255});
 
-    bool running = true;
+    /*bool running = true;
     while(running == true)
     {
         SDL_Event event;
@@ -50,6 +50,6 @@ int main(int argc, char ** argv)
             widget.draw(game_renderer);
             game_renderer.present();
         }
-    }
-    return 0;
+    }*/
+    return app.run();
 }

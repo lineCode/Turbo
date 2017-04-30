@@ -51,12 +51,14 @@ namespace TURBO
     const std::string	TURBO_PATH_SAVES		= "data/save/";
     const std::string	TURBO_PATH_SCREENSHOT	= "data/screenshot/";
     const std::string 	TURBO_PATH_XML 			= "data/xml/";
-    const std::string 	TURBO_PATH_XML_AUDIO 	= "data/xml/audio/";
+    const std::string 	TURBO_PATH_XML_AUDIO    = "data/xml/audio/";
+    const std::string 	TURBO_PATH_XML_CHUNK 	= "data/xml/audio/chunk/";
     const std::string 	TURBO_PATH_XML_FONT 	= "data/xml/font/";
     const std::string	TURBO_PATH_XML_GAME		= "data/xml/game/";
     const std::string 	TURBO_PATH_XML_IMAGE 	= "data/xml/image/";
     const std::string 	TURBO_PATH_XML_LAYOUT	= "data/xml/layout/";
     const std::string 	TURBO_PATH_XML_MAP 		= "data/xml/map/";
+    const std::string 	TURBO_PATH_XML_MUSIC    = "data/xml/audio/music/";
     const std::string 	TURBO_PATH_XML_TEXT 	= "data/xml/text/";
 
     const std::string   TURBO_LOGFILE           = TURBO_PATH_DATA + "log.txt";
@@ -68,14 +70,14 @@ namespace TURBO
 
     /// Other
 
-    const SDL_Color     _TRANSPARENT	            = {0x00, 0x00, 0x00, 0x00};
+    const SDL_Color     _TRANSPARENT	        = {0x00, 0x00, 0x00, 0x00};
     const SDL_Color     _BLACK			        = {0x00, 0x00, 0x00, 0xFF};
-    const SDL_Color     _RED			            = {0xFF, 0x00, 0x00, 0xFF};
-    const SDL_Color     _GREEN                   = {0x00, 0xFF, 0x00, 0xFF};
+    const SDL_Color     _RED			        = {0xFF, 0x00, 0x00, 0xFF};
+    const SDL_Color     _GREEN                  = {0x00, 0xFF, 0x00, 0xFF};
     const SDL_Color     _BLUE			        = {0x00, 0x00, 0xFF, 0xFF};
     const SDL_Color     _WHITE			        = {0xFF, 0xFF, 0xFF, 0xFF};
     const SDL_Color     _YELLOW		            = {0xFF, 0xFF, 0x00, 0xFF};
-    const SDL_Color     _MAGENTA		            = {0xFF, 0x00, 0xFF, 0xFF};
+    const SDL_Color     _MAGENTA		        = {0xFF, 0x00, 0xFF, 0xFF};
     const SDL_Color     _CYAN			        = {0x00, 0xFF, 0xFF, 0xFF};
 
     const std::string   LOG                     = "[LOG]";

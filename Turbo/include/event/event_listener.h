@@ -28,15 +28,36 @@ namespace EVENT
 		SDL_Event * event;
 
 	protected:
-		std::map<Uint32, std::vector<std::function<void()>>> callback;
+		static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
 
 	public:
 		IEventListener();
 		SDL_Event * getEvent();
-		virtual void registerCallback(Uint32 code, std::function<void> callback) = 0;
-		virtual void callCallback(Uint32 code) = 0;
+		virtual void registerEvent(Uint32 code, std::function<void()> callback);
+		static void callEvent(Uint32 code);
 		~IEventListener();
 	};
+
+    /**
+    *** @class WindowListener
+    ***
+    *** @var
+    **/
+    class WindowListener : public IEventListener
+    {
+    private:
+        const std::string TAG = "WindowListener";
+
+    protected:
+        //static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
+
+    public:
+        WindowListener();
+        /*void registerEvent(Uint32 code, std::function<void()> callback);
+        static void callEvent(Uint32 code);*/
+        //virtual void onFocus();
+        ~WindowListener();
+    };
 
 	/**
 	*** @class KeyboardListener
@@ -49,14 +70,15 @@ namespace EVENT
 	    const std::string TAG = "KeyboardListener";
 
 	protected:
+        //static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
 
 	public:
 	    KeyboardListener();
-	    void registerCallback(Uint32 code, std::function<void()> callback);
-		void callCallback(Uint32 code);
-		void onKeyDown();
-		void onKeyUp();
-	    ~KeyboardListener();
+	    /*void registerEvent(Uint32 code, std::function<void()> callback);
+		static void callEvent(Uint32 code);*/
+		//virtual void onKeyDown();
+		//virtual void onKeyUp();
+	    virtual ~KeyboardListener();
 	};
 
 	/**
@@ -70,6 +92,7 @@ namespace EVENT
 	    const string TAG = "MouseListener";
 
 	protected:
+        //static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
 
 	public:
 	    MouseListener();
@@ -93,6 +116,7 @@ namespace EVENT
 		const string TAG = "ControllerListener";
 
 	protected:
+        //static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
 
 	public:
 		ControllerListener();
@@ -113,6 +137,7 @@ namespace EVENT
 	    const string TAG = "JoystickListener";
 
 	protected:
+        //static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
 
 	public:
 	    JoystickListener();
@@ -135,6 +160,7 @@ namespace EVENT
 	    const string TAG = "FingerListener";
 
 	protected:
+        //static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
 
 	public:
 	    FingerListener();

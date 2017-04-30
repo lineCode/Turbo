@@ -47,7 +47,7 @@ namespace TURBO
     ***
     *** @var
     **/
-    class Application
+    class Application : public EVENT::IEventListener
     {
     private:
         const std::string        TAG = "Application";

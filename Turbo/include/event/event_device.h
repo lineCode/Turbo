@@ -13,13 +13,14 @@ namespace EVENT
     class IDevice
     {
     private:
-        const string TAG = "IDevice";
+        const string    TAG = "IDevice";
 
     protected:
+        SDL_Event     * event;
 
     public:
         IDevice();
-        ~IDevice();
+        virtual ~IDevice();
     };
 
     /**
@@ -31,8 +32,6 @@ namespace EVENT
     {
     private:
         const string TAG = "Keyboard";
-
-        SDL_Keyboard * keyboard;
 
     protected:
 
@@ -51,8 +50,6 @@ namespace EVENT
     private:
         const string TAG = "Mouse";
 
-        SDL_Mouse * mouse;
-
     protected:
 
     public:
@@ -69,8 +66,6 @@ namespace EVENT
     {
     private:
         const string TAG = "Controller";
-
-        SDL_Controller * controller;
 
     protected:
 

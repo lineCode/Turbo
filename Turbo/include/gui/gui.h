@@ -16,6 +16,7 @@
 #include "extern/extern.h"
 #include "extern/parser.h"
 #include "extern/directory.h"
+#include "event/event_listener.h"
 
 namespace GUI
 {
@@ -79,6 +80,13 @@ namespace GUI
     public:
         Window(std::string title, GEOMETRY::Rectangle dimension, Uint32 flags);
         SDL_Window        * getWindow();
+        Uint32              getFlags();
+        void                setFlags(Uint32 flags);
+        Uint32              getId();
+        void                show();
+        void                hide();
+        void                maximize();
+        void                minimize();
         void                setBordered(bool bordered);
         bool                isBordered();
         void                setFulllscreen(bool fullscreen);
@@ -126,7 +134,7 @@ namespace GUI
         //TODOvirtual void        draw(Texture & texture);
         virtual void        present();
         virtual void        clear();
-        ~IRenderer();
+        virtual ~IRenderer();
     };
 
 

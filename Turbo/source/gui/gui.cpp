@@ -39,6 +39,41 @@ SDL_Window * Window::getWindow()
     return this->window;
 }
 
+Uint32 Window::getFlags()
+{
+    return SDL_GetWindowFlags(this->window);
+}
+
+void Window::setFlags(Uint32 flags)
+{
+    
+}
+
+Uint32 Window::getId()
+{
+    return SDL_GetWindowID(this->window);
+}
+
+void Window::show()
+{
+    SDL_ShowWindow(this->window);
+}
+
+void Window::hide()
+{
+    SDL_HideWindow(this->window);
+}
+
+void Window::maximize()
+{
+    SDL_MaximizeWindow(this->window);
+}
+
+void Window::minimize()
+{
+    SDL_MinimizeWindow(this->window);
+}
+
 void Window::setBordered(bool bordered)
 {
     SDL_SetWindowBordered(this->window, (SDL_bool)bordered);

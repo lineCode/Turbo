@@ -24,16 +24,14 @@ void IGUIObject::update()
 void IGUIObject::draw(IRenderer & renderer)
 {
     SDL_Rect rect = this->dimension.toSDL_Rect();
+
     renderer.setDrawColor(this->background_color);
     SDL_RenderFillRect(renderer.getRenderer(), &rect);
     renderer.setDrawColor(this->border_color);
     SDL_RenderDrawRect(renderer.getRenderer(), &rect);
     renderer.setDrawColor(renderer.getResetColor());
 
-//    for(auto texture : this->textures)
-//    {
-//        renderer.draw(texture);
-//    }
+
     if(this->child != nullptr)
     {
         this->child->draw(renderer);
