@@ -86,6 +86,11 @@ namespace TURBO
     const std::string   DEBUG                   = "[DEBUG]";
     const std::string   INFO                    = "[INFO]";
     const std::string   SPACE                   = " ";
+
+    /// App properties
+
+    const std::string   APP_NAME                = "Turbo_Test_Window";
+    const std::string   APP_OVERLAY             = TURBO_PATH_XML_LAYOUT + "Turbo_Overlay.xml";
 }
 
 #endif // TURBO_CONSTANTS_H_INCLUDED

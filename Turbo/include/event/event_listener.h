@@ -15,6 +15,28 @@
 
 namespace EVENT
 {
+//	/**
+//	*** @class  Signal
+//	***
+//	*** @brief
+//	**/
+//	class Signal
+//	{
+//	private:
+//	    const std::string TAG = "Signal";
+//
+//	protected:
+//
+//	public:
+//	    Signal();
+//	    template <typename T>
+//	    int connect(T & t, std::function<void()>);
+//	    void disconnect(int id);
+//	    void emit();
+//	    ~Signal();
+//	};
+
+
 	/**
 	*** @class EventListener
 	***

@@ -56,9 +56,9 @@ namespace TURBO
         SYSTEM::SDL         sdl;
         EXTERN::AppTimer    timer;
         Settings            settings;
-        GUI::IGUIObject     overlay;
-        //GUI::Window         window;
-        //GUI::IRenderer      renderer;
+        GUI::Window         window;
+        GUI::IRenderer      renderer;
+        GUI::Overlay        overlay;
         bool                running = true;
 
     public:

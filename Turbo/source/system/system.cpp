@@ -21,12 +21,9 @@ SDL::SDL() : timer()
 	Log::clear(TURBO_DEBFILE);
 	Log::clear(TURBO_INFOFILE);
 
-	//this->version = this->getVersion();
-	//this->revision = this->getRevision();
-	//this->base_path = this->getBasePath();
-	//cout << this->version << endl;
-	//cout << this->revision << endl;
-//	pref_path = this->createPrefPath();
+	this->version = this->getVersion();
+	this->revision = this->getRevision();
+	this->base_path = this->getBasePath();
 
     this->init();
 }
@@ -224,29 +221,47 @@ bool SDL::quitNET()
     return success;
 }
 
+/**
+ * @brief Returns the base path from where the executable was started.
+ */
 string SDL::getBasePath()
 {
     char * base_path = SDL_GetBasePath();
     return base_path;
 }
 
-string SDL::createPrefPath(string prefix, string dirname)
+/**
+ * @brief Creates a folder within a system dependent user directory.
+ * @param dirname   : The name of the folder that will be created.
+ */
+string SDL::createPrefPath(string dirname)
 {
-    char * pref_path = SDL_GetPrefPath(prefix.c_str(), dirname.c_str());
+    char * pref_path = SDL_GetPrefPath("", dirname.c_str());
     return pref_path;
 }
 
 string SDL::getRevision()
 {
-    return SDL_GetRevision() + std::to_string(SDL_GetRevisionNumber());
+    return SDL_GetRevision();
 }
 
+/**
+ * @brief Returns the compiled and the linked version of SDL as string.
+ */
 string SDL::getVersion()
 {
-    SDL_version * v = nullptr;
-    SDL_GetVersion(v);
-    Uint8 version = v->major;
-    return "" + version;
+    SDL_version v_c;
+    SDL_version v_l;
+    SDL_GetVersion(&v_c);
+    SDL_VERSION(&v_l);
+    string version_c = std::to_string(v_c.major) + "."
+                     + std::to_string(v_c.minor) + "."
+                     + std::to_string(v_c.patch);
+    string version_l = std::to_string(v_l.major) + "."
+                     + std::to_string(v_l.minor) + "."
+                     + std::to_string(v_l.patch);
+
+    return version_c + " / " + version_l;
 }
 
 bool SDL::init()

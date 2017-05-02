@@ -62,7 +62,7 @@ namespace GUI
     ***
     *** @var
     **/
-    class IGUIObject
+    class IGUIObject : public EVENT::IEventListener
     {
     private:
         const std::string       TAG     = "IGUIObject";

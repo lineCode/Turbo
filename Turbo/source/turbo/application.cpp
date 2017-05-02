@@ -3,6 +3,7 @@
 
 using namespace TURBO;
 using UTILS::Log;
+using GEOMETRY::Rectangle;
 
 Settings::Settings(string file_path)
     : file_path(file_path)
@@ -61,8 +62,11 @@ Settings::~Settings()
 }
 
 Application::Application()
-    : sdl(), timer(TURBO_FPS_LOCK), settings(TURBO_SETTINGSFILE), overlay()
+    : sdl(), timer(TURBO::TURBO_FPS_LOCK), settings(TURBO::TURBO_SETTINGSFILE),
+      window(TURBO::APP_NAME, Rectangle(50, 50, 500, 400)), renderer(window),
+      overlay(TURBO::APP_OVERLAY)
 {
+    this->registerEvent(SDL_QUIT, std::bind(&Application::stop, this));
     this->registerEvent(SDL_KEYDOWN, std::bind(&Application::stop, this));
     this->registerEvent(SDL_MOUSEBUTTONDOWN, std::bind(&Application::stop, this));
 }
@@ -72,11 +76,13 @@ void Application::eventLoop()
     SDL_Event event;
     while(SDL_PollEvent(&event))
     {
+        EVENT::IEventListener::callEvent(event.type);
+        /*
         switch(event.type)
         {
         case SDL_QUIT:
             {
-                
+                EVENT::IEventListener::callEvent(SDL_KEYDOWN);
                 break;
             }
         case SDL_WINDOWEVENT:
@@ -101,7 +107,7 @@ void Application::eventLoop()
             {
 
             }
-        }
+        }*/
     }
 }
 

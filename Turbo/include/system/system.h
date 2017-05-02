@@ -61,10 +61,10 @@ namespace SYSTEM
 
     public:
         SDL();
-        std::string getBasePath();
-        std::string createPrefPath(std::string prefix, std::string dirname);
-        std::string getRevision();
-        std::string getVersion();
+        static std::string getBasePath();
+        static std::string createPrefPath(std::string dirname);
+        static std::string getRevision();
+        static std::string getVersion();
         bool init();
         bool quit();
         ~SDL();

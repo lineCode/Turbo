@@ -13,9 +13,9 @@
 
 #include "Turbo_main.h"
 #include "geometry/geometry.h"
-#include "extern/extern.h"
 #include "extern/parser.h"
 #include "extern/directory.h"
+#include "utils/log.h"
 #include "event/event_listener.h"
 
 namespace GUI
@@ -78,7 +78,8 @@ namespace GUI
     protected:
 
     public:
-        Window(std::string title, GEOMETRY::Rectangle dimension, Uint32 flags);
+        Window(std::string title, GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle(),
+               Uint32 flags = TURBO::SDL_WINDOW_FLAGS);
         SDL_Window        * getWindow();
         Uint32              getFlags();
         void                setFlags(Uint32 flags);
@@ -117,7 +118,7 @@ namespace GUI
         //TODOstd::list<Texture>  scene_objects;
 
     public:
-        IRenderer(Window & window, Uint32 flags);
+        IRenderer(Window & window, Uint32 flags = TURBO::SDL_RENDER_FLAGS);
         SDL_Renderer      * getRenderer();
         void                setResetColor(Color color);
         Color               getResetColor();

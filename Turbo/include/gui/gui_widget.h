@@ -16,6 +16,24 @@
 namespace GUI
 {
     /**
+    *** @class  Overlay
+    ***
+    *** @brief  This should be the base widget of the application which will distribute
+    ***         all events to its children.
+    **/
+    class Overlay : public Widget
+    {
+    private:
+        const std::string TAG = "Overlay";
+
+    protected:
+
+    public:
+        Overlay(std::string xml_file);
+        ~Overlay();
+    };
+
+    /**
     *** @class Button
     ***
     *** @var

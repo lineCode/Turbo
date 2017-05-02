@@ -3,6 +3,17 @@
 using namespace GUI;
 using GEOMETRY::Rectangle;
 
+Overlay::Overlay(string xml_file)
+    : Widget(xml_file)
+{
+
+}
+
+Overlay::~Overlay()
+{
+
+}
+
 Button::Button(string title, Rectangle dimension)
     : Widget(dimension)
 {

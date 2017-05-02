@@ -264,8 +264,8 @@ Adjustment IGUIObject::getAdjustment()
 
 void IGUIObject::setStyle(XML xml)
 {
-    this->dimension = Rectangle(xml.getValueAsFloat("x"), xml.getValueAsFloat("y"),
-                                xml.getValueAsFloat("w"), xml.getValueAsFloat("h"));
+    this->dimension = Rectangle(xml.getValueAsInt("x"), xml.getValueAsInt("y"),
+                                xml.getValueAsInt("w"), xml.getValueAsInt("h"));
 
     XML style = xml.findTag("Style");
 
@@ -280,11 +280,11 @@ XML IGUIObject::getStyle()
     xml.kvp["y"] = this->dimension.getY();
     xml.kvp["w"] = this->dimension.getWidth();
     xml.kvp["h"] = this->dimension.getLength();
-
+/*
     XML * style;
 
     xml.children.push_back(style);
-
+*/
     return xml;
 }
 
@@ -311,7 +311,16 @@ Widget::Widget(std::string xml_file)
         {
             this->setStyle(w);
         }
+        else
+        {
+            UTILS::Log::warning(this->TAG, "No Widget Tag found in file " + xml_file,
+                                UTILS::LOG_TYPE::WARNING);
+        }
 	}
+	else
+    {
+        UTILS::Log::warning(this->TAG, "Failed to load file " + xml_file, UTILS::LOG_TYPE::WARNING);
+    }
 }
 
 void Widget::addWidget(Widget * w)
