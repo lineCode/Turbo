@@ -36,7 +36,7 @@ namespace SYSTEM
 	***
 	***
 	**/
-    class SDL
+    class SDL final
     {
 	private:
 		const std::string           TAG = "SDL";
@@ -75,7 +75,7 @@ namespace SYSTEM
 	***
 	***
 	**/
-    class Platform
+    class Platform final
     {
     private:
     	const std::string	TAG = "Platform";

@@ -84,7 +84,7 @@ namespace GUI
         std::vector<Uint8>      border              = {0, 0, 0, 0};
         Color                   background_color    = {0, 0, 0, 0};
         Color                   border_color        = {0, 0, 0, 0};
-        Color                   text_color          = {0, 0, 0, 255};
+        Color                   text_color          = {255, 255, 255, 255};
 
     public:
         IGUIObject(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());

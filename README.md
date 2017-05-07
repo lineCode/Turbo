@@ -13,11 +13,11 @@ ___
 - [MIX 2](https://www.libsdl.org/projects/SDL_mixer/)
 - ([NET 2](https://www.libsdl.org/projects/SDL_net/)) * optionally, not yet implemented
 
-Download the development files for your platform. You may want to download the binary files as well.
-**There seems to be an issue with the 64 bit libraries, so you may have to use the 32 bit libraries in order to compile for 64 bit systems.**
+Download the development files for your platform and your Environment. You may want to download the binary files as well.
+- **If you have trouble with 64 bit files may have to use the 32 bit libraries in order to compile for 64 bit systems.**
 
 Extract the include and lib directory you have to use to your libraries path (example: `C:/libraries/SDL/include/`).
-**Remember this path, you will need this later to configure the make file.**
+- **Remember this path, you will need this later to configure the make file.**
 
 ___
 
@@ -27,9 +27,9 @@ ___
 
 -
 
-**MinGW Compiler:**
+**GNU make:**
 
-1. Change parameters at the section `# Define Variables` to fit your system requirements
+1. Change parameters at the section `# Define Variables` in the file Turbo/Turbo.make to fit your system requirements:
 
 	1.1 `INCD`: include directory of SDL2 and Python
 	

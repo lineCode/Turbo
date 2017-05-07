@@ -267,7 +267,7 @@ XML * XMLParser::parseFile(fstream & stream, string line)
 				{
 					xml->tag = this->parseTagName(line);
 					xml->kvp = this->parseKVP(line);
-					xml->lineTag = true;
+					xml->line_tag = true;
 					xml->head = true;
 				}
 				else if(this->isStartEndTagLine(line))
@@ -275,13 +275,13 @@ XML * XMLParser::parseFile(fstream & stream, string line)
 					xml->tag = this->parseTagName(line);
 					xml->kvp = this->parseKVP(line);
 					xml->content = this->parseContent(line);
-					xml->lineTag = true;
+					xml->line_tag = true;
 				}
 				else if(this->isTagLine(line))
 				{
 					xml->tag = this->parseTagName(line);
 					xml->kvp = this->parseKVP(line);
-					xml->lineTag = true;
+					xml->line_tag = true;
 				}
 
 				if(first == nullptr)
@@ -311,13 +311,13 @@ XML * XMLParser::parseFile(fstream & stream, string line)
 				{
 					xml->tag = this->parseTagName(line);
 					xml->kvp = this->parseKVP(line);
-					xml->multiTag = true;
+					xml->multi_tag = true;
 
 					// recursive call for children
 					XML * firstChild = this->parseFile(stream, line);
 					if(firstChild != nullptr)
 					{
-						if(!firstChild->lineTag && !firstChild->multiTag)
+						if(!firstChild->line_tag && !firstChild->multi_tag)
 						{
 							xml->content = firstChild->content;
 						}
@@ -392,7 +392,7 @@ bool XMLParser::write(string file, XML head, string prepend, std::ios::openmode 
 			out << ' ' << kvp.first << '=' << '"' << kvp.second << '"';
 		}
 
-		if(xml->lineTag)
+		if(xml->line_tag)
 		{
 			if(xml->head)
 			{
@@ -407,7 +407,7 @@ bool XMLParser::write(string file, XML head, string prepend, std::ios::openmode 
 				out << "/>" << endl;
 			}
 		}
-		else if(xml->multiTag)
+		else if(xml->multi_tag)
 		{
 			out << '>' << endl;
 			if(xml->child != nullptr)

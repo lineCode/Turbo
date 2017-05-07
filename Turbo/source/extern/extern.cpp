@@ -51,6 +51,18 @@ bool INI::isEmpty()
 	return false;
 }
 
+XML::XML()
+{
+
+}
+
+XML::XML(string tag, bool line_tag)
+{
+	this->tag = tag;
+	this->line_tag = line_tag;
+	this->multi_tag = !line_tag;
+}
+
 string XML::getValue(string key)
 {
 	return this->kvp[key];
@@ -142,7 +154,7 @@ void XML::printXML()
 XML::~XML()
 {
     if(this->children.size() != 0)
-    { 
+    {
         for(XML * child : this->children)
         {
             child->~XML();

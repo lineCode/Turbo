@@ -69,12 +69,14 @@ namespace EXTERN
     	XML				  * prev        = nullptr;
     	std::string 		tag         = "";
     	std::string 		content     = "";
-    	bool 				lineTag     = false;
-    	bool				multiTag    = false;
+    	bool 				line_tag    = false;
+    	bool				multi_tag   = false;
     	bool				head        = false;
     	std::vector<XML *> 	children;
     	std::map<std::string, std::string> kvp;
 
+    	XML();
+        XML(std::string tag, bool line_tag = false);
 		std::string 		getValue(std::string key);
 		Sint32 				getValueAsInt(std::string key);
         float               getValueAsFloat(std::string key);

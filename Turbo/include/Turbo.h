@@ -4,7 +4,7 @@
 #include "system/system.h"
 #include "gui/gui_widget.h"
 #include "audio/audio.h"
-#include "script/Turbo_script.h"
+#include "script/script.h"
 
 using UTILS::LOG_TYPE;
 using GUI::Color;
