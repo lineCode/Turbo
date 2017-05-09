@@ -50,12 +50,14 @@ endif
 
 ifeq ($(SYSTEM),WINDOWS)
 	OUTFILE	:= exe
-	RM 		:= del -f
+	RM		:= del -f
 	RMDIR	:= rmdir
 	MKDIR	:= mkdir
+# $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /p $(SOURCEDIR) /s /m *.cpp /c "cmd /c echo @relpath"))))
+# $(shell dir $(SOURCEDIR) /ad /b) $(SOURCEDIR)
 else
 	OUTFILE	:= out
-	RM 		:= rm
+	RM		:= rm
 	RMDIR	:= rmdir
 	MKDIR	:= mkdir
 endif
@@ -64,7 +66,7 @@ endif
 # Define Variables
 #=======================================================================================
 
-CC 			:= g++
+CC			:= g++
 CFLAGS 		:= -c -Wall -Werror
 CPPFLAGS 	:= -std=gnu++11 -std=c++11
 LDFLAGS 	:= -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net -lpython34
@@ -80,20 +82,26 @@ REL 		:= Release
 PROJECT		:= Turbo
 TARGET 		:= $(DEB)
 
-SOURCES		:= $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /p $(SOURCEDIR) /s /m *.cpp /c "cmd /c echo @relpath"))))
-HEADERS		:= $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /p $(INCLUDEDIR) /s /m *.h /c "cmd /c echo @relpath"))))
-OBJECTS		:= $(SOURCES:%.cpp=$(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/%.o)
+#=======================================================================================
+# File and Path Variables
+#=======================================================================================
+
+MDLS 		:= $(patsubst %/,%,$(patsubst $(SOURCEDIR)/%,%,$(dir $(wildcard $(SOURCEDIR)/*/))))
+SRCD 		:= $(foreach d, $(MDLS), $(addprefix $(SOURCEDIR)/, $(d))) $(SOURCEDIR)
+HEAD 		:= $(foreach d, $(MDLS), $(addprefix $(INCLUDEDIR)/, $(d))) $(INCLUDEDIR)
+OBJD 		:= $(addprefix $(OBJECTDIR)/$(TARGET)/, $(MDLS))
+
+SOURCES		:= $(foreach d, $(SRCD), $(wildcard $(d)/*.cpp))
+HEADERS		:= $(foreach d, $(HEAD), $(wildcard $(d)/*.h))
+OBJECTS		:= $(SOURCES:$(SOURCEDIR)/%.cpp=$(OBJECTDIR)/$(TARGET)/%.o)
 DEPENDS		:= $(OBJECTS:%.o=%.d)
 OUT 		:= $(PROJECT)_$(TARGET).$(OUTFILE)
-
-MDLS 		:= $(shell dir $(SOURCEDIR) /ad /b) $(SOURCEDIR)
-SRCD 		:= $(foreach d, $(MDLS), $(addprefix $(SOURCEDIR)/, $(d))) $(SOURCEDIR)
-DEPD 		:= $(foreach d, $(MDLS), $(addprefix $(INCLUDEDIR)/ ,$(d))) $(INCLUDEDIR)
-OBJD 		:= $(addprefix $(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/, $(MDLS))
 
 #=======================================================================================
 # Build
 #=======================================================================================
+
+Release: all
 
 Debug: all
 
@@ -110,11 +118,9 @@ $(OUT): $(OBJECTS)
 	@echo =======================
 
 #Compile
-
-
 #-include $(DEPENDS)
-#$(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/%.o: $(SOURCEDIR)/%.cpp $(INCLUDEDIR)/%.h
-$(OBJECTDIR)/$(TARGET)/$(SOURCEDIR)/%.o: $(SOURCEDIR)/%.cpp
+#$(OBJECTDIR)/$(TARGET)/%.o: $(SOURCEDIR)/%.cpp $(INCLUDEDIR)/%.h
+$(OBJECTDIR)/$(TARGET)/%.o: $(SOURCEDIR)/%.cpp
 	@echo +======================
 	@echo [ Create object file: ] $@
 	@echo =======================
