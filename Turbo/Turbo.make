@@ -53,6 +53,7 @@ ifeq ($(SYSTEM),WINDOWS)
 	RM		:= del -f
 	RMDIR	:= rmdir
 	MKDIR	:= mkdir
+	OS_LIB	:= -lmingw32
 # $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /p $(SOURCEDIR) /s /m *.cpp /c "cmd /c echo @relpath"))))
 # $(shell dir $(SOURCEDIR) /ad /b) $(SOURCEDIR)
 else
@@ -69,7 +70,7 @@ endif
 CC			:= g++
 CFLAGS 		:= -c -Wall -Werror
 CPPFLAGS 	:= -std=gnu++11 -std=c++11
-LDFLAGS 	:= -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net -lpython34
+LDFLAGS 	:= $(OS_LIB) -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net -lpython34
 
 INCLUDEDIR	:= include
 SOURCEDIR	:= source
