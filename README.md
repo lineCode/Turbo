@@ -5,7 +5,7 @@
 
 ___
 
-## Installation
+## Development
 
 - [SDL 2](https://www.libsdl.org/download-2.0.php)
 - [IMG 2](https://www.libsdl.org/projects/SDL_image/)
@@ -20,6 +20,8 @@ Extract the include and lib directory you have to use to your libraries path (ex
 - **Remember this path, you will need this later to configure the make file.**
 
 ___
+
+## Installation
 
 ### Generating Executables
 

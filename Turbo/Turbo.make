@@ -3,44 +3,44 @@
 #======================================================================================
 
 ifeq ($(OS),Windows_NT)
-    CCFLAGS 				= -D WIN32
-    SYSTEM	 				:= WINDOWS
+    CCFLAGS                  = -D WIN32
+    SYSTEM                  := WINDOWS
     ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
-    	ARCHITECTURE 		:= AMD64
-        CCFLAGS 			= -D AMD64
+    	ARCHITECTURE        := AMD64
+        CCFLAGS              = -D AMD64
     else
         ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
-        	ARCHITECTURE 	:= AMD64
-            CCFLAGS 		= -D AMD64
+            ARCHITECTURE    := AMD64
+            CCFLAGS          = -D AMD64
         endif
         ifeq ($(PROCESSOR_ARCHITECTURE),x86)
-        	ARCHITECTURE 	:= IA32
-            CCFLAGS 		= -D IA32
+            ARCHITECTURE    := IA32
+            CCFLAGS          = -D IA32
         endif
     endif
 else
-	SYSTEM 	:= UNDEFINED
+    SYSTEM 	:= UNDEFINED
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
-    	SYSTEM				:= LINUX
-        CCFLAGS 			= -D LINUX
+    	SYSTEM              := LINUX
+        CCFLAGS              = -D LINUX
     endif
     ifeq ($(UNAME_S),Darwin)
-    	SYSTEM				:= OSX
-        CCFLAGS 			= -D OSX
+    	SYSTEM              := OSX
+        CCFLAGS              = -D OSX
     endif
     UNAME_P := $(shell uname -p)
     ifeq ($(UNAME_P),x86_64)
-    	ARCHITECTURE 		:= AMD64
-        CCFLAGS 			= -D AMD64
+    	ARCHITECTURE        := AMD64
+        CCFLAGS              = -D AMD64
     endif
     ifneq ($(filter %86,$(UNAME_P)),)
-    	ARCHITECTURE 		:= IA32
-        CCFLAGS 			= -D IA32
+    	ARCHITECTURE        := IA32
+        CCFLAGS              = -D IA32
     endif
     ifneq ($(filter arm%,$(UNAME_P)),)
-    	ARCHITECTURE 		:= ARM
-        CCFLAGS 			= -D ARM
+    	ARCHITECTURE        := ARM
+        CCFLAGS              = -D ARM
     endif
 endif
 
@@ -50,15 +50,13 @@ endif
 
 ifeq ($(SYSTEM),WINDOWS)
 	OUTFILE	:= exe
-	RM		:= del -f
+	RM      := del -f
 	RMDIR	:= rmdir
 	MKDIR	:= mkdir
-	OS_LIB	:= -lmingw32
-# $(subst ./,,$(subst ",,$(subst \,/,$(shell forfiles /p $(SOURCEDIR) /s /m *.cpp /c "cmd /c echo @relpath"))))
-# $(shell dir $(SOURCEDIR) /ad /b) $(SOURCEDIR)
+	OS_LIB	:= -lmingw32 -Bstatic 
 else
 	OUTFILE	:= out
-	RM		:= rm
+	RM      := rm
 	RMDIR	:= rmdir
 	MKDIR	:= mkdir
 endif
@@ -67,7 +65,7 @@ endif
 # Define Variables
 #=======================================================================================
 
-CC			:= g++
+CC          := g++
 CFLAGS 		:= -c -Wall -Werror
 CPPFLAGS 	:= -std=gnu++11 -std=c++11
 LDFLAGS 	:= $(OS_LIB) -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net -lpython34
@@ -75,7 +73,7 @@ LDFLAGS 	:= $(OS_LIB) -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lS
 INCLUDEDIR	:= include
 SOURCEDIR	:= source
 OBJECTDIR	:= obj
-LIBD 		:= -L./lib -LC:/Libs/SDL/lib -LC:/Libs/Python/libs
+LIBD 		:= -LC:/Libs/SDL/lib -LC:/Libs/Python/libs
 INCD 		:= -I./include -IC:/Libs/SDL/include -IC:/Libs/Python/include
 
 DEB 		:= Debug

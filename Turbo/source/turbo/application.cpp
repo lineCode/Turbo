@@ -68,7 +68,7 @@ Application::Application()
 {
     this->registerEvent(SDL_QUIT, std::bind(&Application::stop, this));
     this->registerEvent(SDL_KEYDOWN, std::bind(&Application::stop, this));
-    this->registerEvent(SDL_MOUSEBUTTONDOWN, std::bind(&Application::stop, this));
+    //this->registerEvent(SDL_MOUSEBUTTONDOWN, std::bind(&Application::stop, this));
 }
 
 void Application::eventLoop()
@@ -77,12 +77,12 @@ void Application::eventLoop()
     while(SDL_PollEvent(&event))
     {
         EVENT::IEventListener::callEvent(event.type);
-        /*
+        
         switch(event.type)
         {
         case SDL_QUIT:
             {
-                EVENT::IEventListener::callEvent(SDL_KEYDOWN);
+                //EVENT::IEventListener::callEvent(SDL_KEYDOWN);
                 break;
             }
         case SDL_WINDOWEVENT:
@@ -91,7 +91,7 @@ void Application::eventLoop()
             }
         case SDL_KEYDOWN: //case SDL_KEYUP:
             {
-                EVENT::IEventListener::callEvent(SDL_KEYDOWN);
+                //EVENT::IEventListener::callEvent(SDL_KEYDOWN);
                 break;
             }
         case SDL_JOYAXISMOTION: case SDL_JOYBUTTONDOWN: case SDL_JOYBUTTONUP:
@@ -100,14 +100,14 @@ void Application::eventLoop()
             }
         case SDL_MOUSEBUTTONDOWN: //case SDL_MOUSEBUTTONUP: case SDL_MOUSEMOTION:
             {
-                EVENT::IEventListener::callEvent(SDL_MOUSEBUTTONDOWN);
+                //EVENT::IEventListener::callEvent(SDL_MOUSEBUTTONDOWN);
                 break;
             }
         default:
             {
 
             }
-        }*/
+        }
     }
 }
 
