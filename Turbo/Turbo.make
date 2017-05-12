@@ -52,29 +52,38 @@ ifeq ($(SYSTEM),WINDOWS)
 	OUTFILE	:= exe
 	RM      := del -f
 	RMDIR	:= rmdir
+	RRMDIR  := rmdir /s
 	MKDIR	:= mkdir
 	OS_LIB	:= -lmingw32 -Bstatic 
 else
 	OUTFILE	:= out
 	RM      := rm
 	RMDIR	:= rmdir
-	MKDIR	:= mkdir
+	RRMDIR  := rmdir -r
+	MKDIR	:= mkdir -p
 endif
 
 #=======================================================================================
 # Define Variables
 #=======================================================================================
 
-CC          := g++
+CC              := g++
 CFLAGS 		:= -c -Wall -Werror
 CPPFLAGS 	:= -std=gnu++11 -std=c++11
-LDFLAGS 	:= $(OS_LIB) -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net -lpython34
+LDFLAGS 	 = $(OS_LIB) -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net
 
 INCLUDEDIR	:= include
 SOURCEDIR	:= source
 OBJECTDIR	:= obj
-LIBD 		:= -LC:/Libs/SDL/lib -LC:/Libs/Python/libs
-INCD 		:= -I./include -IC:/Libs/SDL/include -IC:/Libs/Python/include
+ifeq ($(SYSTEM), WINDOWS)
+	LIBD 		:= -LC:/Libs/SDL/lib -LC:/Libs/Python/libs
+	INCD 		:= -I./include -IC:/Libs/SDL/include -IC:/Libs/Python/include
+	LDFLAGS += -lpython34
+else
+	LIBD		:= -L/usr/lib
+	INCD		:= -I./include -I/usr/include/SDL2 -I/usr/include/python3.5
+	LDFLAGS += -lpython3.5m
+endif
 
 DEB 		:= Debug
 REL 		:= Release
@@ -131,12 +140,12 @@ dirs:
 	@echo +========================
 	@echo [ Creating directories: ]
 	@echo =========================
-	@$(MKDIR) $(subst /,\,$(OBJD))
+	@$(MKDIR) $(OBJD)
 
 #Clean
 clean:
 	@echo -==========================
 	@echo [ Cleaning object folder: ]
 	@echo ===========================
-	@$(RM) $(subst /,\,$(DEPENDS)) $(subst /,\,$(OBJECTS)) $(OUT) 2>nul
-	@$(RMDIR) $(subst /,\,$(OBJD))
+	@$(RM) $(DEPENDS) $(OBJECTS) $(OUT) 2>nul
+	@$(RMDIR) $(OBJD)

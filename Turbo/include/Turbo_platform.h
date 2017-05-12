@@ -64,6 +64,7 @@
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_net.h"
 
+/*
 typedef unsigned char 		Uint8;
 typedef signed char 		Sint8;
 typedef unsigned short 		Uint16;
@@ -72,6 +73,7 @@ typedef unsigned int 		Uint32;
 typedef signed int 			Sint32;
 typedef unsigned long long 	Uint64;
 typedef signed long long 	Sint64;
+*/
 
 using std::cerr;
 using std::cout;
