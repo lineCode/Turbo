@@ -77,7 +77,7 @@ void Application::eventLoop()
     while(SDL_PollEvent(&event))
     {
         EVENT::IEventListener::callEvent(event.type);
-        
+
         switch(event.type)
         {
         case SDL_QUIT:
@@ -131,6 +131,7 @@ void Application::mainLoop()
 unsigned int Application::run()
 {
     this->mainLoop();
+
     return 0;
 }
 

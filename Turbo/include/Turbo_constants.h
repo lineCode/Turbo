@@ -35,6 +35,8 @@ namespace TURBO
     const int           SDL_MIX_MAX_VOL       	= MIX_MAX_VOLUME;
     const int           SDL_MIX_MIN_VOL       	= 0;
 
+    const int           SDL_NET_BUFFER_LENGTH   = 256;
+
 
     /// Turbo constants
 

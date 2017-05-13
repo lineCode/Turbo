@@ -3,6 +3,7 @@
 
 #include "system/system.h"
 #include "gui/gui_widget.h"
+#include "net/net.h"
 #include "audio/audio.h"
 #include "script/script.h"
 
