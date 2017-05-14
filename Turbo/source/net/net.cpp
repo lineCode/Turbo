@@ -22,6 +22,14 @@ IPaddress IPAddress::toIPaddress(IPAddress ip)
     return ip_address;
 }
 
+IPAddress IPAddress::toIPAddress(IPaddress ip)
+{
+    IPAddress ip_address;
+    ip_address.host = ip.host;
+    ip_address.port = ip.port;
+    return ip_address;
+}
+
 ISocket::ISocket()
 {
 
@@ -32,22 +40,15 @@ ISocket::~ISocket()
 
 }
 
+TCPClient::TCPClient()
+{
+    this->socket_state = SOCKET_STATE::IDLE;
+}
+
 TCPClient::TCPClient(string host, Uint16 port)
 {
-    if(host == "")
-    {
-        if(SDLNet_ResolveHost(&this->client_ip, NULL, port) < 0)
-        {
-            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
-        }
-    }
-    else
-    {
-        if(SDLNet_ResolveHost(&this->client_ip, host.c_str(), port) < 0)
-        {
-            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
-        }
-    }
+    this->socket_state = SOCKET_STATE::IDLE;
+    this->resolve(host, port);
 }
 
 TCPsocket TCPClient::getSocket()
@@ -55,11 +56,23 @@ TCPsocket TCPClient::getSocket()
     return this->socket;
 }
 
-bool TCPClient::open()
+void TCPClient::setSocket(TCPsocket socket)
+{
+    this->socket = socket;
+}
+
+/**
+ * @brief   Resolves to a host of the given ip address. If the host is reachable
+ *          the ip member of the class gets all information
+ * @param   ip
+ */
+bool TCPClient::resolve(IPaddress & ip)
 {
     bool success = true;
+    const char * host = NULL;
+    this->ip = ip;
 
-    if((this->socket = SDLNet_TCP_Open(&this->client_ip)) == NULL)
+    if((host = SDLNet_ResolveIP(&this->ip)) == NULL)
     {
         success = false;
         UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
@@ -67,27 +80,125 @@ bool TCPClient::open()
     return success;
 }
 
-string TCPClient::receive()
+/**
+ * @brief   Resolves to the given host and port number. If the host is reachable
+ *          the ip member of the class gets all information
+ * @param   host
+ * @param   port
+ */
+bool TCPClient::resolve(string host, Uint16 port)
 {
-    string message = "";
-    char buffer[TURBO::SDL_NET_BUFFER_LENGTH];
-    int result = SDLNet_TCP_Recv(this->socket, buffer, TURBO::SDL_NET_BUFFER_LENGTH);
+    bool success = true;
+
+    if(host == "")
+    {
+        if(SDLNet_ResolveHost(&this->ip, NULL, port) < 0)
+        {
+            success = false;
+            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
+        }
+        else
+        {
+            this->socket_state = SOCKET_STATE::RESOLVED;
+        }
+    }
+    else
+    {
+        if(SDLNet_ResolveHost(&this->ip, host.c_str(), port) < 0)
+        {
+            success = false;
+            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
+        }
+        else
+        {
+            this->socket_state = SOCKET_STATE::RESOLVED;
+        }
+    }
+    return success;
+}
+
+/**
+ * @brief   Establishes a connection to the ip address of the ip member variable
+ * @param
+ */
+bool TCPClient::open()
+{
+    bool success = true;
+
+    if(this->socket_state < SOCKET_STATE::OPEN)
+    {
+        if((this->socket = SDLNet_TCP_Open(&this->ip)) == NULL)
+        {
+            success = false;
+            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
+        }
+        else
+        {
+            this->socket_state = SOCKET_STATE::OPEN;
+        }
+    }
+    return success;
+}
+
+bool TCPClient::isOpen()
+{
+    bool success = false;
+
+    if(this->socket_state >= SOCKET_STATE::OPEN)
+    {
+        success = true;
+    }
+    return success;
+}
+
+/**
+ * @TODO    may shift into server class
+ * @brief   Accepts a connection to a client and binds the socket to the client.
+ * @param
+ */
+bool TCPClient::accept(TCPClient & client)
+{
+    bool success = false;
+
+    client.setSocket(SDLNet_TCP_Accept(this->socket));
+    if(client.getSocket() == NULL)
+    {
+        success = false;
+    }
+    return success;
+}
+
+bool TCPClient::receive(NetPackage & package)
+{
+    bool success = true;
+    int result = SDLNet_TCP_Recv(this->socket, &package, sizeof(NetPackage));
+
+    if(result <= 0)
+    {
+        success = false;
+        UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
+    }
+    return success;
+}
+
+NetPackage TCPClient::receive()
+{
+    NetPackage package;
+    int result = SDLNet_TCP_Recv(this->socket, &package, sizeof(NetPackage));
 
     if(result <= 0)
     {
         UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
     }
-    message = buffer;
-    return message;
+    return package;
 }
 
-bool TCPClient::send(string message)
+bool TCPClient::send(NetPackage package)
 {
     bool success = true;
-    //const char * m = message.c_str();
-    //const char * m = "asdasdasd";
-    unsigned result = SDLNet_TCP_Send(this->socket, &message, message.size());
-    if(result < message.length())
+
+    unsigned result = SDLNet_TCP_Send(this->socket, &package, sizeof(package));
+    if(result < sizeof(package))
     {
         success = false;
         UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
@@ -97,7 +208,11 @@ bool TCPClient::send(string message)
 
 void TCPClient::close()
 {
-    SDLNet_TCP_Close(this->socket);
+    if(this->socket_state >= SOCKET_STATE::OPEN)
+    {
+        SDLNet_TCP_Close(this->socket);
+        this->socket_state  = SOCKET_STATE::CLOSED;
+    }
 }
 
 TCPClient::~TCPClient()
@@ -111,26 +226,6 @@ UDPClient::UDPClient()
 }
 
 UDPClient::~UDPClient()
-{
-
-}
-
-Server::Server()
-{
-
-}
-
-Server::~Server()
-{
-
-}
-
-Client::Client()
-{
-
-}
-
-Client::~Client()
 {
 
 }

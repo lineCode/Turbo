@@ -35,15 +35,15 @@ ___
 
 	1.1 `INCD`: include directory of SDL2 and Python
 	
-	>[example `INCD := -IC:/libraries/SDL/include/ -IC:/libraries/Python/include/`]
+	[example `INCD := -IC:/libraries/SDL/include/ -IC:/libraries/Python/include/`]
 	
 	1.2 `LIBD`: library directory of SDL2 and Python
 	
-	>[example: `LIBD := -IC:/libraries/SDL/lib/ -IC:/libraries/Python/libs/`]
+	[example: `LIBD := -IC:/libraries/SDL/lib/ -IC:/libraries/Python/libs/`]
 	
 	1.3 `PROJECT`: desired output file name
 
-	>[example: `PROJECT := Turbo`]
+	[example: `PROJECT := Turbo`]
 
 	1.4 `CFLAGS` and `CPPFLAGS`: compiler flags
 	
@@ -51,7 +51,7 @@ ___
 	
 	1.5 `LDFLAGS`: linker flags
 
-	>[example: `LDFLAGS := -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lpython34`]
+	[example: `LDFLAGS := -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lpython34`]
 
 If you have done all the above things you can now build Turbo with the following command.
 (This requires, that you have added the make executable to your Environment path)

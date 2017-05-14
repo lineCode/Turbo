@@ -5,12 +5,6 @@
 
 namespace TURBO
 {
-	/// Mathematical constants
-
-	const static double PI = 3.141592653589793238462643383279502884197169399375105820974944;
-
-
-
 	/// SDL constants
 
 	const Uint32	    BORDERLESS				= SDL_WINDOW_BORDERLESS;

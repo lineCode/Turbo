@@ -54,7 +54,7 @@ ifeq ($(SYSTEM),WINDOWS)
 	RMDIR	:= rmdir
 	RRMDIR  := rmdir /s
 	MKDIR	:= mkdir
-	OS_LIB	:= -lmingw32 -Bstatic 
+	OS_LIB	:= -lmingw32 
 else
 	OUTFILE	:= out
 	RM      := rm

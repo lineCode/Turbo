@@ -11,13 +11,28 @@ namespace NET
     **/
     enum class SOCKET_STATE : Uint8
     {
-        CLOSED  = 0,
-        IDLE    = 1,
-        OPEN    = 2,
-        BOUND   = 3
+        CLOSED      = 0,
+        IDLE        = 1,
+        RESOLVED    = 2,
+        OPEN        = 3
     };
 
 
+    /**
+    *** @struct NetPackage
+    ***
+    *** @brief  This struct will contain all information of packages that will
+    ***         be send over the network
+    **/
+    struct NetPackage
+    {
+        Uint16 data[TURBO::SDL_NET_BUFFER_LENGTH] = {0x0000};
+    };
+
+
+    /**
+    *** @struct IPAddress
+    **/
     struct IPAddress
     {
         Uint32      host;
@@ -26,7 +41,9 @@ namespace NET
         static std::string IPtoString(IPAddress ip);
         static Uint32 StringtoIP(std::string ip);
         static IPaddress toIPaddress(IPAddress ip);
+        static IPAddress toIPAddress(IPaddress ip);
     };
+
 
     /**
     *** @class  ISocket
@@ -44,8 +61,8 @@ namespace NET
     public:
         ISocket();
         virtual bool        open() = 0;
-        virtual std::string receive() = 0;
-        virtual bool        send(std::string message) = 0;
+        virtual NetPackage  receive() = 0;
+        virtual bool        send(NetPackage package) = 0;
         virtual void        close() = 0;
         virtual ~ISocket();
     };
@@ -62,16 +79,25 @@ namespace NET
         const std::string TAG = "TCPClient";
 
     protected:
-        IPaddress client_ip;
-        TCPsocket socket;
+        IPaddress ip;
+        TCPsocket socket = NULL;
+        ///@TODO server clients std::vector<TCPClient *> clients;
 
     public:
+        TCPClient();
         TCPClient(std::string host, Uint16 port);
-        TCPsocket   getSocket();
-        bool        open();
-        std::string receive();
-        bool        send(std::string message);
-        void        close();
+        SOCKET_STATE    getSocketState();
+        TCPsocket       getSocket();
+        void            setSocket(TCPsocket socket);
+        bool            resolve(IPaddress & ip);
+        bool            resolve(std::string host, Uint16 port);
+        bool            open();
+        bool            isOpen();
+        bool            accept(TCPClient & client);
+        bool            receive(NetPackage & package);
+        NetPackage      receive();
+        bool            send(NetPackage package);
+        void            close();
         ~TCPClient();
     };
 
@@ -91,44 +117,6 @@ namespace NET
     public:
         UDPClient();
         ~UDPClient();
-    };
-
-
-    /**
-    *** @class  Server
-    ***
-    *** @brief
-    **/
-    class Server
-    {
-    private:
-        const std::string TAG = "Server";
-
-    protected:
-        IPaddress ip;
-
-    public:
-        Server();
-        ~Server();
-    };
-
-
-    /**
-    *** @class  Client
-    ***
-    *** @brief
-    **/
-    class Client
-    {
-    private:
-        const std::string TAG = "Client";
-
-    protected:
-        IPaddress ip;
-
-    public:
-        Client();
-        ~Client();
     };
 
 }
