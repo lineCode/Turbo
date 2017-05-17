@@ -45,6 +45,11 @@ void ISocket::setPackage(NetPackage package)
     this->package = package;
 }
 
+SOCKET_STATE ISocket::getSocketState()
+{
+    return this->socket_state;
+}
+
 bool ISocket::isOpen()
 {
     bool success = false;
@@ -216,9 +221,20 @@ TCPSocket::~TCPSocket()
 
 }
 
-TCPServer::TCPServer(Uint16 port)
+TCPClient::TCPClient(string host, Uint16 port)
+{
+    this->resolve(host, port);
+}
+
+TCPClient::~TCPClient()
 {
 
+}
+
+
+TCPServer::TCPServer(Uint16 port)
+{
+    this->resolve("", port);
 }
 
 void TCPServer::pollClient()
@@ -237,7 +253,7 @@ bool TCPServer::accept(TCPClient & client)
 {
     bool success = false;
 
-    std::thread(&TCPServer::pollClient, this);
+    //std::thread(&TCPServer::pollClient, this);
     client.setSocket(SDLNet_TCP_Accept(this->socket));
     if(client.getSocket() == NULL)
     {
@@ -251,14 +267,8 @@ TCPServer::~TCPServer()
 
 }
 
-TCPClient::TCPClient(string host, Uint16 port)
-{
-
-}
-
-TCPClient::~TCPClient()
-{
-
+TCPClient::TCPClient()
+{
 }
 
 //UDPClient::UDPClient()

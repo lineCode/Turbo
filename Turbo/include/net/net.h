@@ -65,9 +65,9 @@ namespace NET
 
     public:
         ISocket();
-                NetPackage      getPackage();
-                void            setPackage(NetPackage package);
-                SOCKET_STATE    getSocketState();
+        virtual NetPackage      getPackage();
+        virtual void            setPackage(NetPackage package);
+        virtual SOCKET_STATE    getSocketState();
         virtual bool            open() = 0;
         virtual NetPackage      receive() = 0;
         virtual bool            send(NetPackage package) = 0;
@@ -91,16 +91,16 @@ namespace NET
 
     public:
         TCPSocket();
-        TCPsocket       getSocket();
-        void            setSocket(TCPsocket socket);
-        bool            resolve(IPaddress & ip);
-        bool            resolve(std::string host, Uint16 port);
-        bool            open();
-        bool            receive(NetPackage & package);
-        NetPackage      receive();
-        bool            send(NetPackage package);
-        void            close();
-        bool            stop();
+        virtual TCPsocket       getSocket();
+        virtual void            setSocket(TCPsocket socket);
+        virtual bool            resolve(IPaddress & ip);
+        virtual bool            resolve(std::string host, Uint16 port);
+        virtual bool            open();
+        virtual bool            receive(NetPackage & package);
+        virtual NetPackage      receive();
+        virtual bool            send(NetPackage package);
+        virtual void            close();
+        virtual bool            stop();
         ~TCPSocket();
     };
 
