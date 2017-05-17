@@ -14,12 +14,11 @@ int main(int argc, char ** argv)
         return -1;
     }
 
-    NetPackage * package;
-    package->data[0] = 0xFFAA;
-    package->data[1] = 0xAADD;
-
-    TCPClient server = TCPClient("", 13370);
+    TCPServer server = TCPServer(1337);
     TCPClient client = TCPClient();
+    NetPackage package;
+    bool running = true;
+
     server.open();
     cout << "Server open" << endl;
     while(client.getSocket() == NULL)
@@ -29,18 +28,36 @@ int main(int argc, char ** argv)
     }
     cout << "Server has a client" << endl;
 
-    while(1)
-    {/*
-        if(client.receive(*package))
+
+    while(running == true)
+    {
+        for(int i = 0; i < TURBO::SDL_NET_BUFFER_LENGTH; ++i)
+            package.data[i] = rand() % 0xFFFF;
+
+/*
+        if(client.receive(package))
         {
+            if(package.data[0] == 0x0000)
+                running = false;
             cout << "Message received: " << endl;
-            for(Uint16 date : package->data)
+            for(Uint16 date : package.data)
+            {
+                cout << std::hex << date << " ";
+            }
+            cout << endl;
+        }
+        if(server.receive(package))
+        {
+            if(package.data[0] == 0x0000)
+                running = false;
+            cout << "Message received: " << endl;
+            for(Uint16 date : package.data)
             {
                 cout << std::hex << date << " ";
             }
             cout << endl;
         }*/
-        client.send(*package);
+        client.send(package);
         SDL_Delay(1000);
     }
 

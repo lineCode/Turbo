@@ -15,11 +15,13 @@ int main(int argc, char ** argv)
     }
 
     NetPackage package;
-    TCPClient client = TCPClient("localhost", 13370);
+    bool running = true;
+    int counter = 0;
+    TCPClient client = TCPClient("localhost", 1337);
 
     client.open();
     cout << "Client open" << endl;
-    while(1)
+    while(running == true)
     {
         if(client.receive(package))
         {
@@ -29,9 +31,14 @@ int main(int argc, char ** argv)
                 cout << std::hex << date << " ";
             }
             cout << endl;
-            client.send(package);
         }
         SDL_Delay(1000);
+        counter++;
+        if(counter == 3)
+        {
+            package.data[0] = 0x0000;
+            client.send(package);
+        }
     }
 
     client.close();
