@@ -35,28 +35,44 @@ ISocket::ISocket()
 
 }
 
+NetPackage ISocket::getPackage()
+{
+    return this->package;
+}
+
+void ISocket::setPackage(NetPackage package)
+{
+    this->package = package;
+}
+
+bool ISocket::isOpen()
+{
+    bool success = false;
+
+    if(this->socket_state >= SOCKET_STATE::OPEN)
+    {
+        success = true;
+    }
+    return success;
+}
+
+
 ISocket::~ISocket()
 {
 
 }
 
-TCPClient::TCPClient()
+TCPSocket::TCPSocket()
 {
     this->socket_state = SOCKET_STATE::IDLE;
 }
 
-TCPClient::TCPClient(string host, Uint16 port)
-{
-    this->socket_state = SOCKET_STATE::IDLE;
-    this->resolve(host, port);
-}
-
-TCPsocket TCPClient::getSocket()
+TCPsocket TCPSocket::getSocket()
 {
     return this->socket;
 }
 
-void TCPClient::setSocket(TCPsocket socket)
+void TCPSocket::setSocket(TCPsocket socket)
 {
     this->socket = socket;
 }
@@ -66,7 +82,7 @@ void TCPClient::setSocket(TCPsocket socket)
  *          the ip member of the class gets all information
  * @param   ip
  */
-bool TCPClient::resolve(IPaddress & ip)
+bool TCPSocket::resolve(IPaddress & ip)
 {
     bool success = true;
     const char * host = NULL;
@@ -86,7 +102,7 @@ bool TCPClient::resolve(IPaddress & ip)
  * @param   host
  * @param   port
  */
-bool TCPClient::resolve(string host, Uint16 port)
+bool TCPSocket::resolve(string host, Uint16 port)
 {
     bool success = true;
 
@@ -121,7 +137,7 @@ bool TCPClient::resolve(string host, Uint16 port)
  * @brief   Establishes a connection to the ip address of the ip member variable
  * @param
  */
-bool TCPClient::open()
+bool TCPSocket::open()
 {
     bool success = true;
 
@@ -140,35 +156,7 @@ bool TCPClient::open()
     return success;
 }
 
-bool TCPClient::isOpen()
-{
-    bool success = false;
-
-    if(this->socket_state >= SOCKET_STATE::OPEN)
-    {
-        success = true;
-    }
-    return success;
-}
-
-/**
- * @TODO    may shift into server class
- * @brief   Accepts a connection to a client and binds the socket to the client.
- * @param
- */
-bool TCPClient::accept(TCPClient & client)
-{
-    bool success = false;
-
-    client.setSocket(SDLNet_TCP_Accept(this->socket));
-    if(client.getSocket() == NULL)
-    {
-        success = false;
-    }
-    return success;
-}
-
-bool TCPClient::receive(NetPackage & package)
+bool TCPSocket::receive(NetPackage & package)
 {
     bool success = true;
     int result = SDLNet_TCP_Recv(this->socket, &package, sizeof(NetPackage));
@@ -181,7 +169,7 @@ bool TCPClient::receive(NetPackage & package)
     return success;
 }
 
-NetPackage TCPClient::receive()
+NetPackage TCPSocket::receive()
 {
     NetPackage package;
     int result = SDLNet_TCP_Recv(this->socket, &package, sizeof(NetPackage));
@@ -193,7 +181,7 @@ NetPackage TCPClient::receive()
     return package;
 }
 
-bool TCPClient::send(NetPackage package)
+bool TCPSocket::send(NetPackage package)
 {
     bool success = true;
 
@@ -206,7 +194,7 @@ bool TCPClient::send(NetPackage package)
     return success;
 }
 
-void TCPClient::close()
+void TCPSocket::close()
 {
     if(this->socket_state >= SOCKET_STATE::OPEN)
     {
@@ -215,17 +203,70 @@ void TCPClient::close()
     }
 }
 
+bool TCPSocket::stop()
+{
+    NetPackage package;
+    package.end_session = true;
+    this->send(package);
+    return true;
+}
+
+TCPSocket::~TCPSocket()
+{
+
+}
+
+TCPServer::TCPServer(Uint16 port)
+{
+
+}
+
+void TCPServer::pollClient()
+{
+    while(0)
+    {
+
+    }
+}
+
+/**
+ * @brief   Accepts a connection to a client and binds the socket to the client.
+ * @param
+ */
+bool TCPServer::accept(TCPClient & client)
+{
+    bool success = false;
+
+    std::thread(&TCPServer::pollClient, this);
+    client.setSocket(SDLNet_TCP_Accept(this->socket));
+    if(client.getSocket() == NULL)
+    {
+        success = false;
+    }
+    return success;
+}
+
+TCPServer::~TCPServer()
+{
+
+}
+
+TCPClient::TCPClient(string host, Uint16 port)
+{
+
+}
+
 TCPClient::~TCPClient()
 {
 
 }
 
-UDPClient::UDPClient()
-{
-
-}
-
-UDPClient::~UDPClient()
-{
-
-}
+//UDPClient::UDPClient()
+//{
+//
+//}
+//
+//UDPClient::~UDPClient()
+//{
+//
+//}

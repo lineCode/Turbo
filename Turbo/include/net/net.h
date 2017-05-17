@@ -14,7 +14,8 @@ namespace NET
         CLOSED      = 0,
         IDLE        = 1,
         RESOLVED    = 2,
-        OPEN        = 3
+        OPEN        = 3,
+        BOUND       = 4
     };
 
 
@@ -26,7 +27,9 @@ namespace NET
     **/
     struct NetPackage
     {
-        Uint16 data[TURBO::SDL_NET_BUFFER_LENGTH] = {0x0000};
+        Uint32  package_id = 0;
+        bool    end_session = false;
+        Uint16  data[TURBO::SDL_NET_BUFFER_LENGTH] = {0x0000};
     };
 
 
@@ -56,15 +59,49 @@ namespace NET
         const std::string TAG = "ISocket";
 
     protected:
-        SOCKET_STATE socket_state = SOCKET_STATE::CLOSED;
+        SOCKET_STATE    socket_state = SOCKET_STATE::CLOSED;
+        NetPackage      package;
+        IPaddress       ip;
 
     public:
         ISocket();
-        virtual bool        open() = 0;
-        virtual NetPackage  receive() = 0;
-        virtual bool        send(NetPackage package) = 0;
-        virtual void        close() = 0;
+                NetPackage      getPackage();
+                void            setPackage(NetPackage package);
+                SOCKET_STATE    getSocketState();
+        virtual bool            open() = 0;
+        virtual NetPackage      receive() = 0;
+        virtual bool            send(NetPackage package) = 0;
+        virtual void            close() = 0;
+        virtual bool            isOpen();
         virtual ~ISocket();
+    };
+
+    /**
+    *** @class  TCPSocket
+    ***
+    *** @brief
+    **/
+    class TCPSocket : public ISocket
+    {
+    private:
+        const std::string TAG = "TCPSocket";
+
+    protected:
+        TCPsocket socket;
+
+    public:
+        TCPSocket();
+        TCPsocket       getSocket();
+        void            setSocket(TCPsocket socket);
+        bool            resolve(IPaddress & ip);
+        bool            resolve(std::string host, Uint16 port);
+        bool            open();
+        bool            receive(NetPackage & package);
+        NetPackage      receive();
+        bool            send(NetPackage package);
+        void            close();
+        bool            stop();
+        ~TCPSocket();
     };
 
 
@@ -73,51 +110,59 @@ namespace NET
     ***
     *** @brief
     **/
-    class TCPClient : public ISocket
+    class TCPClient : public TCPSocket
     {
     private:
         const std::string TAG = "TCPClient";
 
     protected:
-        IPaddress ip;
-        TCPsocket socket = NULL;
-        ///@TODO server clients std::vector<TCPClient *> clients;
 
     public:
         TCPClient();
         TCPClient(std::string host, Uint16 port);
-        SOCKET_STATE    getSocketState();
-        TCPsocket       getSocket();
-        void            setSocket(TCPsocket socket);
-        bool            resolve(IPaddress & ip);
-        bool            resolve(std::string host, Uint16 port);
-        bool            open();
-        bool            isOpen();
-        bool            accept(TCPClient & client);
-        bool            receive(NetPackage & package);
-        NetPackage      receive();
-        bool            send(NetPackage package);
-        void            close();
         ~TCPClient();
     };
 
 
     /**
-    *** @class  UDPClient
+    *** @class  TCPServer
     ***
     *** @brief
     **/
-    class UDPClient : ISocket
+    class TCPServer : public TCPSocket
     {
     private:
-        const std::string TAG = "UDPClient";
+        const std::string TAG = "TCPServer";
+
+        void pollClient();
+
+    protected:
+        std::vector<TCPClient *> clients;
+
+    public:
+        TCPServer(Uint16 port);
+        bool            accept(TCPClient & client);
+        ~TCPServer();
+    };
+
+
+    /**
+    *** @class  UDPSocket
+    ***
+    *** @brief
+    **/
+    /*
+    class UDPSocket : public ISocket
+    {
+    private:
+        const std::string TAG = "UDPSocket";
 
     protected:
 
     public:
-        UDPClient();
-        ~UDPClient();
-    };
+        UDPSocket();
+        ~UDPSocket();
+    };*/
 
 }
 
