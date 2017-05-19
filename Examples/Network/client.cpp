@@ -14,34 +14,29 @@ int main(int argc, char ** argv)
         return -1;
     }
 
-    NetPackage package;
-    bool running = true;
-    int counter = 0;
-    TCPClient client = TCPClient("localhost", 1337);
+    TCPClient   client  = TCPClient("localhost", 13370);
+    NetPackage  package;
+    NetPackage  temp;
+    bool        running = true;
+    int         counter = 0;
 
     client.open();
-    cout << "Client open" << endl;
+    cout << "open" << endl;
     while(running == true)
     {
+		cout << "pull" << endl;
         if(client.receive(package))
         {
-            cout << "Message received: " << endl;
-            for(Uint16 date : package.data)
-            {
-                cout << std::hex << date << " ";
-            }
-            cout << endl;
+            cout << "got package" << endl;
         }
         SDL_Delay(1000);
         counter++;
-        if(counter == 3)
+        if(counter > 3)
         {
-            package.data[0] = 0x0000;
-            client.send(package);
+            break;
         }
     }
-
-    client.close();
+    cout << "Stop connection" << endl;
 
     SDLNet_Quit();
     SDL_Quit();
