@@ -75,14 +75,16 @@ LDFLAGS 	 = $(OS_LIB) -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lS
 INCLUDEDIR	:= include
 SOURCEDIR	:= source
 OBJECTDIR	:= obj
+LIBDIR		:= lib
+
 ifeq ($(SYSTEM), WINDOWS)
 	LIBD 		:= -LC:/Libs/SDL/lib -LC:/Libs/Python/libs
 	INCD 		:= -I./include -IC:/Libs/SDL/include -IC:/Libs/Python/include
-	LDFLAGS += -lpython34
+	LDFLAGS 	+= -lpython34
 else
 	LIBD		:= -L/usr/lib
 	INCD		:= -I./include -I/usr/include/SDL2 -I/usr/include/python3.5
-	LDFLAGS += -lpython3.5m
+	LDFLAGS 	+= -lpython3.5m
 endif
 
 DEB 		:= Debug
@@ -109,13 +111,16 @@ OUT 		:= $(PROJECT)_$(TARGET).$(OUTFILE)
 # Build
 #=======================================================================================
 
-Release: all
+$(TARGET): all
 
-Debug: all
+Libs: libs
 
 all: $(OUT)
 
-#Link
+#===================
+# Link to Outputfile
+#===================
+
 $(OUT): $(OBJECTS)
 	@echo +=====================
 	@echo [ Create taget file: ] $(OUT) for $(SYSTEM) on $(ARCHITECTURE)
@@ -124,8 +129,13 @@ $(OUT): $(OBJECTS)
 	@echo =======================
 	@echo [ Successfully build: ] $(PROJECT)
 	@echo =======================
+	
+	
 
-#Compile
+#=====================
+# Compile Object Files
+#=====================
+
 #-include $(DEPENDS)
 #$(OBJECTDIR)/$(TARGET)/%.o: $(SOURCEDIR)/%.cpp $(INCLUDEDIR)/%.h
 $(OBJECTDIR)/$(TARGET)/%.o: $(SOURCEDIR)/%.cpp
@@ -133,16 +143,34 @@ $(OBJECTDIR)/$(TARGET)/%.o: $(SOURCEDIR)/%.cpp
 	@echo [ Create object file: ] $@
 	@echo =======================
 	@$(CC) $(CPPFLAGS) $(CFLAGS) $< $(INCD) -o $@
+	
+	
 
+#=====================
+# Create Static libary
+#=====================
 
-#Directories
+libs:
+	ar rvs $(LIBDIR)/lib$(PROJECT).a $(OBJECTS)
+	
+	
+	
+#==========================
+# Create Object Directories
+#==========================
+
 dirs:
 	@echo +========================
 	@echo [ Creating directories: ]
 	@echo =========================
 	@$(MKDIR) $(OBJD)
+	
+	
 
-#Clean
+#=========================
+# Clean Object Directories
+#=========================
+
 clean:
 	@echo -==========================
 	@echo [ Cleaning object folder: ]
