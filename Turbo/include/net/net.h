@@ -73,6 +73,8 @@ namespace NET
         virtual bool            send(NetPackage package) = 0;
         virtual void            close() = 0;
         virtual bool            isOpen();
+        virtual bool            resolve(IPaddress & ip);
+        virtual bool            resolve(std::string host, Uint16 port);
         virtual ~ISocket();
     };
 
@@ -87,20 +89,17 @@ namespace NET
         const std::string TAG = "TCPSocket";
 
     protected:
-        TCPsocket socket;
+        TCPsocket socket = NULL;
 
     public:
         TCPSocket();
         virtual TCPsocket       getSocket();
         virtual void            setSocket(TCPsocket socket);
-        virtual bool            resolve(IPaddress & ip);
-        virtual bool            resolve(std::string host, Uint16 port);
         virtual bool            open();
         virtual bool            receive(NetPackage & package);
         virtual NetPackage      receive();
         virtual bool            send(NetPackage package);
         virtual void            close();
-        virtual bool            stop();
         ~TCPSocket();
     };
 
@@ -134,10 +133,10 @@ namespace NET
     private:
         const std::string TAG = "TCPServer";
 
-        void pollClient();
 
     protected:
-        std::vector<TCPClient *> clients;
+        Uint16                      client_counter = 0;
+        std::vector<TCPClient *>    clients;
 
     public:
         TCPServer(Uint16 port);

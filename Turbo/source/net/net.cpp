@@ -32,7 +32,7 @@ IPAddress IPAddress::toIPAddress(IPaddress ip)
 
 ISocket::ISocket()
 {
-
+    this->socket_state = SOCKET_STATE::IDLE;
 }
 
 NetPackage ISocket::getPackage()
@@ -48,6 +48,63 @@ void ISocket::setPackage(NetPackage package)
 SOCKET_STATE ISocket::getSocketState()
 {
     return this->socket_state;
+}
+
+/**
+ * @brief   Resolves to a host of the given ip address. If the host is reachable
+ *          the ip member of the class gets all information
+ * @param   ip
+ */
+bool ISocket::resolve(IPaddress & ip)
+{
+    bool success = true;
+    const char * host = NULL;
+    this->ip = ip;
+
+    if((host = SDLNet_ResolveIP(&this->ip)) == NULL)
+    {
+        success = false;
+        UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
+    }
+    return success;
+}
+
+/**
+ * @brief   Resolves to the given host and port number. If the host is reachable
+ *          the ip member of the class gets all information
+ * @ref     SDLNet_ResolveHost
+ * @param   host
+ * @param   port
+ */
+bool ISocket::resolve(string host, Uint16 port)
+{
+    bool success = false;
+
+    if(host == "")
+    {
+        if(SDLNet_ResolveHost(&this->ip, NULL, port) < 0)
+        {
+            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
+        }
+        else
+        {
+            this->socket_state = SOCKET_STATE::RESOLVED;
+            success = true;
+        }
+    }
+    else
+    {
+        if(SDLNet_ResolveHost(&this->ip, host.c_str(), port) < 0)
+        {
+            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
+        }
+        else
+        {
+            this->socket_state = SOCKET_STATE::RESOLVED;
+            success = true;
+        }
+    }
+    return success;
 }
 
 bool ISocket::isOpen()
@@ -69,7 +126,7 @@ ISocket::~ISocket()
 
 TCPSocket::TCPSocket()
 {
-    this->socket_state = SOCKET_STATE::IDLE;
+
 }
 
 TCPsocket TCPSocket::getSocket()
@@ -83,62 +140,6 @@ void TCPSocket::setSocket(TCPsocket socket)
 }
 
 /**
- * @brief   Resolves to a host of the given ip address. If the host is reachable
- *          the ip member of the class gets all information
- * @param   ip
- */
-bool TCPSocket::resolve(IPaddress & ip)
-{
-    bool success = true;
-    const char * host = NULL;
-    this->ip = ip;
-
-    if((host = SDLNet_ResolveIP(&this->ip)) == NULL)
-    {
-        success = false;
-        UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
-    }
-    return success;
-}
-
-/**
- * @brief   Resolves to the given host and port number. If the host is reachable
- *          the ip member of the class gets all information
- * @param   host
- * @param   port
- */
-bool TCPSocket::resolve(string host, Uint16 port)
-{
-    bool success = true;
-
-    if(host == "")
-    {
-        if(SDLNet_ResolveHost(&this->ip, NULL, port) < 0)
-        {
-            success = false;
-            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
-        }
-        else
-        {
-            this->socket_state = SOCKET_STATE::RESOLVED;
-        }
-    }
-    else
-    {
-        if(SDLNet_ResolveHost(&this->ip, host.c_str(), port) < 0)
-        {
-            success = false;
-            UTILS::Log::error(this->TAG, SDLNet_GetError(), UTILS::LOG_TYPE::ERROR);
-        }
-        else
-        {
-            this->socket_state = SOCKET_STATE::RESOLVED;
-        }
-    }
-    return success;
-}
-
-/**
  * @brief   Establishes a connection to the ip address of the ip member variable
  * @param
  */
@@ -146,7 +147,7 @@ bool TCPSocket::open()
 {
     bool success = true;
 
-    if(this->socket_state < SOCKET_STATE::OPEN)
+    if(this->socket_state < SOCKET_STATE::OPEN && this->socket_state >= SOCKET_STATE::RESOLVED)
     {
         if((this->socket = SDLNet_TCP_Open(&this->ip)) == NULL)
         {
@@ -208,17 +209,16 @@ void TCPSocket::close()
     }
 }
 
-bool TCPSocket::stop()
-{
-    NetPackage package;
-    package.end_session = true;
-    this->send(package);
-    return true;
-}
-
 TCPSocket::~TCPSocket()
 {
+    if(this->socket_state > SOCKET_STATE::CLOSED)
+    {
+        this->close();
+    }
+}
 
+TCPClient::TCPClient()
+{
 }
 
 TCPClient::TCPClient(string host, Uint16 port)
@@ -237,14 +237,6 @@ TCPServer::TCPServer(Uint16 port)
     this->resolve("", port);
 }
 
-void TCPServer::pollClient()
-{
-    while(0)
-    {
-
-    }
-}
-
 /**
  * @brief   Accepts a connection to a client and binds the socket to the client.
  * @param
@@ -253,22 +245,25 @@ bool TCPServer::accept(TCPClient & client)
 {
     bool success = false;
 
-    //std::thread(&TCPServer::pollClient, this);
     client.setSocket(SDLNet_TCP_Accept(this->socket));
     if(client.getSocket() == NULL)
     {
         success = false;
+    }
+    else
+    {
+        this->client_counter++;
+        success = true;
     }
     return success;
 }
 
 TCPServer::~TCPServer()
 {
-
-}
-
-TCPClient::TCPClient()
-{
+    for(auto client : this->clients)
+    {
+        delete client;
+    }
 }
 
 //UDPClient::UDPClient()

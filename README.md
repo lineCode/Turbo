@@ -7,6 +7,8 @@ ___
 
 ## Development
 
+**SDL:**
+
 - [SDL 2](https://www.libsdl.org/download-2.0.php)
 - [IMG 2](https://www.libsdl.org/projects/SDL_image/)
 - [TTF 2](https://www.libsdl.org/projects/SDL_ttf/)
@@ -18,6 +20,20 @@ Download the development files for your platform and your Environment. You may w
 
 Extract the include and lib directory you have to use to your libraries path (example: `C:/libraries/SDL/include/`).
 - **Remember this path, you will need this later to configure the make file.**
+
+___
+
+**Python:**
+
+- [Python 34](https://www.python.org/downloads/release/python-346/)
+
+Download the tarball and extract it to your desired path.
+- **Remember the path of the include/ and libs/ directories**
+
+___
+
+### Issues/TODO
+
 
 ___
 
@@ -43,20 +59,20 @@ ___
 	
 	1.3 `PROJECT`: desired output file name
 
-	[example: `PROJECT := Turbo`]
+	[example: `PROJECT := MyGame`]
 
 	1.4 `CFLAGS` and `CPPFLAGS`: compiler flags
 	
-	>[example: `CFLAGS := -c -Wall -Werror` and `CPPFLAGS := -std=c++11`]
+	[example: `CFLAGS := -c -Wall -Werror` and `CPPFLAGS := -std=c++11`]
 	
 	1.5 `LDFLAGS`: linker flags
 
-	[example: `LDFLAGS := -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lpython34`]
+	[example: `LDFLAGS := -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer`]
 
 If you have done all the above things you can now build Turbo with the following command.
 (This requires, that you have added the make executable to your Environment path)
 	
-		`make Turbo.make`
+	`make Turbo.make`
 
 This command should generate object files into the directory obj and a executable in the base directory of the project.
 
