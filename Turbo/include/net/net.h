@@ -150,7 +150,6 @@ namespace NET
     ***
     *** @brief
     **/
-    /*
     class UDPSocket : public ISocket
     {
     private:
@@ -161,7 +160,18 @@ namespace NET
     public:
         UDPSocket();
         ~UDPSocket();
-    };*/
+    };
+
+    class UDPClient : public UDPSocket
+    {
+    private:
+
+    public:
+        UDPClient();
+        ~UDPClient();
+    }
+
+    class UDPServer : public UDPSocket
 
 }
 
