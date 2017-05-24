@@ -264,10 +264,7 @@ Adjustment IGUIObject::getAdjustment()
 
 void IGUIObject::setStyle(XML xml)
 {
-    XML widget = xml.findTag("Widget");
-    this->dimension = Rectangle(widget.getValueAsInt("x"), widget.getValueAsInt("y"),
-                                widget.getValueAsInt("w"), widget.getValueAsInt("h"));
-
+    XML widget              = xml.findTag("Widget");
     XML style               = widget.findTag("Style");
     XML margin              = style.findTag("margin");
     XML padding             = style.findTag("padding");
@@ -275,6 +272,39 @@ void IGUIObject::setStyle(XML xml)
     XML background_color    = style.findTag("background_color");
     XML border_color        = style.findTag("border_color");
     XML text_color          = style.findTag("text_color");
+
+    this->dimension = Rectangle(widget.getValueAsInt("x"), widget.getValueAsInt("y"),
+                                widget.getValueAsInt("w"), widget.getValueAsInt("h"));
+
+    this->margin[0] = margin.getValueAsInt("t");
+    this->margin[1] = margin.getValueAsInt("r");
+    this->margin[2] = margin.getValueAsInt("b");
+    this->margin[3] = margin.getValueAsInt("l");
+
+    this->padding[0] = padding.getValueAsInt("t");
+    this->padding[1] = padding.getValueAsInt("r");
+    this->padding[2] = padding.getValueAsInt("b");
+    this->padding[3] = padding.getValueAsInt("l");
+
+    this->border[0] = border.getValueAsInt("t");
+    this->border[1] = border.getValueAsInt("r");
+    this->border[2] = border.getValueAsInt("b");
+    this->border[3] = border.getValueAsInt("l");
+
+    this->border_color.r = border_color.getValueAsInt("r");
+    this->border_color.g = border_color.getValueAsInt("g");
+    this->border_color.b = border_color.getValueAsInt("b");
+    this->border_color.a = border_color.getValueAsInt("a");
+
+    this->background_color.r = background_color.getValueAsInt("r");
+    this->background_color.g = background_color.getValueAsInt("g");
+    this->background_color.b = background_color.getValueAsInt("b");
+    this->background_color.a = background_color.getValueAsInt("a");
+
+    this->text_color.r = text_color.getValueAsInt("r");
+    this->text_color.g = text_color.getValueAsInt("g");
+    this->text_color.b = text_color.getValueAsInt("b");
+    this->text_color.a = text_color.getValueAsInt("a");
 }
 
 XML IGUIObject::getStyle()

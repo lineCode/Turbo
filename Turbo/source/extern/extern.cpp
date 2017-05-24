@@ -14,22 +14,46 @@ string INI::getValue(string caption, string key)
 
 int INI::getValueAsInt(string key)
 {
-	return stoi(this->kvp[""][key]);
+	int value = 0;
+
+	if(this->kvp[""][key] != "")
+	{
+		value = stoi(this->kvp[""][key]);
+	}
+	return value;
 }
 
 int INI::getValueAsInt(string caption, string key)
 {
-	return stoi(this->kvp[caption][key]);
+	int value = 0;
+
+	if(this->kvp[caption][key] != "")
+	{
+		value = stoi(this->kvp[caption][key]);
+	}
+	return value;
 }
 
 float INI::getValueAsFloat(string key)
 {
-	return stof(this->kvp[""][key]);
+	float value = 0;
+
+	if(this->kvp[""][key] != "")
+	{
+		value = stof(this->kvp[""][key]);
+	}
+	return value;
 }
 
 float INI::getValueAsFloat(string caption, string key)
 {
-	return stof(this->kvp[caption][key]);
+	float value = 0;
+
+	if(this->kvp[caption][key] != "")
+	{
+		value =	stof(this->kvp[caption][key]);
+	}
+	return value;
 }
 
 void INI::setValue(string key, string value)

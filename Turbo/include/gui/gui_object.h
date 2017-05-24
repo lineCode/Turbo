@@ -82,8 +82,8 @@ namespace GUI
         std::vector<Uint16>     margin              = {0, 0, 0, 0};
         std::vector<Uint16>     padding             = {0, 0, 0, 0};
         std::vector<Uint8>      border              = {0, 0, 0, 0};
-        Color                   background_color    = {0, 0, 0, 0};
         Color                   border_color        = {0, 0, 0, 0};
+        Color                   background_color    = {0, 0, 0, 0};
         Color                   text_color          = {255, 255, 255, 255};
 
     public:

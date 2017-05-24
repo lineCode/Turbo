@@ -44,6 +44,21 @@ else
     endif
 endif
 
+ifeq ($(SYSTEM),WINDOWS)
+	OUTFILE	:= exe
+	RM      := del -f
+	RMDIR	:= rmdir
+	RRMDIR  := rmdir /s
+	MKDIR	:= mkdir
+	OS_LIB	:= -lmingw32 
+else
+	OUTFILE	:= out
+	RM      := rm
+	RMDIR	:= rmdir
+	RRMDIR  := rmdir -r
+	MKDIR	:= mkdir -p
+endif
+
 ifeq ($(SYSTEM), WINDOWS)
 	LIB 		:= -LC:/Libs/SDL/lib -LC:/Libs/Python/libs
 	INC 		+= -I./include -IC:/Libs/SDL/include -IC:/Libs/Python/include
@@ -57,16 +72,31 @@ endif
 INC         += -I../../Turbo/include/
 LINK		+= -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net
 
-OBJECTS		= obj/Debug/script/script.o obj/Debug/extern/parser.o obj/Debug/extern/directory.o obj/Debug/extern/extern.o obj/Debug/extern/time.o obj/Debug/net/net.o obj/Debug/turbo/default.o obj/Debug/turbo/application.o obj/Debug/geometry/geometry.o obj/Debug/utils/log.o obj/Debug/gui/gui.o obj/Debug/gui/gui_widget.o obj/Debug/gui/gui_object.o obj/Debug/event/event_listener.o obj/Debug/event/event_device.o obj/Debug/audio/audio.o obj/Debug/system/system.o 
-OBJECTS		:= $(foreach d, $(OBJECTS), $(addprefix ../../Turbo/,$(d)))
+MDLS 		:= $(patsubst %/,%,$(patsubst ../../Turbo/obj/Debug/%,%,$(dir $(wildcard ../../Turbo/obj/Debug/*/))))
+OBJD 		:= $(addprefix ../../Turbo/obj/Debug/, $(MDLS))
+OBJECTS		:= $(foreach d, $(OBJD), $(wildcard $(d)/*.o))
 
-filename := display
-filename_out := Display
 
-$(filename): $(OBJECTS) $(filename).o
-	@g++ $(OBJECTS) $(filename).o -o $(filename_out) $(INC) $(LIB) $(LINK)
-	@echo Done: $(filename_out)
+#====================================================================================
+
+target_1 	:= display
+target_1_o 	:= display.$(OUTFILE)
+target_2 	:= widget
+target_2_o 	:= Widget.$(OUTFILE)
+
+#====================================================================================
+
+$(target_1): $(OBJECTS) $(target_1).o
+	@g++ $(OBJECTS) $(target_1).o -o $(target_1_o) $(INC) $(LIB) $(LINK)
+	@echo Done: $(target_1_o)
 	
-$(filename).o: $(filename).cpp
-	@g++ -std=c++11 -c $(filename).cpp $(INC) -o $(filename).o
+$(target_1).o: $(target_1).cpp
+	@g++ -std=c++11 -c $(target_1).cpp $(INC) -o $(target_1).o
 
+
+$(target_2): $(OBJECTS) $(target_2).o
+	@g++ $(OBJECTS) $(target_2).o -o $(target_2_o) $(INC) $(LIB) $(LINK)
+	@echo Done: $(target_2_o)
+	
+$(target_2).o: $(target_2).cpp
+	@g++ -std=c++11 -c $(target_2).cpp $(INC) -o $(target_2).o
