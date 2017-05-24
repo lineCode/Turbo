@@ -17,6 +17,7 @@ int main(int argc, char ** argv)
 
     ren.clear();
     //ren.draw(tex);
+    tex.
     ren.present();
     SDL_Delay(2000);
     ren.clear();
