@@ -17,7 +17,7 @@
 	- gui_object.cpp
 	- gui_widget.cpp
 - logic
-	- 
+	- logic_object.cpp
 - net
 	- net.cpp
 - script

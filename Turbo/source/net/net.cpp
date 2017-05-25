@@ -285,3 +285,13 @@ UDPClient::~UDPClient()
 {
 
 }
+
+UDPServer::UDPServer()
+{
+
+}
+
+UDPServer::~UDPServer()
+{
+
+}

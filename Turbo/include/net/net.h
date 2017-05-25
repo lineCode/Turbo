@@ -162,16 +162,41 @@ namespace NET
         ~UDPSocket();
     };
 
+
+    /**
+    *** @class  UDPClient
+    ***
+    *** @brief
+    **/
     class UDPClient : public UDPSocket
     {
     private:
+        const std::string TAG = "UDPClient";
+
+    protected:
 
     public:
         UDPClient();
         ~UDPClient();
-    }
+    };
 
+
+    /**
+    *** @class  UDPServer
+    ***
+    *** @brief
+    **/
     class UDPServer : public UDPSocket
+    {
+    private:
+        const std::string TAG = "UDPServer";
+
+    protected:
+
+    public:
+        UDPServer();
+        ~UDPServer();
+    };
 
 }
 

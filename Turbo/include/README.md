@@ -19,7 +19,8 @@
 	- gui_object.h
 	- gui_widget.h
 - logic
-	- 
+	- logic.h
+	- logic_object.h
 - net
 	- net.h
 - script

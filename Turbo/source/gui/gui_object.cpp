@@ -11,6 +11,12 @@ IGUIObject::IGUIObject(Rectangle dimension)
 
 }
 
+IGUIObject::IGUIObject(int x, int y, int w, int h)
+    : dimension(Rectangle(x, y, w, h))
+{
+
+}
+
 void IGUIObject::update()
 {
 
@@ -371,6 +377,12 @@ IGUIObject::~IGUIObject()
 
 Widget::Widget(Rectangle dimension)
     : IGUIObject(dimension)
+{
+
+}
+
+Widget::Widget(int x, int y, int w, int h)
+    : IGUIObject(x, y, w, h)
 {
 
 }

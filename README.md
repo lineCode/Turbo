@@ -3,7 +3,6 @@
 - C++ Class Wrapper for SDL2
 - 2D Component/Entity Game Engine
 
-___
 
 ## Development
 
@@ -21,7 +20,7 @@ Download the development files for your platform and your Environment. You may w
 Extract the include and lib directory you have to use to your libraries path (example: `C:/libraries/SDL/include/`).
 - **Remember this path, you will need this later to configure the make file.**
 
-___
+
 
 **Python:**
 
@@ -30,12 +29,12 @@ ___
 Download the tarball and extract it to your desired path.
 - **Remember the path of the include/ and libs/ directories**
 
-___
+
 
 ### Issues/TODO
 
 
-___
+
 
 ## Installation
 
@@ -76,6 +75,6 @@ If you have done all the above things you can now build Turbo with the following
 
 This command should generate object files into the directory obj and a executable in the base directory of the project.
 
-___
+
 
 For more information and help take a look at either 'Visual Studio Support' or 'GNU make'.

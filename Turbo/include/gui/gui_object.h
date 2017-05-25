@@ -88,6 +88,7 @@ namespace GUI
 
     public:
         IGUIObject(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
+        IGUIObject(int x, int y, int w, int h);
         virtual void            update();
         virtual void            draw(IRenderer & renderer);
         virtual bool            hasParent();
@@ -149,6 +150,7 @@ namespace GUI
 
     public:
         Widget(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
+        Widget(int x, int y, int w, int h);
         Widget(std::string xml_file);
         virtual void            addWidget(Widget * w);
         virtual void            removeWidget();
