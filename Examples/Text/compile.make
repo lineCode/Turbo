@@ -79,12 +79,8 @@ OBJECTS		:= $(foreach d, $(OBJD), $(wildcard $(d)/*.o))
 
 #====================================================================================
 
-target_1 	:= display
-target_1_o 	:= Display.$(OUTFILE)
-target_2 	:= widget
-target_2_o 	:= Widget.$(OUTFILE)
-target_3 	:= logo
-target_3_o 	:= Logo.$(OUTFILE)
+target_1 	:= text
+target_1_o 	:= Text.$(OUTFILE)
 
 #====================================================================================
 
@@ -102,10 +98,3 @@ $(target_2): $(OBJECTS) $(target_2).o
 	
 $(target_2).o: $(target_2).cpp
 	@g++ -std=c++11 -c $(target_2).cpp $(INC) -o $(target_2).o
-	
-$(target_3): $(OBJECTS) $(target_3).o
-	@g++ $(OBJECTS) $(target_3).o -o $(target_3_o) $(INC) $(LIB) $(LINK)
-	@echo Done: $(target_3_o)
-	
-$(target_3).o: $(target_3).cpp
-	@g++ -std=c++11 -c $(target_3).cpp $(INC) -o $(target_3).o

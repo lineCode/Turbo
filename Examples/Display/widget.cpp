@@ -9,6 +9,7 @@ int main(int argc, char ** argv)
     IRenderer ren = IRenderer(win);
     Widget widget1 = Widget("widget.xml");
     Widget widget2 = Widget(Rectangle(5, 5, 200, 100));
+    Button button = Button("Test");
 
     widget2.setBackgroundColor(Color(200, 100, 50, 100));
     widget2.setBorderColor(Color(10, 100, 255, 255));
@@ -17,6 +18,7 @@ int main(int argc, char ** argv)
 
     widget1.draw(ren);
     widget2.draw(ren);
+    button.draw(ren);
 
     ren.present();
 
