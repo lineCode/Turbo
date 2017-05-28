@@ -16,6 +16,16 @@
 namespace LOGIC
 {
     /**
+    *** @enum   OBJECT_TYPE
+    ***
+    *** @brief
+    **/
+    enum class OBJECT_TYPE : Uint8
+    {
+        STATIC = 0
+    };
+
+    /**
     *** @class  ILogicObject
     ***
     *** @brief  ILogicObject is the base class for every object below the UI layout.

@@ -2,7 +2,7 @@
 
 using namespace EVENT;
 
-map<Uint32, vector<function<void()>>> IEventListener::event_callback;
+map<Uint32, map<Uint32, vector<function<void()>>>> IEventListener::event_callback;
 //map<Uint32, vector<function<void()>>> WindowListener::event_callback;
 //map<Uint32, vector<function<void()>>> KeyboardListener::event_callback;
 //map<Uint32, vector<function<void()>>> MouseListener::event_callback;
@@ -20,14 +20,14 @@ SDL_Event * IEventListener::getEvent()
     return this->event;
 }
 
-void IEventListener::registerEvent(Uint32 code, function<void()> callback)
+void IEventListener::registerEvent(Uint32 code, Uint32 value, function<void()> callback)
 {
-    event_callback[code].push_back(callback);
+    event_callback[code][value].push_back(callback);
 }
 
-void IEventListener::callEvent(Uint32 code)
+void IEventListener::callEvent(Uint32 code, Uint32 value)
 {
-    for(auto call : event_callback[code])
+    for(auto call : event_callback[code][value])
     {
         call();
     }

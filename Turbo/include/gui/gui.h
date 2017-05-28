@@ -20,6 +20,8 @@
 
 namespace GUI
 {
+    class Texture;
+
     /**
     *** @enum RENDER_MODE
     **/
@@ -132,7 +134,7 @@ namespace GUI
         void                drawFilledRectangle(GEOMETRY::Rectangle r, Color color);
         //void                drawShape(GEOMETRY::IShape s, Color color);
         //void                drawFilledShape(GEOMETRY::IShape s, Color color);
-        //TODOvirtual void        draw(Texture & texture);
+        //virtual void        draw(Texture & texture);
         virtual void        present();
         virtual void        clear();
         virtual ~IRenderer();
@@ -159,9 +161,8 @@ namespace GUI
     protected:
 
     public:
-        Sprite(std::string      file_path);
-        SDL_Surface           * getSurface();
         Sprite(std::string      file_path, bool xml = true);
+        SDL_Surface           * getSurface();
         ~Sprite();
     };
 
@@ -181,7 +182,8 @@ namespace GUI
     protected:
 
     public:
-        Font(std::string file_path, bool xml = true);
+        Font(std::string file_path, Uint8 font_size);
+        Font(std::string file_path);
         TTF_Font          * getFont();
         int                 getHeight();
         void                setOutline(Uint8 outline);
@@ -212,12 +214,37 @@ namespace GUI
     protected:
 
     public:
+        Texture();
         Texture(IRenderer & renderer, Sprite & sprite);
-        bool setTextureFromText(IRenderer & renderer, Font & font, std::string text,
-                                RENDER_MODE mode, Color color_fg,
-                                Color color_bg = {0, 0, 0, 0});
+        SDL_Texture * getTexture();
+        void setTexture(SDL_Texture * texture);
+        void draw(IRenderer & renderer, GEOMETRY::Rectangle rect = GEOMETRY::Rectangle());
         ~Texture();
     };
+
+    /**
+    *** @class  Text
+    ***
+    *** @brief
+    **/
+    class Text
+    {
+    private:
+        const std::string TAG = "Text";
+        Texture texture;
+        GEOMETRY::Rectangle dimension;
+
+
+    protected:
+
+    public:
+        Text(IRenderer & renderer, Font & font, std::string text,
+             RENDER_MODE mode = RENDER_MODE::SOLID, Color color_fg = {255, 255, 255, 255},
+             Color color_bg = {0, 0, 0, 0});
+        void draw(IRenderer & renderer);
+        ~Text();
+    };
+
 
     /**
     *** @class  Cursor
@@ -256,7 +283,7 @@ namespace GUI
 
     public:
         GUIRenderer(Window & window, GEOMETRY::Rectangle dimension, Uint32 flags);
-        void draw(Texture texture);
+        void draw(Texture & texture);
         ~GUIRenderer();
     };
 
@@ -275,7 +302,7 @@ namespace GUI
 
     public:
         GameRenderer(Window & window, Uint32 flags);
-        void draw(Texture texture);
+        void draw(Texture & texture);
         ~GameRenderer();
     };
 

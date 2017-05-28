@@ -17,6 +17,11 @@ IGUIObject::IGUIObject(int x, int y, int w, int h)
 
 }
 
+void IGUIObject::onMouseover(std::function<void()>callback)
+{
+    //this->registerEvent(SDL_MOUSEMOTION, 30, callback);
+}
+
 void IGUIObject::update()
 {
 

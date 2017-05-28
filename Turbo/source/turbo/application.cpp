@@ -66,9 +66,14 @@ Application::Application()
       window(TURBO::APP_NAME, Rectangle(50, 50, 500, 400)), renderer(window),
       overlay(TURBO::APP_OVERLAY)
 {
-    this->registerEvent(SDL_QUIT, std::bind(&Application::stop, this));
-    this->registerEvent(SDL_KEYDOWN, std::bind(&Application::stop, this));
+    this->registerEvent(SDL_QUIT, 0, std::bind(&Application::stop, this));
+    this->registerEvent(SDL_KEYDOWN, SDLK_ESCAPE, std::bind(&Application::stop, this));
     //this->registerEvent(SDL_MOUSEBUTTONDOWN, std::bind(&Application::stop, this));
+}
+
+GUI::Window & Application::getWindow()
+{
+    return this->window;
 }
 
 void Application::eventLoop()
@@ -76,26 +81,31 @@ void Application::eventLoop()
     SDL_Event event;
     while(SDL_PollEvent(&event))
     {
-        EVENT::IEventListener::callEvent(event.type);
 
         switch(event.type)
         {
         case SDL_QUIT:
             {
-                //EVENT::IEventListener::callEvent(SDL_KEYDOWN);
+                EVENT::IEventListener::callEvent(event.type, 0);
                 break;
             }
         case SDL_WINDOWEVENT:
             {
                 break;
             }
-        case SDL_KEYDOWN: //case SDL_KEYUP:
+        case SDL_KEYDOWN: case SDL_KEYUP:
             {
-                //EVENT::IEventListener::callEvent(SDL_KEYDOWN);
+                EVENT::IEventListener::callEvent(event.type, event.key.keysym.sym);
                 break;
             }
-        case SDL_JOYAXISMOTION: case SDL_JOYBUTTONDOWN: case SDL_JOYBUTTONUP:
+        case SDL_JOYAXISMOTION:
             {
+            
+                break;
+            }
+        case SDL_JOYBUTTONDOWN: case SDL_JOYBUTTONUP:
+            {
+            
                 break;
             }
         case SDL_MOUSEBUTTONDOWN: //case SDL_MOUSEBUTTONUP: case SDL_MOUSEMOTION:
@@ -111,6 +121,11 @@ void Application::eventLoop()
     }
 }
 
+void Application::gameLoop()
+{
+	
+}
+
 void Application::registerCallbacks()
 {
 
@@ -122,6 +137,7 @@ void Application::mainLoop()
     while(this->running)
     {
         this->eventLoop();
+		this->gameLoop();
         stop = timer.getTicks();
         this->timer.calcDelay(start, stop);
         start = stop;

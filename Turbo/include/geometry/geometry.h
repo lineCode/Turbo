@@ -8,7 +8,7 @@ namespace GEOMETRY
     /**
     *** @class  Point
     ***
-    *** @brief  
+    *** @brief
     **/
     class Point
     {
@@ -46,7 +46,7 @@ namespace GEOMETRY
     /**
     *** @class  Line
     ***
-    *** @brief  
+    *** @brief
     **/
     class Line
     {
@@ -78,7 +78,7 @@ namespace GEOMETRY
     /**
     *** @class  Vector
     ***
-    *** @brief  
+    *** @brief
     **/
     class Vector
     {
@@ -161,7 +161,7 @@ namespace GEOMETRY
     /**
     *** @class  Triangle
     ***
-    *** @brief  
+    *** @brief
     **/
     class Triangle : public IShape
     {
@@ -187,13 +187,14 @@ namespace GEOMETRY
         double          getArea();
         double          getScope();
         double          getVolume();
+        bool            isEmpty();
         ~Triangle();
     };
 
     /**
     *** @class  Rectangle
     ***
-    *** @brief  
+    *** @brief
     ***
     *** @var    p1 top left
     *** @var    p2 top right
@@ -232,6 +233,7 @@ namespace GEOMETRY
         void            setVolume(double v);
         double          getVolume();
         SDL_Rect        toSDL_Rect();
+        bool            isEmpty();
         ~Rectangle();
     };
 

@@ -46,7 +46,7 @@ Uint32 Window::getFlags()
 
 void Window::setFlags(Uint32 flags)
 {
-    
+
 }
 
 Uint32 Window::getId()
@@ -208,6 +208,7 @@ void IRenderer::present()
 
 void IRenderer::clear()
 {
+    this->setDrawColor(this->reset_color);
     SDL_RenderClear(this->renderer);
 }
 
@@ -252,6 +253,10 @@ Sprite::Sprite(string file_path, bool is_xml)
         {
             this->surface = IMG_Load(file_path.c_str());
         }
+        else
+        {
+
+        }
     }
 }
 
@@ -268,22 +273,33 @@ Sprite::~Sprite()
     }
 }
 
-Font::Font(std::string file_path, bool is_xml)
+Font::Font(std::string file_path, Uint8 font_size)
 {
-    if(is_xml)
+    if(EXTERN::Directory::isType(file_path, "ttf"))
     {
-        if(EXTERN::Directory::isType(file_path, "xml"))
+        this->font = TTF_OpenFont(file_path.c_str(), font_size);
+    }
+}
+
+Font::Font(std::string file_path)
+{
+    Uint8 font_size = 12;
+    if(EXTERN::Directory::isType(file_path, "xml"))
+    {
+        EXTERN::XMLParser parser(file_path);
+        XML xml = parser.getXML();
+        XML ft = xml.findTag("Font");
+        if(!ft.isEmpty())
         {
-            EXTERN::XMLParser parser(file_path);
-            XML xml = parser.getXML();
-            XML sp = xml.findTag("Font");
-            if(!sp.isEmpty())
+            string rel_path = ft.getValue("relPath");
+            Uint8 font_size_pt = ft.getValueAsInt("fontSize");
+            if(rel_path != "")
             {
-                string rel_path = sp.getValue("relPath");
-                if(rel_path != "")
-                {
-                    file_path = rel_path;
-                }
+                file_path = rel_path;
+            }
+            if(font_size_pt != 0)
+            {
+                font_size = font_size_pt;
             }
         }
     }
@@ -291,7 +307,7 @@ Font::Font(std::string file_path, bool is_xml)
 
     if(EXTERN::Directory::isType(file_path, "ttf"))
     {
-        this->font = TTF_OpenFont(file_path.c_str(), 12);
+        this->font = TTF_OpenFont(file_path.c_str(), font_size);
     }
 }
 
@@ -356,6 +372,11 @@ Rectangle Text::getSizeUTF8(string text, Font & font)
 
 }
 */
+Texture::Texture()
+{
+
+}
+
 Texture::Texture(IRenderer & renderer, Sprite & sprite)
 {
     if(sprite.getSurface() != nullptr)
@@ -364,18 +385,52 @@ Texture::Texture(IRenderer & renderer, Sprite & sprite)
     }
 }
 
-bool Texture::setTextureFromText(IRenderer & renderer, Font & font, std::string text,
-                                 RENDER_MODE mode, Color color_fg, Color color_bg)
+SDL_Texture * Texture::getTexture()
 {
-    bool success = false;
+    return this->texture;
+}
+
+void Texture::setTexture(SDL_Texture * texture)
+{
+    this->texture = texture;
+}
+
+void Texture::draw(IRenderer & renderer, Rectangle dest)
+{
+    if(!dest.isEmpty())
+    {
+        SDL_Rect destination = dest.toSDL_Rect();
+        SDL_RenderCopyEx(renderer.getRenderer(), this->texture, NULL, &destination, 0, NULL, SDL_FLIP_NONE);
+    }
+    else
+    {
+        SDL_RenderCopyEx(renderer.getRenderer(), this->texture, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
+    }
+}
+
+Texture::~Texture()
+{
+    if(this->texture != nullptr)
+    {
+        SDL_DestroyTexture(this->texture);
+    }
+}
+
+Text::Text(IRenderer & renderer, Font & font, std::string text, RENDER_MODE mode,
+           Color color_fg, Color color_bg)
+    : texture(), dimension()
+{
     SDL_Surface * surface = nullptr;
 
     switch(mode)
     {
     case RENDER_MODE::SOLID:
         {
-            surface = TTF_RenderUNICODE_Solid(font.getFont(), (Uint16 *)text.c_str(),
+            surface = TTF_RenderText_Solid(font.getFont(), text.c_str(),
                                               color_fg.toSDL_Color());
+                                              /*
+            surface = TTF_RenderUNICODE_Solid(font.getFont(), (Uint16 *)text.c_str(),
+                                              color_fg.toSDL_Color());*/
             break;
         }
     case RENDER_MODE::SHADED:
@@ -393,22 +448,22 @@ bool Texture::setTextureFromText(IRenderer & renderer, Font & font, std::string 
     }
     if(surface != nullptr)
     {
-        this->texture = SDL_CreateTextureFromSurface(renderer.getRenderer(), surface);
+        int w = 0, h = 0;
+        TTF_SizeText(font.getFont(), text.c_str(), &w, &h);
+        this->dimension = Rectangle(0, 0, w, h);
+        this->texture.setTexture(SDL_CreateTextureFromSurface(renderer.getRenderer(), surface));
         SDL_FreeSurface(surface);
     }
-    if(this->texture != nullptr)
-    {
-        success = true;
-    }
-    return success;
 }
 
-Texture::~Texture()
+void Text::draw(IRenderer & renderer)
 {
-    if(this->texture != nullptr)
-    {
-        SDL_DestroyTexture(this->texture);
-    }
+    this->texture.draw(renderer, this->dimension);
+}
+
+Text::~Text()
+{
+
 }
 
 Cursor::Cursor()
@@ -432,7 +487,7 @@ GUIRenderer::GUIRenderer(Window & window, Rectangle dimension, Uint32 flags)
 
 }
 
-void GUIRenderer::draw(Texture texture)
+void GUIRenderer::draw(Texture & texture)
 {
 
 }
@@ -448,7 +503,7 @@ GameRenderer::GameRenderer(Window & window, Uint32 flags)
 
 }
 
-void GameRenderer::draw(Texture texture)
+void GameRenderer::draw(Texture & texture)
 {
 
 }

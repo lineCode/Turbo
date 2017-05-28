@@ -108,8 +108,8 @@ double Point::getZ()
 
 double Point::getDistance(Point p)
 {
-    return sqrt(pow(this->x-p.getX(), 2.0) + 
-                pow(this->y-p.getY(), 2.0) + 
+    return sqrt(pow(this->x-p.getX(), 2.0) +
+                pow(this->y-p.getY(), 2.0) +
                 pow(this->z-p.getZ(), 2.0));
 }
 
@@ -324,6 +324,15 @@ double Triangle::getVolume()
     return 0;
 }
 
+bool Triangle::isEmpty()
+{
+    if(this->p1.isEmpty() && this->p2.isEmpty() && this->p3.isEmpty())
+    {
+        return true;
+    }
+    return false;
+}
+
 Triangle::~Triangle()
 {
 
@@ -441,6 +450,15 @@ SDL_Rect Rectangle::toSDL_Rect()
     rect.w = this->p3.getX();
     rect.h = this->p3.getY();
     return rect;
+}
+
+bool Rectangle::isEmpty()
+{
+    if(this->p1.isEmpty() && this->p2.isEmpty() && this->p3.isEmpty() && this->p4.isEmpty())
+    {
+        return true;
+    }
+    return false;
 }
 
 Rectangle::~Rectangle()

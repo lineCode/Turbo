@@ -70,7 +70,6 @@ namespace GUI
         IGUIObject            * child   = nullptr;
         IGUIObject            * next    = nullptr;
         IGUIObject            * prev    = nullptr;
-        std::vector<Texture>    textures;
 
     protected:
         // Style Properties
@@ -89,6 +88,7 @@ namespace GUI
     public:
         IGUIObject(GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
         IGUIObject(int x, int y, int w, int h);
+        virtual void            onMouseover(std::function<void()> callback);
         virtual void            update();
         virtual void            draw(IRenderer & renderer);
         virtual bool            hasParent();

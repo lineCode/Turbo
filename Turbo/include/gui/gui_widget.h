@@ -47,7 +47,7 @@ namespace GUI
 
     public:
         Button(std::string title = "", GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
-        Button(std::string title = "", int x = 0, int y = 0, int w = 0, int h = 0);
+        Button(std::string title, int x, int y, int w, int h);
         ~Button();
     };
 
@@ -65,7 +65,7 @@ namespace GUI
 
     public:
         Label(std::string title = "", GEOMETRY::Rectangle dimension = GEOMETRY::Rectangle());
-        Label(std::string title = "", int x = 0, int y = 0, int w = 0, int h = 0);
+        Label(std::string title, int x, int y, int w, int h);
         ~Label();
     };
 

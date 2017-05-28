@@ -50,13 +50,13 @@ namespace EVENT
 		SDL_Event * event;
 
 	protected:
-		static std::map<Uint32, std::vector<std::function<void()>>> event_callback;
+		static std::map<Uint32, std::map<Uint32, std::vector<std::function<void()>>>> event_callback;
 
 	public:
 		IEventListener();
 		SDL_Event * getEvent();
-		virtual void registerEvent(Uint32 code, std::function<void()> callback);
-		static void callEvent(Uint32 code);
+		virtual void registerEvent(Uint32 code, Uint32 value, std::function<void()> callback);
+		static void callEvent(Uint32 code, Uint32 value);
 		~IEventListener();
 	};
 

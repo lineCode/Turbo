@@ -63,7 +63,9 @@ namespace TURBO
 
     public:
         Application();
+        GUI::Window       & getWindow();
         void                eventLoop();
+		void                gameLoop();
         void                registerCallbacks();
         void                mainLoop();
         unsigned int        run();
