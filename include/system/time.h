@@ -1,0 +1,91 @@
+#ifndef TURBO_TIMER_H
+#define TURBO_TIMER_H
+
+#include <thread>
+#include <chrono>
+#include <iomanip>
+#include <vector>
+#include <sstream>
+
+#include "system/system_def.h"
+
+namespace TURBO
+{
+    namespace SYSTEM
+    {
+        class Time
+        {
+        public:
+            static Uint32 getTicks();
+            static Uint64 getTimestamp();
+            static void sleep(Uint64 ns);
+            static std::string getTicksToString(Uint32 ticks, std::string format = "%H:%M:%S.%f");
+            static std::string getTimestampToString(Uint64 timestamp, std::string format = "%H:%M:%S %d.%m.%Y");
+        };
+
+        class Timer
+        {
+        private:
+            static Uint16   timers;
+            Uint16          timer_id        = 0;
+            TIMER_STATE     state           = TIMER_STATE::STOPPED;
+            Uint32          elapsed_time    = 0;
+            Uint32          active_time     = 0;
+            Uint32          paused_time     = 0;
+            Uint32          timer_started   = 0;
+            Uint32          timer_paused    = 0;
+            Uint32          timer_resumed   = 0;
+            Uint32          timer_stopped   = 0;
+
+        public:
+            explicit Timer();
+            ~Timer();
+            Uint32 				start();
+            Uint32 				pause();
+            Uint32 				resume();
+            Uint32 				stop();
+            TIMER_STATE         getState();
+            Uint32              getTicks();
+            Uint32 				getTime();
+            std::string         printTime();
+        };
+
+        class PTimer
+        {
+        private:
+            static Uint16   timers;
+            Uint16          timer_id        = 0;
+            TIMER_STATE     state           = TIMER_STATE::STOPPED;
+            Uint64          elapsed_time    = 0;
+            Uint64          active_time     = 0;
+            Uint64          paused_time     = 0;
+            Uint64          timer_started   = 0;
+            Uint64          timer_paused    = 0;
+            Uint64          timer_resumed   = 0;
+            Uint64          timer_stopped   = 0;
+
+        public:
+            explicit PTimer();
+            ~PTimer();
+            Uint64 				start();
+            Uint64 				pause();
+            Uint64 				resume();
+            Uint64 				stop();
+            TIMER_STATE         getState();
+            Uint64              getTicks();
+            Uint64 				getTime();
+            std::string         printTime();
+        };
+
+        class SDLTimer
+        {
+            Sint32 timer_id = 0;
+
+        public:
+            Sint32 addTimer(Uint32 interval, SDL_TimerCallback callback, void * data);
+            bool removeTimer();
+        };
+    }
+}
+
+#endif //TURBO_TIMER_H
