@@ -15,5 +15,19 @@ namespace TURBO
         {
 
         }
+
+        Rect &Rect::operator*(Uint32 scalar)
+        {
+            w *= scalar;
+            h *= scalar;
+            return *this;
+        }
+
+        Rect &Rect::operator/(Uint32 scalar)
+        {
+            w /= scalar;
+            h /= scalar;
+            return *this;
+        }
     }
 }

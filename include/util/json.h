@@ -1,24 +1,38 @@
 #ifndef TURBO_JSON_H
 #define TURBO_JSON_H
 
-#include "util/util_def.h"
 #include <iostream>
-#include <vector>
+#include <fstream>
 
 namespace TURBO
 {
     namespace UTIL
     {
-        template <typename T>
-        struct JSONPair<std::string, T>
-        {
-            std::string key;
-            T value;
-        };
-
         struct JSON
         {
-            std::vector<JSONPair> kvp;
+            std::string key;
+        };
+
+        class JSONParser
+        {
+        private:
+            JSON    json;
+            char   *buffer_pos;
+
+        public:
+            JSONParser(std::string file);
+            JSON read(std::string file);
+            bool isSquareBracketOpenChar(char c);
+            bool isSquareBracketCloseChar(char c);
+            bool isCurlyBracketOpenChar(char c);
+            bool isCurlyBracketCloseChar(char c);
+            bool isWhitespaceChar(char c);
+            int skipWhitespaces();
+            bool readKey();
+            bool readValue();
+            bool readArray();
+            bool readObject();
+            bool readJSON();
         };
     }
 }

@@ -1,9 +1,7 @@
 #ifndef TURBO_RECT_H
 #define TURBO_RECT_H
 
-#include <SDL_types.h>
-
-#include "math/math_def.h"
+typedef int Uint32;
 
 namespace TURBO
 {
@@ -19,6 +17,8 @@ namespace TURBO
 
             Rect();
             Rect(Uint32 x, Uint32 y, Uint32 w, Uint32 h);
+            Rect& operator*(Uint32 scalar);
+            Rect& operator/(Uint32 scalar);
         };
     }
 }

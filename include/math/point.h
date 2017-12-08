@@ -1,26 +1,35 @@
 #ifndef TURBO_POINT_H
 #define TURBO_POINT_H
 
-#include <SDL_types.h>
-
-#include "math/math_def.h"
+typedef int Uint32;
 
 namespace TURBO
 {
     namespace MATH
     {
-        class Rect;
-
         class Point
         {
         public:
-            Sint32 x;
-            Sint32 y;
-            Sint32 z;
+            Uint32 x;
+            Uint32 y;
+            Uint32 z;
 
             Point();
-            Point(Sint32 x, Sint32 y);
-            Point(Sint32 x, Sint32 y, Sint32 z);
+            Point(Uint32 x, Uint32 y, Uint32 z);
+            Point& operator+(Point &other);
+            Point& operator+=(Point &other);
+            Point& operator-(Point &other);
+            Point& operator-=(Point &other);
+            Point& operator*(Point &other);
+            Point& operator*=(Point &other);
+            Point& operator/(Point &other);
+            Point& operator/=(Point &other);
+            Point& operator*(Uint32 scalar);
+            Point& operator*=(Uint32 scalar);
+            Point& operator/(Uint32 scalar);
+            Point& operator/=(Uint32 scalar);
+            friend bool operator==(Point & first, Point &second);
+            friend bool operator!=(Point & first, Point &second);
         };
     }
 }
