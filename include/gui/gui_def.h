@@ -7,12 +7,32 @@ namespace TURBO
 {
     namespace GUI
     {
-        enum class EVENT_TYPE : Uint8
+        enum EVENT_TYPE : Uint8
         {
-            TURBO_ON_MOUSE_OVER = 0x0,
-            TURBO_ON_MOUSE_OUT,
-            TURBO_ON_MOUSE_DOWN,
-            TURBO_ON_MOUSE_UP,
+            ON_MOUSE_OVER = 0x0,
+            ON_MOUSE_OUT,
+            ON_MOUSE_BUTTON_DOWN,
+            ON_MOUSE_BUTTON_UP
+        };
+
+        enum OBJECT_TYPE : Uint8
+        {
+            OBJECT = 0x0,
+            LAYOUT = 0x1,
+            WIDGET = 0x2
+        };
+
+        enum class SIZE_POLICY : Uint8
+        {
+            MAXIMUM = 0x0,
+            MINIMUM = 0x1
+
+        };
+
+        enum class ORIENTATION : Uint8
+        {
+            HORIZONTAL = 0x0,
+            VERTICAL = 0x1
         };
     }
 }

@@ -10,51 +10,45 @@ namespace TURBO
         class SDL : SDL2pp::SDL
         {
         private:
-            bool is_init = false;
             Uint32 init_flags = 0x0;
 
         public:
+            static bool is_init;
             explicit SDL(Uint32 sdl_flags);
         };
 
-        class SDLImage : SDL2pp::SDLImage
+        class SDLIMG : SDL2pp::SDLImage
         {
         private:
-            bool is_init = false;
             Uint32 init_flags = 0x0;
 
         public:
-            explicit SDLImage(Uint32 image_flags);
+            static bool is_init;
+            explicit SDLIMG(Uint32 image_flags);
         };
 
         class SDLTTF : SDL2pp::SDLTTF
         {
-        private:
-            bool is_init = false;
-            Uint32 init_flags = 0x0;
-
         public:
+            static bool is_init;
             SDLTTF();
         };
 
-        class SDLMixer : SDL2pp::SDLMixer
+        class SDLMIX : SDL2pp::SDLMixer
         {
         private:
-            bool is_init = false;
             Uint32 init_flags = 0x0;
 
         public:
-            explicit SDLMixer(Uint32 mixer_flags);
+            static bool is_init;
+            explicit SDLMIX(Uint32 mixer_flags);
         };
 
-        class SDLNet
+        class SDLNET
         {
-        private:
-            bool is_init = false;
-            Uint32 init_flags = 0x0;
-
         public:
-            SDLNet();
+            static bool is_init;
+            SDLNET();
         };
     }
 }

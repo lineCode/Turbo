@@ -32,24 +32,73 @@ namespace TURBO
         std::string Time::getTicksToString(Uint32 ticks, std::string format)
         {
             std::stringstream ss;
-            unsigned offset = 0;
+            unsigned long offset = 0;
+            unsigned long next_offset = 0;
 
             if((offset = format.find("%H", offset)) != std::string::npos)
             {
                 ss << std::setw(2) << std::setfill('0') << (ticks / (1000 * 60 * 60) % 24)
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
             }
-            if((offset = format.find("%M", offset + 2)) != std::string::npos)
+            if((offset = format.find("%M", next_offset)) != std::string::npos)
             {
                 ss << std::setw(2) << std::setfill('0') << (ticks / (1000 * 60) % 60)
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
             }
-            if((offset = format.find("%S", offset + 2)) != std::string::npos)
+            if((offset = format.find("%S", next_offset)) != std::string::npos)
             {
                 ss << std::setw(2) << std::setfill('0') << (ticks / 1000 % 60)
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
             }
-            if((offset = format.find("%f", offset + 2)) != std::string::npos)
+            if((offset = format.find("%f", next_offset)) != std::string::npos)
+            {
+                ss << std::setw(3) << std::setfill('0') << (ticks % 1000)
+                   << format.substr(offset + 2);
+            }
+            return ss.str();
+        }
+
+        std::string Time::getPTicksToString(Uint64 ticks, std::string format)
+        {
+            std::stringstream ss;
+            unsigned long offset = 0;
+            unsigned long next_offset = 0;
+            Uint64 ns_to_s = 1000 * 1000 * 1000;
+
+            if((offset = format.find("%H", offset)) != std::string::npos)
+            {
+                ss << std::setw(2) << std::setfill('0') << (ticks / (ns_to_s * 60 * 60)) % 24
+                   << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
+            }
+            if((offset = format.find("%M", next_offset)) != std::string::npos)
+            {
+                ss << std::setw(2) << std::setfill('0') << (ticks / (ns_to_s * 60)) % 60
+                   << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
+            }
+            if((offset = format.find("%S", next_offset)) != std::string::npos)
+            {
+                ss << std::setw(2) << std::setfill('0') << (ticks / ns_to_s) % 60
+                   << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
+            }
+            if((offset = format.find("%f", next_offset)) != std::string::npos)
+            {
+                ss << std::setw(3) << std::setfill('0') << (ticks / (1000 * 1000)) % 1000
+                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
+            }
+            if((offset = format.find("%u", next_offset)) != std::string::npos)
+            {
+                ss << std::setw(3) << std::setfill('0') << (ticks / 1000) % 1000
+                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
+                next_offset = offset + 2;
+            }
+            if((offset = format.find("%n", next_offset)) != std::string::npos)
             {
                 ss << std::setw(3) << std::setfill('0') << (ticks % 1000)
                    << format.substr(offset + 2);

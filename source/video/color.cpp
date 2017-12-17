@@ -10,12 +10,6 @@ namespace TURBO
 
         }
 
-        Color::Color(float r, float g, float b, float a)
-            : rf(r), gf(g), bf(b), af(a)
-        {
-
-        }
-
         SDL_Color Color::toSDLColor()
         {
             return {r, g, b, a};

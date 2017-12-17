@@ -5,7 +5,7 @@ namespace TURBO
     namespace VIDEO
     {
         Text::Text(std::string text, Font *font)
-            : texture()
+            //: texture()
         {
 
         }

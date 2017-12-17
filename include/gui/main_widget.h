@@ -11,11 +11,11 @@ namespace TURBO
         class MainWidget : public Widget
         {
         protected:
-            VIDEO::Window & window;
-            VIDEO::Renderer & renderer;
+            VIDEO::Window &window;
+            VIDEO::Renderer &renderer;
 
         public:
-            MainWidget(VIDEO::Window & window, VIDEO::Renderer & renderer);
+            MainWidget(VIDEO::Window &window, VIDEO::Renderer &renderer);
         };
     }
 }

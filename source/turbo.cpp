@@ -13,7 +13,8 @@ namespace TURBO
           sdl_ttf(),
           sdl_net()
     {
-
+        glewInit();
+        VIDEO::OpenGL::init();
     }
 
     void Turbo::setFrameLimit(Uint8 limit)
@@ -48,13 +49,10 @@ namespace TURBO
                 {
                     running = false;
                 }
+                ren.clear();
+                ren.present();
             }
         }
         return 0;
-    }
-
-    Turbo::~Turbo()
-    {
-
     }
 }

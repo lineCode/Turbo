@@ -6,16 +6,26 @@ namespace TURBO
     namespace GUI
     {
         Object::Object(Object * parent)
-            : parent(parent), geometry()
+            : parent(parent),
+              child(nullptr),
+              geometry(),
+              object_type(OBJECT_TYPE::OBJECT),
+              visible(false),
+              mouse_over(false),
+              mouse_clicked(false)
         {
-
+            if(parent != nullptr)
+            {
+                //TODO handle size
+                setSize(parent->getSize());
+            }
         }
 
-        void Object::fireCallback(std::string callback)
+        void Object::fireCallback(Uint8 event)
         {
-            if(callbacks.count(callback))
+            if(callbacks.count(event))
             {
-                callbacks[callback]();
+                callbacks[event]();
             }
         }
 
@@ -27,23 +37,47 @@ namespace TURBO
 
             if(mouse_over)
             {
-                fireCallback("onMouseOver");
+                fireCallback(EVENT_TYPE::ON_MOUSE_OVER);
             }
             if(mouse_clicked)
             {
-                fireCallback("onClicked");
+                fireCallback(EVENT_TYPE::ON_MOUSE_BUTTON_DOWN);
             }
         }
 
-        MATH::Rect Object::setGeometry(MATH::Rect geometry)
+        void Object::registerCallback(Uint8 event, std::function<void()> &callback)
+        {
+            callbacks[event] = callback;
+        }
+
+        MATH::Rect &Object::setGeometry(MATH::Rect geometry)
         {
             this->geometry = geometry;
             return this->geometry;
         }
 
-        MATH::Rect Object::getGeometry()
+        MATH::Rect &Object::getGeometry()
         {
             return geometry;
+        }
+
+        MATH::Rect &Object::setSize(MATH::Rect size)
+        {
+            if(size <= geometry)
+            {
+                this->size = size;
+            }
+            return this->size;
+        }
+
+        MATH::Rect &Object::getSize()
+        {
+            return size;
+        }
+
+        OBJECT_TYPE Object::getType()
+        {
+            return object_type;
         }
 
         bool Object::isVisible()
@@ -56,20 +90,59 @@ namespace TURBO
             return mouse_over;
         }
 
-        void Object::onMouseOver(std::function<void()> callback)
-        {
-            callbacks["onMouseOver"] = callback;
-        }
-
         bool Object::mouseClicked()
         {
             return mouse_clicked;
         }
 
-        Object & Object::show()
+        Object *Object::getParent()
+        {
+            return parent;
+        }
+
+        Object *Object::setParent(Object *object)
+        {
+            parent = object;
+            return this;
+        }
+
+        Object *Object::getChild()
+        {
+            return child;
+        }
+
+        Object *Object::setChild(Object *object)
+        {
+            this->child = object;
+            return this;
+        }
+
+        Object *Object::hide()
+        {
+            visible = false;
+            if(child != nullptr)
+            {
+                child->hide();
+            }
+            return this;
+        }
+
+        Object *Object::show()
         {
             visible = true;
-            return *this;
+            if(child != nullptr)
+            {
+                child->show();
+            }
+            return this;
+        }
+
+        Object *Object::update()
+        {
+            if(child != nullptr)
+            {
+                child->update();
+            }
         }
     }
 }

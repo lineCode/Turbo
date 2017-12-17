@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <stack>
+
+#include "util/parser.h"
 
 namespace TURBO
 {
@@ -16,23 +20,22 @@ namespace TURBO
         class JSONParser
         {
         private:
-            JSON    json;
-            char   *buffer_pos;
+            JSON json;
+            std::stack<std::string> tokens;
+            std::vector<char> buffer;
+            std::vector<char>::iterator buffer_pos;
+            unsigned long file_pos = 0;
+            std::streamsize file_size;
 
         public:
-            JSONParser(std::string file);
+            explicit JSONParser(std::string file);
+            JSON getJSON();
             JSON read(std::string file);
-            bool isSquareBracketOpenChar(char c);
-            bool isSquareBracketCloseChar(char c);
-            bool isCurlyBracketOpenChar(char c);
-            bool isCurlyBracketCloseChar(char c);
-            bool isWhitespaceChar(char c);
             int skipWhitespaces();
             bool readKey();
             bool readValue();
             bool readArray();
             bool readObject();
-            bool readJSON();
         };
     }
 }

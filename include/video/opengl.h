@@ -15,10 +15,11 @@ namespace TURBO
         class OpenGL
         {
         public:
+            static bool GL_IS_INIT;
+            static bool GLEW_IS_INIT;
             static void init();
             static void swap(Window &window);
             static void clear(GLbitfield mask = GL_COLOR_BUFFER_BIT);
-            static Uint32 loadShader(std::string filename, GLenum shader_type);
         };
     }
 }

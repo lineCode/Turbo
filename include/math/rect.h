@@ -1,7 +1,8 @@
 #ifndef TURBO_RECT_H
 #define TURBO_RECT_H
 
-typedef int Uint32;
+#include "math/math_def.h"
+#include "math/point.h"
 
 namespace TURBO
 {
@@ -10,15 +11,24 @@ namespace TURBO
         class Rect
         {
         public:
-            Uint32 x;
-            Uint32 y;
-            Uint32 w;
-            Uint32 h;
+            Sint32 x;
+            Sint32 y;
+            Sint32 w;
+            Sint32 h;
 
             Rect();
-            Rect(Uint32 x, Uint32 y, Uint32 w, Uint32 h);
-            Rect& operator*(Uint32 scalar);
-            Rect& operator/(Uint32 scalar);
+            Rect(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
+            Point topLeft();
+            Point topRight();
+            Point bottomLeft();
+            Point bottomRight();
+            Point center();
+            Rect& operator*(Sint32 scalar);
+            Rect& operator/(Sint32 scalar);
+            friend bool operator==(Rect & first, Rect &second);
+            friend bool operator!=(Rect & first, Rect &second);
+            friend bool operator<(Rect & first, Rect &second);
+            friend bool operator<=(Rect & first, Rect &second);
         };
     }
 }

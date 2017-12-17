@@ -1,33 +1,35 @@
 #ifndef TURBO_WINDOW_H
 #define TURBO_WINDOW_H
 
-#include <SDL2pp/SDL2pp.hh>
+#include <SDL_events.h>
+#include <SDL_video.h>
 
-#include "video/opengl.h"
+#include "video/video_def.h"
 #include "math/math.h"
 
 namespace TURBO
 {
     namespace VIDEO
     {
-        class Window : public SDL2pp::Window
+        class Window
         {
         private:
-            SDL_GLContext context;
-            MATH::Rect geometry;
-            bool shown = false;
-            bool exposed = false;
-            bool restored = false;
-            bool minimized = false;
-            bool maximized = false;
-            bool mouse_focus = false;
-            bool focus = false;
-            bool closed = false;
+            SDL_Window *window;
+            MATH::Rect size;
+            bool shown          = false;
+            bool exposed        = false;
+            bool restored       = false;
+            bool minimized      = false;
+            bool maximized      = false;
+            bool mouse_focus    = false;
+            bool focus          = false;
+            bool closed         = false;
 
         public:
             Window(const std::string &title, MATH::Rect geometry, Uint32 flags);
-            ~Window() override;
-            MATH::Rect getGeometry();
+            ~Window();
+            SDL_Window * getWindow();
+            MATH::Rect &getSize();
             void pollEvent(SDL_Event &event);
             bool isShown() const;
             bool isExposed() const;

@@ -9,7 +9,7 @@ namespace TURBO
     {
 //        class Renderer;
 //
-//        class Texture : public SDL2pp::Texture
+//        class Texture
 //        {
 //        private:
 //            Renderer &renderer;

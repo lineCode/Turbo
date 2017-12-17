@@ -61,47 +61,7 @@ namespace TURBO
             return f.good();
         }
 
-        bool Dir::isType(const std::string name, const std::string type)
-        {
-            bool success = false;
-            if(Dir::isFile(name))
-            {
-                if(name.substr(name.rfind('.') + 1, name.length() - name.rfind('.') - 1) == toLower(type))
-                {
-                    success = true;
-                }
-            }
-            return success;
-        }
 
-        bool Dir::hasFilter(const std::string name, const std::string filter)
-        {
-            bool success = false;
-
-            if(filter.find(',') != std::string::npos)
-            {
-                success = Dir::hasFilter(name, explode(filter, ','));
-            }
-            else
-            {
-                success = Dir::isType(name, filter);
-            }
-            return success;
-        }
-
-        bool Dir::hasFilter(const std::string name, const std::vector<std::string> filter)
-        {
-            bool success = false;
-
-            for(std::string s : filter)
-            {
-                if(Dir::isType(name, s))
-                {
-                    success = true;
-                }
-            }
-            return success;
-        }
 
         std::vector<std::string> Dir::getDirs()
         {

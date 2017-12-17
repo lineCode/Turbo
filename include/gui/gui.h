@@ -3,7 +3,9 @@
 
 #include "gui/object.h"
 #include "gui/widget.h"
+#include "gui/layout.h"
 #include "gui/main_widget.h"
+#include "gui/button.h"
 
 namespace TURBO
 {

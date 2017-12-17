@@ -1,11 +1,7 @@
 #ifndef TURBO_VIDEO_DEF_H
 #define TURBO_VIDEO_DEF_H
 
-#include <iostream>
-#include <string>
-
-#include <SDL.h>
-#include <SDL2pp/SDL2pp.hh>
+#include <SDL_types.h>
 
 #include "turbo_def.h"
 

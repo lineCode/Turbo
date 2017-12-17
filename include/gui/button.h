@@ -13,8 +13,8 @@ namespace TURBO
             std::string text;
 
         public:
+            explicit Button(std::string text);
             Button(Object * parent, std::string text);
-            Button(std::string text);
         };
     }
 }

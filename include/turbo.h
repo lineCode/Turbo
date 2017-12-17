@@ -27,16 +27,15 @@ namespace TURBO
 
     public:
         SYSTEM::SDL         sdl;
-        SYSTEM::SDLImage    sdl_image;
-        SYSTEM::SDLMixer    sdl_mixer;
+        SYSTEM::SDLIMG      sdl_image;
+        SYSTEM::SDLMIX      sdl_mixer;
         SYSTEM::SDLTTF      sdl_ttf;
-        SYSTEM::SDLNet      sdl_net;
+        SYSTEM::SDLNET      sdl_net;
 
         explicit Turbo(Uint32 sdl_flags = SDL_INIT_EVERYTHING);
-        void setFrameLimit(Uint8 limit);
-        Uint8 getFrameLimit();
-        int run();
-        ~Turbo();
+        void    setFrameLimit(Uint8 limit);
+        Uint8   getFrameLimit();
+        int     run();
     };
 }
 

@@ -7,7 +7,12 @@ namespace TURBO
 {
     namespace AUDIO
     {
-
+        enum class PLAYER_STATE : Uint8
+        {
+            STOPPED = 0x0,
+            PLAYING = 0x1,
+            PAUSED  = 0x2,
+        };
     }
 }
 

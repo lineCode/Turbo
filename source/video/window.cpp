@@ -4,27 +4,25 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        Window::Window(const std::string &title, MATH::Rect geometry, Uint32 flags)
-            : SDL2pp::Window(title, geometry.x, geometry.y, geometry.w, geometry.h, flags), geometry(geometry)
+        Window::Window(const std::string &title, MATH::Rect size, Uint32 flags)
+            : size(size)
         {
-            context = SDL_GL_CreateContext(this->Get());
-            glEnable(GL_TEXTURE_2D);
-            glViewport(geometry.x, geometry.y, geometry.w, geometry.h);
-            glMatrixMode(GL_PROJECTION);
-            glLoadIdentity();
-            glOrtho(0, geometry.w, geometry.h, 0, -1, 1);
-            glMatrixMode(GL_MODELVIEW);
-            glLoadIdentity();
+            window = SDL_CreateWindow(title.c_str(), size.x, size.y, size.w, size.h, flags);
         }
 
         Window::~Window()
         {
-            SDL_GL_DeleteContext(context);
+            SDL_DestroyWindow(window);
         }
 
-        MATH::Rect Window::getGeometry()
+        SDL_Window * Window::getWindow()
         {
-            return geometry;
+            return window;
+        }
+
+        MATH::Rect &Window::getSize()
+        {
+            return size;
         }
 
         void Window::pollEvent(SDL_Event &event)

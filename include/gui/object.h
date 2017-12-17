@@ -10,33 +10,46 @@
 #include "gui/gui_def.h"
 #include "math/math.h"
 #include "input/input.h"
+#include "style_properties.h"
 
 namespace TURBO
 {
     namespace GUI
     {
-        class Object
+        class Object : public StyleProperties
         {
         protected:
-            Object * parent;
+            Object *parent;
+            Object *child;
             MATH::Rect geometry;
-            std::map<std::string, std::function<void()>> callbacks;
-            bool visible = false;
-            bool mouse_over = false;
-            bool mouse_clicked = false;
+            MATH::Rect size;
+            std::map<Uint8, std::function<void()>> callbacks;
+            OBJECT_TYPE object_type;
+            bool visible;
+            bool mouse_over;
+            bool mouse_clicked;
 
-            void fireCallback(std::string callback);
+            void fireCallback(Uint8 event);
 
         public:
-            explicit Object(Object * parent);
+            explicit Object(Object *parent);
             void pollEvent(SDL_Event &event);
-            MATH::Rect setGeometry(MATH::Rect geometry);
-            MATH::Rect getGeometry();
+            void registerCallback(Uint8 event, std::function<void()> &callback);
+            MATH::Rect &setGeometry(MATH::Rect geometry);
+            MATH::Rect &getGeometry();
+            MATH::Rect &setSize(MATH::Rect size);
+            MATH::Rect &getSize();
+            OBJECT_TYPE getType();
             bool isVisible();
             bool mouseOver();
-            void onMouseOver(std::function<void()> callback);
             bool mouseClicked();
-            Object & show();
+            Object *getParent();
+            Object *setParent(Object *object);
+            Object *getChild();
+            Object *setChild(Object *object);
+            Object *hide();
+            Object *show();
+            virtual Object *update();
         };
     }
 }

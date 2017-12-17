@@ -13,6 +13,7 @@ namespace TURBO
         {
         public:
             explicit Widget(Object * parent);
+
         };
     }
 }

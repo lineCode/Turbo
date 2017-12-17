@@ -19,9 +19,6 @@ namespace TURBO
             static bool 				isDir(std::string name);
             static bool 				isFile(std::string name);
             static bool 				fileExists(std::string name);
-            static bool					isType(std::string name, std::string type);
-            static bool 				hasFilter(std::string name, std::string filter);
-            static bool 				hasFilter(std::string name, std::vector<std::string> filter);
             std::vector<std::string> 	getDirs();
             std::vector<std::string> 	getFiles();
         };

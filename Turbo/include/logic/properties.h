@@ -1,9 +1,0 @@
-#ifndef PROPERTIES_H_INCLUDED
-#define PROPERTIES_H_INCLUDED
-
-namespace LOGIC
-{
-
-}
-
-#endif // PROPERTIES_H_INCLUDED

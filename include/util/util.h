@@ -6,6 +6,7 @@
 #include "util/string.h"
 #include "util/ini.h"
 #include "util/xml.h"
+#include "util/json.h"
 #include "util/log.h"
 
 namespace TURBO

@@ -1,7 +1,7 @@
 #ifndef TURBO_POINT_H
 #define TURBO_POINT_H
 
-typedef int Uint32;
+#include "math/math_def.h"
 
 namespace TURBO
 {
@@ -10,26 +10,30 @@ namespace TURBO
         class Point
         {
         public:
-            Uint32 x;
-            Uint32 y;
-            Uint32 z;
+            Sint32 x;
+            Sint32 y;
+            Sint32 z;
 
             Point();
-            Point(Uint32 x, Uint32 y, Uint32 z);
-            Point& operator+(Point &other);
-            Point& operator+=(Point &other);
-            Point& operator-(Point &other);
-            Point& operator-=(Point &other);
-            Point& operator*(Point &other);
-            Point& operator*=(Point &other);
-            Point& operator/(Point &other);
-            Point& operator/=(Point &other);
-            Point& operator*(Uint32 scalar);
-            Point& operator*=(Uint32 scalar);
-            Point& operator/(Uint32 scalar);
-            Point& operator/=(Uint32 scalar);
-            friend bool operator==(Point & first, Point &second);
-            friend bool operator!=(Point & first, Point &second);
+            Point(Sint32 x, Sint32 y, Sint32 z = 0);
+            Point& operator+(const Point &other);
+            Point& operator+=(const Point &other);
+            Point& operator-(const Point &other);
+            Point& operator-=(const Point &other);
+            Point& operator*(const Point &other);
+            Point& operator*=(const Point &other);
+            Point& operator/(const Point &other);
+            Point& operator/=(const Point &other);
+            Point& operator*(Sint32 scalar);
+            Point& operator*=(Sint32 scalar);
+            Point& operator/(Sint32 scalar);
+            Point& operator/=(Sint32 scalar);
+            friend bool operator==(const Point &first, const Point &second);
+            friend bool operator!=(const Point &first, const Point &second);
+            friend bool operator<(const Point &first, const Point &second);
+            friend bool operator<=(const Point &first, const Point &second);
+            friend bool operator>(const Point &first, const Point &second);
+            friend bool operator>=(const Point &first, const Point &second);
         };
     }
 }

@@ -2,14 +2,18 @@
 #define TURBO_XML_H
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <map>
 #include <stack>
 #include <algorithm>
 
+#include <regex>
+
 #include "util/util_def.h"
 #include "util/string.h"
 #include "util/log.h"
+#include "util/parser.h"
 
 namespace TURBO
 {
@@ -17,12 +21,11 @@ namespace TURBO
     {
         enum XML_TOKEN
         {
-            INVALID = 1,
+            INVALID = 0,
+            DOCUMENT_START = 1,
             COMMENT_START = 2,
             TAG_START = 3,
-            TAG_OPEN = 5,
-            TAG_CLOSE = 6,
-            TAG_RESET = 7
+            ATTRIBUTE_START = 4
         };
 
         struct XML
@@ -56,24 +59,34 @@ namespace TURBO
         {
         private:
             std::string             filename;
+            std::streamsize         file_size;
             XML 					xml;
             XML                    *head;
-            XML                    *last;
             XML                    *current;
-            XML_TOKEN               last_tag = XML_TOKEN::INVALID;
-            unsigned                token_pos;
-            unsigned                element_pos;
-            unsigned                reading_offset;
-            std::stack<XML_TOKEN>   tokens;
-            std::stack<std::string> tags;
+            XML                    *last;
+            XML_TOKEN               token = XML_TOKEN::DOCUMENT_START;
+            char                   *buffer_pos;
+            long                    begin = 0;
+            long                    buffer_offset = 0;
+            char                   *buffer;
+
+            bool                    isNameStartChar(char c);
+            bool                    isNameChar(char c);
+            int                     skipSpaces();
+            int                     skipWhiteSpaces();
+            bool                    readComment();
+            bool                    readName();
+            bool                    readAttribute();
+            bool                    readTag();
+            bool                    fillBuffer(std::ifstream &in);
+            bool 					writeXML(std::string file, XML xml, std::string prepend = "",
+                                             std::ios::openmode flags = std::ios::out | std::ios::trunc);
+            void                    free(XML * xml);
 
         public:
             explicit XMLParser(std::string file);
             XML 					read(std::string file = "");
-            void                    parseBuffer(std::vector<char> buffer);
-            bool 					write(std::string file, XML xml, std::string prepend = "",
-                                          std::ios::openmode flags = std::ios::out | std::ios::trunc);
-            void                    free(XML * xml);
+            bool                    write(std::string file, XML xml);
             XML						getXML();
         };
     }

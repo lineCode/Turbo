@@ -11,7 +11,7 @@ namespace TURBO
         class Text
         {
         private:
-            Texture & texture;
+            //Texture & texture;
 
         public:
             Text(std::string text, Font *font = nullptr);

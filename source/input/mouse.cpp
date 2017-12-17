@@ -4,7 +4,7 @@ namespace TURBO
 {
     namespace INPUT
     {
-        MATH::Point Mouse::pos(0, 0);
+        MATH::Point Mouse::pos = MATH::Point(0, 0);
         std::map<Uint8, bool> Mouse::mouse_button_pressed = {};
         bool Mouse::mouse_pressed = false;
         bool Mouse::mouse_moved = false;

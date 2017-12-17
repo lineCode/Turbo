@@ -10,13 +10,13 @@ namespace TURBO
 
         }
 
-        Point::Point(Uint32 x, Uint32 y, Uint32 z)
+        Point::Point(Sint32 x, Sint32 y, Sint32 z)
             : x(x), y(y), z(z)
         {
 
         }
 
-        Point& Point::operator+(Point &other)
+        Point& Point::operator+(const Point &other)
         {
             x += other.x;
             y += other.y;
@@ -24,7 +24,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator+=(Point &other)
+        Point& Point::operator+=(const Point &other)
         {
             x += other.x;
             y += other.y;
@@ -32,7 +32,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator-(Point &other)
+        Point& Point::operator-(const Point &other)
         {
             x -= other.x;
             y -= other.y;
@@ -40,7 +40,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator-=(Point &other)
+        Point& Point::operator-=(const Point &other)
         {
             x -= other.x;
             y -= other.y;
@@ -48,7 +48,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator*(Point &other)
+        Point& Point::operator*(const Point &other)
         {
             x *= other.x;
             y *= other.y;
@@ -56,7 +56,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator*=(Point &other)
+        Point& Point::operator*=(const Point &other)
         {
             x *= other.x;
             y *= other.y;
@@ -64,7 +64,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator/(Point &other)
+        Point& Point::operator/(const Point &other)
         {
             x /= other.x;
             y /= other.y;
@@ -72,7 +72,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator/=(Point &other)
+        Point& Point::operator/=(const Point &other)
         {
             x /= other.x;
             y /= other.y;
@@ -80,7 +80,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator*(Uint32 scalar)
+        Point& Point::operator*(Sint32 scalar)
         {
             x *= scalar;
             y *= scalar;
@@ -88,7 +88,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator*=(Uint32 scalar)
+        Point& Point::operator*=(Sint32 scalar)
         {
             x *= scalar;
             y *= scalar;
@@ -96,7 +96,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator/(Uint32 scalar)
+        Point& Point::operator/(Sint32 scalar)
         {
             x /= scalar;
             y /= scalar;
@@ -104,7 +104,7 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator/=(Uint32 scalar)
+        Point& Point::operator/=(Sint32 scalar)
         {
             x /= scalar;
             y /= scalar;
@@ -112,14 +112,34 @@ namespace TURBO
             return *this;
         }
 
-        bool operator==(Point &first, Point &second)
+        bool operator==(const Point &first, const Point &second)
         {
             return (first.x == second.x && first.y == second.y && first.z == second.z);
         }
 
-        bool operator!=(Point &p, Point &q)
+        bool operator!=(const Point &p, const Point &q)
         {
             return !(p == q);
+        }
+
+        bool operator<(const Point &first, const Point &second)
+        {
+            return (first.x < second.x) && (first.y < second.y) && (first.z < second.z);
+        }
+
+        bool operator<=(const Point &first, const Point &second)
+        {
+            return (first < second) || (first == second);
+        }
+
+        bool operator>(const Point &first, const Point &second)
+        {
+            return (first.x > second.x) && (first.y > second.y) && (first.z > second.z);
+        }
+
+        bool operator>=(const Point &first, const Point &second)
+        {
+            return (first < second) || (first == second);
         }
     }
 }

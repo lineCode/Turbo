@@ -20,6 +20,7 @@ namespace TURBO
             static Uint64 getTimestamp();
             static void sleep(Uint64 ns);
             static std::string getTicksToString(Uint32 ticks, std::string format = "%H:%M:%S.%f");
+            static std::string getPTicksToString(Uint64 ticks, std::string format = "%H:%M:%S.%f %u %n");
             static std::string getTimestampToString(Uint64 timestamp, std::string format = "%H:%M:%S %d.%m.%Y");
         };
 
