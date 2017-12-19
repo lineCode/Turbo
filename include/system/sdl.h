@@ -2,53 +2,66 @@
 #define TURBO_SDL_H
 
 #include "system/system_def.h"
+#include "SDL_image.h"
+#include "SDL_ttf.h"
+#include "SDL_mixer.h"
+#include "SDL_net.h"
 
 namespace TURBO
 {
     namespace SYSTEM
     {
-        class SDL : SDL2pp::SDL
+        class SDL
         {
         private:
-            Uint32 init_flags = 0x0;
+            bool is_init;
+            Uint32 init_flags;
 
         public:
-            static bool is_init;
-            explicit SDL(Uint32 sdl_flags);
+            explicit SDL(Uint32 flags);
+            ~SDL();
         };
 
-        class SDLIMG : SDL2pp::SDLImage
+        class SDLIMG
         {
         private:
-            Uint32 init_flags = 0x0;
+            bool is_init;
+            Uint32 init_flags;
 
         public:
-            static bool is_init;
-            explicit SDLIMG(Uint32 image_flags);
+            explicit SDLIMG(Uint32 flags);
+            ~SDLIMG();
         };
 
-        class SDLTTF : SDL2pp::SDLTTF
+        class SDLTTF
         {
+        private:
+            bool is_init;
+
         public:
-            static bool is_init;
             SDLTTF();
+            ~SDLTTF();
         };
 
-        class SDLMIX : SDL2pp::SDLMixer
+        class SDLMIX
         {
         private:
-            Uint32 init_flags = 0x0;
+            bool is_init;
+            Uint32 init_flags;
 
         public:
-            static bool is_init;
-            explicit SDLMIX(Uint32 mixer_flags);
+            explicit SDLMIX(Uint32 flags);
+            ~SDLMIX();
         };
 
         class SDLNET
         {
+        private:
+            bool is_init;
+
         public:
-            static bool is_init;
             SDLNET();
+            ~SDLNET();
         };
     }
 }

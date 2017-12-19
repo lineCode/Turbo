@@ -9,18 +9,18 @@ namespace TURBO
             DIR   		  * dir 	= opendir(directory.c_str());
             struct dirent * entry;
 
-            if(dir != NULL)
+            if(dir != nullptr)
             {
-                while((entry = readdir(dir)) != NULL)
+                while((entry = readdir(dir)) != nullptr)
                 {
                     if(entry->d_name != (std::string)"." && entry->d_name != (std::string)"..")
                     {
-                        std::string handle = entry->d_name;
-                        if(this->isDir(entry->d_name))
+                        std::string handle = directory + entry->d_name;
+                        if(Dir::isDir(handle))
                         {
                             this->dirs.push_back(handle);
                         }
-                        else if(this->isFile(entry->d_name))
+                        else if(Dir::isFile(handle))
                         {
                             this->files.push_back(handle);
                         }
@@ -34,7 +34,7 @@ namespace TURBO
             bool success = false;
             DIR * dir = opendir(name.c_str());
 
-            if(dir != NULL)
+            if(dir != nullptr)
             {
                 success = true;
             }
@@ -60,8 +60,6 @@ namespace TURBO
             std::fstream f(name);
             return f.good();
         }
-
-
 
         std::vector<std::string> Dir::getDirs()
         {

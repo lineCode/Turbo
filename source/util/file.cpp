@@ -24,7 +24,7 @@ namespace TURBO
             bool success = false;
             if(Dir::isFile(name))
             {
-                if(name.substr(name.rfind('.') + 1, name.length() - name.rfind('.') - 1) == toLower(type))
+                if(toLower(name.substr(name.rfind('.') + 1, name.length() - name.rfind('.') - 1)) == toLower(type))
                 {
                     success = true;
                 }
@@ -51,7 +51,7 @@ namespace TURBO
         {
             bool success = false;
 
-            for(std::string s : filter)
+            for(auto & s : filter)
             {
                 if(File::isType(name, s))
                 {

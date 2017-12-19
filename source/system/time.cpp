@@ -182,6 +182,45 @@ namespace TURBO
             }
             return timer_stopped;
         }
+
+        Uint32 Timer::addTime(Uint32 amount)
+        {
+            elapsed_time += amount;
+
+            return elapsed_time;
+        }
+
+        Uint32 Timer::addActiveTime(Uint32 amount)
+        {
+            active_time += amount;
+            elapsed_time += amount;
+
+            return active_time;
+        }
+
+        Uint32 Timer::subTime(Uint32 amount)
+        {
+            elapsed_time -= amount;
+
+            return elapsed_time;
+        }
+
+        Uint32 Timer::subActiveTime(Uint32 amount)
+        {
+            active_time -= amount;
+            elapsed_time -= amount;
+
+            return active_time;
+        }
+
+        TIMER_STATE Timer::reset()
+        {
+            stop();
+            elapsed_time = 0;
+            active_time = 0;
+            paused_time = 0;
+            return state;
+        }
         
         TIMER_STATE  Timer::getState()
         {
@@ -198,6 +237,20 @@ namespace TURBO
             pause();
             resume();
             return elapsed_time;
+        }
+
+        Uint32 Timer::getActiveTime()
+        {
+            pause();
+            resume();
+            return active_time;
+        }
+
+        Uint32 Timer::getPausedTime()
+        {
+            pause();
+            resume();
+            return paused_time;
         }
 
         std::string Timer::printTime()
@@ -288,6 +341,45 @@ namespace TURBO
             return timer_stopped;
         }
 
+        Uint64 PTimer::addTime(Uint64 amount)
+        {
+            elapsed_time += amount;
+
+            return elapsed_time;
+        }
+
+        Uint64 PTimer::addActiveTime(Uint64 amount)
+        {
+            active_time += amount;
+            elapsed_time += amount;
+
+            return active_time;
+        }
+
+        Uint64 PTimer::subTime(Uint64 amount)
+        {
+            elapsed_time -= amount;
+
+            return elapsed_time;
+        }
+
+        Uint64 PTimer::subActiveTime(Uint64 amount)
+        {
+            active_time -= amount;
+            elapsed_time -= amount;
+
+            return active_time;
+        }
+
+        TIMER_STATE PTimer::reset()
+        {
+            stop();
+            elapsed_time = 0;
+            active_time = 0;
+            paused_time = 0;
+            return state;
+        }
+
         TIMER_STATE PTimer::getState()
         {
             return state;
@@ -304,6 +396,20 @@ namespace TURBO
             pause();
             resume();
             return elapsed_time;
+        }
+
+        Uint64 PTimer::getActiveTime()
+        {
+            pause();
+            resume();
+            return active_time;
+        }
+
+        Uint64 PTimer::getPausedTime()
+        {
+            pause();
+            resume();
+            return paused_time;
         }
 
         std::string PTimer::printTime()

@@ -1,13 +1,18 @@
 #ifndef TURBO_AUDIO_DEF_H
 #define TURBO_AUDIO_DEF_H
 
+#include "SDL_mixer.h"
+
 #include "turbo_def.h"
 
 namespace TURBO
 {
     namespace AUDIO
     {
-        enum class PLAYER_STATE : Uint8
+        const Uint8 MIN_VOLUME = 0;
+        const Uint8 MAX_VOLUME = MIX_MAX_VOLUME;
+
+        enum class MEDIUM_STATE : Uint8
         {
             STOPPED = 0x0,
             PLAYING = 0x1,

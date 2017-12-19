@@ -47,7 +47,7 @@ namespace TURBO
             return color_draw;
         }
 
-        Color &Renderer::getDrawColor() const
+        Color &Renderer::getDrawColor()
         {
             return color_draw;
         }
@@ -58,7 +58,7 @@ namespace TURBO
             return color_clear;
         }
 
-        Color &Renderer::getClearColor() const
+        Color &Renderer::getClearColor()
         {
             return color_clear;
         }

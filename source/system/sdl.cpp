@@ -4,39 +4,97 @@ namespace TURBO
 {
     namespace SYSTEM
     {
-        bool SDL::is_init = false;
-        bool SDLIMG::is_init = false;
-        bool SDLTTF::is_init = false;
-        bool SDLMIX::is_init = false;
-        bool SDLNET::is_init = false;
-
-        SDL::SDL(Uint32 sdl_flags)
-            : SDL2pp::SDL(sdl_flags), init_flags(sdl_flags)
+        SDL::SDL(Uint32 flags)
         {
-            SDL::is_init = true;
+            if(!(flags & init_flags))
+            {
+                if(is_init)
+                {
+                    if(SDL_InitSubSystem(flags) > 0)
+                    {
+                        init_flags |= flags;
+                    }
+                }
+                else
+                {
+                    if(SDL_Init(flags) > 0)
+                    {
+                        init_flags |= flags;
+                        is_init = true;
+                    }
+                }
+            }
         }
 
-        SDLIMG::SDLIMG(Uint32 image_flags)
-            : SDL2pp::SDLImage(image_flags), init_flags(image_flags)
+        SDL::~SDL()
         {
-            SDLIMG::is_init = true;
+            SDL_Quit();
+        }
+
+        SDLIMG::SDLIMG(Uint32 flags)
+        {
+            if(!(flags & init_flags))
+            {
+                if(is_init)
+                {
+                    if(IMG_Init(flags) > 0)
+                    {
+                        init_flags |= flags;
+                        is_init = true;
+                    }
+                }
+            }
+        }
+
+        SDLIMG::~SDLIMG()
+        {
+            IMG_Quit();
+            is_init = false;
         }
 
         SDLTTF::SDLTTF()
-            : SDL2pp::SDLTTF()
         {
-            SDLTTF::is_init = true;
+            TTF_Init();
+            is_init = true;
         }
 
-        SDLMIX::SDLMIX(Uint32 mixer_flags)
-            : SDL2pp::SDLMixer(mixer_flags), init_flags(mixer_flags)
+        SDLTTF::~SDLTTF()
         {
-            SDLMIX::is_init = true;
+            TTF_Quit();
+            is_init = false;
+        }
+
+        SDLMIX::SDLMIX(Uint32 flags)
+        {
+            if(!(flags & init_flags))
+            {
+                if(is_init)
+                {
+                    if(Mix_Init(flags) > 0)
+                    {
+                        init_flags |= flags;
+                        is_init = true;
+                    }
+                }
+            }
+        }
+
+        SDLMIX::~SDLMIX()
+        {
+            Mix_Quit();
+            is_init = false;
         }
 
         SDLNET::SDLNET()
         {
-            SDLNET::is_init = true;
+            SDLNet_Init();
+            is_init = true;
+        }
+
+        SDLNET::~SDLNET()
+        {
+            SDLNet_Quit();
+            is_init = false;
         }
     }
 }

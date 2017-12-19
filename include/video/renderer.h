@@ -35,9 +35,9 @@ namespace TURBO
             void clear();
             void present();
             Color &setDrawColor(Color color);
-            Color &getDrawColor() const;
+            Color &getDrawColor();
             Color &setClearColor(Color color);
-            Color &getClearColor() const;
+            Color &getClearColor();
             void setFont(Font *font);
             void drawSurface(SDL_Surface *surface, Sint32 x, Sint32 y);
             void drawTexture(SDL_Texture *texture, Sint32 x, Sint32 y);

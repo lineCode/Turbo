@@ -24,6 +24,10 @@ namespace TURBO
             static std::string getTimestampToString(Uint64 timestamp, std::string format = "%H:%M:%S %d.%m.%Y");
         };
 
+        /**
+         * A millisecond accurate timer
+         * @note the actual time may differ by some offset caused by function calls
+         */
         class Timer
         {
         private:
@@ -45,12 +49,23 @@ namespace TURBO
             Uint32 				pause();
             Uint32 				resume();
             Uint32 				stop();
+            Uint32              addTime(Uint32 amount);
+            Uint32              addActiveTime(Uint32 amount);
+            Uint32              subTime(Uint32 amount);
+            Uint32              subActiveTime(Uint32 amount);
+            TIMER_STATE         reset();
             TIMER_STATE         getState();
             Uint32              getTicks();
             Uint32 				getTime();
+            Uint32 				getActiveTime();
+            Uint32 				getPausedTime();
             std::string         printTime();
         };
 
+        /**
+         * A nanosecond accurate pointer
+         * @note the actual time may differ by some offset caused by function calls
+         */
         class PTimer
         {
         private:
@@ -72,9 +87,16 @@ namespace TURBO
             Uint64 				pause();
             Uint64 				resume();
             Uint64 				stop();
+            Uint64              addTime(Uint64 amount);
+            Uint64              addActiveTime(Uint64 amount);
+            Uint64              subTime(Uint64 amount);
+            Uint64              subActiveTime(Uint64 amount);
+            TIMER_STATE         reset();
             TIMER_STATE         getState();
             Uint64              getTicks();
             Uint64 				getTime();
+            Uint64 				getActiveTime();
+            Uint64 				getPausedTime();
             std::string         printTime();
         };
 
