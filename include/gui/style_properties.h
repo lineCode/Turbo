@@ -33,6 +33,7 @@ namespace TURBO
         public:
             StyleProperties();
             Background getBackground();
+            Background setBackground(Background background);
         };
     }
 }

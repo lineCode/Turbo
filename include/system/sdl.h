@@ -14,54 +14,29 @@ namespace TURBO
         class SDL
         {
         private:
-            bool is_init;
-            Uint32 init_flags;
+            Uint32 sdl_flags;
+            Uint32 image_flags;
+            Uint32 mixer_flags;
 
         public:
-            explicit SDL(Uint32 flags);
+            static bool SDL_IS_INIT;
+            static bool IMG_IS_INIT;
+            static bool MIX_IS_INIT;
+            static bool TTF_IS_INIT;
+            static bool NET_IS_INIT;
+
+            explicit SDL(Uint32 flags = SDL_INIT_EVERYTHING);
+            Uint32 initSDL(Uint32 flags = SDL_INIT_EVERYTHING);
+            Uint32 initIMG(Uint32 flags = IMG_INIT_PNG);
+            Uint32 initMIX(Uint32 flags = MIX_INIT_MP3);
+            Uint32 initTTF();
+            Uint32 initNET();
+            void quitSDL();
+            void quitIMG();
+            void quitMIX();
+            void quitTTF();
+            void quitNET();
             ~SDL();
-        };
-
-        class SDLIMG
-        {
-        private:
-            bool is_init;
-            Uint32 init_flags;
-
-        public:
-            explicit SDLIMG(Uint32 flags);
-            ~SDLIMG();
-        };
-
-        class SDLTTF
-        {
-        private:
-            bool is_init;
-
-        public:
-            SDLTTF();
-            ~SDLTTF();
-        };
-
-        class SDLMIX
-        {
-        private:
-            bool is_init;
-            Uint32 init_flags;
-
-        public:
-            explicit SDLMIX(Uint32 flags);
-            ~SDLMIX();
-        };
-
-        class SDLNET
-        {
-        private:
-            bool is_init;
-
-        public:
-            SDLNET();
-            ~SDLNET();
         };
     }
 }

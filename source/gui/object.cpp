@@ -21,6 +21,11 @@ namespace TURBO
             }
         }
 
+        Object::~Object()
+        {
+
+        }
+
         void Object::fireCallback(Uint8 event)
         {
             if(callbacks.count(event))

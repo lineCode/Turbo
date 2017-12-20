@@ -20,5 +20,11 @@ namespace TURBO
         {
             return background;
         }
+
+        Background StyleProperties::setBackground(Background background)
+        {
+            this->background = background;
+            return this->background;
+        }
     }
 }

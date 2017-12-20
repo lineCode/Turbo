@@ -12,7 +12,7 @@ namespace TURBO
         const Uint8 MIN_VOLUME = 0;
         const Uint8 MAX_VOLUME = MIX_MAX_VOLUME;
 
-        enum class MEDIUM_STATE : Uint8
+        enum MEDIUM_STATE : Uint8
         {
             STOPPED = 0x0,
             PLAYING = 0x1,

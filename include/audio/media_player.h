@@ -21,10 +21,17 @@ namespace TURBO
             std::vector<Music*> playlist;
             Music *current_medium;
 
+            void finished();
+
         public:
             explicit MediaPlayer(std::string path);
             ~MediaPlayer();
             MEDIUM_STATE getState() const;
+            void onFinish(void * callback);
+            void onMediaChanged(void * callback);
+            void onPositionChanged(void * callback);
+            void onStateChanged(void * callback);
+            void onVolumeChanged(void * callback);
             bool playing();
             bool paused();
             Uint8 setVolume(Uint8 volume);

@@ -18,21 +18,19 @@ namespace TURBO
         static Uint32 SDL_INIT_FLAGS;
         static Uint32 IMG_INIT_FLAGS;
         static Uint32 MIX_INIT_FLAGS;
+
+        static Uint8 TURBO_FRAME_LIMIT;
     };
 
     class Turbo
     {
     private:
-        Uint8 frame_limit = 60;
+        Uint8 frame_limit;
 
     public:
         SYSTEM::SDL         sdl;
-        SYSTEM::SDLIMG      sdl_image;
-        SYSTEM::SDLMIX      sdl_mixer;
-        SYSTEM::SDLTTF      sdl_ttf;
-        SYSTEM::SDLNET      sdl_net;
 
-        explicit Turbo(Uint32 sdl_flags = SDL_INIT_EVERYTHING);
+        explicit Turbo();
         void    setFrameLimit(Uint8 limit);
         Uint8   getFrameLimit();
         int     run();

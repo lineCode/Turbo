@@ -9,13 +9,16 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        class Font : public SDL2pp::Font
+        class Font
         {
         private:
+            TTF_Font * font;
             std::string path;
 
         public:
             Font(std::string path, Uint8 ptsize, Uint8 index = 0);
+            ~Font();
+            TTF_Font * getFont();
         };
     }
 }

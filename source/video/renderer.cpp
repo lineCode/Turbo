@@ -92,15 +92,15 @@ namespace TURBO
             SDL_Surface *surface = nullptr;
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
-                surface = TTF_RenderText_Solid(font->Get(), text.c_str(), color_fg.toSDLColor());
+                surface = TTF_RenderText_Solid(font->getFont(), text.c_str(), color_fg.toSDLColor());
             }
             else if(text_mode == VIDEO::TEXT_MODE::BLENDED)
             {
-                surface = TTF_RenderText_Blended(font->Get(), text.c_str(), color_fg.toSDLColor());
+                surface = TTF_RenderText_Blended(font->getFont(), text.c_str(), color_fg.toSDLColor());
             }
             else if(text_mode == VIDEO::TEXT_MODE::SHADED)
             {
-                surface = TTF_RenderText_Shaded(font->Get(), text.c_str(), color_fg.toSDLColor(), color_bg.toSDLColor());
+                surface = TTF_RenderText_Shaded(font->getFont(), text.c_str(), color_fg.toSDLColor(), color_bg.toSDLColor());
             }
 
             drawSurface(surface, x, y);

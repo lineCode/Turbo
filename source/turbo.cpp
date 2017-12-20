@@ -2,19 +2,18 @@
 
 namespace TURBO
 {
-    Uint32 Settings::SDL_INIT_FLAGS = 0x2;
+    Uint32 Settings::SDL_INIT_FLAGS = SDL_INIT_EVERYTHING;
     Uint32 Settings::IMG_INIT_FLAGS = IMG_INIT_PNG;
     Uint32 Settings::MIX_INIT_FLAGS = MIX_INIT_MP3;
 
-    Turbo::Turbo(Uint32 sdl_flags)
-        : sdl(sdl_flags),
-          sdl_image(Settings::IMG_INIT_FLAGS),
-          sdl_mixer(Settings::MIX_INIT_FLAGS),
-          sdl_ttf(),
-          sdl_net()
+    Uint8 Settings::TURBO_FRAME_LIMIT = 60;
+
+    Turbo::Turbo()
+        : sdl(Settings::SDL_INIT_FLAGS),
+          frame_limit(Settings::TURBO_FRAME_LIMIT)
     {
-        glewInit();
-        VIDEO::OpenGL::init();
+        sdl.initIMG(Settings::IMG_INIT_FLAGS);
+        sdl.initMIX(Settings::MIX_INIT_FLAGS);
     }
 
     void Turbo::setFrameLimit(Uint8 limit)

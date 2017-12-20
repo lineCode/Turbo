@@ -29,9 +29,39 @@ namespace TURBO
             }
         }
 
+        void MediaPlayer::finished()
+        {
+            // TODO callback
+        }
+
         MEDIUM_STATE MediaPlayer::getState() const
         {
             return current_medium->getState();
+        }
+
+        void MediaPlayer::onFinish(void * callback)
+        {
+            //TODO set callback
+        }
+
+        void MediaPlayer::onMediaChanged(void *callback)
+        {
+
+        }
+
+        void MediaPlayer::onPositionChanged(void *callback)
+        {
+
+        }
+
+        void MediaPlayer::onStateChanged(void *callback)
+        {
+
+        }
+
+        void MediaPlayer::onVolumeChanged(void *callback)
+        {
+
         }
 
         bool MediaPlayer::playing()

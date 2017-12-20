@@ -25,7 +25,7 @@ namespace TURBO
 
         void OpenGL::swap(Window &window)
         {
-            SDL_GL_SwapWindow(window.Get());
+            SDL_GL_SwapWindow(window.getWindow());
         }
 
         void OpenGL::clear(GLbitfield mask)

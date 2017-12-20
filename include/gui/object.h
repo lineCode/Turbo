@@ -33,6 +33,7 @@ namespace TURBO
 
         public:
             explicit Object(Object *parent);
+            ~Object();
             void pollEvent(SDL_Event &event);
             void registerCallback(Uint8 event, std::function<void()> &callback);
             MATH::Rect &setGeometry(MATH::Rect geometry);

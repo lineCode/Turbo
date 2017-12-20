@@ -5,9 +5,18 @@ namespace TURBO
     namespace VIDEO
     {
         Font::Font(std::string filepath, Uint8 ptsize, Uint8 index)
-            : SDL2pp::Font(filepath, ptsize, index), path(filepath)
         {
+            font = TTF_OpenFont(path.c_str(), ptsize);
+        }
 
+        Font::~Font()
+        {
+            TTF_CloseFont(font);
+        }
+
+        TTF_Font * Font::getFont()
+        {
+            return font;
         }
     }
 }

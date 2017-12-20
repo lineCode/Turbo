@@ -62,7 +62,7 @@ namespace TURBO
 
         MEDIUM_STATE Music::play(Uint32 fadein_ms)
         {
-            if(state == MEDIUM_STATE::STOPPED)
+            if(state == MEDIUM_STATE::STOPPED && music != nullptr)
             {
                 if(fadein_ms > 0)
                 {
