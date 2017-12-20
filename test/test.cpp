@@ -32,8 +32,12 @@ int main(int argc, char ** argv)
     }
 
     auto mp = TA::MediaPlayer("resources/audio/");
+    auto c = TA::Chunk("resources/audio/piano.wav");
 
+    Mix_VolumeChunk(c.getChunk(), 128);
     Mix_VolumeMusic(128);
+
+    c.play(2000);
 
     bool running = true;
     while(running)
@@ -45,7 +49,6 @@ int main(int argc, char ** argv)
             {
                 if(event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    LOG("stop");
                     mp.stop();
                     running = false;
                 }
@@ -53,18 +56,15 @@ int main(int argc, char ** argv)
                 {
                     if(mp.getState() == TA::MEDIUM_STATE::STOPPED)
                     {
-                        LOG("play");
-                        std::cout << mp.play() << std::endl;
+                        mp.play();
                     }
                     else if(mp.getState() == TA::MEDIUM_STATE::PLAYING)
                     {
-                        LOG("pause");
-                        std::cout << mp.pause() << std::endl;
+                        mp.pause();
                     }
                     else if(mp.getState() == TA::MEDIUM_STATE::PAUSED)
                     {
-                        LOG("resume");
-                        std::cout << mp.resume() << std::endl;
+                        mp.resume();
                     }
                 }
             }

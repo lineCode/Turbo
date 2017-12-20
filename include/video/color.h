@@ -1,8 +1,6 @@
 #ifndef Uint8URBO_COLOR_H
 #define Uint8URBO_COLOR_H
 
-#include <SDL2pp/Color.hh>
-
 #include "video/video_def.h"
 
 namespace TURBO
