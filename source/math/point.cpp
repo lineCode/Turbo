@@ -129,7 +129,7 @@ namespace TURBO
 
         bool operator<=(const Point &first, const Point &second)
         {
-            return (first < second) || (first == second);
+            return (first.x <= second.x) && (first.y <= second.y) && (first.z <= second.z);
         }
 
         bool operator>(const Point &first, const Point &second)
@@ -139,7 +139,7 @@ namespace TURBO
 
         bool operator>=(const Point &first, const Point &second)
         {
-            return (first < second) || (first == second);
+            return (first.x >= second.x) && (first.y >= second.y) && (first.z >= second.z);
         }
     }
 }

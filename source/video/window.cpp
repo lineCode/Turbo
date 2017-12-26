@@ -4,10 +4,10 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        Window::Window(const std::string &title, MATH::Rect size, Uint32 flags)
-            : size(size)
+        Window::Window(const std::string &title, MATH::Rect geometry, Uint32 flags)
+            : geometry(geometry), size(0, 0, geometry.w, geometry.h)
         {
-            window = SDL_CreateWindow(title.c_str(), size.x, size.y, size.w, size.h, flags);
+            window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
         }
 
         Window::~Window()
@@ -18,6 +18,11 @@ namespace TURBO
         SDL_Window * Window::getWindow()
         {
             return window;
+        }
+
+        MATH::Rect &Window::getGeometry()
+        {
+            return geometry;
         }
 
         MATH::Rect &Window::getSize()

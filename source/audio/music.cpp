@@ -11,7 +11,11 @@ namespace TURBO
             if(UTIL::File::hasFilter(path, std::vector<std::string>{"mp3", "ogg", "flac"}))
             {
                 music = Mix_LoadMUS(path.c_str());
-                type = Mix_GetMusicType(music);
+                if(music != nullptr)
+                {
+                    music_type = Mix_GetMusicType(music);
+                    this->path = path;
+                }
             }
         }
 
@@ -19,11 +23,12 @@ namespace TURBO
         {
             if(music != nullptr)
             {
+                stop();
                 Mix_FreeMusic(music);
             }
         }
 
-        Mix_Music * Music::getMusic()
+        Mix_Music * Music::getMusic() const
         {
             return music;
         }
@@ -32,30 +37,43 @@ namespace TURBO
         {
             if(UTIL::File::hasFilter(path, std::vector<std::string>{"mp3", "ogg", "flac"}))
             {
+                stop();
                 music = Mix_LoadMUS(path.c_str());
-                type = Mix_GetMusicType(music);
+                if(music != nullptr)
+                {
+                    music_type = Mix_GetMusicType(music);
+                    this->path = path;
+                }
             }
             return music;
         }
 
-        Mix_MusicType Music::getType()
+        std::string Music::getPath() const
         {
-            return type;
+            return path;
         }
 
-        MEDIUM_STATE Music::getState()
+        Mix_MusicType Music::getType() const
+        {
+            return music_type;
+        }
+
+        MEDIUM_STATE Music::getState() const
         {
             return state;
         }
 
         MEDIUM_STATE Music::rewind()
         {
-            if(type == Mix_MusicType::MUS_MOD || type == Mix_MusicType::MUS_OGG ||
-                type == Mix_MusicType::MUS_MP3 || type == Mix_MusicType::MUS_MID)
+            if(music_type == Mix_MusicType::MUS_MOD || music_type == Mix_MusicType::MUS_OGG ||
+                music_type == Mix_MusicType::MUS_MP3 || music_type == Mix_MusicType::MUS_MID)
             {
-                stop();
-                Mix_RewindMusic();
-                state = MEDIUM_STATE::STOPPED;
+                if(music != nullptr)
+                {
+                    stop();
+                    Mix_RewindMusic();
+                    state = MEDIUM_STATE::STOPPED;
+                }
             }
             return state;
         }
@@ -79,7 +97,7 @@ namespace TURBO
 
         MEDIUM_STATE Music::pause()
         {
-            if(state == MEDIUM_STATE::PLAYING)
+            if(state == MEDIUM_STATE::PLAYING && music != nullptr)
             {
                 Mix_PauseMusic();
                 state = MEDIUM_STATE::PAUSED;
@@ -89,7 +107,7 @@ namespace TURBO
 
         MEDIUM_STATE Music::resume()
         {
-            if(state == MEDIUM_STATE::PAUSED)
+            if(state == MEDIUM_STATE::PAUSED && music != nullptr)
             {
                 Mix_ResumeMusic();
                 state = MEDIUM_STATE::PLAYING;
@@ -97,9 +115,10 @@ namespace TURBO
             return state;
         }
 
+
         MEDIUM_STATE Music::stop(Uint32 fadeout_ms)
         {
-            if(state != MEDIUM_STATE::STOPPED)
+            if(state != MEDIUM_STATE::STOPPED && music != nullptr)
             {
                 if(fadeout_ms > 0)
                 {

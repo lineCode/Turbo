@@ -16,7 +16,7 @@ namespace TURBO
         }
 
         Box::Box(Object *parent, ORIENTATION orientation)
-            : LayoutContainer(parent)
+            : LayoutContainer(parent), orientation(orientation)
         {
 
         }
@@ -51,10 +51,28 @@ namespace TURBO
 
         Box *Box::update()
         {
-            MATH::Rect children_size = size / children.size();
+            MATH::Rect children_size = size;
+            if(orientation == ORIENTATION::HORIZONTAL)
+            {
+                children_size.div(0, 0, children.size(), 0);
+            }
+            else if(orientation == ORIENTATION::VERTICAL)
+            {
+                children_size.div(0, 0, 0, children.size());
+            }
+
             for(auto & child : children)
             {
-                child->setSize(children_size);
+                child->setGeometry(children_size);
+                child->setSize(child->getGeometry());
+                if(orientation == ORIENTATION::HORIZONTAL)
+                {
+                    children_size.add(children_size.w, 0, 0, 0);
+                }
+                else if(orientation == ORIENTATION::VERTICAL)
+                {
+                    children_size.add(0, children_size.h, 0, 0);
+                }
             }
         }
     }

@@ -18,6 +18,8 @@ namespace TURBO
         public:
             Group(Uint8 id, Uint8 channels);
             Group(Uint8 id, Uint8 start, Uint8 stop);
+            static Sint32 reserveChannels(Uint32 channels);
+            static Sint32 unreserveChannels();
             Uint8 getId();
             std::vector<Uint8> getChannels();
         };

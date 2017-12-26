@@ -3,6 +3,7 @@
 
 #include "audio/music.h"
 #include "audio/chunk.h"
+#include "audio/group.h"
 #include "audio/media_player.h"
 
 namespace TURBO

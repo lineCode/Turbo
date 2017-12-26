@@ -9,7 +9,7 @@ namespace TURBO
         {
             MATH::Rect window_size = window.getSize();
             setGeometry(MATH::Rect(0, 0, window_size.w, window_size.h));
-            setSize(MATH::Rect(0, 0, window_size.w, window_size.h));
+            setSize(getGeometry());
         }
     }
 }

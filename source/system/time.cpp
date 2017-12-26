@@ -424,14 +424,23 @@ namespace TURBO
             return oss.str();
         }
 
-        Sint32 SDLTimer::addTimer(Uint32 interval, SDL_TimerCallback callback, void *data)
+        SDLTimer::SDLTimer(Uint32 interval, const std::function<void()> callback)
+            : interval(interval), callback(callback)
         {
-            return SDL_AddTimer(interval, callback, data);
+            t = new std::thread(&SDLTimer::trigger, this);
         }
 
-        bool SDLTimer::removeTimer()
+        Uint32 SDLTimer::trigger()
         {
-            return SDL_RemoveTimer(timer_id);
+            SDL_Delay(interval);
+            this->callback();
+        }
+
+        SDLTimer::~SDLTimer()
+        {
+            SDL_RemoveTimer(timer_id);
+            t->join();
+            delete t;
         }
     }
 }

@@ -32,6 +32,23 @@ namespace TURBO
             }
         }
 
+        Sint32 Group::reserveChannels(Uint32 channels)
+        {
+            if(channels > 0xFF)
+            {
+                return Mix_ReserveChannels(0xFF);
+            }
+            else
+            {
+                return Mix_ReserveChannels(channels);
+            }
+        }
+
+        Sint32 Group::unreserveChannels()
+        {
+            return Mix_ReserveChannels(0);
+        }
+
         Uint8 Group::getId()
         {
             return id;

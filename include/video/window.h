@@ -15,6 +15,7 @@ namespace TURBO
         {
         private:
             SDL_Window *window;
+            MATH::Rect geometry;
             MATH::Rect size;
             bool shown          = false;
             bool exposed        = false;
@@ -29,6 +30,7 @@ namespace TURBO
             Window(const std::string &title, MATH::Rect geometry, Uint32 flags);
             ~Window();
             SDL_Window * getWindow();
+            MATH::Rect &getGeometry();
             MATH::Rect &getSize();
             void pollEvent(SDL_Event &event);
             bool isShown() const;

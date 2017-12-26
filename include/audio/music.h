@@ -17,15 +17,16 @@ namespace TURBO
             std::string path;
             MEDIUM_STATE state;
             Mix_Music * music;
-            Mix_MusicType type;
+            Mix_MusicType music_type;
 
         public:
             explicit Music(std::string path);
             ~Music();
-            Mix_Music * getMusic();
+            Mix_Music * getMusic() const;
             Mix_Music * setMusic(std::string path);
-            Mix_MusicType getType();
-            MEDIUM_STATE getState();
+            std::string getPath() const;
+            Mix_MusicType getType() const;
+            MEDIUM_STATE getState() const;
             MEDIUM_STATE rewind();
             MEDIUM_STATE play(Uint32 fadein_ms = 0);
             MEDIUM_STATE pause();

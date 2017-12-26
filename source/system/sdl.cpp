@@ -54,7 +54,7 @@ namespace TURBO
             {
                 if((Mix_Init(flags) & flags) == flags)
                 {
-                    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+                    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048);
 
                     mixer_flags |= flags;
                     SDL::MIX_IS_INIT = true;

@@ -102,11 +102,15 @@ namespace TURBO
 
         class SDLTimer
         {
+            std::thread * t;
             Sint32 timer_id = 0;
+            Uint32 interval;
+            std::function<void()> callback;
 
         public:
-            Sint32 addTimer(Uint32 interval, SDL_TimerCallback callback, void * data);
-            bool removeTimer();
+            SDLTimer(Uint32 interval, std::function<void()> callback);
+            Uint32 trigger();
+            ~SDLTimer();
         };
     }
 }

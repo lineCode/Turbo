@@ -15,15 +15,19 @@ namespace TURBO
         {
         private:
             Mix_Chunk *chunk;
+            Sint8 channel;
             std::string path;
             MEDIUM_STATE state;
 
         public:
-            explicit Chunk(std::string path);
+            explicit Chunk(std::string path, Sint8 channel = -1);
             ~Chunk();
-            Mix_Chunk *getChunk();
+            Mix_Chunk *getChunk() const;
             Mix_Chunk *setChunk(std::string path);
-            MEDIUM_STATE getState();
+            std::string getPath() const;
+            Sint8 getChannel() const;
+            Sint8 setChannel(Sint8 channel);
+            MEDIUM_STATE getState() const;
             MEDIUM_STATE play(Uint32 fadein_ms = 0);
             MEDIUM_STATE pause();
             MEDIUM_STATE resume();

@@ -22,6 +22,9 @@ namespace TURBO
         
         class Box : public LayoutContainer
         {
+        protected:
+            ORIENTATION orientation;
+
         public:
             explicit Box(Object *parent, ORIENTATION orientation = ORIENTATION::HORIZONTAL);
             Box *addWidget(Object *object, int index = -1);

@@ -6,13 +6,18 @@ namespace TURBO
     {
         MediaPlayer::MediaPlayer(const std::string path)
             : position(),
-              path(path)
+              path(path),
+              playlist_position(0),
+              volume(64),
+              last_mute_volume(64),
+              shuffle_on(false),
+              repeat_on(false)
         {
             position.reset();
             UTIL::Dir dir(path);
-            for(auto file : dir.getFiles())
+            for(const auto & file : dir.getFiles())
             {
-                if(UTIL::File::hasFilter(file, std::vector<std::string>{"MP3", "FLAC"}))
+                if(UTIL::File::hasFilter(file, MUSIC_EXTENSIONS))
                 {
                     Music * m = new Music(file);
                     playlist.push_back(m);
@@ -29,9 +34,12 @@ namespace TURBO
             }
         }
 
-        void MediaPlayer::finished()
+        void MediaPlayer::fireCallback(Uint8 event)
         {
-            // TODO callback
+            if(callbacks.count(event) > 0)
+            {
+                callbacks[event]();
+            }
         }
 
         MEDIUM_STATE MediaPlayer::getState() const
@@ -39,39 +47,19 @@ namespace TURBO
             return current_medium->getState();
         }
 
-        void MediaPlayer::onFinish(void * callback)
+        void MediaPlayer::registerCallback(Uint8 event, const std::function<void()> callback)
         {
-            //TODO set callback
+            callbacks[event] = callback;
         }
 
-        void MediaPlayer::onMediaChanged(void *callback)
+        bool MediaPlayer::isPlaying()
         {
-
+            return (Mix_PlayingMusic() == 1);
         }
 
-        void MediaPlayer::onPositionChanged(void *callback)
+        bool MediaPlayer::isPaused()
         {
-
-        }
-
-        void MediaPlayer::onStateChanged(void *callback)
-        {
-
-        }
-
-        void MediaPlayer::onVolumeChanged(void *callback)
-        {
-
-        }
-
-        bool MediaPlayer::playing()
-        {
-            return Mix_PlayingMusic() == 1;
-        }
-
-        bool MediaPlayer::paused()
-        {
-            return Mix_PausedMusic() == 1;
+            return (Mix_PausedMusic() == 1);
         }
 
         Uint8 MediaPlayer::setVolume(Uint8 volume)
@@ -79,8 +67,10 @@ namespace TURBO
             if(volume >= MIN_VOLUME && volume <= MAX_VOLUME)
             {
                 this->volume = volume;
+                fireCallback(EVENT_TYPE::ON_VOLUME_CHANGED);
                 if(Mix_VolumeMusic(volume) < 0)
                 {
+                    setMute(true);
                     return 0;
                 }
             }
@@ -90,6 +80,27 @@ namespace TURBO
         Uint8 MediaPlayer::getVolume() const
         {
             return this->volume;
+        }
+
+        Uint8 MediaPlayer::setMute(bool mute)
+        {
+            if(mute)
+            {
+                fireCallback(EVENT_TYPE::ON_MUTE);
+                last_mute_volume = volume;
+                volume = 0;
+            }
+            else
+            {
+                fireCallback(EVENT_TYPE::ON_UNMUTE);
+                volume = last_mute_volume;
+            }
+            return volume;
+        }
+
+        bool MediaPlayer::isMuted() const
+        {
+            return (volume > 0);
         }
 
         Uint32 MediaPlayer::getPosition()
@@ -102,6 +113,7 @@ namespace TURBO
             double new_position = position / 1000;
             if(Mix_SetMusicPosition(new_position) == 0)
             {
+                fireCallback(EVENT_TYPE::ON_POSITION_CHANGED);
                 this->position.addActiveTime(position - this->position.getActiveTime());
                 return this->position.getActiveTime();
             }
@@ -116,14 +128,16 @@ namespace TURBO
             if(current_medium->rewind() == MEDIUM_STATE::STOPPED)
             {
                 position.reset();
+                fireCallback(EVENT_TYPE::ON_REWIND);
             }
             return current_medium->getState();
         }
 
         MEDIUM_STATE MediaPlayer::play()
         {
-            if(current_medium->play() == MEDIUM_STATE::PLAYING)
+            if(current_medium->play() == MEDIUM_STATE::PLAYING && current_medium != nullptr)
             {
+                fireCallback(EVENT_TYPE::ON_PLAY);
                 position.start();
             }
             return current_medium->getState();
@@ -131,8 +145,9 @@ namespace TURBO
 
         MEDIUM_STATE MediaPlayer::pause()
         {
-            if(current_medium->pause() == MEDIUM_STATE::PAUSED)
+            if(current_medium->pause() == MEDIUM_STATE::PAUSED && current_medium != nullptr)
             {
+                fireCallback(EVENT_TYPE::ON_PAUSE);
                 position.pause();
             }
             return current_medium->getState();
@@ -140,8 +155,9 @@ namespace TURBO
 
         MEDIUM_STATE MediaPlayer::resume()
         {
-            if(current_medium->resume() == MEDIUM_STATE::PLAYING)
+            if(current_medium->resume() == MEDIUM_STATE::PLAYING && current_medium != nullptr)
             {
+                fireCallback(EVENT_TYPE::ON_RESUME);
                 position.resume();
             }
             return current_medium->getState();
@@ -149,22 +165,73 @@ namespace TURBO
 
         MEDIUM_STATE MediaPlayer::stop()
         {
-            if(current_medium->stop() == MEDIUM_STATE ::STOPPED)
+            if(current_medium->stop() == MEDIUM_STATE ::STOPPED && current_medium != nullptr)
             {
+                fireCallback(EVENT_TYPE::ON_STOP);
                 position.stop();
             }
             return current_medium->getState();
         }
 
-        std::vector<Music *> MediaPlayer::addToPlaylist(Music *music, int index)
+        Music * MediaPlayer::next()
         {
-            if(index == -1)
+            if(playlist_position == playlist.size() - 1)
             {
-                playlist.push_back(music);
+                setPlaylistPosition(0);
             }
             else
             {
-                playlist.insert(playlist.begin() + index, music);
+                setPlaylistPosition(playlist_position + 1);
+            }
+        }
+
+        Music * MediaPlayer::previous()
+        {
+            if(playlist_position == 0)
+            {
+                setPlaylistPosition(playlist.size() - 1);
+            }
+            else
+            {
+                setPlaylistPosition(playlist_position - 1);
+            }
+        }
+
+        bool MediaPlayer::setShuffle(bool shuffle)
+        {
+            shuffle_on = shuffle;
+            return shuffle_on;
+        }
+
+        bool MediaPlayer::getShuffle()
+        {
+            return shuffle_on;
+        }
+
+        bool MediaPlayer::setRepeat(bool repeat)
+        {
+            repeat_on = repeat;
+            return repeat_on;
+        }
+
+        bool MediaPlayer::getRepeat()
+        {
+            return false;
+        }
+
+        std::vector<Music *> MediaPlayer::addToPlaylist(Music *music, int index)
+        {
+            if(music != nullptr)
+            {
+                fireCallback(EVENT_TYPE::ON_PLAYLIST_CHANGED);
+                if(index == -1)
+                {
+                    playlist.push_back(music);
+                }
+                else
+                {
+                    playlist.insert(playlist.begin() + index, music);
+                }
             }
             return playlist;
         }
@@ -174,6 +241,7 @@ namespace TURBO
             auto pos = playlist.end();
             if((pos = std::find(playlist.begin(), playlist.end(), current_medium)) != playlist.end())
             {
+                fireCallback(EVENT_TYPE::ON_PLAYLIST_CHANGED);
                 stop();
             }
             playlist.erase(pos);
@@ -184,6 +252,7 @@ namespace TURBO
         {
             if(std::find(playlist.begin(), playlist.end(), current_medium) == playlist.begin() + index)
             {
+                fireCallback(EVENT_TYPE::ON_PLAYLIST_CHANGED);
                 stop();
             }
             playlist.erase(playlist.begin() + index);
@@ -200,11 +269,29 @@ namespace TURBO
             return playlist.size();
         }
 
-        Music *MediaPlayer::setMedium(Music *music)
+        Uint64 MediaPlayer::getPlaylistPosition() const
         {
-            current_medium->stop();
-            current_medium = music;
-            return current_medium;
+            return playlist_position;
+        }
+
+        Uint64 MediaPlayer::setPlaylistPosition(Uint64 pos)
+        {
+            if(pos < playlist.size())
+            {
+                stop();
+                Music *temp = current_medium;
+                current_medium = *(playlist.begin() + pos);
+                if(current_medium != nullptr)
+                {
+                    if(temp != current_medium)
+                    {
+                        fireCallback(EVENT_TYPE::ON_MEDIUM_CHANGED);
+                    }
+                    playlist_position = pos;
+                    play();
+                }
+            }
+            return playlist_position;
         }
 
         Music *MediaPlayer::getMedium() const
@@ -212,13 +299,30 @@ namespace TURBO
             return current_medium;
         }
 
-        std::string MediaPlayer::setPlaylistLocation(const std::string path)
+        std::string MediaPlayer::setPlaylistPath(const std::string path)
         {
+            for(auto file : playlist)
+            {
+                file->~Music();
+            }
+
             this->path = path;
+            UTIL::Dir dir(path);
+
+            for(const auto & file : dir.getFiles())
+            {
+                if(UTIL::File::hasFilter(file, MUSIC_EXTENSIONS))
+                {
+                    Music * m = new Music(file);
+                    playlist.push_back(m);
+                    current_medium = m;
+                }
+            }
+
             return this->path;
         }
 
-        std::string MediaPlayer::getPlaylistLocation() const
+        std::string MediaPlayer::getPlaylistPath() const
         {
             return this->path;
         }

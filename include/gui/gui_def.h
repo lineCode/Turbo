@@ -18,8 +18,10 @@ namespace TURBO
         enum OBJECT_TYPE : Uint8
         {
             OBJECT = 0x0,
-            LAYOUT = 0x1,
-            WIDGET = 0x2
+            LAYOUT,
+            WIDGET,
+            BUTTON,
+            TEXT_INPUT,
         };
 
         enum class SIZE_POLICY : Uint8

@@ -17,7 +17,8 @@ namespace TURBO
             if(parent != nullptr)
             {
                 //TODO handle size
-                setSize(parent->getSize());
+                setGeometry(parent->getSize());
+                setSize(getGeometry());
             }
         }
 
@@ -80,8 +81,14 @@ namespace TURBO
             return size;
         }
 
-        OBJECT_TYPE Object::getType()
+        OBJECT_TYPE Object::getObjectType()
         {
+            return object_type;
+        }
+
+        OBJECT_TYPE Object::setObjectType(OBJECT_TYPE type)
+        {
+            object_type = type;
             return object_type;
         }
 

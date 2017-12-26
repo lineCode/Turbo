@@ -7,13 +7,24 @@ namespace TURBO
         Button::Button(Object *parent, const std::string text)
             : Widget(parent), text(text)
         {
-
+            setObjectType(OBJECT_TYPE::BUTTON);
         }
 
         Button::Button(const std::string text)
             : Widget(nullptr), text(text)
         {
 
+        }
+
+        std::string Button::setText(std::string text)
+        {
+            this->text = text;
+            return this->text;
+        }
+
+        std::string Button::getText() const
+        {
+            return text;
         }
     }
 }

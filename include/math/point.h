@@ -34,6 +34,7 @@ namespace TURBO
             friend bool operator<=(const Point &first, const Point &second);
             friend bool operator>(const Point &first, const Point &second);
             friend bool operator>=(const Point &first, const Point &second);
+            friend bool operator>(const Point &first, const Point &second);
         };
     }
 }

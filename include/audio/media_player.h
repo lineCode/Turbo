@@ -16,26 +16,51 @@ namespace TURBO
         {
         private:
             SYSTEM::Timer position;
-            Uint8 volume;
             std::string path;
+            std::map<Uint8, std::function<void()>> callbacks;
             std::vector<Music*> playlist;
             Music *current_medium;
+            Uint64 playlist_position;
+            Uint8 volume;
+            Uint8 last_mute_volume;
+            bool shuffle_on;
+            bool repeat_on;
 
-            void finished();
+            /**
+             * Executes a callback function if any is connected with the given event.
+             * @param event type of the event
+             */
+            void fireCallback(Uint8 event);
 
         public:
+            /**
+             * Initializes a media player with audio track from the given path.
+             */
             explicit MediaPlayer(std::string path);
+
+            /**
+             * Frees all alocated music objects.
+             */
             ~MediaPlayer();
+
+            /**
+             *
+             * @return the state of the current medium.
+             */
             MEDIUM_STATE getState() const;
-            void onFinish(void * callback);
-            void onMediaChanged(void * callback);
-            void onPositionChanged(void * callback);
-            void onStateChanged(void * callback);
-            void onVolumeChanged(void * callback);
-            bool playing();
-            bool paused();
+
+            /**
+             * Registers a callback function that will fire if the given event occours.
+             * @param event type of the event to register
+             * @param callback the callback function that gets called when the event is triggered
+             */
+            void registerCallback(Uint8 event, std::function<void()> callback);
+            bool isPlaying();
+            bool isPaused();
             Uint8 setVolume(Uint8 volume);
             Uint8 getVolume() const;
+            Uint8 setMute(bool mute);
+            bool isMuted() const;
 
             /**
              *
@@ -54,15 +79,22 @@ namespace TURBO
             MEDIUM_STATE pause();
             MEDIUM_STATE resume();
             MEDIUM_STATE stop();
+            Music *next();
+            Music *previous();
+            bool setShuffle(bool shuffle);
+            bool getShuffle();
+            bool setRepeat(bool repeat);
+            bool getRepeat();
             std::vector<Music*> addToPlaylist(Music *music, int index = -1);
             std::vector<Music*> removeFromPlaylist(Music *music);
             std::vector<Music*> removeFromPlaylist(int index);
             std::vector<Music*> getPlaylist() const;
             Uint64 getPlaylistSize() const;
-            Music *setMedium(Music *music);
+            Uint64 getPlaylistPosition() const;
+            Uint64 setPlaylistPosition(Uint64 pos);
             Music *getMedium() const;
-            std::string setPlaylistLocation(std::string path);
-            std::string getPlaylistLocation() const;
+            std::string setPlaylistPath(std::string path);
+            std::string getPlaylistPath() const;
         };
     }
 }

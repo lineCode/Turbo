@@ -40,7 +40,8 @@ namespace TURBO
             MATH::Rect &getGeometry();
             MATH::Rect &setSize(MATH::Rect size);
             MATH::Rect &getSize();
-            OBJECT_TYPE getType();
+            OBJECT_TYPE getObjectType();
+            OBJECT_TYPE setObjectType(OBJECT_TYPE type);
             bool isVisible();
             bool mouseOver();
             bool mouseClicked();

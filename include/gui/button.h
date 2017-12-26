@@ -15,6 +15,8 @@ namespace TURBO
         public:
             explicit Button(std::string text);
             Button(Object * parent, std::string text);
+            std::string setText(std::string text);
+            std::string getText() const;
         };
     }
 }

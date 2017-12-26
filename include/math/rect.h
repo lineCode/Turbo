@@ -18,6 +18,10 @@ namespace TURBO
 
             Rect();
             Rect(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
+            Rect& add(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
+            Rect& sub(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
+            Rect& mul(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
+            Rect& div(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
             Point topLeft();
             Point topRight();
             Point bottomLeft();
@@ -29,6 +33,8 @@ namespace TURBO
             friend bool operator!=(Rect & first, Rect &second);
             friend bool operator<(Rect & first, Rect &second);
             friend bool operator<=(Rect & first, Rect &second);
+            friend bool operator>(Rect & first, Rect &second);
+            friend bool operator>=(Rect & first, Rect &second);
         };
     }
 }
