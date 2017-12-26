@@ -13,6 +13,8 @@ namespace TURBO
 {
     namespace SYSTEM
     {
+        static bool SYSTEM_RUNNING = true;
+
         enum class TIMER_STATE : Uint8
         {
             STOPPED = 0x0,

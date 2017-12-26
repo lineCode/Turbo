@@ -7,7 +7,7 @@ namespace TURBO
         Group::Group(Uint8 id, Uint8 channels)
             : id(id)
         {
-            for(int i = 0; i < channels; ++i)
+            for(Uint8 i = 0; i < channels; ++i)
             {
                 if(Mix_GroupChannel(i, id))
                 {

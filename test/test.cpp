@@ -9,7 +9,7 @@ namespace TS = TURBO::SYSTEM;
 
 void callback()
 {
-    std::cout << "ASD" << std::endl;
+    int i = 0;
 }
 
 int main(int argc, char ** argv)
@@ -35,20 +35,20 @@ int main(int argc, char ** argv)
     vbox.addWidget(&b2);
     vbox.addWidget(&b3);
 
-    auto t = TS::SDLTimer(2000, &callback);
+    auto t = TS::TimerCallback(&callback, 200);
 
-    bool running = true;
-    while(running)
+    while(TS::SYSTEM_RUNNING)
     {
         SDL_Event event;
         while(SDL_PollEvent(&event))
         {
             if(event.type == SDL_KEYDOWN)
             {
-                running = false;
+                TS::SYSTEM_RUNNING = false;
             }
             renderer.clear();
-            renderer.drawLayout(&vbox);
+            //renderer.drawLayout(&vbox);
+            b1.draw(&renderer);
             renderer.present();
         }
         SDL_Delay(5);

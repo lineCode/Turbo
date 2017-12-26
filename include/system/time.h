@@ -100,17 +100,18 @@ namespace TURBO
             std::string         printTime();
         };
 
-        class SDLTimer
+        class TimerCallback
         {
             std::thread * t;
-            Sint32 timer_id = 0;
-            Uint32 interval;
+            std::thread::id parent_id;
             std::function<void()> callback;
+            Uint32 delay;
+            Uint32 repeat;
 
         public:
-            SDLTimer(Uint32 interval, std::function<void()> callback);
-            Uint32 trigger();
-            ~SDLTimer();
+            explicit TimerCallback(std::function<void()> callback, Uint32 delay, Uint32 repeat = 0);
+            Uint32 trigger(Uint32 delay);
+            ~TimerCallback();
         };
     }
 }

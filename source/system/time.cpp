@@ -424,22 +424,32 @@ namespace TURBO
             return oss.str();
         }
 
-        SDLTimer::SDLTimer(Uint32 interval, const std::function<void()> callback)
-            : interval(interval), callback(callback)
+        TimerCallback::TimerCallback(const std::function<void()> callback, Uint32 delay, Uint32 repeat)
+            : callback(callback), delay(delay), repeat(repeat)
         {
-            t = new std::thread(&SDLTimer::trigger, this);
+            parent_id = std::this_thread::get_id();
+            t = new std::thread(&TimerCallback::trigger, this, delay);
         }
 
-        Uint32 SDLTimer::trigger()
+        Uint32 TimerCallback::trigger(Uint32 delay)
         {
-            SDL_Delay(interval);
+            SDL_Delay(delay);
             this->callback();
+
+            // TODO stop thread when main thread is stopped
+            // otherwise endless recursion
+//            if(repeat > 0)
+//            {
+//                trigger(repeat);
+//            }
         }
 
-        SDLTimer::~SDLTimer()
+        TimerCallback::~TimerCallback()
         {
-            SDL_RemoveTimer(timer_id);
-            t->join();
+            if(t->joinable())
+            {
+                t->join();
+            }
             delete t;
         }
     }
