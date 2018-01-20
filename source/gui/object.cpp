@@ -11,11 +11,14 @@ namespace TURBO
               geometry(),
               object_type(OBJECT_TYPE::OBJECT),
               visible(false),
+              mouse_on(false),
               mouse_over(false),
+              mouse_out(false),
               mouse_clicked(false)
         {
             if(parent != nullptr)
             {
+                parent->setChild(this);
                 //TODO handle size
                 setGeometry(parent->getSize());
                 setSize(getGeometry());
@@ -38,12 +41,24 @@ namespace TURBO
         void Object::pollEvent(SDL_Event &event)
         {
             MATH::Point p = INPUT::Mouse::getPosition();
-            mouse_over = MATH::pointInRect(p, geometry);
+            mouse_over = MATH::pointInRect(p, geometry) && !mouse_on;
+            mouse_out = !MATH::pointInRect(p, geometry) && mouse_on;
             mouse_clicked = mouse_over && INPUT::Mouse::pressed();
+
+            if(child != nullptr)
+            {
+                child->pollEvent(event);
+            }
 
             if(mouse_over)
             {
+                mouse_on = true;
                 fireCallback(EVENT_TYPE::ON_MOUSE_OVER);
+            }
+            if(mouse_out)
+            {
+                mouse_on = false;
+                fireCallback(EVENT_TYPE::ON_MOUSE_OUT);
             }
             if(mouse_clicked)
             {
@@ -51,7 +66,7 @@ namespace TURBO
             }
         }
 
-        void Object::registerCallback(Uint8 event, std::function<void()> &callback)
+        void Object::registerCallback(Uint8 event, const std::function<void()> callback)
         {
             callbacks[event] = callback;
         }
@@ -59,6 +74,7 @@ namespace TURBO
         MATH::Rect &Object::setGeometry(MATH::Rect geometry)
         {
             this->geometry = geometry;
+            fireCallback(ON_GEOMETRY_CHANGED);
             return this->geometry;
         }
 
@@ -72,6 +88,7 @@ namespace TURBO
             if(size <= geometry)
             {
                 this->size = size;
+                fireCallback(ON_SIZE_CHANGED);
             }
             return this->size;
         }
@@ -102,6 +119,11 @@ namespace TURBO
             return mouse_over;
         }
 
+        bool Object::mouseOut()
+        {
+            return mouse_out;
+        }
+
         bool Object::mouseClicked()
         {
             return mouse_clicked;
@@ -115,6 +137,7 @@ namespace TURBO
         Object *Object::setParent(Object *object)
         {
             parent = object;
+            fireCallback(ON_PARENT_CHANGED);
             return this;
         }
 
@@ -126,6 +149,7 @@ namespace TURBO
         Object *Object::setChild(Object *object)
         {
             this->child = object;
+            fireCallback(ON_CHILD_CHANGED);
             return this;
         }
 
@@ -136,6 +160,7 @@ namespace TURBO
             {
                 child->hide();
             }
+            fireCallback(ON_VISIBILITY_CHANGED);
             return this;
         }
 
@@ -146,7 +171,17 @@ namespace TURBO
             {
                 child->show();
             }
+            fireCallback(ON_VISIBILITY_CHANGED);
             return this;
+        }
+
+        void Object::draw(VIDEO::Renderer *renderer)
+        {
+            renderer->drawRect(size, background.background_color, true);
+            if(child != nullptr)
+            {
+                child->draw(renderer);
+            }
         }
 
         Object *Object::update()

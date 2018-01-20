@@ -16,7 +16,7 @@ namespace TURBO
 
         }
 
-        std::string Button::setText(std::string text)
+        std::string Button::setText(const std::string text)
         {
             this->text = text;
             return this->text;

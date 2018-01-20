@@ -103,13 +103,11 @@ namespace TURBO
         class TimerCallback
         {
             std::thread * t;
-            std::thread::id parent_id;
             std::function<void()> callback;
             Uint32 delay;
-            Uint32 repeat;
 
         public:
-            explicit TimerCallback(std::function<void()> callback, Uint32 delay, Uint32 repeat = 0);
+            explicit TimerCallback(std::function<void()> callback, Uint32 delay);
             Uint32 trigger(Uint32 delay);
             ~TimerCallback();
         };

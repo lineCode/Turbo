@@ -7,30 +7,19 @@ namespace TURBO
 {
     namespace GUI
     {
-        class Color
-        {
-        public:
-            float r;
-            float g;
-            float b;
-            float a;
-
-            Color(float r, float g, float b, float a);
-        };
-
         class Background
         {
         public:
-            Color background_color;
+            VIDEO::Color background_color;
 
-            explicit Background(Color color);
+            explicit Background(VIDEO::Color color);
         };
 
         class StyleProperties
         {
         protected:
             Background background;
-            Color text_color;
+            VIDEO::Color text_color;
 
         public:
             StyleProperties();

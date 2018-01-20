@@ -424,10 +424,9 @@ namespace TURBO
             return oss.str();
         }
 
-        TimerCallback::TimerCallback(const std::function<void()> callback, Uint32 delay, Uint32 repeat)
-            : callback(callback), delay(delay), repeat(repeat)
+        TimerCallback::TimerCallback(const std::function<void()> callback, Uint32 delay)
+            : callback(callback), delay(delay)
         {
-            parent_id = std::this_thread::get_id();
             t = new std::thread(&TimerCallback::trigger, this, delay);
         }
 
@@ -435,13 +434,6 @@ namespace TURBO
         {
             SDL_Delay(delay);
             this->callback();
-
-            // TODO stop thread when main thread is stopped
-            // otherwise endless recursion
-//            if(repeat > 0)
-//            {
-//                trigger(repeat);
-//            }
         }
 
         TimerCallback::~TimerCallback()

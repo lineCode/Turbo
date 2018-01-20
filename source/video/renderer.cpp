@@ -14,10 +14,12 @@ namespace TURBO
         {
             renderer = SDL_CreateRenderer(window.getWindow(), index, flags);
             font = new Font(TURBO_DEFAULT_FONT, TURBO_DEFAULT_FONT_SIZE, 0);
+            font_texture = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
         }
 
         Renderer::~Renderer()
         {
+            delete font_texture;
             delete font;
             SDL_DestroyRenderer(renderer);
         }
@@ -115,24 +117,33 @@ namespace TURBO
         {
             if(texture != nullptr)
             {
-
+                SDL_RenderCopyEx(renderer, texture, nullptr, nullptr, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+            }
+        }
+        
+        void Renderer::drawTexture(Texture *texture, Sint32 x, Sint32 y)
+        {
+            if(texture != nullptr)
+            {
+                SDL_Rect r = texture->getSize();
+                SDL_RenderCopyEx(renderer, texture->getTexture(), &r, &r, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
             }
         }
 
-        void Renderer::drawText(std::string text, Sint32 x, Sint32 y)
+        void Renderer::drawUTF8Text(std::string text, Sint32 x, Sint32 y)
         {
             SDL_Surface *surface = nullptr;
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
-                surface = TTF_RenderText_Solid(font->getFont(), text.c_str(), color_text_fg.toSDLColor());
+                surface = TTF_RenderUTF8_Solid(font->getFont(), text.c_str(), color_text_fg.toSDLColor());
             }
             else if(text_mode == VIDEO::TEXT_MODE::BLENDED)
             {
-                surface = TTF_RenderText_Blended(font->getFont(), text.c_str(), color_text_fg.toSDLColor());
+                surface = TTF_RenderUTF8_Blended(font->getFont(), text.c_str(), color_text_fg.toSDLColor());
             }
             else if(text_mode == VIDEO::TEXT_MODE::SHADED)
             {
-                surface = TTF_RenderText_Shaded(font->getFont(), text.c_str(), color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
+                surface = TTF_RenderUTF8_Shaded(font->getFont(), text.c_str(), color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
             }
 
             if(surface != nullptr)
@@ -142,7 +153,33 @@ namespace TURBO
                 SDL_Rect d = {x, y, surface->w, surface->h};
                 SDL_Texture * tex = SDL_CreateTextureFromSurface(renderer, surface);
                 SDL_RenderCopy(renderer, tex, &s, &d);
-                SDL_DestroyTexture(tex);
+                SDL_FreeSurface(surface);
+            }
+        }
+
+        void Renderer::drawUnicodeText(const Uint16 *text, Sint32 x, Sint32 y)
+        {
+            SDL_Surface *surface = nullptr;
+            if(text_mode == VIDEO::TEXT_MODE::SOLID)
+            {
+                surface = TTF_RenderUNICODE_Solid(font->getFont(), text, color_text_fg.toSDLColor());
+            }
+            else if(text_mode == VIDEO::TEXT_MODE::BLENDED)
+            {
+                surface = TTF_RenderUNICODE_Blended(font->getFont(), text, color_text_fg.toSDLColor());
+            }
+            else if(text_mode == VIDEO::TEXT_MODE::SHADED)
+            {
+                surface = TTF_RenderUNICODE_Shaded(font->getFont(), text, color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
+            }
+
+            if(surface != nullptr)
+            {
+                //drawSurface(surface, x, y);
+                SDL_Rect s = {0, 0, surface->w, surface->h};
+                SDL_Rect d = {x, y, surface->w, surface->h};
+                SDL_Texture * tex = SDL_CreateTextureFromSurface(renderer, surface);
+                SDL_RenderCopy(renderer, tex, &s, &d);
                 SDL_FreeSurface(surface);
             }
         }
@@ -171,51 +208,6 @@ namespace TURBO
             else
             {
                 //polygonColor(renderer, );
-            }
-        }
-
-        void Renderer::drawObject(GUI::Object *object)
-        {
-            if(object != nullptr)
-            {
-                if(object->getObjectType() >= GUI::OBJECT_TYPE::WIDGET)
-                {
-                    if(object->getSize() <= window.getSize())
-                    {
-                        GUI::Color c = object->getBackground().background_color;
-                        drawRect(object->getSize(), Color(c.r, c.g, c.b, c.a), true);
-                        if(object->getObjectType() == GUI::OBJECT_TYPE::BUTTON)
-                        {
-                            auto button = dynamic_cast<GUI::Button*>(object);
-                            setTextColor(Color(0, 255, 0, 255));
-                            drawText(button->getText(), button->getSize().x, button->getSize().y);
-                        }
-
-                        if(object->getChild() != nullptr)
-                        {
-                            drawObject(object->getChild());
-                        }
-                    }
-                }
-                else if(object->getObjectType() >= GUI::OBJECT_TYPE::LAYOUT)
-                {
-                    auto container = dynamic_cast<GUI::LayoutContainer*>(object);
-                    drawLayout(container);
-                }
-            }
-        }
-
-        void Renderer::drawLayout(GUI::LayoutContainer *container)
-        {
-            if(container != nullptr)
-            {
-                if(container->getObjectType() == GUI::OBJECT_TYPE::LAYOUT)
-                {
-                    for(auto & child : container->getChildren())
-                    {
-                        drawObject(child);
-                    }
-                }
             }
         }
     }

@@ -24,9 +24,13 @@ namespace TURBO
             MATH::Rect geometry;
             MATH::Rect size;
             std::map<Uint8, std::function<void()>> callbacks;
+            template <typename ...Args>
+            std::map<Uint8, std::function<void(Args...)>> callback;
             OBJECT_TYPE object_type;
             bool visible;
+            bool mouse_on;
             bool mouse_over;
+            bool mouse_out;
             bool mouse_clicked;
 
             void fireCallback(Uint8 event);
@@ -35,7 +39,7 @@ namespace TURBO
             explicit Object(Object *parent);
             ~Object();
             void pollEvent(SDL_Event &event);
-            void registerCallback(Uint8 event, std::function<void()> &callback);
+            void registerCallback(Uint8 event, std::function<void()> callback);
             MATH::Rect &setGeometry(MATH::Rect geometry);
             MATH::Rect &getGeometry();
             MATH::Rect &setSize(MATH::Rect size);
@@ -44,6 +48,7 @@ namespace TURBO
             OBJECT_TYPE setObjectType(OBJECT_TYPE type);
             bool isVisible();
             bool mouseOver();
+            bool mouseOut();
             bool mouseClicked();
             Object *getParent();
             Object *setParent(Object *object);
@@ -51,6 +56,7 @@ namespace TURBO
             Object *setChild(Object *object);
             Object *hide();
             Object *show();
+            virtual void draw(VIDEO::Renderer * renderer);
             virtual Object *update();
         };
     }

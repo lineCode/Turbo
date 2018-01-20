@@ -7,9 +7,19 @@ namespace TU = TURBO::UTIL;
 namespace TM = TURBO::MATH;
 namespace TS = TURBO::SYSTEM;
 
-void callback()
+void color()
 {
-    int i = 0;
+    std::cout << "hover" << std::endl;
+}
+
+void out()
+{
+    std::cout << "out" << std::endl;
+}
+
+void d(int x)
+{
+    std::cout << x << std::endl;
 }
 
 int main(int argc, char ** argv)
@@ -20,7 +30,7 @@ int main(int argc, char ** argv)
     sdl.initIMG(IMG_INIT_PNG);
     sdl.initMIX(MIX_INIT_MP3 | MIX_INIT_FLAC);
 
-    auto window = TV::Window("Title", TM::Rect(50, 50, 500, 500), SDL_WINDOW_SHOWN);
+    auto window = TV::Window("Title", TM::Rect(50, 50, 600, 600), SDL_WINDOW_SHOWN);
     auto renderer = TV::Renderer(window, -1, SDL_RENDERER_ACCELERATED);
     auto main_widget = TURBO::GUI::MainWidget(window, renderer);
     auto vbox = TURBO::GUI::Box(&main_widget, TURBO::GUI::ORIENTATION::HORIZONTAL);
@@ -35,20 +45,24 @@ int main(int argc, char ** argv)
     vbox.addWidget(&b2);
     vbox.addWidget(&b3);
 
-    auto t = TS::TimerCallback(&callback, 200);
+    b1.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, color);
+    b1.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
+
+    b1.registerC(TG::EVENT_TYPE::ON_MOUSE_OUT, d, 1);
 
     while(TS::SYSTEM_RUNNING)
     {
         SDL_Event event;
         while(SDL_PollEvent(&event))
         {
+            TURBO::INPUT::Mouse::pollEvent(event);
+            b1.pollEvent(event);
             if(event.type == SDL_KEYDOWN)
             {
                 TS::SYSTEM_RUNNING = false;
             }
             renderer.clear();
-            //renderer.drawLayout(&vbox);
-            b1.draw(&renderer);
+            main_widget.draw(&renderer);
             renderer.present();
         }
         SDL_Delay(5);

@@ -10,6 +10,7 @@ namespace TURBO
         class Button : public Widget
         {
         protected:
+            VIDEO::Texture * texture;
             std::string text;
 
         public:

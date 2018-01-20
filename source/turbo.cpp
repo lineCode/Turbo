@@ -1,4 +1,4 @@
-    #include "turbo.h"
+#include "turbo.h"
 
 namespace TURBO
 {
@@ -29,12 +29,11 @@ namespace TURBO
     int Turbo::run()
     {
         SDL_Event event;
-        bool running = true;
         VIDEO::Window win("Test", MATH::Rect(0, 0, 500, 500), SDL_WINDOW_SHOWN);
         VIDEO::Renderer ren(win, -1, SDL_RENDERER_ACCELERATED);
         GUI::MainWidget widget = GUI::MainWidget(win, ren);
 
-        while(running)
+        while(SYSTEM::SYSTEM_RUNNING)
         {
             while(SDL_PollEvent(&event))
             {
@@ -46,9 +45,10 @@ namespace TURBO
                    || INPUT::Mouse::pressed(SDL_BUTTON_RIGHT)
                    || event.type == SDL_QUIT)
                 {
-                    running = false;
+                    SYSTEM::SYSTEM_RUNNING = false;
                 }
                 ren.clear();
+                widget.draw(&ren);
                 ren.present();
             }
         }

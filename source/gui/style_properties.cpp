@@ -4,21 +4,15 @@ namespace TURBO
 {
     namespace GUI
     {
-        Color::Color(float r, float g, float b, float a)
-            : r(r), g(g), b(b), a(a)
-        {
-
-        }
-
-        Background::Background(Color color)
+        Background::Background(VIDEO::Color color)
             : background_color(color)
         {
 
         }
 
         StyleProperties::StyleProperties()
-            : background({1.0, 1.0, 1.0, 1.0}),
-              text_color({0.0, 0.0, 0.0, 1.0})
+            : background({0xFF, 0xFF, 0xFF, 0xFF}),
+              text_color({0x00, 0x00, 0x00, 0xFF})
         {
 
         }

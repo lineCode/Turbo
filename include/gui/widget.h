@@ -4,6 +4,7 @@
 #include <string>
 
 #include "gui/object.h"
+#include "video/font.h"
 
 namespace TURBO
 {
@@ -11,6 +12,8 @@ namespace TURBO
     {
         class Widget : public Object
         {
+        private:
+
         public:
             explicit Widget(Object * parent);
 

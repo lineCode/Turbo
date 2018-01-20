@@ -18,6 +18,7 @@ namespace TURBO
         public:
             explicit LayoutContainer(Object *parent);
             std::vector<Object*> getChildren();
+            void draw(VIDEO::Renderer * renderer) override;
         };
         
         class Box : public LayoutContainer

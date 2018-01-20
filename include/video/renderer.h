@@ -2,6 +2,7 @@
 #define TURBO_RENDERER_H
 
 #include <iostream>
+#include <vector>
 
 #include <SDL_video.h>
 #include <SDL_types.h>
@@ -9,11 +10,9 @@
 
 #include "video/video_def.h"
 #include "video/window.h"
+#include "video/texture.h"
 #include "video/color.h"
 #include "video/font.h"
-#include "gui/object.h"
-#include "gui/layout.h"
-#include "gui/button.h"
 
 namespace TURBO
 {
@@ -25,6 +24,7 @@ namespace TURBO
             SDL_Renderer   *renderer;
             Window         &window;
             Font           *font;
+            Texture        *font_texture;
             TEXT_MODE       text_mode;
             Color           color_text_fg;
             Color           color_text_bg;
@@ -50,11 +50,11 @@ namespace TURBO
             TEXT_MODE getTextMode() const;
             void drawSurface(SDL_Surface *surface, Sint32 x, Sint32 y);
             void drawTexture(SDL_Texture *texture, Sint32 x, Sint32 y);
-            void drawText(std::string text, Sint32 x, Sint32 y);
+            void drawTexture(Texture *texture, Sint32 x, Sint32 y);
+            void drawUTF8Text(std::string text, Sint32 x, Sint32 y);
+            void drawUnicodeText(const Uint16 * text, Sint32 x, Sint32 y);
             void drawRect(MATH::Rect rect, Color color = Color(255, 255, 255, 255), bool filled = false);
             void drawPolygon(std::vector<MATH::Point> points, bool filled = false);
-            void drawObject(GUI::Object *object);
-            void drawLayout(GUI::LayoutContainer *container);
         };
     }
 }

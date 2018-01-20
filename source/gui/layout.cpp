@@ -15,6 +15,14 @@ namespace TURBO
             return children;
         }
 
+        void LayoutContainer::draw(VIDEO::Renderer *renderer)
+        {
+            for(const auto & child : children)
+            {
+                child->draw(renderer);
+            }
+        }
+
         Box::Box(Object *parent, ORIENTATION orientation)
             : LayoutContainer(parent), orientation(orientation)
         {
