@@ -29,6 +29,7 @@ namespace TURBO
             Texture(SDL_Renderer *renderer, Sint32 w, Sint32 h, Uint32 format = TURBO_SDL_TEXTURE_FORMAT,
                     Sint32 access = TURBO_SDL_TEXTURE_ACCESS);
             Texture(SDL_Renderer *renderer, SDL_Surface * surface);
+            void loadTextureInfo();
             SDL_Texture * getTexture();
             SDL_Rect getSize();
         };

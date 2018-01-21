@@ -10,12 +10,7 @@ namespace TURBO
 
         }
 
-        std::string Text::setText(std::string text)
-        {
-            return "";
-        }
-
-        std::string Text::getText()
+        std::string Text::updateText(std::string text)
         {
             return "";
         }

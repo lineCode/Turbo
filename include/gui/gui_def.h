@@ -29,6 +29,7 @@ namespace TURBO
             OBJECT = 0x0,
             LAYOUT,
             WIDGET,
+            TEXT_WIDGET,
             BUTTON,
             TEXT_INPUT,
         };

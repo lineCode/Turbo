@@ -7,19 +7,21 @@ namespace TURBO
         Renderer::Renderer(Window &window, int index, Uint32 flags)
             : window(window),
               text_mode(TEXT_MODE::BLENDED),
-              color_text_fg(255, 255, 0, 255),
-              color_text_bg(255, 255, 255, 255),
+              color_text_fg(255, 255, 255, 255),
+              color_text_bg(0, 0, 0, 255),
               color_draw(255, 255, 255, 255),
               color_clear(0, 0, 0, 255)
         {
             renderer = SDL_CreateRenderer(window.getWindow(), index, flags);
             font = new Font(TURBO_DEFAULT_FONT, TURBO_DEFAULT_FONT_SIZE, 0);
+            font_collection = new FontCollection(TURBO_DEFAULT_FONT, 10, 50, 10);
             font_texture = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
         }
 
         Renderer::~Renderer()
         {
             delete font_texture;
+            delete font_collection;
             delete font;
             SDL_DestroyRenderer(renderer);
         }
@@ -86,12 +88,32 @@ namespace TURBO
             return color_clear;
         }
 
+        Font *Renderer::getFont()
+        {
+            return font;
+        }
+
         Font *Renderer::setFont(Font *font)
         {
             if(font != nullptr)
             {
                 this->font = font;
             }
+            return this->font;
+        }
+
+        FontCollection *Renderer::getFontCollection()
+        {
+            return font_collection;
+        }
+
+        FontCollection *Renderer::setFontCollection(FontCollection *font_collection)
+        {
+            if(font_collection == nullptr)
+            {
+                this->font_collection = font_collection;
+            }
+            return this->font_collection;
         }
 
         TEXT_MODE Renderer::setTextMode(TEXT_MODE mode)
@@ -130,9 +152,13 @@ namespace TURBO
             }
         }
 
-        void Renderer::drawUTF8Text(std::string text, Sint32 x, Sint32 y)
+        Texture *Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h)
         {
             SDL_Surface *surface = nullptr;
+            Texture *texture = nullptr;
+
+            // TODO choose optimal font size
+
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
                 surface = TTF_RenderUTF8_Solid(font->getFont(), text.c_str(), color_text_fg.toSDLColor());
@@ -148,13 +174,10 @@ namespace TURBO
 
             if(surface != nullptr)
             {
-                //drawSurface(surface, x, y);
-                SDL_Rect s = {0, 0, surface->w, surface->h};
-                SDL_Rect d = {x, y, surface->w, surface->h};
-                SDL_Texture * tex = SDL_CreateTextureFromSurface(renderer, surface);
-                SDL_RenderCopy(renderer, tex, &s, &d);
+                texture = new Texture(renderer, surface);
                 SDL_FreeSurface(surface);
             }
+            return texture;
         }
 
         void Renderer::drawUnicodeText(const Uint16 *text, Sint32 x, Sint32 y)

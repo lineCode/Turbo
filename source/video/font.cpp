@@ -5,13 +5,12 @@ namespace TURBO
     namespace VIDEO
     {
         Font::Font(const std::string filepath, Uint8 ptsize, Uint8 index)
+            : path(filepath), pt_size(ptsize)
         {
-            font = TTF_OpenFontIndex(path.c_str(), ptsize, index);
+            font = TTF_OpenFontIndex(filepath.c_str(), ptsize, index);
 
             if(font != nullptr)
             {
-                path = filepath;
-                pt_size = ptsize;
                 loadFontInfo();
             }
         }
@@ -162,7 +161,7 @@ namespace TURBO
             return m;
         }
 
-        MATH::Vector Font::getUTF8TextSize(std::string text)
+        MATH::Rect Font::getUTF8TextSize(std::string text)
         {
             int w = 0, h = 0;
 
@@ -171,10 +170,10 @@ namespace TURBO
                 TTF_SizeText(font, text.c_str(), &w, &h);
             }
 
-            return MATH::Vector{w, h, 0};
+            return MATH::Rect{0, 0, w, h};
         }
 
-        MATH::Vector Font::getUnicodeTextSize(const Uint16 *text)
+        MATH::Rect Font::getUnicodeTextSize(const Uint16 *text)
         {
             int w = 0, h = 0;
 
@@ -182,7 +181,33 @@ namespace TURBO
             {
                 TTF_SizeUNICODE(font, text, &w, &h);
             }
-            return MATH::Vector{w, h, 0};
+            return MATH::Rect{0, 0, w, h};
+        }
+
+        FontCollection::FontCollection(std::string path, Uint8 from, Uint8 to, Uint8 step)
+        {
+            for(Uint8 i = from; i <= to; i += step)
+            {
+                Font *font = new Font(path, i);
+                fonts[i] = font;
+            }
+        }
+
+        FontCollection::~FontCollection()
+        {
+            for(const auto &font : fonts)
+            {
+                delete font.second;
+            }
+        }
+
+        Font *FontCollection::getFont(Uint8 size)
+        {
+            if(fonts.count(size) > 0)
+            {
+                fonts[size];
+            }
+            return fonts.begin()->second;
         }
     }
 }

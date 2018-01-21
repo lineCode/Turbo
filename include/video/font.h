@@ -1,10 +1,12 @@
 #ifndef TURBO_FONT_H
 #define TURBO_FONT_H
 
+#include <map>
+
 #include <SDL_ttf.h>
 
 #include "video/video_def.h"
-#include "math/vector.h"
+#include "math/rect.h"
 
 namespace TURBO
 {
@@ -81,8 +83,19 @@ namespace TURBO
             Uint32 setFontKerning(Sint32 kerning);
             bool hasGlyph(Uint16 c);
             FontMetrics getMetrics(Uint16 c);
-            MATH::Vector getUTF8TextSize(std::string text);
-            MATH::Vector getUnicodeTextSize(const Uint16 * text);
+            MATH::Rect getUTF8TextSize(std::string text);
+            MATH::Rect getUnicodeTextSize(const Uint16 * text);
+        };
+
+        class FontCollection
+        {
+        private:
+            std::map<Uint8, Font*> fonts;
+
+        public:
+            explicit FontCollection(std::string path, Uint8 from = 1, Uint8 to = 10, Uint8 step = 1);
+            ~FontCollection();
+            Font *getFont(Uint8 size);
         };
     }
 }

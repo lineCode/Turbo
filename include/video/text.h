@@ -14,9 +14,8 @@ namespace TURBO
             //Texture & texture;
 
         public:
-            Text(std::string text, Font *font = nullptr);
-            std::string setText(std::string text = "");
-            std::string getText();
+            explicit Text(std::string text, Font *font = nullptr);
+            std::string updateText(std::string text);
         };
     }
 }

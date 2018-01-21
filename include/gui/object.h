@@ -24,8 +24,6 @@ namespace TURBO
             MATH::Rect geometry;
             MATH::Rect size;
             std::map<Uint8, std::function<void()>> callbacks;
-            template <typename ...Args>
-            std::map<Uint8, std::function<void(Args...)>> callback;
             OBJECT_TYPE object_type;
             bool visible;
             bool mouse_on;
@@ -37,7 +35,7 @@ namespace TURBO
 
         public:
             explicit Object(Object *parent);
-            ~Object();
+            virtual ~Object();
             void pollEvent(SDL_Event &event);
             void registerCallback(Uint8 event, std::function<void()> callback);
             MATH::Rect &setGeometry(MATH::Rect geometry);

@@ -8,12 +8,29 @@ namespace TURBO
             : renderer(renderer), w(w), h(h), format(format), access(access)
         {
             texture = SDL_CreateTexture(renderer, format, access, w, h);
+            loadTextureInfo();
         }
 
         Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
             : renderer(renderer)
         {
             texture = SDL_CreateTextureFromSurface(renderer, surface);
+            loadTextureInfo();
+        }
+
+        void Texture::loadTextureInfo()
+        {
+            Sint32 w = 0, h = 0, a = 0;
+            Uint32 f = 0;
+
+            if(texture != nullptr)
+            {
+                SDL_QueryTexture(texture, &f, &a, &w, &h);
+                format = f;
+                access = a;
+                this->w = w;
+                this->h = h;
+            }
         }
 
         SDL_Texture * Texture::getTexture()
