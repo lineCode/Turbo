@@ -5,7 +5,7 @@ namespace TURBO
     namespace GUI
     {
         TextWidget::TextWidget(Object *parent, const std::string text)
-            : Object(parent), text(text), text_texture(nullptr)
+            : Widget(parent), text(text), text_texture(nullptr)
         {
             object_type = OBJECT_TYPE::TEXT_WIDGET;
         }
@@ -33,7 +33,7 @@ namespace TURBO
                 text_texture = renderer->createUTF8Text(text, size.w, size.h);
             }
             Object::draw(renderer);
-            renderer->drawTexture(text_texture->getTexture(), size.x, size.y);
+            renderer->drawTexture(text_texture, size);
         }
     }
 }

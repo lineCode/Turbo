@@ -11,8 +11,11 @@ namespace TURBO
         {
         public:
             VIDEO::Color background_color;
+            VIDEO::Texture * background_texture;
 
             explicit Background(VIDEO::Color color);
+            explicit Background(VIDEO::Texture * texture);
+            explicit Background(std::string path, VIDEO::Renderer *renderer);
         };
 
         class StyleProperties

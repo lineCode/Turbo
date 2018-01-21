@@ -9,7 +9,7 @@ namespace TURBO
 {
     namespace GUI
     {
-        class TextWidget : public Object
+        class TextWidget : public Widget
         {
         protected:
             std::string text;

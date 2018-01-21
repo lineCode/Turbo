@@ -17,6 +17,7 @@ namespace TURBO
 
             Color(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
             SDL_Color toSDLColor();
+            Uint32 toHexColor();
         };
     }
 }

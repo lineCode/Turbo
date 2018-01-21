@@ -14,5 +14,16 @@ namespace TURBO
         {
             return {r, g, b, a};
         }
+
+        Uint32 Color::toHexColor()
+        {
+            Uint32 color = 0x00000000;
+            color = (color + r) << 8;
+            color = (color + g) << 8;
+            color = (color + b) << 8;
+            color += a;
+
+            return color;
+        }
     }
 }

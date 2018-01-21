@@ -20,14 +20,14 @@ namespace TURBO
 
         void Texture::loadTextureInfo()
         {
-            Sint32 w = 0, h = 0, a = 0;
-            Uint32 f = 0;
+            Sint32 w = 0, h = 0, acc = 0;
+            Uint32 form = 0;
 
             if(texture != nullptr)
             {
-                SDL_QueryTexture(texture, &f, &a, &w, &h);
-                format = f;
-                access = a;
+                SDL_QueryTexture(texture, &form, &acc, &w, &h);
+                format = form;
+                access = acc;
                 this->w = w;
                 this->h = h;
             }
@@ -36,6 +36,16 @@ namespace TURBO
         SDL_Texture * Texture::getTexture()
         {
             return texture;
+        }
+
+        Sint32 Texture::getWidth()
+        {
+            return w;
+        }
+
+        Sint32 Texture::getHeight()
+        {
+            return h;
         }
 
         SDL_Rect Texture::getSize()

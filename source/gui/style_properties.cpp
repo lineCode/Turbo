@@ -10,6 +10,18 @@ namespace TURBO
 
         }
 
+        Background::Background(VIDEO::Texture *texture)
+            : background_color({0x00, 0x00, 0x00, 0xFF}), background_texture(texture)
+        {
+
+        }
+
+        Background::Background(std::string path, VIDEO::Renderer *renderer)
+            : background_color({0x00, 0x00, 0x00, 0xFF})
+        {
+            background_texture = new VIDEO::Texture(renderer->getRenderer(), nullptr);
+        }
+
         StyleProperties::StyleProperties()
             : background({0xFF, 0xFF, 0xFF, 0xFF}),
               text_color({0x00, 0x00, 0x00, 0xFF})

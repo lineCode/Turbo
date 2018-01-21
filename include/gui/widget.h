@@ -5,7 +5,6 @@
 
 #include "gui/object.h"
 #include "video/font.h"
-#include "video/text.h"
 
 namespace TURBO
 {

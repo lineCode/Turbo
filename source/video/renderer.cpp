@@ -127,7 +127,7 @@ namespace TURBO
             return text_mode;
         }
 
-        void Renderer::drawSurface(SDL_Surface *surface, Sint32 x, Sint32 y)
+        void Renderer::drawSDLSurface(SDL_Surface *surface, Sint32 x, Sint32 y)
         {
             if(surface != nullptr)
             {
@@ -135,11 +135,14 @@ namespace TURBO
             }
         }
 
-        void Renderer::drawTexture(SDL_Texture *texture, Sint32 x, Sint32 y)
+        void Renderer::drawSDLTexture(SDL_Texture *texture, Sint32 x, Sint32 y)
         {
             if(texture != nullptr)
             {
-                SDL_RenderCopyEx(renderer, texture, nullptr, nullptr, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+                Sint32 w = 0, h = 0;
+                SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
+                SDL_Rect dest = {x, y, w, h};
+                SDL_RenderCopyEx(renderer, texture, nullptr, &dest, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
             }
         }
         
@@ -147,8 +150,19 @@ namespace TURBO
         {
             if(texture != nullptr)
             {
-                SDL_Rect r = texture->getSize();
-                SDL_RenderCopyEx(renderer, texture->getTexture(), &r, &r, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+                SDL_Rect dest = {x, y, texture->getWidth(), texture->getHeight()};
+                SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+            }
+        }
+
+        void Renderer::drawTexture(Texture *texture, MATH::Rect dest)
+        {
+            if(texture != nullptr)
+            {
+                SDL_Rect dest_rect = {dest.x, dest.y,
+                                      std::min(texture->getWidth(), dest.w),
+                                      std::min(texture->getHeight(), dest.h)};
+                SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest_rect, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
             }
         }
 
@@ -180,9 +194,11 @@ namespace TURBO
             return texture;
         }
 
-        void Renderer::drawUnicodeText(const Uint16 *text, Sint32 x, Sint32 y)
+        Texture *Renderer::createUnicodeText(const Uint16 *text, Sint32 w, Sint32 h)
         {
             SDL_Surface *surface = nullptr;
+            Texture * texture = nullptr;
+
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
                 surface = TTF_RenderUNICODE_Solid(font->getFont(), text, color_text_fg.toSDLColor());
@@ -198,13 +214,10 @@ namespace TURBO
 
             if(surface != nullptr)
             {
-                //drawSurface(surface, x, y);
-                SDL_Rect s = {0, 0, surface->w, surface->h};
-                SDL_Rect d = {x, y, surface->w, surface->h};
-                SDL_Texture * tex = SDL_CreateTextureFromSurface(renderer, surface);
-                SDL_RenderCopy(renderer, tex, &s, &d);
+                texture = new Texture(renderer, surface);
                 SDL_FreeSurface(surface);
             }
+            return texture;
         }
 
         void Renderer::drawRect(MATH::Rect rect, Color color, bool filled)
@@ -226,7 +239,7 @@ namespace TURBO
         {
             if(filled)
             {
-                //filledPolygonColor(renderer, );
+                //filledPolygonColor(renderer, nullptr, nullptr, 0, color_draw.toHexColor());
             }
             else
             {
