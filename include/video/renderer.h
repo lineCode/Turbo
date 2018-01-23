@@ -52,12 +52,12 @@ namespace TURBO
             FontCollection *setFontCollection(FontCollection * font_collection);
             TEXT_MODE setTextMode(TEXT_MODE mode);
             TEXT_MODE getTextMode() const;
-
             void drawSDLSurface(SDL_Surface *surface, Sint32 x, Sint32 y);
             void drawSDLTexture(SDL_Texture *texture, Sint32 x, Sint32 y);
             void drawTexture(Texture *texture, Sint32 x, Sint32 y);
             void drawTexture(Texture *texture, MATH::Rect dest);
             Texture *createUTF8Text(std::string &text, Sint32 w, Sint32 h);
+            Texture *createUTF8Text(std::string &text, Uint8 pt_size, Sint32 w, Sint32 h);
             Texture *createUnicodeText(const Uint16 * text, Sint32 w, Sint32 h);
             void drawRect(MATH::Rect rect, Color color = Color(255, 255, 255, 255), bool filled = false);
             void drawPolygon(std::vector<MATH::Point> points, bool filled = false);

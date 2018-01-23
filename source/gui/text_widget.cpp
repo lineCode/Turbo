@@ -30,7 +30,17 @@ namespace TURBO
         {
             if(text_texture == nullptr)
             {
-                text_texture = renderer->createUTF8Text(text, size.w, size.h);
+                int text_size = renderer->getFont()->getUTF8TextSize(text).w;
+                if(text_size > size.w)
+                {
+                    //TODO get roughly the size of the optimal font size
+                    Uint8 ideal_size = 12;//static_cast<Uint8>(text_size - size.w);
+                    text_texture = renderer->createUTF8Text(text, ideal_size, size.w, size.h);
+                }
+                else
+                {
+                    text_texture = renderer->createUTF8Text(text, size.w, size.h);
+                }
             }
             Object::draw(renderer);
             renderer->drawTexture(text_texture, size);

@@ -205,9 +205,61 @@ namespace TURBO
         {
             if(fonts.count(size) > 0)
             {
-                fonts[size];
+                return fonts[size];
             }
             return fonts.begin()->second;
+        }
+
+        Font *FontCollection::getLTEFont(Uint8 size)
+        {
+            if(fonts.count(size) > 0)
+            {
+                return fonts[size];
+            }
+
+            auto it = --fonts.lower_bound(size);
+
+            if(it->first < size)
+            {
+                return fonts.lower_bound(size)->second;
+            }
+            else
+            {
+                if(!fonts.empty())
+                {
+                    return fonts.begin()->second;
+                }
+                else
+                {
+                    return nullptr;
+                }
+            }
+        }
+
+        Font *FontCollection::getGTEFont(Uint8 size)
+        {
+            if(fonts.count(size) > 0)
+            {
+                return fonts[size];
+            }
+
+            auto it = fonts.upper_bound(size);
+
+            if(it->first > size)
+            {
+                return fonts.upper_bound(size)->second;
+            }
+            else
+            {
+                if(!fonts.empty())
+                {
+                    return fonts.begin()->second;
+                }
+                else
+                {
+                    return nullptr;
+                }
+            }
         }
     }
 }

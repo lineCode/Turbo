@@ -2,6 +2,7 @@
 #define TURBO_FONT_H
 
 #include <map>
+#include <algorithm>
 
 #include <SDL_ttf.h>
 
@@ -95,7 +96,27 @@ namespace TURBO
         public:
             explicit FontCollection(std::string path, Uint8 from = 1, Uint8 to = 10, Uint8 step = 1);
             ~FontCollection();
+
+            /**
+             * Searches for a font that has the requested  size
+             * @param size the requested size
+             * @return A pointer to a font saved in the fonts, or nullptr if non available
+             */
             Font *getFont(Uint8 size);
+
+            /**
+             * Searches for a font that has the requested or a smaller size
+             * @param size the requested size
+             * @return A pointer to a font saved in the fonts, or nullptr if non available
+             */
+            Font *getLTEFont(Uint8 size);
+
+            /**
+             * Searches for a font that has the requested or a greater size
+             * @param size the requested size
+             * @return A pointer to a font saved in the fonts, or nullptr if non available
+             */
+            Font *getGTEFont(Uint8 size);
         };
     }
 }

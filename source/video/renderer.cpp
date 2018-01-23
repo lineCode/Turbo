@@ -170,20 +170,48 @@ namespace TURBO
         {
             SDL_Surface *surface = nullptr;
             Texture *texture = nullptr;
+            TTF_Font *font = this->font->getFont();
 
             // TODO choose optimal font size
 
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
-                surface = TTF_RenderUTF8_Solid(font->getFont(), text.c_str(), color_text_fg.toSDLColor());
+                surface = TTF_RenderUTF8_Solid(font, text.c_str(), color_text_fg.toSDLColor());
             }
             else if(text_mode == VIDEO::TEXT_MODE::BLENDED)
             {
-                surface = TTF_RenderUTF8_Blended(font->getFont(), text.c_str(), color_text_fg.toSDLColor());
+                surface = TTF_RenderUTF8_Blended(font, text.c_str(), color_text_fg.toSDLColor());
             }
             else if(text_mode == VIDEO::TEXT_MODE::SHADED)
             {
-                surface = TTF_RenderUTF8_Shaded(font->getFont(), text.c_str(), color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
+                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
+            }
+
+            if(surface != nullptr)
+            {
+                texture = new Texture(renderer, surface);
+                SDL_FreeSurface(surface);
+            }
+            return texture;
+        }
+
+        Texture *Renderer::createUTF8Text(std::string &text, Uint8 pt_size, Sint32 w, Sint32 h)
+        {
+            SDL_Surface *surface = nullptr;
+            Texture *texture = nullptr;
+            TTF_Font *font = this->font_collection->getLTEFont(pt_size)->getFont();
+
+            if(text_mode == VIDEO::TEXT_MODE::SOLID)
+            {
+                surface = TTF_RenderUTF8_Solid(font, text.c_str(), color_text_fg.toSDLColor());
+            }
+            else if(text_mode == VIDEO::TEXT_MODE::BLENDED)
+            {
+                surface = TTF_RenderUTF8_Blended(font, text.c_str(), color_text_fg.toSDLColor());
+            }
+            else if(text_mode == VIDEO::TEXT_MODE::SHADED)
+            {
+                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
             }
 
             if(surface != nullptr)

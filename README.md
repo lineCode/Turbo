@@ -4,9 +4,9 @@
 - 2D Component/Entity Game Engine
 
 
-## Development
+# Development
 
-**SDL:**
+##SDL
 
 - [SDL 2](https://www.libsdl.org/download-2.0.php)
 - [IMG 2](https://www.libsdl.org/projects/SDL_image/)
@@ -14,37 +14,45 @@
 - [MIX 2](https://www.libsdl.org/projects/SDL_mixer/)
 - [NET 2](https://www.libsdl.org/projects/SDL_net/)
 
+### Linux
+
+- most linux distributions will have sdl as supported package (libsdl2-dev)
+
+### Windows
+
 Download the development files for your platform and your Environment. You may want to download the binary files as well.
 - **If you have trouble with 64 bit files may have to use the 32 bit libraries in order to compile for 64 bit systems.**
 
 Extract the include and lib directory you have to use to your libraries path (example: `C:/libraries/SDL/include/`).
 - **Remember this path, you will need this later to configure the make file.**
 
+##Python
 
+### Linux
 
-**Python:**
+- most linux distributions will have python as supported package (python-dev)
 
 - [Python 34](https://www.python.org/downloads/release/python-346/)
 
-Download the tarball and extract it to your desired path.
+Download the tarball/zip and extract it to your desired path.
 - **Remember the path of the include/ and libs/ directories**
 
 
 
-### Issues/TODO
+# Issues/TODO
 
 
 
 
-## Installation
+# Installation
 
-### Generating Executables
+## Generating Executables
 
-**Visual Studio:**
+###Visual Studio
 
 -
 
-**GNU make:**
+###GNU make
 
 1. Change parameters at the section `# Define Variables` in the file Turbo/Turbo.make to fit your system requirements:
 
@@ -58,7 +66,7 @@ Download the tarball and extract it to your desired path.
 	
 	1.3 `PROJECT`: desired output file name
 
-	[example: `PROJECT := MyGame`]
+	[example: `PROJECT := MyApp`]
 
 	1.4 `CFLAGS` and `CPPFLAGS`: compiler flags
 	
@@ -75,6 +83,19 @@ If you have done all the above things you can now build Turbo with the following
 
 This command should generate object files into the directory obj and a executable in the base directory of the project.
 
+###cmake
 
+-
+
+###qmake
+
+The easiest way (IMO) is to use qmake.
+
+- Get a functioning version of qmake (comes with QT, but is available as standalone)
+- create a .pro file
+    - execute `qmake -project` in the working directory
+- execute `qmake`
+- execute `make`
+- an executable should be generated in the working directory
 
 For more information and help take a look at either 'Visual Studio Support' or 'GNU make'.

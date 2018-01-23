@@ -9,6 +9,7 @@ namespace TURBO
             : parent(parent),
               child(nullptr),
               geometry(),
+              size(),
               object_type(OBJECT_TYPE::OBJECT),
               visible(false),
               mouse_on(false),
