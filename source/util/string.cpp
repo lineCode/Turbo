@@ -37,7 +37,7 @@ namespace TURBO
             return result;
         }
 
-        std::string implode(std::vector<std::string> haystack, std::string needle)
+        std::string implode(std::vector<std::string> haystack, const std::string needle)
         {
             std::string result;
 

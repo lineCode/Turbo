@@ -26,36 +26,55 @@ namespace TURBO
 
         void Time::sleep(Uint64 ns)
         {
-            std::this_thread::sleep_for (std::chrono::nanoseconds(ns));
+            std::this_thread::sleep_for(std::chrono::nanoseconds(ns));
         }
 
         std::string Time::getTicksToString(Uint32 ticks, std::string format)
         {
             std::stringstream ss;
-            unsigned long offset = 0;
-            unsigned long next_offset = 0;
+            Sint32 digits = 0;
+            Uint64 offset = 0;
+            Uint64 next_offset = 0;
+            Uint64 diff = 0;
+            Uint64 hours = 0, minutes = 0, seconds = 0, milliseconds = 0;
 
             if((offset = format.find("%H", offset)) != std::string::npos)
             {
-                ss << std::setw(2) << std::setfill('0') << (ticks / (1000 * 60 * 60) % 24)
+                hours = ticks / (1000 * 60 * 60);
+                diff = hours * 1000 * 60 * 60;
+                digits = UTIL::digits(hours);
+
+                ss << std::setw(std::max(2, digits)) << std::setfill('0') << hours
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
             if((offset = format.find("%M", next_offset)) != std::string::npos)
             {
-                ss << std::setw(2) << std::setfill('0') << (ticks / (1000 * 60) % 60)
+                minutes = (hours > 0) ? ticks / (1000 * 60) % 60 : ticks / (1000 * 60);
+                digits = UTIL::digits(minutes);
+
+                ss << std::setw(std::max(2, digits)) << std::setfill('0') << minutes
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
             if((offset = format.find("%S", next_offset)) != std::string::npos)
             {
-                ss << std::setw(2) << std::setfill('0') << (ticks / 1000 % 60)
+                seconds = (minutes > 0) ? (ticks / 1000 % 60) : (ticks - diff) / 1000;
+                digits = UTIL::digits(seconds);
+
+                ss << std::setw(std::max(2, digits)) << std::setfill('0') << seconds
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
+
+            diff += minutes * 1000 * 60;
+
             if((offset = format.find("%f", next_offset)) != std::string::npos)
             {
-                ss << std::setw(3) << std::setfill('0') << (ticks % 1000)
+                milliseconds = (seconds > 0) ? (ticks % 1000) : ticks - diff;
+                digits = UTIL::digits(milliseconds);
+
+                ss << std::setw(std::max(3, digits)) << std::setfill('0') << milliseconds
                    << format.substr(offset + 2);
             }
             return ss.str();
@@ -64,43 +83,74 @@ namespace TURBO
         std::string Time::getPTicksToString(Uint64 ticks, std::string format)
         {
             std::stringstream ss;
-            unsigned long offset = 0;
-            unsigned long next_offset = 0;
+            Sint32 digits = 0;
+            Uint64 offset = 0;
+            Uint64 next_offset = 0;
+            Uint64 diff = 0;
+            Uint64 hours = 0, minutes = 0, seconds = 0, milliseconds = 0, microseconds = 0, nanoseconds = 0;
             Uint64 ns_to_s = 1000 * 1000 * 1000;
 
             if((offset = format.find("%H", offset)) != std::string::npos)
             {
-                ss << std::setw(2) << std::setfill('0') << (ticks / (ns_to_s * 60 * 60)) % 24
+                hours = (ticks / (ns_to_s * 60 * 60));
+                diff = hours * ns_to_s * 60 * 60;
+                digits = UTIL::digits(hours);
+
+                ss << std::setw(std::max(2, digits)) << std::setfill('0') << hours
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
             if((offset = format.find("%M", next_offset)) != std::string::npos)
             {
-                ss << std::setw(2) << std::setfill('0') << (ticks / (ns_to_s * 60)) % 60
+                minutes = (hours > 0) ? (ticks / (ns_to_s * 60)) % 60 : ticks / (ns_to_s * 60);
+                digits = UTIL::digits(minutes);
+
+                ss << std::setw(std::max(2, digits)) << std::setfill('0') << minutes
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
             if((offset = format.find("%S", next_offset)) != std::string::npos)
             {
-                ss << std::setw(2) << std::setfill('0') << (ticks / ns_to_s) % 60
+                seconds = (minutes > 0) ? (ticks / ns_to_s) % 60 : (ticks - diff) / ns_to_s;
+                digits = UTIL::digits(seconds);
+
+                ss << std::setw(std::max(2, digits)) << std::setfill('0') << seconds
                    << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
+
+            diff += minutes * ns_to_s * 60;
+
             if((offset = format.find("%f", next_offset)) != std::string::npos)
             {
-                ss << std::setw(3) << std::setfill('0') << (ticks / (1000 * 1000)) % 1000
+                milliseconds = (seconds > 0) ? (ticks / (1000 * 1000)) % 1000 : (ticks - diff) / (1000 * 1000);
+                digits = UTIL::digits(milliseconds);
+
+                ss << std::setw(std::max(3, digits)) << std::setfill('0') << milliseconds
                     << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
+
+            diff += seconds * ns_to_s;
+
             if((offset = format.find("%u", next_offset)) != std::string::npos)
             {
-                ss << std::setw(3) << std::setfill('0') << (ticks / 1000) % 1000
+                microseconds = (milliseconds > 0) ? (ticks / 1000) % 1000 : (ticks - diff) / 1000;
+                digits = UTIL::digits(microseconds);
+
+                ss << std::setw(std::max(3, digits)) << std::setfill('0') << microseconds
                     << format.substr(offset + 2, format.find('%', offset + 2) - offset - 2);
                 next_offset = offset + 2;
             }
+
+            diff += milliseconds * 1000 * 1000;
+
             if((offset = format.find("%n", next_offset)) != std::string::npos)
             {
-                ss << std::setw(3) << std::setfill('0') << (ticks % 1000)
+                nanoseconds = (microseconds > 0) ? ticks % 1000 : ticks - diff;
+                digits = UTIL::digits(nanoseconds);
+
+                ss << std::setw(std::max(3, digits)) << std::setfill('0') << nanoseconds
                    << format.substr(offset + 2);
             }
             return ss.str();

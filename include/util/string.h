@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 #include "util/util.h"
 
