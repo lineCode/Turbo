@@ -5,7 +5,9 @@
 #include "SDL_mixer.h"
 
 #include "audio/audio_def.h"
+#include "system/sdl.h"
 #include "util/file.h"
+#include "util/log.h"
 
 namespace TURBO
 {

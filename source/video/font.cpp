@@ -7,11 +7,18 @@ namespace TURBO
         Font::Font(const std::string filepath, Uint8 ptsize, Uint8 index)
             : path(filepath), pt_size(ptsize)
         {
-            font = TTF_OpenFontIndex(filepath.c_str(), ptsize, index);
-
-            if(font != nullptr)
+            if(SYSTEM::SDL::TTF_IS_INIT)
             {
-                loadFontInfo();
+                font = TTF_OpenFontIndex(filepath.c_str(), ptsize, index);
+
+                if(font != nullptr)
+                {
+                    loadFontInfo();
+                }
+            }
+            else
+            {
+                UTIL::Log::err("SDL TTF is not initialized");
             }
         }
 

@@ -7,11 +7,18 @@ namespace TURBO
         Surface::Surface(std::string path, Renderer *renderer)
             : path(path)
         {
-            surface = IMG_Load(path.c_str());
-
-            if(surface != nullptr)
+            if(SYSTEM::SDL::IMG_IS_INIT)
             {
-                loadSurfaceInfo();
+                surface = IMG_Load(path.c_str());
+
+                if(surface != nullptr)
+                {
+                    loadSurfaceInfo();
+                }
+            }
+            else
+            {
+                UTIL::Log::err("SDL_IMG is not initialized");
             }
         }
 

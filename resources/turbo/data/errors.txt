@@ -1,0 +1,36 @@
+### ERRORS FOR LOG FILES ###
+
+
+#
+# Errors codes are built by the following format
+# Type_Category_Number
+#
+# Type:
+#   00 reserved
+#   10 logs
+#   20 warnings
+#   30 errors
+#
+# Categories:
+#   00 reserved
+#   10 general
+#   20 system related
+#   30 library related
+#   40 ...
+#
+
+
+# General warnings
+
+20_10_000 = Settings file could not be loaded
+
+
+# General errors
+
+30_10_000 = Settings could not be initialized
+
+30_20_000 = SDL is not initialized
+30_20_001 = SDL_IMG is not initialized
+30_20_002 = SDL_MIX is not initialized
+30_20_003 = SDL_TTF is not initialized
+30_20_004 = SDL_NET is not initialized

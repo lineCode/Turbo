@@ -7,7 +7,7 @@ namespace TU = TURBO::UTIL;
 namespace TM = TURBO::MATH;
 namespace TS = TURBO::SYSTEM;
 
-void color()
+void over()
 {
     std::cout << "hover" << std::endl;
 }
@@ -15,11 +15,6 @@ void color()
 void out()
 {
     std::cout << "out" << std::endl;
-}
-
-void d(int x)
-{
-    std::cout << x << std::endl;
 }
 
 int main(int argc, char ** argv)
@@ -60,7 +55,7 @@ int main(int argc, char ** argv)
     vbox2.addWidget(&b3);
     vbox2.addWidget(&b4);
 
-    b1.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, color);
+    b1.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, over);
     b1.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
 
     LOG("Start application");

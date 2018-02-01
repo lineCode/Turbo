@@ -8,14 +8,21 @@ namespace TURBO
             : path(path),
               state(MEDIUM_STATE::STOPPED)
         {
-            if(UTIL::File::hasFilter(path, std::vector<std::string>{"mp3", "ogg", "flac"}))
+            if(SYSTEM::SDL::MIX_IS_INIT)
             {
-                music = Mix_LoadMUS(path.c_str());
-                if(music != nullptr)
+                if(UTIL::File::hasFilter(path, std::vector<std::string>{"mp3", "ogg", "flac"}))
                 {
-                    music_type = Mix_GetMusicType(music);
-                    this->path = path;
+                    music = Mix_LoadMUS(path.c_str());
+                    if(music != nullptr)
+                    {
+                        music_type = Mix_GetMusicType(music);
+                        this->path = path;
+                    }
                 }
+            }
+            else
+            {
+                UTIL::Log::err("SDL_MIX is not initialized");
             }
         }
 

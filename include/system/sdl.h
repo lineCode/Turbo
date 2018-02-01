@@ -20,6 +20,7 @@ namespace TURBO
 
         public:
             static bool SDL_IS_INIT;
+            static bool OPENGL_IS_INIT;
             static bool IMG_IS_INIT;
             static bool MIX_IS_INIT;
             static bool TTF_IS_INIT;

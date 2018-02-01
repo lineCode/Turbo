@@ -2,6 +2,8 @@
 #define TURBO_TEXTURE_H
 
 #include "video/video_def.h"
+#include "system/sdl.h"
+#include "util/log.h"
 
 namespace TURBO
 {

@@ -6,6 +6,7 @@
 
 #include "video/video_def.h"
 #include "math/math.h"
+#include "system/sdl.h"
 
 namespace TURBO
 {

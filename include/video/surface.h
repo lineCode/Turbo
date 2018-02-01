@@ -4,6 +4,8 @@
 #include "SDL_image.h"
 
 #include "video/video_def.h"
+#include "system/sdl.h"
+#include "util/log.h"
 #include "video/renderer.h"
 
 namespace TURBO

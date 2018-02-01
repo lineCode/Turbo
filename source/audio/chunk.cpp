@@ -9,10 +9,17 @@ namespace TURBO
               path(path),
               state(MEDIUM_STATE::STOPPED)
         {
-            if(UTIL::File::isType(path, "wav"))
+            if(SYSTEM::SDL::MIX_IS_INIT)
             {
-                chunk = Mix_LoadWAV(path.c_str());
-                setChannel(channel);
+                if(UTIL::File::isType(path, "wav"))
+                {
+                    chunk = Mix_LoadWAV(path.c_str());
+                    setChannel(channel);
+                }
+            }
+            else
+            {
+                UTIL::Log::err("SDL_MIX is not initialized");
             }
         }
 

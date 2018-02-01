@@ -7,7 +7,9 @@
 #include <SDL_ttf.h>
 
 #include "video/video_def.h"
+#include "util/log.h"
 #include "math/rect.h"
+#include "system/sdl.h"
 
 namespace TURBO
 {

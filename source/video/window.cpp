@@ -8,6 +8,11 @@ namespace TURBO
             : geometry(geometry), size(0, 0, geometry.w, geometry.h)
         {
             window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
+
+            if(flags & SDL_WINDOW_OPENGL)
+            {
+                SYSTEM::SDL::OPENGL_IS_INIT = true;
+            }
         }
 
         Window::~Window()

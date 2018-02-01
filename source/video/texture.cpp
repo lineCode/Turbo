@@ -7,15 +7,29 @@ namespace TURBO
         Texture::Texture(SDL_Renderer *renderer, Sint32 w, Sint32 h, Uint32 format, Sint32 access)
             : renderer(renderer), w(w), h(h), format(format), access(access)
         {
-            texture = SDL_CreateTexture(renderer, format, access, w, h);
-            loadTextureInfo();
+            if(SYSTEM::SDL::SDL_IS_INIT)
+            {
+                texture = SDL_CreateTexture(renderer, format, access, w, h);
+                loadTextureInfo();
+            }
+            else
+            {
+                UTIL::Log::err("SDL is not initialized");
+            }
         }
 
         Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
             : renderer(renderer)
         {
-            texture = SDL_CreateTextureFromSurface(renderer, surface);
-            loadTextureInfo();
+            if(SYSTEM::SDL::SDL_IS_INIT)
+            {
+                texture = SDL_CreateTextureFromSurface(renderer, surface);
+                loadTextureInfo();
+            }
+            else
+            {
+                UTIL::Log::err("SDL is not initialized");
+            }
         }
 
         void Texture::loadTextureInfo()

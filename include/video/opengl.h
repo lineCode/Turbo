@@ -5,6 +5,8 @@
 #include <SDL_opengl.h>
 
 #include "video/video_def.h"
+#include "system/sdl.h"
+#include "util/log.h"
 
 namespace TURBO
 {
@@ -15,7 +17,6 @@ namespace TURBO
         class OpenGL
         {
         public:
-            static bool GL_IS_INIT;
             static bool GLEW_IS_INIT;
             static void init();
             static void swap(Window &window);

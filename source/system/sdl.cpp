@@ -5,6 +5,7 @@ namespace TURBO
     namespace SYSTEM
     {
         bool SDL::SDL_IS_INIT = false;
+        bool SDL::OPENGL_IS_INIT = false;
         bool SDL::IMG_IS_INIT = false;
         bool SDL::MIX_IS_INIT = false;
         bool SDL::TTF_IS_INIT = false;

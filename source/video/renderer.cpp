@@ -12,10 +12,17 @@ namespace TURBO
               color_draw(255, 255, 255, 255),
               color_clear(0, 0, 0, 255)
         {
-            renderer = SDL_CreateRenderer(window.getWindow(), index, flags);
-            font = new Font(TURBO_DEFAULT_FONT, TURBO_DEFAULT_FONT_SIZE, 0);
-            font_collection = new FontCollection(TURBO_DEFAULT_FONT, 10, 50, 10);
-            font_texture = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
+            if(SYSTEM::SDL::SDL_IS_INIT)
+            {
+                renderer        = SDL_CreateRenderer(window.getWindow(), index, flags);
+                font            = new Font(TURBO_DEFAULT_FONT, TURBO_DEFAULT_FONT_SIZE, 0);
+                font_collection = new FontCollection(TURBO_DEFAULT_FONT, 10, 50, 10);
+                font_texture    = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
+            }
+            else
+            {
+                UTIL::Log::err("SDL is not initialized");
+            }
         }
 
         Renderer::~Renderer()

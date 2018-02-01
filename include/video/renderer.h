@@ -9,10 +9,12 @@
 #include <SDL2_gfxPrimitives.h>
 
 #include "video/video_def.h"
-#include "video/window.h"
-#include "video/texture.h"
+#include "system/sdl.h"
+#include "util/log.h"
 #include "video/color.h"
 #include "video/font.h"
+#include "video/texture.h"
+#include "video/window.h"
 
 namespace TURBO
 {
