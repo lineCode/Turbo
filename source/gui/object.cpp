@@ -20,7 +20,6 @@ namespace TURBO
             if(parent != nullptr)
             {
                 parent->setChild(this);
-                //TODO handle size
                 setGeometry(parent->getSize());
                 setSize(getGeometry());
             }
@@ -42,9 +41,10 @@ namespace TURBO
         void Object::pollEvent(SDL_Event &event)
         {
             MATH::Point p = INPUT::Mouse::getPosition();
+            // TODO geometry need reference to global coordinates
             mouse_over = MATH::pointInRect(p, geometry) && !mouse_on;
             mouse_out = !MATH::pointInRect(p, geometry) && mouse_on;
-            mouse_clicked = mouse_over && INPUT::Mouse::pressed();
+            mouse_clicked = INPUT::Mouse::pressed();
 
             if(child != nullptr)
             {
@@ -63,7 +63,11 @@ namespace TURBO
             }
             if(mouse_clicked)
             {
-                fireCallback(EVENT_TYPE::ON_MOUSE_BUTTON_DOWN);
+                std::cout << geometry.x << " " << INPUT::Mouse::getPosition().x << std::endl;
+                if(mouse_on)
+                {
+                    fireCallback(EVENT_TYPE::ON_MOUSE_BUTTON_DOWN);
+                }
             }
         }
 
@@ -174,6 +178,33 @@ namespace TURBO
             }
             fireCallback(ON_VISIBILITY_CHANGED);
             return this;
+        }
+
+        Object *Object::setVisibility(bool visible)
+        {
+            if(visible)
+            {
+                show();
+            }
+            else
+            {
+                hide();
+            }
+            return this;
+        }
+
+        float Object::setOpacity(float alpha)
+        {
+            if(alpha > 0)
+            {
+                this->opacity = std::min(1.0f, alpha);
+            }
+            return this->opacity;
+        }
+
+        float Object::getOpacity()
+        {
+            return opacity;
         }
 
         void Object::draw(VIDEO::Renderer *renderer)

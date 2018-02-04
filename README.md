@@ -99,7 +99,7 @@ int main(int argc, char ** argv)
 
 # Development
 
-##SDL
+## SDL
 
 - [SDL 2](https://www.libsdl.org/download-2.0.php)
 - [IMG 2](https://www.libsdl.org/projects/SDL_image/)
@@ -114,10 +114,18 @@ int main(int argc, char ** argv)
 ### Windows
 
 Download the development files for your platform and your Environment. You may want to download the binary files as well.
-- **If you have trouble with 64 bit files may have to use the 32 bit libraries in order to compile for 64 bit systems.**
+
+***If you have trouble with 64 bit files may have to use the 32 bit libraries in order to compile for 64 bit systems.***
 
 Extract the include and lib directory you have to use to your libraries path (example: `C:/libraries/SDL/include/`).
-- **Remember this path, you will need this later to configure the make file.**
+
+***Remember this path, you will need this later to configure the make file.***
+
+## Lua
+
+### Linux
+
+### Windows
 
 ## Python
 
@@ -129,6 +137,7 @@ If you decide otherwise you have to download the following archive.
 - [Python 34](https://www.python.org/downloads/release/python-346/)
 
 Download the tarball/zip and extract it to your desired path.
+
 ***Remember the path of the include/ and libs/ directories***
 
 ### Windows
@@ -136,6 +145,7 @@ Download the tarball/zip and extract it to your desired path.
 - [Python 34](https://www.python.org/downloads/release/python-346/)
 
 Download the tarball/zip and extract it to your desired path.
+
 ***Remember the path of the include/ and libs/ directories***
 
 
@@ -143,11 +153,11 @@ Download the tarball/zip and extract it to your desired path.
 
 ## Generating Executables
 
-###Visual Studio
+### Visual Studio
 
 -
 
-###GNU make
+### GNU make
 
 1. Change parameters at the section `# Define Variables` in the file Turbo/Turbo.make to fit your system requirements:
 
@@ -178,11 +188,11 @@ If you have done all the above things you can now build Turbo with the following
 
 This command should generate object files into the directory obj and a executable in the base directory of the project.
 
-###cmake
+### cmake
 
 -
 
-###qmake
+### qmake
 
 The easiest way (IMO) is to use qmake.
 

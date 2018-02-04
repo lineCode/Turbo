@@ -48,6 +48,18 @@ namespace TURBO
             return font;
         }
 
+        Uint8 Font::setFontSize(Uint8 size)
+        {
+            font = TTF_OpenFont(path.c_str(), size);
+            pt_size = size;
+            return pt_size;
+        }
+
+        Uint8 Font::getFontSize()
+        {
+            return pt_size;
+        }
+
         Uint32 Font::getFontHeight()
         {
             return height;
@@ -197,6 +209,15 @@ namespace TURBO
             {
                 Font *font = new Font(path, i);
                 fonts[i] = font;
+            }
+        }
+
+        FontCollection::FontCollection(std::string path, std::vector<Uint8> sizes)
+        {
+            for(const auto & size : sizes)
+            {
+                Font *font = new Font(path, size);
+                fonts[size] = font;
             }
         }
 

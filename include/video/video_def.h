@@ -9,12 +9,7 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        enum class TEXT_MODE : Uint8
-        {
-            SOLID = 0x0,
-            BLENDED = 0x1,
-            SHADED = 0x2
-        };
+
     }
 }
 

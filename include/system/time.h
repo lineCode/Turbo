@@ -69,35 +69,51 @@ namespace TURBO
         class Timer
         {
         private:
-            static Uint16   timers;
-            Uint16          timer_id        = 0;
-            TIMER_STATE     state           = TIMER_STATE::STOPPED;
-            Uint32          elapsed_time    = 0;
-            Uint32          active_time     = 0;
-            Uint32          paused_time     = 0;
-            Uint32          timer_started   = 0;
-            Uint32          timer_paused    = 0;
-            Uint32          timer_resumed   = 0;
-            Uint32          timer_stopped   = 0;
+            static Uint16 timers;
+            Uint16        timer_id      = 0;
+            TIMER_STATE   state         = TIMER_STATE::STOPPED;
+            Uint32        elapsed_time  = 0;
+            Uint32        active_time   = 0;
+            Uint32        paused_time   = 0;
+            Uint32        timer_started = 0;
+            Uint32        timer_paused  = 0;
+            Uint32        timer_resumed = 0;
+            Uint32        timer_stopped = 0;
 
         public:
             explicit Timer();
+
             ~Timer();
-            Uint32 				start();
-            Uint32 				pause();
-            Uint32 				resume();
-            Uint32 				stop();
-            Uint32              addTime(Uint32 amount);
-            Uint32              addActiveTime(Uint32 amount);
-            Uint32              subTime(Uint32 amount);
-            Uint32              subActiveTime(Uint32 amount);
-            TIMER_STATE         reset();
-            TIMER_STATE         getState();
-            Uint32              getTicks();
-            Uint32 				getTime();
-            Uint32 				getActiveTime();
-            Uint32 				getPausedTime();
-            std::string         printTime();
+
+            Uint32 start();
+
+            Uint32 pause();
+
+            Uint32 resume();
+
+            Uint32 stop();
+
+            Uint32 addTime(Uint32 amount);
+
+            Uint32 addActiveTime(Uint32 amount);
+
+            Uint32 subTime(Uint32 amount);
+
+            Uint32 subActiveTime(Uint32 amount);
+
+            TIMER_STATE reset();
+
+            TIMER_STATE getState();
+
+            Uint32 getTicks();
+
+            Uint32 getTime();
+
+            Uint32 getActiveTime();
+
+            Uint32 getPausedTime();
+
+            std::string printTime();
         };
 
         /**
@@ -107,46 +123,68 @@ namespace TURBO
         class PTimer
         {
         private:
-            static Uint16   timers;
-            Uint16          timer_id        = 0;
-            TIMER_STATE     state           = TIMER_STATE::STOPPED;
-            Uint64          elapsed_time    = 0;
-            Uint64          active_time     = 0;
-            Uint64          paused_time     = 0;
-            Uint64          timer_started   = 0;
-            Uint64          timer_paused    = 0;
-            Uint64          timer_resumed   = 0;
-            Uint64          timer_stopped   = 0;
+            static Uint16 timers;
+            Uint16        timer_id      = 0;
+            TIMER_STATE   state         = TIMER_STATE::STOPPED;
+            Uint64        elapsed_time  = 0;
+            Uint64        active_time   = 0;
+            Uint64        paused_time   = 0;
+            Uint64        timer_started = 0;
+            Uint64        timer_paused  = 0;
+            Uint64        timer_resumed = 0;
+            Uint64        timer_stopped = 0;
 
         public:
             explicit PTimer();
+
             ~PTimer();
-            Uint64 				start();
-            Uint64 				pause();
-            Uint64 				resume();
-            Uint64 				stop();
-            Uint64              addTime(Uint64 amount);
-            Uint64              addActiveTime(Uint64 amount);
-            Uint64              subTime(Uint64 amount);
-            Uint64              subActiveTime(Uint64 amount);
-            TIMER_STATE         reset();
-            TIMER_STATE         getState();
-            Uint64              getTicks();
-            Uint64 				getTime();
-            Uint64 				getActiveTime();
-            Uint64 				getPausedTime();
-            std::string         printTime();
+
+            Uint64 start();
+
+            Uint64 pause();
+
+            Uint64 resume();
+
+            Uint64 stop();
+
+            Uint64 addTime(Uint64 amount);
+
+            Uint64 addActiveTime(Uint64 amount);
+
+            Uint64 subTime(Uint64 amount);
+
+            Uint64 subActiveTime(Uint64 amount);
+
+            TIMER_STATE reset();
+
+            TIMER_STATE getState();
+
+            Uint64 getTicks();
+
+            Uint64 getTime();
+
+            Uint64 getActiveTime();
+
+            Uint64 getPausedTime();
+
+            std::string printTime();
         };
 
+        /**
+         * This class calls a function after a certain delay.
+         */
         class TimerCallback
         {
-            std::thread * t;
+        private:
+            std::thread *t;
             std::function<void()> callback;
-            Uint32 delay;
+            Uint32                delay;
+
+            Uint32 trigger(Uint32 delay);
 
         public:
             explicit TimerCallback(std::function<void()> callback, Uint32 delay);
-            Uint32 trigger(Uint32 delay);
+
             ~TimerCallback();
         };
     }

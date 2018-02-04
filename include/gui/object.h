@@ -3,6 +3,7 @@
 
 #include <map>
 #include <functional>
+#include <algorithm>
 
 #include <SDL_types.h>
 #include <SDL_events.h>
@@ -26,6 +27,7 @@ namespace TURBO
             std::map<Uint8, std::function<void()>> callbacks;
             OBJECT_TYPE object_type;
             bool visible;
+            float opacity;
             bool mouse_on;
             bool mouse_over;
             bool mouse_out;
@@ -54,6 +56,9 @@ namespace TURBO
             Object *setChild(Object *object);
             Object *hide();
             Object *show();
+            Object *setVisibility(bool visible);
+            float setOpacity(float alpha);
+            float getOpacity();
             virtual void draw(VIDEO::Renderer * renderer);
             virtual Object *update();
         };

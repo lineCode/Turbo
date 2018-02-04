@@ -33,7 +33,7 @@ namespace TURBO
             SDL_DestroyRenderer(renderer);
         }
 
-        SDL_Renderer * Renderer::getRenderer()
+        SDL_Renderer *Renderer::getRenderer()
         {
             return renderer;
         }
@@ -152,13 +152,14 @@ namespace TURBO
                 SDL_RenderCopyEx(renderer, texture, nullptr, &dest, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
             }
         }
-        
+
         void Renderer::drawTexture(Texture *texture, Sint32 x, Sint32 y)
         {
             if(texture != nullptr)
             {
                 SDL_Rect dest = {x, y, texture->getWidth(), texture->getHeight()};
-                SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+                SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest, 0, nullptr,
+                                 SDL_RendererFlip::SDL_FLIP_NONE);
             }
         }
 
@@ -169,17 +170,26 @@ namespace TURBO
                 SDL_Rect dest_rect = {dest.x, dest.y,
                                       std::min(texture->getWidth(), dest.w),
                                       std::min(texture->getHeight(), dest.h)};
-                SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest_rect, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+                SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest_rect, 0, nullptr,
+                                 SDL_RendererFlip::SDL_FLIP_NONE);
             }
         }
 
-        Texture *Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h)
+        Texture *Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h, TEXT_ALIGNMENT alignment)
         {
-            SDL_Surface *surface = nullptr;
-            Texture *texture = nullptr;
-            TTF_Font *font = this->font->getFont();
+            SDL_Surface *surface   = nullptr;
+            Texture     *texture   = nullptr;
+            TTF_Font    *font      = this->font->getFont();
+            Sint32      text_width = this->font->getUTF8TextSize(text).w;
 
-            // TODO choose optimal font size
+            //TODO split lines at line breaks
+
+            if(text_width > w)
+            {
+                auto rows              = static_cast<Uint8>((text_width / w) + 1);
+                auto optimal_font_size = static_cast<Uint8>((h / rows) * PX_TO_PT);
+                font = font_collection->getLTEFont(optimal_font_size)->getFont();
+            }
 
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
@@ -191,7 +201,8 @@ namespace TURBO
             }
             else if(text_mode == VIDEO::TEXT_MODE::SHADED)
             {
-                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
+                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(),
+                                                color_text_bg.toSDLColor());
             }
 
             if(surface != nullptr)
@@ -205,8 +216,8 @@ namespace TURBO
         Texture *Renderer::createUTF8Text(std::string &text, Uint8 pt_size, Sint32 w, Sint32 h)
         {
             SDL_Surface *surface = nullptr;
-            Texture *texture = nullptr;
-            TTF_Font *font = this->font_collection->getLTEFont(pt_size)->getFont();
+            Texture     *texture = nullptr;
+            TTF_Font    *font    = this->font_collection->getLTEFont(pt_size)->getFont();
 
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
@@ -218,7 +229,8 @@ namespace TURBO
             }
             else if(text_mode == VIDEO::TEXT_MODE::SHADED)
             {
-                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
+                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(),
+                                                color_text_bg.toSDLColor());
             }
 
             if(surface != nullptr)
@@ -232,7 +244,7 @@ namespace TURBO
         Texture *Renderer::createUnicodeText(const Uint16 *text, Sint32 w, Sint32 h)
         {
             SDL_Surface *surface = nullptr;
-            Texture * texture = nullptr;
+            Texture *texture = nullptr;
 
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
@@ -244,7 +256,8 @@ namespace TURBO
             }
             else if(text_mode == VIDEO::TEXT_MODE::SHADED)
             {
-                surface = TTF_RenderUNICODE_Shaded(font->getFont(), text, color_text_fg.toSDLColor(), color_text_bg.toSDLColor());
+                surface = TTF_RenderUNICODE_Shaded(font->getFont(), text, color_text_fg.toSDLColor(),
+                                                   color_text_bg.toSDLColor());
             }
 
             if(surface != nullptr)

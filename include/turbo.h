@@ -34,6 +34,7 @@ namespace TURBO
         void    setFrameLimit(Uint8 limit);
         Uint8   getFrameLimit();
         int     run();
+        void    quit();
     };
 }
 

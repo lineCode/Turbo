@@ -54,4 +54,9 @@ namespace TURBO
         }
         return 0;
     }
+
+    void Turbo::quit()
+    {
+        TURBO::SYSTEM::SYSTEM_RUNNING = false;
+    }
 }

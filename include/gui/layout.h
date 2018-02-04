@@ -18,7 +18,7 @@ namespace TURBO
         public:
             explicit LayoutContainer(Object *parent);
             std::vector<Object*> getChildren();
-            void draw(VIDEO::Renderer * renderer) override;
+            void draw(VIDEO::Renderer *renderer) override;
         };
         
         class Box : public LayoutContainer
@@ -32,6 +32,24 @@ namespace TURBO
             Box *removeWidget(Object *object);
             Box *removeWidget(int index);
             Box *update() override;
+        };
+
+        class Grid : public LayoutContainer
+        {
+        private:
+            std::map<std::pair<Uint8, Uint8>, TURBO::GUI::Object*> children;
+            Uint8 cols;
+            Uint8 rows;
+            Sint32 cell_width = 0;
+            Sint32 cell_height = 0;
+
+        public:
+            explicit Grid(Object * parent, Uint8 cols, Uint8 rows);
+            Grid *addWidget(Object *object, Uint8 x, Uint8 y, Uint8 w, Uint8 h);
+            Grid *removeWidget(Object *object);
+            Grid *removeWidget(Uint8 x, Uint8 y);
+            Grid *update();
+            void draw(VIDEO::Renderer *renderer) override;
         };
     }
 }
