@@ -209,7 +209,9 @@ namespace TURBO
 
         void Object::draw(VIDEO::Renderer *renderer)
         {
-            renderer->drawRect(size, background.background_color, true);
+            renderer->drawRect(size, background_color, true);
+            renderer->drawTexture(background_texture, size);
+            renderer->drawRect(size, border_color, false);
             if(child != nullptr)
             {
                 child->draw(renderer);

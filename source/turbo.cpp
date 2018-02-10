@@ -28,7 +28,7 @@ namespace TURBO
 
     int Turbo::run()
     {
-        SDL_Event event;
+        SDL_Event event = {};
         VIDEO::Window win("Test", MATH::Rect(0, 0, 500, 500), SDL_WINDOW_SHOWN);
         VIDEO::Renderer ren(win, -1, SDL_RENDERER_ACCELERATED);
         GUI::MainWidget widget = GUI::MainWidget(win, ren);
@@ -41,9 +41,7 @@ namespace TURBO
                 INPUT::Mouse::pollEvent(event);
                 widget.pollEvent(event);
 
-                if(INPUT::Keyboard::pressed(SDLK_ESCAPE, KMOD_LSHIFT)
-                   || INPUT::Mouse::pressed(SDL_BUTTON_RIGHT)
-                   || event.type == SDL_QUIT)
+                if(INPUT::Keyboard::pressed(SDLK_ESCAPE, KMOD_LSHIFT))
                 {
                     SYSTEM::SYSTEM_RUNNING = false;
                 }

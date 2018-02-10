@@ -1,11 +1,14 @@
+#include <script/python.h>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
 namespace TG = TURBO::GUI;
 namespace TV = TURBO::VIDEO;
+namespace TI = TURBO::INPUT;
 namespace TU = TURBO::UTIL;
 namespace TM = TURBO::MATH;
 namespace TS = TURBO::SYSTEM;
+namespace TC = TURBO::SCRIPT;
 
 void over()
 {
@@ -49,17 +52,25 @@ int main(int argc, char ** argv)
     auto b5 = TG::Button("Test");
     auto b6 = TG::Button("Grid-Test");
     auto b7 = TG::Button("Grid-Test2");
+    auto wi = TG::Button("Black");
 
     renderer.getFont()->setFontSize(60);
 
-    b1.setBackground(TG::Background({255, 255, 0, 255}));
-    b2.setBackground(TG::Background({255, 0, 0, 255}));
-    b3.setBackground(TG::Background({255, 0, 255, 255}));
-    b4.setBackground(TG::Background({0, 0, 0, 255}));
-    b5.setBackground(TG::Background({0, 255, 255, 255}));
-    b6.setBackground(TG::Background({100, 100, 100, 255}));
-    b6.setBackground(TG::Background({50, 150, 50, 255}));
-    b7.setBackground(TG::Background({100, 100, 100, 255}));
+    b1.setBackgroundColor({255, 255, 0, 255});
+    b2.setBackgroundColor({255, 0, 0, 255});
+    b2.setBackgroundTexture("resources/images/mushroom.png", &renderer);
+    b3.setBackgroundColor({255, 0, 255, 255});
+    b4.setBackgroundColor({0, 0, 0, 255});
+    b5.setBackgroundColor({0, 255, 255, 255});
+    b5.setFontColor({255, 0, 50, 100});
+    b5.setBorderColor({0, 255, 0, 255});
+    b6.setBackgroundColor({100, 100, 100, 255});
+    b6.setBackgroundColor({50, 150, 50, 255});
+    b7.setBackgroundColor({100, 100, 100, 255});
+    b7.setFontColor({100, 200, 255, 255});
+    wi.setBackgroundColor({0, 0, 0, 0});
+    wi.setFontColor({255, 0, 255, 255});
+
     hbox.addWidget(&vbox1);
     hbox.addWidget(&b5);
     hbox.addWidget(&vbox2);
@@ -68,6 +79,7 @@ int main(int argc, char ** argv)
     vbox2.addWidget(&b3);
     vbox2.addWidget(&b4);
     vbox2.addWidget(&grid);
+    vbox2.addWidget(&wi);
     grid.addWidget(&b6, 0, 0, 1, 2);
     grid.addWidget(&b7, 1, 1, 2, 1);
 
@@ -77,17 +89,39 @@ int main(int argc, char ** argv)
 
     LOG("Start application");
 
+    TC::Lua lua = TC::Lua();
+
     while(TS::SYSTEM_RUNNING)
     {
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
             TURBO::INPUT::Mouse::pollEvent(event);
-            b1.pollEvent(event);
-            if(event.type == SDL_KEYDOWN)
+            TURBO::INPUT::Keyboard::pollEvent(event);
+            main_widget.pollEvent(event);
+
+            if(event.type == SDL_QUIT)
             {
                 TS::SYSTEM_RUNNING = false;
             }
+            if(event.type == SDL_KEYDOWN)
+            {
+                if(TI::Keyboard::pressed(SDLK_RETURN))
+                {
+                    lua.callString(TI::Keyboard::getText());
+                    TI::Keyboard::clearText();
+                }
+                else if(TI::Keyboard::pressed(SDLK_BACKSPACE))
+                {
+                    TI::Keyboard::reduceText();
+                    LOG(TI::Keyboard::getText());
+                }
+                else
+                {
+                    LOG(TI::Keyboard::getText());
+                }
+            }
+
             renderer.clear();
             main_widget.draw(&renderer);
             renderer.present();
@@ -97,6 +131,6 @@ int main(int argc, char ** argv)
 
     LOG("Stop application");
 
-    std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%s %fms %uus %nns") << std::endl;
+    std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;
 }

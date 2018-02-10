@@ -76,6 +76,7 @@ HEADERS += include/turbo.h \
            include/video/font.h \
            include/video/opengl.h \
            include/video/renderer.h \ \
+           include/video/surface.h \ \
            include/video/texture.h \
            include/video/video.h \
            include/video/video_def.h \
@@ -120,5 +121,6 @@ SOURCES += test/test.cpp \
            source/video/font.cpp \
            source/video/opengl.cpp \
            source/video/renderer.cpp \
+           source/video/surface.cpp \
            source/video/texture.cpp \
            source/video/window.cpp

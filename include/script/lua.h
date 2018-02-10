@@ -24,10 +24,12 @@ namespace TURBO
         {
         private:
             lua_State *lua_state;
+
         public:
             explicit Lua();
             ~Lua();
-            int call(std::string filename);
+            int callString(std::string content);
+            int callScript(std::string filename);
             int registerFunction(std::string name, lua_CFunction function);
         };
     }

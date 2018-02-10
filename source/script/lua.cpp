@@ -15,7 +15,13 @@ namespace TURBO
             lua_close(lua_state);
         }
 
-        int Lua::call(std::string filename)
+        int Lua::callString(std::string content)
+        {
+            luaL_dostring (lua_state, content.c_str());
+            return 1;
+        }
+
+        int Lua::callScript(std::string filename)
         {
             // Remove
             //luaL_requiref(lua_state, "io", luaopen_io, 1);

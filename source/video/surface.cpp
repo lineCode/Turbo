@@ -22,6 +22,19 @@ namespace TURBO
             }
         }
 
+        Surface::~Surface()
+        {
+            if(surface != nullptr)
+            {
+                SDL_FreeSurface(surface);
+            }
+        }
+
+        SDL_Surface *Surface::getSurface()
+        {
+            return this->surface;
+        }
+
         void Surface::loadSurfaceInfo()
         {
             if(surface != nullptr)

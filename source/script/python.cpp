@@ -9,11 +9,16 @@ namespace TURBO
 
         }
 
-        void Python::call(std::string file)
+        void Python::callString(std::string content)
         {
-            std::ifstream ifs(file);
-            std::string content( (std::istreambuf_iterator<char>(ifs) ),
-                                 (std::istreambuf_iterator<char>()    ) );
+            PyRun_SimpleString(content.c_str());
+        }
+
+        void Python::callScript(std::string filename)
+        {
+            std::ifstream ifs(filename);
+            std::string content((std::istreambuf_iterator<char>(ifs)),
+                                (std::istreambuf_iterator<char>()   ));
             PyRun_SimpleString(content.c_str());
         }
 
@@ -27,7 +32,15 @@ namespace TURBO
 
             static struct PyModuleDef module =
                 {
-                    PyModuleDef_HEAD_INIT, "module", "description", -1, methods, nullptr, nullptr, nullptr, nullptr
+                    PyModuleDef_HEAD_INIT,
+                    "module",
+                    "description",
+                    -1,
+                    methods,
+                    nullptr,
+                    nullptr,
+                    nullptr,
+                    nullptr
                 };
             PyModule_Create(&module);
         }

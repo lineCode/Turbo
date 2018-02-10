@@ -11,9 +11,13 @@ namespace TURBO
         {
         private:
             static std::map<Sint32, bool> key_pressed;
+            static std::string text;
 
         public:
             static void pollEvent(SDL_Event &event);
+            static std::string getText();
+            static std::string reduceText();
+            static void clearText();
             static bool pressed(SDL_Keycode sym);
             static bool pressed(SDL_Keycode sym, SDL_Keymod mod);
         };

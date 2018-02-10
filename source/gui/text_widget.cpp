@@ -30,11 +30,14 @@ namespace TURBO
         {
             if(text_texture == nullptr)
             {
+                renderer->setTextColor(text_color);
                 int text_size = renderer->getFont()->getUTF8TextSize(text).w;
                 if(text_size > size.w)
                 {
                     //TODO get roughly the size of the optimal font size
-                    Uint8 ideal_size = 12;//static_cast<Uint8>(text_size - size.w);
+                    Uint8 ideal_size = 12;
+                    /*std::min(static_cast<Uint8>(16),
+                      static_cast<Uint8>(text_size * (size.w/text_size) * VIDEO::PX_TO_PT));*/
                     text_texture = renderer->createUTF8Text(text, ideal_size, size.w, size.h);
                 }
                 else

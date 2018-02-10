@@ -25,6 +25,11 @@ namespace TURBO
             }
         }
 
+        void Log::clearLine()
+        {
+            std::cout << "\033[A\33[2K";
+        }
+
         void Log::log(const std::string & message)
         {
             std::cout << SYSTEM::Time::getTimestampToString(SYSTEM::Time::getTimestamp(), "%d.%m %H:%M") << " | "

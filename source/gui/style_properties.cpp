@@ -4,40 +4,63 @@ namespace TURBO
 {
     namespace GUI
     {
-        Background::Background(VIDEO::Color color)
-            : background_color(color)
-        {
-
-        }
-
-        Background::Background(VIDEO::Texture *texture)
-            : background_color({0x00, 0x00, 0x00, 0xFF}), background_texture(texture)
-        {
-
-        }
-
-        Background::Background(std::string path, VIDEO::Renderer *renderer)
-            : background_color({0x00, 0x00, 0x00, 0xFF})
-        {
-            background_texture = new VIDEO::Texture(renderer->getRenderer(), nullptr);
-        }
-
         StyleProperties::StyleProperties()
-            : background({0xFF, 0xFF, 0xFF, 0xFF}),
-              text_color({0x00, 0x00, 0x00, 0xFF})
+            : background_texture(nullptr),
+              background_color({0xFF, 0xFF, 0xFF, 0xFF}),
+              text_color({0x00, 0x00, 0x00, 0xFF}),
+              border_color({0x00, 0x00, 0x00, 0x00})
         {
 
         }
 
-        Background StyleProperties::getBackground()
+        StyleProperties::~StyleProperties()
         {
-            return background;
+            delete background_texture;
         }
 
-        Background StyleProperties::setBackground(Background background)
+        VIDEO::Texture *StyleProperties::getBackgroundTexture()
         {
-            this->background = background;
-            return this->background;
+            return background_texture;
+        }
+
+        VIDEO::Texture *StyleProperties::setBackgroundTexture(const std::string path, VIDEO::Renderer *renderer)
+        {
+            VIDEO::Surface surface = VIDEO::Surface(path, renderer);
+            background_texture = new VIDEO::Texture(renderer->getRenderer(), surface.getSurface());
+            return background_texture;
+        }
+
+        VIDEO::Color StyleProperties::getBackgroundColor()
+        {
+            return background_color;
+        }
+
+        VIDEO::Color StyleProperties::setBackgroundColor(VIDEO::Color color)
+        {
+            background_color = color;
+            return background_color;
+        }
+
+        VIDEO::Color StyleProperties::getFontColor()
+        {
+            return text_color;
+        }
+
+        VIDEO::Color StyleProperties::setFontColor(VIDEO::Color color)
+        {
+            text_color = color;
+            return text_color;
+        }
+
+        VIDEO::Color StyleProperties::getBorderColor()
+        {
+            return border_color;
+        }
+
+        VIDEO::Color StyleProperties::setBorderColor(VIDEO::Color color)
+        {
+            border_color = color;
+            return border_color;
         }
     }
 }

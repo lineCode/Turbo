@@ -2,32 +2,31 @@
 #define TURBO_STYLE_PROPERTIES_H
 
 #include "gui/gui_def.h"
+#include "video/surface.h"
 
 namespace TURBO
 {
     namespace GUI
     {
-        class Background
-        {
-        public:
-            VIDEO::Color background_color;
-            VIDEO::Texture * background_texture;
-
-            explicit Background(VIDEO::Color color);
-            explicit Background(VIDEO::Texture * texture);
-            explicit Background(std::string path, VIDEO::Renderer *renderer);
-        };
-
         class StyleProperties
         {
         protected:
-            Background background;
+            VIDEO::Color background_color;
+            VIDEO::Texture *background_texture;
             VIDEO::Color text_color;
+            VIDEO::Color border_color;
 
         public:
             StyleProperties();
-            Background getBackground();
-            Background setBackground(Background background);
+            ~StyleProperties();
+            VIDEO::Texture *getBackgroundTexture();
+            VIDEO::Texture *setBackgroundTexture(std::string path, VIDEO::Renderer *renderer);
+            VIDEO::Color getBackgroundColor();
+            VIDEO::Color setBackgroundColor(VIDEO::Color color);
+            VIDEO::Color getFontColor();
+            VIDEO::Color setFontColor(VIDEO::Color color);
+            VIDEO::Color getBorderColor();
+            VIDEO::Color setBorderColor(VIDEO::Color color);
         };
     }
 }

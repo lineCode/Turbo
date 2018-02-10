@@ -22,6 +22,8 @@ namespace TURBO
 
         public:
             Surface(std::string path, Renderer *renderer);
+            ~Surface();
+            SDL_Surface *getSurface();
             void loadSurfaceInfo();
         };
     }

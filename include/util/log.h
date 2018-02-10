@@ -51,6 +51,7 @@ namespace TURBO
             static LOG_MODE setLogMode(LOG_MODE new_mode);
             static LOG_MODE getLogMode();
             static void log(const std::string & message, LOG_MODE mode);
+            static void clearLine();
             static void log(const std::string & message);
             static void info(const std::string & message);
             static void war(const std::string & message);
