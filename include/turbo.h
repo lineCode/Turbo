@@ -5,6 +5,7 @@
 #include "script/script.h"
 #include "input/input.h"
 #include "math/math.h"
+#include "net/net.h"
 #include "video/video.h"
 #include "gui/gui.h"
 #include "audio/audio.h"

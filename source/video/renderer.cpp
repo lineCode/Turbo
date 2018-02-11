@@ -18,6 +18,11 @@ namespace TURBO
                 font            = new Font(TURBO_DEFAULT_FONT, TURBO_DEFAULT_FONT_SIZE, 0);
                 font_collection = new FontCollection(TURBO_DEFAULT_FONT, 10, 50, 10);
                 font_texture    = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
+
+                if(renderer == nullptr)
+                {
+                    UTIL::Log::err(SDL_GetError());
+                }
             }
             else
             {

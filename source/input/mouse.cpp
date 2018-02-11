@@ -5,6 +5,8 @@ namespace TURBO
     namespace INPUT
     {
         MATH::Point Mouse::pos = MATH::Point(0, 0);
+        MATH::Point Mouse::last_pos = MATH::Point(0, 0);
+        MATH::Point Mouse::global_pos = MATH::Point(0, 0);
         std::map<Uint8, bool> Mouse::mouse_button_pressed = {};
         bool Mouse::mouse_pressed = false;
         bool Mouse::mouse_moved = false;
@@ -34,7 +36,6 @@ namespace TURBO
             else if(event.type == SDL_MOUSEMOTION)
             {
                 mouse_moved = true;
-                pos = MATH::Point(event.motion.x, event.motion.y);
             }
             else if(event.type == SDL_MOUSEWHEEL)
             {
@@ -44,7 +45,20 @@ namespace TURBO
 
         MATH::Point Mouse::getPosition()
         {
+            SDL_GetMouseState(&pos.x, &pos.y);
             return pos;
+        }
+
+        MATH::Point Mouse::getLastPosition()
+        {
+            SDL_GetRelativeMouseState(&last_pos.x, &last_pos.y);
+            return last_pos;
+        }
+
+        MATH::Point Mouse::getGlobalPosition()
+        {
+            SDL_GetGlobalMouseState(&global_pos.x, &global_pos.y);
+            return global_pos;
         }
 
         bool Mouse::pressed(Uint8 mouse_button)

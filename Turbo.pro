@@ -49,6 +49,7 @@ HEADERS += include/turbo.h \
            include/math/vector.h \
            include/net/net.h \
            include/net/net_def.h \
+           include/net/socket.h \
            include/net/tcp.h \
            include/net/udp.h \
            include/script/lua.h \
@@ -100,6 +101,7 @@ SOURCES += test/test.cpp \
            source/math/point.cpp \
            source/math/rect.cpp \
            source/math/vector.cpp \
+           source/net/socket.cpp \
            source/net/tcp.cpp \
            source/net/udp.cpp \
            source/script/lua.cpp \

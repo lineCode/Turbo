@@ -1,7 +1,7 @@
 #ifndef TURBO_TCP_H
 #define TURBO_TCP_H
 
-#include "net/net_def.h"
+#include "net/socket.h"
 
 namespace TURBO
 {
@@ -10,18 +10,19 @@ namespace TURBO
         class TCPSocket : public ISocket
         {
         protected:
-            TCPsocket socket = NULL;
+            TCPsocket socket;
 
         public:
             virtual ~TCPSocket();
-            virtual TCPsocket       getSocket();
-            virtual void            setSocket(TCPsocket socket);
-            virtual bool            open();
-            virtual bool            receive(NetPackage & package);
-            virtual NetPackage      receive();
-            virtual bool            send(NetPackage package);
-            virtual void            close();
+            TCPsocket       getSocket();
+            void            setSocket(TCPsocket socket);
+            bool            open() override;
+            bool            receive(NetPackage & package);
+            NetPackage      receive() override;
+            bool            send(NetPackage package) override;
+            void            close() override;
         };
+
 
         class TCPClient : public TCPSocket
         {
@@ -31,6 +32,7 @@ namespace TURBO
             TCPClient(std::string host, Uint16 port);
         };
 
+
         class TCPServer : public TCPSocket
         {
         protected:
@@ -39,7 +41,7 @@ namespace TURBO
 
         public:
             explicit TCPServer(Uint16 port);
-            ~TCPServer();
+            ~TCPServer() override;
             bool accept(TCPClient & client);
         };
     }

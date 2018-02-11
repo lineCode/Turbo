@@ -18,7 +18,7 @@ namespace TURBO
 
         public:
             StyleProperties();
-            ~StyleProperties();
+            virtual ~StyleProperties();
             VIDEO::Texture *getBackgroundTexture();
             VIDEO::Texture *setBackgroundTexture(std::string path, VIDEO::Renderer *renderer);
             VIDEO::Color getBackgroundColor();

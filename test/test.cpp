@@ -1,4 +1,5 @@
 #include <script/python.h>
+#include <SDL_net.h>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
@@ -7,6 +8,7 @@ namespace TV = TURBO::VIDEO;
 namespace TI = TURBO::INPUT;
 namespace TU = TURBO::UTIL;
 namespace TM = TURBO::MATH;
+namespace TN = TURBO::NET;
 namespace TS = TURBO::SYSTEM;
 namespace TC = TURBO::SCRIPT;
 
@@ -89,37 +91,18 @@ int main(int argc, char ** argv)
 
     LOG("Start application");
 
-    TC::Lua lua = TC::Lua();
-
     while(TS::SYSTEM_RUNNING)
     {
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
-            TURBO::INPUT::Mouse::pollEvent(event);
-            TURBO::INPUT::Keyboard::pollEvent(event);
+            TI::Mouse::pollEvent(event);
+            TI::Keyboard::pollEvent(event);
             main_widget.pollEvent(event);
 
-            if(event.type == SDL_QUIT)
+            if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
             {
                 TS::SYSTEM_RUNNING = false;
-            }
-            if(event.type == SDL_KEYDOWN)
-            {
-                if(TI::Keyboard::pressed(SDLK_RETURN))
-                {
-                    lua.callString(TI::Keyboard::getText());
-                    TI::Keyboard::clearText();
-                }
-                else if(TI::Keyboard::pressed(SDLK_BACKSPACE))
-                {
-                    TI::Keyboard::reduceText();
-                    LOG(TI::Keyboard::getText());
-                }
-                else
-                {
-                    LOG(TI::Keyboard::getText());
-                }
             }
 
             renderer.clear();

@@ -23,10 +23,6 @@ namespace TURBO
                     key_pressed[event.key.keysym.sym] = false;
                 }
             }
-            if(event.type == SDL_TEXTINPUT)
-            {
-                text += event.text.text;
-            }
         }
 
         std::string Keyboard::getText()
@@ -36,13 +32,16 @@ namespace TURBO
 
         std::string Keyboard::reduceText()
         {
-            text.pop_back();
+            if(!text.empty())
+            {
+                text.pop_back();
+            }
             return text;
         }
 
         void Keyboard::clearText()
         {
-            text = "";
+            text.clear();
         }
 
         bool Keyboard::pressed(SDL_Keycode sym)

@@ -15,6 +15,10 @@ namespace TURBO
                 {
                     loadFontInfo();
                 }
+                else
+                {
+                    UTIL::Log::err(TTF_GetError());
+                }
             }
             else
             {

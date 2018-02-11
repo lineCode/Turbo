@@ -9,9 +9,16 @@ namespace TURBO
         {
             window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
 
-            if(flags & SDL_WINDOW_OPENGL)
+            if(window != nullptr)
             {
-                SYSTEM::SDL::OPENGL_IS_INIT = true;
+                if(flags & SDL_WINDOW_OPENGL)
+                {
+                    SYSTEM::SDL::OPENGL_IS_INIT = true;
+                }
+            }
+            else
+            {
+                UTIL::Log::err(SDL_GetError());
             }
         }
 

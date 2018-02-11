@@ -17,6 +17,7 @@ namespace TURBO
             ON_MOUSE_BUTTON_DOWN,
             ON_MOUSE_BUTTON_UP,
             ON_GEOMETRY_CHANGED,
+            ON_POSITION_CHANGED,
             ON_SIZE_CHANGED,
             ON_VISIBILITY_CHANGED,
             ON_PARENT_CHANGED,

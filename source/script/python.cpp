@@ -6,7 +6,12 @@ namespace TURBO
     {
         Python::Python()
         {
+            Py_Initialize();
+        }
 
+        Python::~Python()
+        {
+            Py_Finalize();
         }
 
         void Python::callString(std::string content)

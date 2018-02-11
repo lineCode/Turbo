@@ -17,6 +17,7 @@ namespace TURBO
         {
         public:
             Python();
+            ~Python();
             void callString(std::string content);
             void callScript(std::string filename);
             void registerFunction(std::string name, PyObject * function);

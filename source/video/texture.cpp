@@ -10,7 +10,14 @@ namespace TURBO
             if(SYSTEM::SDL::SDL_IS_INIT)
             {
                 texture = SDL_CreateTexture(renderer, format, access, w, h);
-                loadTextureInfo();
+                if(texture != nullptr)
+                {
+                    loadTextureInfo();
+                }
+                else
+                {
+                    UTIL::Log::err(SDL_GetError());
+                }
             }
             else
             {
@@ -24,7 +31,14 @@ namespace TURBO
             if(SYSTEM::SDL::SDL_IS_INIT)
             {
                 texture = SDL_CreateTextureFromSurface(renderer, surface);
-                loadTextureInfo();
+                if(texture != nullptr)
+                {
+                    loadTextureInfo();
+                }
+                else
+                {
+                    UTIL::Log::err(SDL_GetError());
+                }
             }
             else
             {

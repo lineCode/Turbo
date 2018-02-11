@@ -39,30 +39,12 @@ namespace TURBO
 
             static std::string IPtoString(IPAddress ip);
             static Uint32 StringtoIP(std::string ip);
+            static Uint16 StringtoPort(std::string port);
             static IPaddress toIPaddress(IPAddress ip);
             static IPAddress toIPAddress(IPaddress ip);
         };
 
-        class ISocket
-        {
-        protected:
-            SOCKET_STATE    socket_state = SOCKET_STATE::CLOSED;
-            NetPackage      package;
-            IPaddress       ip;
 
-        public:
-            ISocket();
-            virtual NetPackage      getPackage();
-            virtual void            setPackage(NetPackage package);
-            virtual SOCKET_STATE    getSocketState();
-            virtual bool            open() = 0;
-            virtual NetPackage      receive() = 0;
-            virtual bool            send(NetPackage package) = 0;
-            virtual void            close() = 0;
-            virtual bool            isOpen();
-            virtual bool            resolve(IPaddress & ip);
-            virtual bool            resolve(std::string host, Uint16 port);
-        };
     }
 }
 

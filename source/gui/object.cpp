@@ -5,7 +5,7 @@ namespace TURBO
 {
     namespace GUI
     {
-        Object::Object(Object * parent)
+        Object::Object(Object *parent)
             : parent(parent),
               child(nullptr),
               geometry(),
@@ -21,6 +21,8 @@ namespace TURBO
             {
                 parent->setChild(this);
                 setGeometry(parent->getSize());
+                // TODO Set position from parent object
+                setPosition(parent->getGeometry().topLeft());
                 setSize(getGeometry());
             }
         }
@@ -42,8 +44,8 @@ namespace TURBO
         {
             MATH::Point p = INPUT::Mouse::getPosition();
             // TODO geometry need reference to global coordinates
-            mouse_over = MATH::pointInRect(p, geometry) && !mouse_on;
-            mouse_out = !MATH::pointInRect(p, geometry) && mouse_on;
+            mouse_over    = MATH::pointInRect(p, geometry) && !mouse_on;
+            mouse_out     = !MATH::pointInRect(p, geometry) && mouse_on;
             mouse_clicked = INPUT::Mouse::pressed();
 
             if(child != nullptr)
@@ -86,6 +88,18 @@ namespace TURBO
         MATH::Rect &Object::getGeometry()
         {
             return geometry;
+        }
+
+        MATH::Point &Object::setPosition(MATH::Point position)
+        {
+            this->position = position;
+            fireCallback(ON_POSITION_CHANGED);
+            return this->position;
+        }
+
+        MATH::Point &Object::getPosition()
+        {
+            return position;
         }
 
         MATH::Rect &Object::setSize(MATH::Rect size)

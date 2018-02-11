@@ -15,6 +15,10 @@ namespace TURBO
                 {
                     loadSurfaceInfo();
                 }
+                else
+                {
+                    UTIL::Log::err(IMG_GetError());
+                }
             }
             else
             {
