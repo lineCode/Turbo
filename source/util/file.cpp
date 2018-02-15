@@ -21,44 +21,38 @@ namespace TURBO
 
         bool File::isType(const std::string name, const std::string type)
         {
-            bool success = false;
             if(Dir::isFile(name))
             {
                 if(toLower(name.substr(name.rfind('.') + 1, name.length() - name.rfind('.') - 1)) == toLower(type))
                 {
-                    success = true;
+                    return true;
                 }
             }
-            return success;
+            return false;
         }
 
         bool File::hasFilter(const std::string name, const std::string filter)
         {
-            bool success = false;
-
             if(filter.find(',') != std::string::npos)
             {
-                success = File::hasFilter(name, explode(filter, ','));
+                return File::hasFilter(name, explode(filter, ','));
             }
             else
             {
-                success = File::isType(name, filter);
+                return File::isType(name, filter);
             }
-            return success;
         }
 
         bool File::hasFilter(const std::string name, const std::vector<std::string> filter)
         {
-            bool success = false;
-
             for(auto & s : filter)
             {
                 if(File::isType(name, s))
                 {
-                    success = true;
+                    return true;
                 }
             }
-            return success;
+            return false;
         }
     }
 }

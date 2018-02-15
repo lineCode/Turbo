@@ -15,10 +15,25 @@ namespace TURBO
             lua_close(lua_state);
         }
 
-        int Lua::callString(std::string content)
+        lua_State *Lua::getState()
         {
-            luaL_dostring (lua_state, content.c_str());
-            return 1;
+            return lua_state;
+        }
+
+        std::string Lua::getString()
+        {
+            return lua_tostring(lua_state, -1);
+        }
+
+        void Lua::getGlobal(std::string name)
+        {
+            lua_getglobal(lua_state, name.c_str());
+        }
+
+        double Lua::callString(std::string content)
+        {
+            luaL_dostring(lua_state, content.c_str());
+            return lua_tonumber(lua_state, -1);
         }
 
         int Lua::callScript(std::string filename)

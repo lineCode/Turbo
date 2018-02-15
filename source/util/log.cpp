@@ -17,17 +17,45 @@ namespace TURBO
             return Log::log_mode;
         }
 
+        std::string Log::format(LOG_FORMAT format, std::string message)
+        {
+            std::stringstream result;
+            result << "\033[" << format << "m" << message << "\033[0m";
+            return result.str();
+        }
+
+        std::string Log::format(std::vector<LOG_FORMAT> formats, std::string message)
+        {
+            std::stringstream result;
+
+            result << "\033[";
+            for(int index = 0; index < formats.size(); ++index)
+            {
+                if(index < formats.size() - 1)
+                {
+                    result << formats[index] << ";";
+                }
+                else
+                {
+                    result << formats[index];
+                }
+            }
+            result << "m" << message << "\033[0m";
+
+            return result.str();
+        }
+
+        void Log::clearLine()
+        {
+            std::cout << "\033[A\33[2K";
+        }
+
         void Log::log(const std::string & message, const LOG_MODE mode)
         {
             if(mode <= Log::log_mode)
             {
                 Log::log(message);
             }
-        }
-
-        void Log::clearLine()
-        {
-            std::cout << "\033[A\33[2K";
         }
 
         void Log::log(const std::string & message)

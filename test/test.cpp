@@ -27,10 +27,8 @@ void quit()
     TS::SYSTEM_RUNNING = false;
 }
 
-int main(int argc, char ** argv)
+void test()
 {
-    TS::PTimer ptimer{};
-
     LOG("Loading libraries");
 
     TS::SDL sdl = TS::SDL(SDL_INIT_EVERYTHING);
@@ -113,6 +111,86 @@ int main(int argc, char ** argv)
     }
 
     LOG("Stop application");
+
+}
+
+void test2(int argc, char ** argv)
+{
+    TS::CMDParser cmd_parser = TS::CMDParser(argc, argv);
+
+    cmd_parser.setOption("-w", "--wasp", 2, false, {}, "bzzz");
+    cmd_parser.setOption("-o", "--ouch", 99, false, {}, "muh");
+    cmd_parser.setOption("-l", "--loop", 1, false, {}, "sets level of looping");
+    cmd_parser.setOption("-p", "--pressure", 1, true, {}, "dummy");
+
+    if(!cmd_parser.checkArgs())
+    {
+        std::cout << TU::Log::format(TU::LOG_FORMAT::FG_YELLOW, "Trace:\n" + cmd_parser.getTrace())
+                  << std::endl;
+    }
+    if(cmd_parser.isSet("-h"))
+        cmd_parser.printHelp();
+
+    for(const auto & arg : cmd_parser.getArgument("-w"))
+    {
+        std::cout << arg << " ";
+    }
+    std::cout << "\n";
+}
+
+int add(lua_State * state)
+{
+    int args = lua_gettop(state);
+    if(args == 2)
+    {
+        lua_pushnumber(state, lua_tonumber(state, 1) + lua_tonumber(state, 2));
+        return 1;
+    }
+    return -1;
+}
+
+int sub(lua_State * state)
+{
+    int args = lua_gettop(state);
+    if(args == 2)
+    {
+        lua_pushnumber(state, lua_tonumber(state, 1) - lua_tonumber(state, 2));
+        return 1;
+    }
+    return -1;
+}
+
+void test3()
+{
+    TC::Lua lua = TC::Lua();
+    lua.registerFunction("add", add);
+    lua.registerFunction("sub", sub);
+    lua.callString("function div(a, b) return a/b end");
+    lua.getGlobal("div");
+    if(!lua_isfunction(lua.getState(),-1))
+    {
+        lua_pop(lua.getState(),1);
+        return;
+    }
+
+    std::string call;
+    double result = 0;
+    std::cin >> call;
+
+    while((result = lua.callString(call)) != -1 && !call.empty())
+    {
+        std::cout << result << std::endl;
+        std::cin >> call;
+    }
+}
+
+
+
+int main(int argc, char ** argv)
+{
+    TS::PTimer ptimer{};
+
+    test4();
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;

@@ -16,18 +16,32 @@ namespace TURBO
             DEFAULT         = 0,
             BOLD_ON         = 1,
             UNDERLINED_ON   = 4,
+            BLINK_ON        = 5,
             INVERSE_ON      = 7,
             BOLD_OFF        = 21,
             UNDERLINE_OFF   = 24,
+            BLINK_OFF       = 25,
             INVERSE_OFF     = 27,
             FG_RED          = 31,
             FG_GREEN        = 32,
+            FG_YELLOW       = 33,
             FG_BLUE         = 34,
+            FG_MAGENTA      = 35,
+            FG_CYAN         = 36,
+            FG_LIGHT_GRAY   = 37,
             FG_DEFAULT      = 39,
             BG_RED          = 41,
             BG_GREEN        = 42,
             BG_BLUE         = 44,
-            BG_DEFAULT      = 49
+            BG_DEFAULT      = 49,
+            FG_DARK_GRAY    = 90,
+            FG_LIGHT_RED    = 91,
+            FG_LIGHT_GREEN  = 92,
+            FG_LIGHT_YELLOW = 93,
+            FG_LIGHT_BLUE   = 94,
+            FG_LIGHT_MAGENTA= 95,
+            FG_LIGHT_CYAN   = 96,
+            FG_WHITE        = 97,
         };
 
         enum class LOG_MODE : Uint8
@@ -50,8 +64,10 @@ namespace TURBO
             static LOG_MODE                 log_mode;
             static LOG_MODE setLogMode(LOG_MODE new_mode);
             static LOG_MODE getLogMode();
-            static void log(const std::string & message, LOG_MODE mode);
+            static std::string format(LOG_FORMAT format, std::string message);
+            static std::string format(std::vector<LOG_FORMAT> formats, std::string message);
             static void clearLine();
+            static void log(const std::string & message, LOG_MODE mode);
             static void log(const std::string & message);
             static void info(const std::string & message);
             static void war(const std::string & message);

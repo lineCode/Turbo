@@ -31,28 +31,21 @@ namespace TURBO
 
         bool Dir::isDir(std::string name)
         {
-            bool success = false;
             DIR * dir = opendir(name.c_str());
 
-            if(dir != nullptr)
-            {
-                success = true;
-            }
-            return success;
+            return dir != nullptr;
         }
 
         bool Dir::isFile(std::string name)
         {
-            bool success = false;
-
             if(!Dir::isDir(name))
             {
                 if(Dir::fileExists(name))
                 {
-                    success = true;
+                    return true;
                 }
             }
-            return success;
+            return false;
         }
 
         bool Dir::fileExists(std::string name)

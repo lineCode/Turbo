@@ -28,7 +28,10 @@ namespace TURBO
         public:
             explicit Lua();
             ~Lua();
-            int callString(std::string content);
+            lua_State *getState();
+            void getGlobal(std::string name);
+            std::string getString();
+            double callString(std::string content);
             int callScript(std::string filename);
             int registerFunction(std::string name, lua_CFunction function);
         };

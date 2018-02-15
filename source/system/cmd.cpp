@@ -7,24 +7,40 @@ namespace TURBO
         CMDParser::CMDParser(int argc, char ** argv)
             : argc(argc), argv(argv)
         {
-
+            setOption("-h", "--help", 0, false, {}, "prints this information");
         }
 
         bool CMDParser::checkArgs()
         {
             bool valid = true;
             trace = "";
+            app_name = argv[0];
 
+            // Arguments
             for(int i = 1; i < argc; ++i)
             {
                 std::string arg = argv[i];
-                if(options.count(arg))
+                if(arg.substr(0, 2) == "--")
+                {
+                    arg = arg.substr(1, 2);
+                }
+
+                if(options.count(arg) == 0)
+                {
+                    trace += "- unrecognized option '" + arg + "' found\n";
+                }
+                else
                 {
                     // Parameters
-                    if(options[arg][0] > 0)
+                    int params = 0;
+                    std::stringstream ss(options[arg]["params"]);
+                    ss >> params;
+
+                    if(params > 0)
                     {
                         int param = 0;
-                        while(param < options[arg][0])
+
+                        while(param < params)
                         {
                             if(i != argc - 1 && param != argc - 1 && argv[i+1][0] != '-')
                             {
@@ -41,8 +57,8 @@ namespace TURBO
                             else
                             {
                                 args[arg] = std::vector<std::string>{""};
-                                std::string war = (options[arg][0] - param == 1) ? "value" : "values";
-                                trace += "missing " + war += " for command " + arg += "\n";
+                                std::string val = (params - param == 1) ? "value" : "values";
+                                trace += "- missing " + val += " for command " + options[arg]["long"] += "\n";
                                 valid = false;
                                 break;
                             }
@@ -57,11 +73,11 @@ namespace TURBO
             }
             for(auto option : options)
             {
-                if(option.second[1])
+                if(option.second["required"] == "true")
                 {
-                    if(!args.count(option.first))
+                    if(!args.count(option.second["short"]))
                     {
-                        trace += "missing command " + option.first + "\n";
+                        trace += "- missing command " + option.second["long"] + "\n";
                         valid = false;
                     }
                 }
@@ -69,27 +85,71 @@ namespace TURBO
             return valid;
         }
 
-        void CMDParser::setOption(const std::string option, const Uint8 params, const bool required, const std::string info)
+        bool CMDParser::setOption(const std::string short_option, const std::string long_option, const Uint8 params,
+                                  const bool required, std::vector<std::string> defaults, const std::string info)
         {
-            if(option.length() > largest_option)
-                largest_option = static_cast<Uint8>(option.length() + 1);
-            if(params * 8 + 3 > largest_params)
-                largest_params = static_cast<Uint8>(params * 8 + 4);
+            if(options.count(short_option) > 0)
+            {
+                return false;
+            }
+            if(!std::regex_match(short_option, std::regex("-[a-zA-Z]")))
+            {
+                return false;
+            }
+            if(!std::regex_match(long_option, std::regex("--[a-zA-Z]+[a-zA-Z-]*")))
+            {
+                return false;
+            }
+            if(short_option != long_option.substr(1, 2))
+            {
+                return false;
+            }
 
-            options[option] = std::vector<Uint8>{params, static_cast<Uint8>(required)};
-            option_info[option] = info;
+            Uint64 arg_len = long_option.length() + 1;
+            if(arg_len > largest_option)
+            {
+                largest_option = static_cast<Uint8>(arg_len);
+            }
+
+            options[short_option]["short"] = short_option;
+            options[short_option]["long"] = long_option;
+            options[short_option]["params"] = std::to_string(params);
+            options[short_option]["required"] = (required) ? "true" : "false";
+            options[short_option]["defaults"] = UTIL::implode(defaults, ",");
+            options[short_option]["info"] = info;
+
+            return true;
         }
 
-        std::vector<std::string> CMDParser::getOption(std::string option)
+        std::map<std::string, std::string> CMDParser::getOption(std::string option)
         {
-            if(option[0] != '-')
-                option = '-' + option;
-            return args[option];
+            if(std::regex_match(option, std::regex("--[a-zA-Z]+[a-zA-Z-]*")))
+            {
+                option = option.substr(1, 2);
+            }
+
+            if(options.count(option) > 0)
+            {
+                return options[option];
+            }
+            else
+            {
+                return {};
+            }
         }
 
-        bool CMDParser::isSet(std::string option)
+        bool CMDParser::isSet(std::string argument)
         {
-            return (args.count(option) == 1);
+            return (args.count(argument) == 1);
+        }
+
+        std::vector<std::string> CMDParser::getArgument(const std::string argument)
+        {
+            if(isSet(argument))
+            {
+                return args[argument];
+            }
+            return {};
         }
 
         std::string CMDParser::getTrace()
@@ -99,34 +159,50 @@ namespace TURBO
 
         void CMDParser::printTrace()
         {
-            std::cout << getTrace() << std::endl;
+            if(!trace.empty())
+            {
+                std::string head = "Issues while parsing arguments for ";
+                std::cout << head << app_name << "\n" << getTrace() << std::endl;
+            }
         }
 
         std::string CMDParser::getHelp()
         {
             std::ostringstream help;
-            help << "\nUsage:\n    -command [argument list]\n\nCommands:\n";
+            help << "\nUsage:\n    -command [parameter list]\n\nCommands:\n";
             for(auto option : options)
             {
-                help << "    " << std::left << std::setfill(' ') << std::setw(largest_option) << option.first;
-                if(option.second.at(0))
+                help << "  " << std::left << std::setfill(' ') << option.second["short"] << ' '
+                     << std::setw(largest_option) << option.second["long"];
+
+                int params = 0;
+                std::stringstream ss(option.second["params"]);
+                ss >> params;
+
+                if(params > 0)
                 {
-                    std::string params = "[";
-                    for(int i = 0; i < option.second.at(0); ++i)
+                    std::string param_string = "[param0";
+                    if(params > 1)
                     {
-                        params += "param" + std::to_string(i);
-                        if(i != option.second.at(0) - 1)
-                        {
-                            params += " ";
-                        }
+                        param_string += " param1";
                     }
-                    help << std::left << std::setfill(' ') << std::setw(largest_params) << (params + "]");
+                    if(params > 1 && params < 3)
+                    {
+                        param_string += " param2";
+                    }
+                    else if(params > 3)
+                    {
+                        param_string += " ... param";
+                        param_string += std::to_string(params);
+                    }
+                    help << std::left << std::setfill(' ') << std::setw(27) << (param_string + "]");
                 }
                 else
                 {
-                    help << std::left << std::setfill(' ') << std::setw(largest_params) << "";
+                    help << std::left << std::setfill(' ') << std::setw(27) << "";
                 }
-                if(option.second.at(1))
+
+                if(option.second["required"] == "true")
                 {
                     help << std::left << std::setfill(' ') << std::setw(19) << "(command required)";
                 }
@@ -134,7 +210,7 @@ namespace TURBO
                 {
                     help << std::left << std::setfill(' ') << std::setw(19) << "";
                 }
-                help << option_info[option.first] + "\n";
+                help << "" << option.second["info"] << "\n";
             }
             return help.str();
         }

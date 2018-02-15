@@ -16,6 +16,31 @@ namespace TURBO
             initSDL(flags);
         }
 
+        std::string SDL::getBasePath()
+        {
+            char * base_path = SDL_GetBasePath();
+            return base_path;
+        }
+
+        std::string SDL::createPrefPath(std::string prefix, std::string dirname)
+        {
+            char * pref_path = SDL_GetPrefPath(prefix.c_str(), dirname.c_str());
+            return pref_path;
+        }
+
+        std::string SDL::getRevision()
+        {
+            return SDL_GetRevision() + std::to_string(SDL_GetRevisionNumber());
+        }
+
+        std::string SDL::getVersion()
+        {
+            SDL_version * v = nullptr;
+            SDL_GetVersion(v);
+            Uint8 version = v->major;
+            return "" + version;
+        }
+
         Uint32 SDL::initSDL(Uint32 flags)
         {
             if(!SDL::SDL_IS_INIT)
