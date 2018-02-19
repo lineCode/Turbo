@@ -1,6 +1,9 @@
 #ifndef TURBO_RECT_H
 #define TURBO_RECT_H
 
+#include <lua.hpp>
+#include "script/LuaBridge/LuaBridge.h"
+
 #include "math/math_def.h"
 #include "math/point.h"
 
@@ -35,6 +38,8 @@ namespace TURBO
             friend bool operator<=(Rect & first, Rect &second);
             friend bool operator>(Rect & first, Rect &second);
             friend bool operator>=(Rect & first, Rect &second);
+
+            static void registerToLuaScript(lua_State *state);
         };
     }
 }

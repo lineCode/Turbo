@@ -5,7 +5,7 @@ namespace TURBO
     namespace VIDEO
     {
         Window::Window(const std::string &title, MATH::Rect geometry, Uint32 flags)
-            : geometry(geometry), size(0, 0, geometry.w, geometry.h)
+            : geometry(geometry)
         {
             window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
 
@@ -37,9 +37,33 @@ namespace TURBO
             return geometry;
         }
 
-        MATH::Rect &Window::getSize()
+        MATH::Rect &Window::setGeometry(MATH::Rect rect)
         {
-            return size;
+            setPosition(rect.topLeft());
+            setSize(rect);
+            return geometry;
+        }
+
+        MATH::Point Window::getPosition()
+        {
+            return {geometry.x, geometry.y};
+        }
+
+        MATH::Point Window::setPosition(MATH::Point point)
+        {
+            geometry = MATH::Rect(point.x, point.y, geometry.w, geometry.h);
+            SDL_SetWindowPosition(window, geometry.x, geometry.y);
+        }
+
+        MATH::Rect Window::getSize()
+        {
+            return {0, 0, geometry.w, geometry.h};
+        }
+
+        MATH::Rect Window::setSize(MATH::Rect rect)
+        {
+            geometry = MATH::Rect(geometry.x, geometry.y, rect.w, rect.h);
+            SDL_SetWindowSize(window, geometry.w, geometry.h);
         }
 
         void Window::pollEvent(SDL_Event &event)
@@ -145,6 +169,17 @@ namespace TURBO
         bool Window::isClosed() const
         {
             return closed;
+        }
+
+        void Window::registerToLuaScript(lua_State *state)
+        {
+            luabridge::getGlobalNamespace(state)
+                .beginNamespace("VIDEO")
+                    .beginClass<Window>("Window")
+                    .addConstructor<void(*)(std::string, MATH::Rect, Uint32)>()
+                    .addFunction("setGeometry", &Window::setGeometry)
+                    .endClass()
+                .endNamespace();
         }
     }
 }

@@ -3,6 +3,8 @@
 
 #include "turbo_def.h"
 
+#define NAME(obj) #obj
+
 namespace TURBO
 {
     namespace SCRIPT

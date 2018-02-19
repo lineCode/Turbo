@@ -47,5 +47,17 @@ namespace TURBO
             }
             return result.substr(0, result.rfind(needle) - 1);
         }
+
+        std::string replace(std::string haystack, char needle, char replace)
+        {
+            std::replace(haystack.begin(), haystack.end(), needle, replace);
+            return haystack;
+        }
+
+        std::string removeSpaces(std::string &haystack)
+        {
+            haystack.erase(std::remove_if(haystack.begin(), haystack.end(), ::isspace), haystack.end());
+            return haystack;
+        }
     }
 }

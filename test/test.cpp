@@ -138,59 +138,65 @@ void test2(int argc, char ** argv)
     std::cout << "\n";
 }
 
-int add(lua_State * state)
-{
-    int args = lua_gettop(state);
-    if(args == 2)
-    {
-        lua_pushnumber(state, lua_tonumber(state, 1) + lua_tonumber(state, 2));
-        return 1;
-    }
-    return -1;
-}
-
-int sub(lua_State * state)
-{
-    int args = lua_gettop(state);
-    if(args == 2)
-    {
-        lua_pushnumber(state, lua_tonumber(state, 1) - lua_tonumber(state, 2));
-        return 1;
-    }
-    return -1;
-}
-
+/**
+ * Execute a script
+ */
 void test3()
 {
-    TC::Lua lua = TC::Lua();
-    lua.registerFunction("add", add);
-    lua.registerFunction("sub", sub);
-    lua.callString("function div(a, b) return a/b end");
-    lua.getGlobal("div");
-    if(!lua_isfunction(lua.getState(),-1))
-    {
-        lua_pop(lua.getState(),1);
-        return;
-    }
-
-    std::string call;
-    double result = 0;
-    std::cin >> call;
-
-    while((result = lua.callString(call)) != -1 && !call.empty())
-    {
-        std::cout << result << std::endl;
-        std::cin >> call;
-    }
+    TC::Lua l = TC::Lua();
+    l.callScript("resources/script/lua/test.lua");
 }
 
+/**
+ * Execute a script and get return value
+ */
+void test4()
+{
+    TC::Lua l = TC::Lua();
+    l.callScript("resources/script/lua/test.lua");
+
+
+    l.getGlobal("div");
+    lua_pushnumber(l.getState(), 2);
+    lua_pushnumber(l.getState(), 4);
+
+    if(lua_pcall(l.getState(), 2, 1, 0))
+        l.printError();
+
+    std::cout << "result of div " << lua_tonumber(l.getState(), -1) << std::endl;
+}
+
+void test5()
+{
+    TV::Window win = TV::Window("Test", TM::Rect(20, 20, 400, 400), SDL_WINDOW_SHOWN);
+
+    TC::Lua l = TC::Lua();
+    auto L = l.getState();
+    TV::Window::registerToLuaScript(L);
+    TM::Rect::registerToLuaScript(L);
+
+    luabridge::getGlobalNamespace(L)
+        .beginNamespace("Global")
+        .addVariable("window", &win)
+        .endNamespace();
+
+    std::string input;
+    std::getline(std::cin, input);
+
+    while(input != "exit")
+    {
+        l.callString(input);
+        std::getline(std::cin, input);
+    }
+};
 
 
 int main(int argc, char ** argv)
 {
     TS::PTimer ptimer{};
 
-    test4();
+    test5();
+    //std::cout << std::regex_replace("hello d", std::regex("\\s"), "");
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;

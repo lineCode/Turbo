@@ -2,6 +2,7 @@
 #define TURBO_STRING_H
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <cmath>
 
@@ -15,6 +16,8 @@ namespace TURBO
         std::string                 toLower(std::string haystack);
         std::vector<std::string>    explode(std::string haystack, char needle);
         std::string                 implode(std::vector<std::string> haystack, std::string needle);
+        std::string                 replace(std::string haystack, char needle, char replace);
+        std::string                 removeSpaces(std::string haystack);
     }
 }
 

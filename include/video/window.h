@@ -4,6 +4,9 @@
 #include <SDL_events.h>
 #include <SDL_video.h>
 
+#include <lua.hpp>
+#include "script/LuaBridge/LuaBridge.h"
+
 #include "video/video_def.h"
 #include "math/math.h"
 #include "system/sdl.h"
@@ -18,7 +21,6 @@ namespace TURBO
         private:
             SDL_Window *window;
             MATH::Rect geometry;
-            MATH::Rect size;
             bool shown          = false;
             bool exposed        = false;
             bool restored       = false;
@@ -33,7 +35,11 @@ namespace TURBO
             ~Window();
             SDL_Window * getWindow();
             MATH::Rect &getGeometry();
-            MATH::Rect &getSize();
+            MATH::Rect &setGeometry(MATH::Rect rect);
+            MATH::Point getPosition();
+            MATH::Point setPosition(MATH::Point point);
+            MATH::Rect getSize();
+            MATH::Rect setSize(MATH::Rect rect);
             void pollEvent(SDL_Event &event);
             bool isShown() const;
             bool isExposed() const;
@@ -43,6 +49,8 @@ namespace TURBO
             bool hasMouseFocus() const;
             bool isFocus() const;
             bool isClosed() const;
+
+            static void registerToLuaScript(lua_State * state);
         };
     }
 }
