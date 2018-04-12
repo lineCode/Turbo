@@ -128,7 +128,6 @@ int main(int argc, char ** argv)
 
 ```
 
-**Result:**
 ![Result](https://github.com/styinx/Turbo/blob/master/result.png)
 
 # Development
