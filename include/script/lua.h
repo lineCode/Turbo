@@ -6,16 +6,18 @@
 #include <functional>
 
 #ifdef __cplusplus
-    # include <lua.hpp>
+
+# include <lua.hpp>
+
 #else
-    # include <lua.h>
-    # include <lualib.h>
-    # include <lauxlib.h>
+# include <lua.h>
+# include <lualib.h>
+# include <lauxlib.h>
 #endif
 
+#include "script/LuaBridge/LuaBridge.h"
 
 #include "script/script_def.h"
-
 #include "util/dir.h"
 
 namespace TURBO
@@ -29,10 +31,13 @@ namespace TURBO
 
         public:
             explicit LuaObject(std::string class_name);
+
             std::string getClassName();
+            static void registerObject(lua_State *state);
         };
 
-        class TestObject : public LuaObject
+        class TestObject
+            : public LuaObject
         {
         public:
             TestObject();
@@ -45,19 +50,38 @@ namespace TURBO
 
         public:
             explicit Lua();
+
             ~Lua();
+
             lua_State *getState();
+
             void pop();
+
             std::string getError();
+
             void printError(std::string function = "");
+
+            void addVariable(LuaObject &object);
+
             void getGlobal(std::string name);
+
             bool getGlobalFunction(std::string name);
+
             std::string getString();
+
             int callString(std::string content);
+
             int callScript(std::string filename);
+
             int loadScript(std::string filename);
-            int callFunctionFromScript(std::string filename, std::string function);
+
             int registerFunction(std::string name, lua_CFunction function);
+
+            template<typename T>
+            void registerObject(lua_State *state)
+            {
+                T::registerObject(state);
+            };
         };
     }
 }

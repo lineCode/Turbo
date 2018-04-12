@@ -15,7 +15,7 @@ namespace TURBO
     const Uint32 TURBO_SDL_TEXTURE_ACCESS = SDL_TEXTUREACCESS_STATIC;
 
     const std::string TURBO_RESOURCE_PATH = "./resources/";
-    const std::string TURBO_SETTINGS_PATH = TURBO_RESOURCE_PATH + "application/";
+    const std::string TURBO_SETTINGS_PATH = TURBO_RESOURCE_PATH + "turbo/";
     const std::string TURBO_FONT_PATH = TURBO_SETTINGS_PATH + "fonts/";
 
     const std::string TURBO_DEFAULT_SETTINGS = TURBO_SETTINGS_PATH + "application.ini";
