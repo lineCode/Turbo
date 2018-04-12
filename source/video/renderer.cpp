@@ -35,7 +35,11 @@ namespace TURBO
             delete font_texture;
             delete font_collection;
             delete font;
-            SDL_DestroyRenderer(renderer);
+
+            if(renderer != nullptr)
+            {
+                SDL_DestroyRenderer(renderer);
+            }
         }
 
         SDL_Renderer *Renderer::getRenderer()

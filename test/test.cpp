@@ -1,5 +1,3 @@
-#include <script/python.h>
-#include <SDL_net.h>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
@@ -61,6 +59,7 @@ void test()
     b2.setBackgroundTexture("resources/images/mushroom.png", &renderer);
     b3.setBackgroundColor({255, 0, 255, 255});
     b4.setBackgroundColor({0, 0, 0, 255});
+    b4.setFontColor({255, 255, 255, 255});
     b5.setBackgroundColor({0, 255, 255, 255});
     b5.setFontColor({255, 0, 50, 100});
     b5.setBorderColor({0, 255, 0, 255});
@@ -168,17 +167,20 @@ void test4()
 
 void test5()
 {
+    TS::SDL sdl{};
+    sdl.initSDL();
+    sdl.initTTF();
     TV::Window win = TV::Window("Test", TM::Rect(20, 20, 400, 400), SDL_WINDOW_SHOWN);
+    TV::Renderer ren = TV::Renderer(win, -1, SDL_RENDERER_ACCELERATED);
+    ren.setDrawColor({255, 0, 0, 255});
+    ren.setClearColor({0, 255, 0, 255});
+    ren.present();
+    ren.clear();
 
     TC::Lua l = TC::Lua();
     auto L = l.getState();
-    TV::Window::registerToLuaScript(L);
-    TM::Rect::registerToLuaScript(L);
-
-    luabridge::getGlobalNamespace(L)
-        .beginNamespace("Global")
-        .addVariable("window", &win)
-        .endNamespace();
+//    win.registerObject(L);
+    l.registerObject<TV::Window>(L);
 
     std::string input;
     std::getline(std::cin, input);
@@ -186,17 +188,16 @@ void test5()
     while(input != "exit")
     {
         l.callString(input);
+        ren.present();
+        ren.clear();
         std::getline(std::cin, input);
     }
 };
 
-
 int main(int argc, char ** argv)
 {
     TS::PTimer ptimer{};
-
-    test5();
-    //std::cout << std::regex_replace("hello d", std::regex("\\s"), "");
+    test();
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;

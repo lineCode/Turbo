@@ -12,19 +12,26 @@
 namespace TA = TURBO::AUDIO;
 namespace TG = TURBO::GUI;
 namespace TV = TURBO::VIDEO;
+namespace TI = TURBO::INPUT;
 namespace TU = TURBO::UTIL;
 namespace TM = TURBO::MATH;
+namespace TN = TURBO::NET;
 namespace TS = TURBO::SYSTEM;
+namespace TC = TURBO::SCRIPT;
 
 void over()
 {
     std::cout << "hover" << std::endl;
 }
 
-
 void out()
 {
     std::cout << "out" << std::endl;
+}
+
+void quit()
+{
+    TS::SYSTEM_RUNNING = false;
 }
 
 
@@ -33,7 +40,7 @@ int main(int argc, char ** argv)
     TS::PTimer ptimer{};
 
     LOG("Loading libraries");
-
+    
     TS::SDL sdl = TS::SDL(SDL_INIT_EVERYTHING);
     sdl.initIMG(IMG_INIT_PNG);
     sdl.initMIX(MIX_INIT_MP3 | MIX_INIT_FLAC);
@@ -43,21 +50,37 @@ int main(int argc, char ** argv)
 
     auto window = TV::Window("Title", TM::Rect(50, 50, 600, 600), SDL_WINDOW_SHOWN);
     auto renderer = TV::Renderer(window, -1, SDL_RENDERER_ACCELERATED);
-    auto main_widget = TURBO::GUI::MainWidget(window, renderer);
-    auto hbox = TURBO::GUI::Box(&main_widget, TURBO::GUI::ORIENTATION::VERTICAL);
-    auto vbox1 = TURBO::GUI::Box(nullptr, TURBO::GUI::ORIENTATION::HORIZONTAL);
-    auto vbox2 = TURBO::GUI::Box(nullptr, TURBO::GUI::ORIENTATION::HORIZONTAL);
-    auto b1 = TURBO::GUI::Button("Hi");
-    auto b2 = TURBO::GUI::Button("Bye");
-    auto b3 = TURBO::GUI::Button("Today");
-    auto b4 = TURBO::GUI::Button("Asd\nss\nsda");
-    auto b5 = TURBO::GUI::Button("Test");
+    auto main_widget = TG::MainWidget(window, renderer);
+    auto hbox = TG::Box(&main_widget, TG::ORIENTATION::VERTICAL);
+    auto vbox1 = TG::Box(nullptr, TG::ORIENTATION::HORIZONTAL);
+    auto vbox2 = TG::Box(nullptr, TG::ORIENTATION::HORIZONTAL);
+    auto grid = TG::Grid(nullptr, 3, 3);
+    auto b1 = TG::Button("Hi");
+    auto b2 = TG::Button("Bye");
+    auto b3 = TG::Button("Today");
+    auto b4 = TG::Button("Käse?");
+    auto b5 = TG::Button("Test");
+    auto b6 = TG::Button("Grid-Test");
+    auto b7 = TG::Button("Grid-Test2");
+    auto wi = TG::Button("Black");
 
-    b1.setBackground(TURBO::GUI::Background({255, 255, 0, 255}));
-    b2.setBackground(TURBO::GUI::Background({255, 0, 0, 255}));
-    b3.setBackground(TURBO::GUI::Background({255, 0, 255, 255}));
-    b4.setBackground(TURBO::GUI::Background({0, 0, 0, 255}));
-    b5.setBackground(TURBO::GUI::Background({0, 255, 255, 255}));
+    renderer.getFont()->setFontSize(60);
+
+    b1.setBackgroundColor({255, 255, 0, 255});
+    b2.setBackgroundColor({255, 0, 0, 255});
+    b2.setBackgroundTexture("resources/images/mushroom.png", &renderer);
+    b3.setBackgroundColor({255, 0, 255, 255});
+    b4.setBackgroundColor({0, 0, 0, 255});
+    b5.setBackgroundColor({0, 255, 255, 255});
+    b5.setFontColor({255, 0, 50, 100});
+    b5.setBorderColor({0, 255, 0, 255});
+    b6.setBackgroundColor({100, 100, 100, 255});
+    b6.setBackgroundColor({50, 150, 50, 255});
+    b7.setBackgroundColor({100, 100, 100, 255});
+    b7.setFontColor({100, 200, 255, 255});
+    wi.setBackgroundColor({0, 0, 0, 0});
+    wi.setFontColor({255, 0, 255, 255});
+
     hbox.addWidget(&vbox1);
     hbox.addWidget(&b5);
     hbox.addWidget(&vbox2);
@@ -65,9 +88,14 @@ int main(int argc, char ** argv)
     vbox1.addWidget(&b2);
     vbox2.addWidget(&b3);
     vbox2.addWidget(&b4);
+    vbox2.addWidget(&grid);
+    vbox2.addWidget(&wi);
+    grid.addWidget(&b6, 0, 0, 1, 2);
+    grid.addWidget(&b7, 1, 1, 2, 1);
 
-    b1.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, over);
-    b1.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
+    b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, over);
+    b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
+    b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_BUTTON_DOWN, quit);
 
     LOG("Start application");
 
@@ -76,12 +104,15 @@ int main(int argc, char ** argv)
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
-            TURBO::INPUT::Mouse::pollEvent(event);
-            b1.pollEvent(event);
-            if(event.type == SDL_KEYDOWN)
+            TI::Mouse::pollEvent(event);
+            TI::Keyboard::pollEvent(event);
+            main_widget.pollEvent(event);
+
+            if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
             {
                 TS::SYSTEM_RUNNING = false;
             }
+
             renderer.clear();
             main_widget.draw(&renderer);
             renderer.present();
@@ -97,9 +128,16 @@ int main(int argc, char ** argv)
 
 ```
 
+**Result:**
+![Result](https://github.com/styinx/Turbo/blob/master/result.png)
+
 # Development
 
 ## SDL
+
+### Linux
+
+Direct Download:
 
 - [SDL 2](https://www.libsdl.org/download-2.0.php)
 - [IMG 2](https://www.libsdl.org/projects/SDL_image/)
@@ -107,19 +145,24 @@ int main(int argc, char ** argv)
 - [MIX 2](https://www.libsdl.org/projects/SDL_mixer/)
 - [NET 2](https://www.libsdl.org/projects/SDL_net/)
 
-### Linux
+Terminal: (Most linux distributions will have sdl as supported package (libsdl2-dev))
 
-- most linux distributions will have sdl as supported package (libsdl2-dev)
+- libsdl2-dev / libsdl2-2.0-0 
+- libsdl2-image-dev / libsdl2-image-2.0-0
+- libsdl2-mixer-dev / libsdl2-mixer-2.0-0
+- libsdl2-net-dev / libsdl2-net-2.0-0
+- libsdl2-ttf-dev / libsdl2-ttf-2.0-0
 
 ### Windows
 
-Download the development files for your platform and your Environment. You may want to download the binary files as well.
+- [SDL 2](https://www.libsdl.org/download-2.0.php)
+- [IMG 2](https://www.libsdl.org/projects/SDL_image/)
+- [TTF 2](https://www.libsdl.org/projects/SDL_ttf/)
+- [MIX 2](https://www.libsdl.org/projects/SDL_mixer/)
+- [NET 2](https://www.libsdl.org/projects/SDL_net/)
 
-***If you have trouble with 64 bit files may have to use the 32 bit libraries in order to compile for 64 bit systems.***
-
-Extract the include and lib directory you have to use to your libraries path (example: `C:/libraries/SDL/include/`).
-
-***Remember this path, you will need this later to configure the make file.***
+Download the development files for your platform and your Environment. 
+Extract the library files into your library directories. 
 
 ## Lua
 
@@ -131,23 +174,19 @@ Extract the include and lib directory you have to use to your libraries path (ex
 
 ### Linux
 
-Most linux distributions will have python as supported package (python-dev). 
-If you decide otherwise you have to download the following archive.
+Direct Download:
 
 - [Python 34](https://www.python.org/downloads/release/python-346/)
 
-Download the tarball/zip and extract it to your desired path.
-
-***Remember the path of the include/ and libs/ directories***
+Terminal: (Most linux distributions will have python as supported package (python-dev))
+ 
+- python-dev / libpython-dev
 
 ### Windows
 
 - [Python 34](https://www.python.org/downloads/release/python-346/)
 
-Download the tarball/zip and extract it to your desired path.
-
-***Remember the path of the include/ and libs/ directories***
-
+Download the tarball/zip and extract the library files into your library directories. 
 
 # Installation
 
@@ -159,34 +198,7 @@ Download the tarball/zip and extract it to your desired path.
 
 ### GNU make
 
-1. Change parameters at the section `# Define Variables` in the file Turbo/Turbo.make to fit your system requirements:
-
-	1.1 `INCD`: include directory of SDL2 and Python
-	
-	[example `INCD := -IC:/libraries/SDL/include/ -IC:/libraries/Python/include/`]
-	
-	1.2 `LIBD`: library directory of SDL2 and Python
-	
-	[example: `LIBD := -IC:/libraries/SDL/lib/ -IC:/libraries/Python/libs/`]
-	
-	1.3 `PROJECT`: desired output file name
-
-	[example: `PROJECT := MyApp`]
-
-	1.4 `CFLAGS` and `CPPFLAGS`: compiler flags
-	
-	[example: `CFLAGS := -c -Wall -Werror` and `CPPFLAGS := -std=c++11`]
-	
-	1.5 `LDFLAGS`: linker flags
-
-	[example: `LDFLAGS := -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer`]
-
-If you have done all the above things you can now build Turbo with the following command.
-(This requires, that you have added the make executable to your Environment path)
-	
-	`make Turbo.make`
-
-This command should generate object files into the directory obj and a executable in the base directory of the project.
+-
 
 ### cmake
 
@@ -194,9 +206,7 @@ This command should generate object files into the directory obj and a executabl
 
 ### qmake
 
-The easiest way (IMO) is to use qmake.
-
-- Get a functioning version of qmake (comes with QT, but is available as standalone)
+- Get a functioning version of qmake (comes with QT, but is available as standalone as well)
 - create a .pro file
     - execute `qmake -project` in the working directory
 - execute `qmake`

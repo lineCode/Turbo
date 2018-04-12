@@ -5,26 +5,36 @@ namespace TURBO
     namespace VIDEO
     {
         Window::Window(const std::string &title, MATH::Rect geometry, Uint32 flags)
-            : geometry(geometry)
+            : geometry(geometry)//, SCRIPT::LuaObject(__FUNCTION__)
         {
-            window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
-
-            if(window != nullptr)
+            if(SYSTEM::SDL::SDL_IS_INIT)
             {
-                if(flags & SDL_WINDOW_OPENGL)
+                window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
+
+                if(window != nullptr)
                 {
-                    SYSTEM::SDL::OPENGL_IS_INIT = true;
+                    if(flags & SDL_WINDOW_OPENGL)
+                    {
+                        SYSTEM::SDL::OPENGL_IS_INIT = true;
+                    }
+                }
+                else
+                {
+                    UTIL::Log::err(SDL_GetError());
                 }
             }
             else
             {
-                UTIL::Log::err(SDL_GetError());
+                UTIL::Log::err("SDL is not initialized");
             }
         }
 
         Window::~Window()
         {
-            SDL_DestroyWindow(window);
+            if(window != nullptr)
+            {
+                SDL_DestroyWindow(window);
+            }
         }
 
         SDL_Window * Window::getWindow()
@@ -171,7 +181,7 @@ namespace TURBO
             return closed;
         }
 
-        void Window::registerToLuaScript(lua_State *state)
+        void Window::registerObject(lua_State *state)
         {
             luabridge::getGlobalNamespace(state)
                 .beginNamespace("VIDEO")

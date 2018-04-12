@@ -15,6 +15,11 @@ namespace TURBO
             return class_name;
         }
 
+        void LuaObject::registerObject(lua_State *state)
+        {
+
+        }
+
         TestObject::TestObject()
             : LuaObject(__FUNCTION__)
         {
@@ -64,6 +69,14 @@ namespace TURBO
             return lua_tostring(lua_state, -1);
         }
 
+        void Lua::addVariable(LuaObject &object)
+        {
+            luabridge::getGlobalNamespace(lua_state)
+                .beginNamespace("Global")
+                .addVariable(object.getClassName().c_str(), &object)
+                .endNamespace();
+        }
+
         void Lua::getGlobal(std::string name)
         {
             lua_getglobal(lua_state, name.c_str());
@@ -109,12 +122,6 @@ namespace TURBO
                 return 0;
             }
             return 1;
-        }
-
-        int Lua::callFunctionFromScript(std::string filename, std::string function)
-        {
-
-            return 0;
         }
 
         int Lua::registerFunction(std::string name, lua_CFunction function)
