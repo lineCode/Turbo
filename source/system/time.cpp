@@ -172,6 +172,7 @@ namespace TURBO
             Timer::timers++;
             timer_id = Timer::timers;
 
+            //reset();
             start();
         }
 
@@ -180,8 +181,7 @@ namespace TURBO
             timer_started = getTicks();
             if(state != TIMER_STATE::STARTED)
             {
-                elapsed_time = 0;
-                state        = TIMER_STATE::STARTED;
+                state = TIMER_STATE::STARTED;
             }
             else
             {
@@ -196,7 +196,8 @@ namespace TURBO
             timer_paused = getTicks();
             if(state == TIMER_STATE::STARTED)
             {
-                Uint32 time_diff = timer_paused - timer_started;
+                Uint32 start_resume = (timer_resumed > timer_started) ? timer_resumed : timer_started;
+                Uint32 time_diff = timer_paused - start_resume;
                 active_time += time_diff;
                 elapsed_time += time_diff;
                 state            = TIMER_STATE::PAUSED;
@@ -223,9 +224,13 @@ namespace TURBO
             if(state != TIMER_STATE::STOPPED)
             {
                 Uint32 diff_time = (timer_resumed > timer_started) ? timer_resumed : timer_started;
-                if(state != TIMER_STATE::PAUSED)
+                if(state == TIMER_STATE::STARTED)
                 {
                     active_time += timer_stopped - diff_time;
+                }
+                else if(state == TIMER_STATE::PAUSED)
+                {
+                    paused_time += timer_stopped - diff_time;
                 }
                 elapsed_time += timer_stopped - diff_time;
                 state            = TIMER_STATE::STOPPED;
@@ -354,7 +359,8 @@ namespace TURBO
             timer_paused = getTicks();
             if(state == TIMER_STATE::STARTED)
             {
-                Uint64 time_diff = timer_paused - timer_started;
+                Uint64 start_resume = (timer_resumed > timer_started) ? timer_resumed : timer_started;
+                Uint64 time_diff = timer_paused - start_resume;
                 active_time += time_diff;
                 elapsed_time += time_diff;
                 state            = TIMER_STATE::PAUSED;
@@ -381,9 +387,13 @@ namespace TURBO
             if(state != TIMER_STATE::STOPPED)
             {
                 Uint64 diff_time = (timer_resumed > timer_started) ? timer_resumed : timer_started;
-                if(state != TIMER_STATE::PAUSED)
+                if(state == TIMER_STATE::STARTED)
                 {
                     active_time += timer_stopped - diff_time;
+                }
+                else if(state == TIMER_STATE::PAUSED)
+                {
+                    paused_time += timer_stopped - diff_time;
                 }
                 elapsed_time += timer_stopped - diff_time;
                 state            = TIMER_STATE::STOPPED;

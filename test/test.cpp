@@ -56,7 +56,7 @@ void test()
 
     b1.setBackgroundColor({255, 255, 0, 255});
     b2.setBackgroundColor({255, 0, 0, 255});
-    b2.setBackgroundTexture("resources/images/mushroom.png", &renderer);
+    b2.setBackgroundTexture("resources/image/mushroom.png", &renderer);
     b3.setBackgroundColor({255, 0, 255, 255});
     b4.setBackgroundColor({0, 0, 0, 255});
     b4.setFontColor({255, 255, 255, 255});
@@ -194,10 +194,84 @@ void test5()
     }
 };
 
+void test6()
+{
+    LOG("start");
+    TS::SDL sdl{};
+    sdl.initSDL(SDL_INIT_EVERYTHING);
+    sdl.initMIX(MIX_INIT_FLAC | MIX_INIT_MP3);
+
+    if(sdl.MIX_IS_INIT)
+    {
+        LOG("init");
+    }
+
+    TV::Window window = TV::Window();
+    TA::MediaPlayer media_player = TA::MediaPlayer(TURBO::TURBO_AUDIO_PATH);
+    media_player.play();
+    media_player.setVolume(20);
+
+    while(media_player.isPlaying() && TS::SYSTEM_RUNNING)
+    {
+        SDL_Event event = {};
+        while(SDL_PollEvent(&event))
+        {
+            TI::Keyboard::pollEvent(event);
+
+            if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
+            {
+                TS::SYSTEM_RUNNING = false;
+            }
+
+            if(TI::Keyboard::pressedOR(SDLK_PLUS, SDLK_KP_PLUS, SDLK_UP))
+            {
+                media_player.setVolume(media_player.getVolume() + 5);
+            }
+            else if(TI::Keyboard::pressedOR(SDLK_MINUS, SDLK_KP_MINUS, SDLK_DOWN))
+            {
+                media_player.setVolume(media_player.getVolume() - 5);
+            }
+
+            if(TI::Keyboard::pressed(SDLK_RIGHT, KMOD_LCTRL))
+            {
+                media_player.next();
+            }
+            else if(TI::Keyboard::pressed(SDLK_LEFT, KMOD_LCTRL))
+            {
+                media_player.previous();
+            }
+            else if(TI::Keyboard::pressedOR(SDLK_RIGHT, SDLK_l))
+            {
+                media_player.setPosition(media_player.getPosition() + 100);
+            }
+            else if(TI::Keyboard::pressedOR(SDLK_LEFT, SDLK_k))
+            {
+                media_player.setPosition(media_player.getPosition() - 100);
+            }
+
+            if(TI::Keyboard::pressed(SDLK_SPACE))
+            {
+                if(media_player.isPaused())
+                {
+                    LOG("PLAY");
+                    media_player.resume();
+                }
+                else
+                {
+                    LOG("PAUSE");
+                    media_player.pause();
+                }
+            }
+        }
+        SDL_Delay(5);
+    }
+}
+
 int main(int argc, char ** argv)
 {
     TS::PTimer ptimer{};
-    test();
+
+    test6();
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;

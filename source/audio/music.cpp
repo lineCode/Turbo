@@ -8,22 +8,7 @@ namespace TURBO
             : path(path),
               state(MEDIUM_STATE::STOPPED)
         {
-            if(SYSTEM::SDL::MIX_IS_INIT)
-            {
-                if(UTIL::File::hasFilter(path, std::vector<std::string>{"mp3", "ogg", "flac"}))
-                {
-                    music = Mix_LoadMUS(path.c_str());
-                    if(music != nullptr)
-                    {
-                        music_type = Mix_GetMusicType(music);
-                        this->path = path;
-                    }
-                }
-            }
-            else
-            {
-                UTIL::Log::err("SDL_MIX is not initialized");
-            }
+            setMusic(path);
         }
 
         Music::~Music()
@@ -32,6 +17,7 @@ namespace TURBO
             {
                 stop();
                 Mix_FreeMusic(music);
+                music = nullptr;
             }
         }
 
@@ -42,15 +28,24 @@ namespace TURBO
 
         Mix_Music * Music::setMusic(const std::string path)
         {
-            if(UTIL::File::hasFilter(path, std::vector<std::string>{"mp3", "ogg", "flac"}))
+            if(SYSTEM::SDL::MIX_IS_INIT)
             {
-                stop();
-                music = Mix_LoadMUS(path.c_str());
-                if(music != nullptr)
+                if(UTIL::File::hasFilter(path, std::vector<std::string>{"mp3", "ogg", "flac"}))
                 {
-                    music_type = Mix_GetMusicType(music);
-                    this->path = path;
+                    if(UTIL::Dir::fileExists(path))
+                    {
+                        music = Mix_LoadMUS(path.c_str());
+                        if(music != nullptr)
+                        {
+                            music_type = Mix_GetMusicType(music);
+                            this->path = path;
+                        }
+                    }
                 }
+            }
+            else
+            {
+                UTIL::Log::err("SDL_MIX is not initialized");
             }
             return music;
         }
@@ -70,16 +65,36 @@ namespace TURBO
             return state;
         }
 
+        MEDIUM_STATE Music::setState(MEDIUM_STATE state)
+        {
+            if(state == MEDIUM_STATE::PLAYING)
+            {
+                if(this->state == MEDIUM_STATE::PAUSED)
+                {
+                    resume();
+                }
+                else
+                {
+                    play();
+                }
+            }
+            else if(state == MEDIUM_STATE::PAUSED)
+            {
+                pause();
+            }
+            else if(state == MEDIUM_STATE::STOPPED)
+            {
+                stop();
+            }
+        }
+
         MEDIUM_STATE Music::rewind()
         {
-            if(music_type == Mix_MusicType::MUS_MOD || music_type == Mix_MusicType::MUS_OGG ||
-                music_type == Mix_MusicType::MUS_MP3 || music_type == Mix_MusicType::MUS_MID)
+            if(music_type >= Mix_MusicType::MUS_MOD && music_type <= Mix_MusicType::MUS_MP3_MAD)
             {
                 if(music != nullptr)
                 {
-                    stop();
                     Mix_RewindMusic();
-                    state = MEDIUM_STATE::STOPPED;
                 }
             }
             return state;

@@ -13,24 +13,29 @@ namespace TURBO
               shuffle_on(false),
               repeat_on(false)
         {
+            this->path = (path.back() == '/') ? path : path + "/";
             position.reset();
-            UTIL::Dir dir(path);
-            for(const auto & file : dir.getFiles())
+            UTIL::Dir dir(this->path);
+            for(const auto &file : dir.getFiles())
             {
                 if(UTIL::File::hasFilter(file, MUSIC_EXTENSIONS))
                 {
-                    Music * m = new Music(file);
+                    Music *m = new Music(file);
                     playlist.push_back(m);
                     current_medium = m;
                 }
             }
+            setVolume(volume);
+            setShuffle(shuffle_on);
+            setRepeat(repeat_on);
         }
 
         MediaPlayer::~MediaPlayer()
         {
+            stop();
             for(auto file : playlist)
             {
-                file->~Music();
+                delete file;
             }
         }
 
@@ -88,7 +93,7 @@ namespace TURBO
             {
                 fireCallback(EVENT_TYPE::ON_MUTE);
                 last_mute_volume = volume;
-                volume = 0;
+                volume           = 0;
             }
             else
             {
@@ -110,16 +115,22 @@ namespace TURBO
 
         Uint32 MediaPlayer::setPosition(Uint32 position)
         {
-            double new_position = position / 1000;
-            if(Mix_SetMusicPosition(new_position) == 0)
+            if(UTIL::File::hasFilter(current_medium->getPath(), std::vector<std::string>{"mp3", "ogg", "mod"}))
             {
-                fireCallback(EVENT_TYPE::ON_POSITION_CHANGED);
-                this->position.addActiveTime(position - this->position.getActiveTime());
-                return this->position.getActiveTime();
-            }
-            else
-            {
-                return 0;
+                if(position > 0)
+                {
+                    double new_position = position / 1000;
+                    if(Mix_SetMusicPosition(new_position) == 0)
+                    {
+                        fireCallback(EVENT_TYPE::ON_POSITION_CHANGED);
+                        this->position.addActiveTime(position - this->position.getActiveTime());
+                        return this->position.getActiveTime();
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
             }
         }
 
@@ -129,6 +140,34 @@ namespace TURBO
             {
                 position.reset();
                 fireCallback(EVENT_TYPE::ON_REWIND);
+            }
+            return current_medium->getState();
+        }
+
+        MEDIUM_STATE MediaPlayer::setPlayback(bool play)
+        {
+            if(play)
+            {
+                LOG("play");
+                current_medium->resume();
+            }
+            else
+            {
+                LOG("pause");
+                current_medium->pause();
+            }
+            return current_medium->getState();
+        }
+
+        MEDIUM_STATE MediaPlayer::togglePlayback()
+        {
+            if(current_medium->getState() == MEDIUM_STATE::PLAYING)
+            {
+                current_medium->pause();
+            }
+            else if(current_medium->getState() == MEDIUM_STATE::PAUSED)
+            {
+                current_medium->resume();
             }
             return current_medium->getState();
         }
@@ -165,7 +204,7 @@ namespace TURBO
 
         MEDIUM_STATE MediaPlayer::stop()
         {
-            if(current_medium->stop() == MEDIUM_STATE ::STOPPED && current_medium != nullptr)
+            if(current_medium->stop() == MEDIUM_STATE::STOPPED && current_medium != nullptr)
             {
                 fireCallback(EVENT_TYPE::ON_STOP);
                 position.stop();
@@ -173,7 +212,7 @@ namespace TURBO
             return current_medium->getState();
         }
 
-        Music * MediaPlayer::next()
+        Music *MediaPlayer::next()
         {
             if(playlist_position == playlist.size() - 1)
             {
@@ -183,9 +222,10 @@ namespace TURBO
             {
                 setPlaylistPosition(playlist_position + 1);
             }
+            return current_medium;
         }
 
-        Music * MediaPlayer::previous()
+        Music *MediaPlayer::previous()
         {
             if(playlist_position == 0)
             {
@@ -195,6 +235,7 @@ namespace TURBO
             {
                 setPlaylistPosition(playlist_position - 1);
             }
+            return current_medium;
         }
 
         bool MediaPlayer::setShuffle(bool shuffle)
@@ -303,17 +344,17 @@ namespace TURBO
         {
             for(auto file : playlist)
             {
-                file->~Music();
+                delete file;
             }
 
             this->path = path;
             UTIL::Dir dir(path);
 
-            for(const auto & file : dir.getFiles())
+            for(const auto &file : dir.getFiles())
             {
                 if(UTIL::File::hasFilter(file, MUSIC_EXTENSIONS))
                 {
-                    Music * m = new Music(file);
+                    Music *m = new Music(file);
                     playlist.push_back(m);
                     current_medium = m;
                 }

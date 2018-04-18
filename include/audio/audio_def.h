@@ -11,7 +11,9 @@ namespace TURBO
 {
     namespace AUDIO
     {
-        const std::vector<std::string> MUSIC_EXTENSIONS{"MP3", "OGG", "FLAC", "MID", "MOD", "WAV"};
+        const std::vector<std::string> AUDIO_EXTENSIONS{"NONE", "CMD", "WAV", "MOD", "MID", "OGG",
+                                                        "MP3", "MP3_MAD", "FLAC", "MODPLUG"};
+        const std::vector<std::string> MUSIC_EXTENSIONS{"MP3", "OGG", "FLAC", "MID", "MOD"};
 
         const Uint8 MIN_VOLUME = 0;
         const Uint8 MAX_VOLUME = MIX_MAX_VOLUME;
