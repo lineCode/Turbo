@@ -209,7 +209,7 @@ void test6()
     TV::Window window = TV::Window();
     TA::MediaPlayer media_player = TA::MediaPlayer(TURBO::TURBO_AUDIO_PATH);
     media_player.play();
-    media_player.setVolume(20);
+    media_player.setVolume(0);
 
     while(media_player.isPlaying() && TS::SYSTEM_RUNNING)
     {
@@ -249,7 +249,7 @@ void test6()
                 media_player.setPosition(media_player.getPosition() - 100);
             }
 
-            if(TI::Keyboard::pressed(SDLK_SPACE))
+            if(TI::Keyboard::down(SDLK_SPACE))
             {
                 if(media_player.isPaused())
                 {
@@ -271,7 +271,10 @@ int main(int argc, char ** argv)
 {
     TS::PTimer ptimer{};
 
+    //TI::KeyCombination comb = TI::KeyCombination({SDLK_LCTRL});
+
     test6();
+
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;
