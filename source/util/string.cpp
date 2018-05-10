@@ -4,6 +4,49 @@ namespace TURBO
 {
     namespace UTIL
     {
+        std::string toUnicode(Uint16 code)
+        {
+            char chars[5];
+
+            // 0x00 - 0x7F
+            if(code <= 0x7F)
+            {
+                chars[0] = static_cast<char>(code & 0x7F);
+                chars[1] = '\0';
+            }
+                // 0x080 - 0x7FF
+            else if(code <= 0x7FF)
+            {
+                chars[1] = static_cast<char>(0x80 | (code & 0x3F));
+                chars[0] = static_cast<char>(0xC0 | ((code >> 6) & 0x1F));
+                chars[2] = '\0';
+            }
+                // 0x8000 - 0xFFFF
+            else if(code <= 0xFFFF)
+            {
+                chars[2] = static_cast<char>(0x80 | (code & 0x3F));
+                chars[1] = static_cast<char>(0x80 | ((code >> 6) & 0x3F));
+                chars[0] = static_cast<char>(0xE0 | ((code >> 12) & 0xF));
+                chars[3] = '\0';
+            }
+                // 0x10000 - 0x10FFFF
+            else if(code <= 0x10FFFF)
+            {
+                chars[3] = static_cast<char>(0x80 | (code & 0x3F));
+                chars[2] = static_cast<char>(0x80 | ((code >> 6) & 0x3F));
+                chars[1] = static_cast<char>(0x80 | ((code >> 12) & 0x3F));
+                chars[0] = static_cast<char>(0xF0 | ((code >> 18) & 0x7));
+                chars[4] = '\0';
+            }
+            else
+            {
+                chars[0] = static_cast<char>(0x0);
+                chars[1] = '\0';
+            }
+
+            return std::string(chars);
+        }
+
         std::string trim(const std::string & str, const std::string & whitespace)
         {
             const auto strBegin = str.find_first_not_of(whitespace);

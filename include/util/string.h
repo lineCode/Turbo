@@ -12,6 +12,7 @@ namespace TURBO
 {
     namespace UTIL
     {
+        std::string                 toUnicode(Uint16 code);
         std::string                 trim(const std::string & str, const std::string & whitespace = " \t");
         std::string                 toLower(std::string haystack);
         std::vector<std::string>    explode(std::string haystack, char needle);
