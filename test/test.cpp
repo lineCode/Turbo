@@ -1,3 +1,5 @@
+#include <SDL_net.h>
+#include <locale>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
@@ -25,7 +27,7 @@ void quit()
     TS::SYSTEM_RUNNING = false;
 }
 
-void test()
+void gui()
 {
     LOG("Loading libraries");
 
@@ -36,21 +38,21 @@ void test()
 
     LOG("Set up UI");
 
-    auto window = TV::Window("Title", TM::Rect(50, 50, 600, 600), SDL_WINDOW_SHOWN);
-    auto renderer = TV::Renderer(window, -1, SDL_RENDERER_ACCELERATED);
+    auto window      = TV::Window("Title", TM::Rect(50, 50, 600, 600), SDL_WINDOW_SHOWN);
+    auto renderer    = TV::Renderer(window, -1, SDL_RENDERER_ACCELERATED);
     auto main_widget = TG::MainWidget(window, renderer);
-    auto hbox = TG::Box(&main_widget, TG::ORIENTATION::VERTICAL);
-    auto vbox1 = TG::Box(nullptr, TG::ORIENTATION::HORIZONTAL);
-    auto vbox2 = TG::Box(nullptr, TG::ORIENTATION::HORIZONTAL);
-    auto grid = TG::Grid(nullptr, 3, 3);
-    auto b1 = TG::Button("Hi");
-    auto b2 = TG::Button("Bye");
-    auto b3 = TG::Button("Today");
-    auto b4 = TG::Button("Käse?");
-    auto b5 = TG::Button("Test");
-    auto b6 = TG::Button("Grid-Test");
-    auto b7 = TG::Button("Grid-Test2");
-    auto wi = TG::Button("Black");
+    auto hbox        = TG::Box(&main_widget, TG::ORIENTATION::VERTICAL);
+    auto vbox1       = TG::Box(nullptr, TG::ORIENTATION::HORIZONTAL);
+    auto vbox2       = TG::Box(nullptr, TG::ORIENTATION::HORIZONTAL);
+    auto grid        = TG::Grid(nullptr, 3, 3);
+    auto b1          = TG::Button("Hi");
+    auto b2          = TG::Button("Bye");
+    auto b3          = TG::Button("Today");
+    auto b4          = TG::Button("Käse?");
+    auto b5          = TG::Button("Test");
+    auto b6          = TG::Button("Grid-Test");
+    auto b7          = TG::Button("Grid-Test2");
+    auto wi          = TG::Button("Black");
 
     renderer.getFont()->setFontSize(60);
 
@@ -113,7 +115,7 @@ void test()
 
 }
 
-void test2(int argc, char ** argv)
+void cmdParser(int argc, char **argv)
 {
     TS::CMDParser cmd_parser = TS::CMDParser(argc, argv);
 
@@ -130,47 +132,19 @@ void test2(int argc, char ** argv)
     if(cmd_parser.isSet("-h"))
         cmd_parser.printHelp();
 
-    for(const auto & arg : cmd_parser.getArgument("-w"))
+    for(const auto &arg : cmd_parser.getArgument("-w"))
     {
         std::cout << arg << " ";
     }
     std::cout << "\n";
 }
 
-/**
- * Execute a script
- */
-void test3()
-{
-    TC::Lua l = TC::Lua();
-    l.callScript("resources/script/lua/test.lua");
-}
-
-/**
- * Execute a script and get return value
- */
-void test4()
-{
-    TC::Lua l = TC::Lua();
-    l.callScript("resources/script/lua/test.lua");
-
-
-    l.getGlobal("div");
-    lua_pushnumber(l.getState(), 2);
-    lua_pushnumber(l.getState(), 4);
-
-    if(lua_pcall(l.getState(), 2, 1, 0))
-        l.printError();
-
-    std::cout << "result of div " << lua_tonumber(l.getState(), -1) << std::endl;
-}
-
-void test5()
+void luaScript()
 {
     TS::SDL sdl{};
     sdl.initSDL();
     sdl.initTTF();
-    TV::Window win = TV::Window("Test", TM::Rect(20, 20, 400, 400), SDL_WINDOW_SHOWN);
+    TV::Window   win = TV::Window("Test", TM::Rect(20, 20, 400, 400), SDL_WINDOW_SHOWN);
     TV::Renderer ren = TV::Renderer(win, -1, SDL_RENDERER_ACCELERATED);
     ren.setDrawColor({255, 0, 0, 255});
     ren.setClearColor({0, 255, 0, 255});
@@ -178,7 +152,7 @@ void test5()
     ren.clear();
 
     TC::Lua l = TC::Lua();
-    auto L = l.getState();
+    auto    L = l.getState();
 //    win.registerObject(L);
     l.registerObject<TV::Window>(L);
 
@@ -194,19 +168,13 @@ void test5()
     }
 };
 
-void test6()
+void musicPlayer()
 {
-    LOG("start");
     TS::SDL sdl{};
     sdl.initSDL(SDL_INIT_EVERYTHING);
     sdl.initMIX(MIX_INIT_FLAC | MIX_INIT_MP3);
 
-    if(sdl.MIX_IS_INIT)
-    {
-        LOG("init");
-    }
-
-    TV::Window window = TV::Window();
+    TV::Window      window       = TV::Window();
     TA::MediaPlayer media_player = TA::MediaPlayer(TURBO::TURBO_AUDIO_PATH);
     media_player.play();
     media_player.setVolume(0);
@@ -267,13 +235,89 @@ void test6()
     }
 }
 
-int main(int argc, char ** argv)
+int server()
+{
+    TS::SDL sdl = TS::SDL();
+    sdl.initSDL(SDL_INIT_EVERYTHING);
+    sdl.initNET();
+
+
+    LOG("START SERVER");
+
+    TN::TCPServer server = TN::TCPServer(13370);
+    TN::NetPackage package{};
+
+    Uint16 text[] = {0x050a, 0x0065, 0x006c, 0x006c,
+                     0x006f, 0x0020, 0x02ac, 0x006f,
+                     0x0072, 0x006c, 0x0064, 0x0020,
+                     0x0074, 0x006f, 0x0020, 0x03a8,
+                     0x006f, 0x0075, 0x0020, 0x006d,
+                     0x0079, 0x0020, 0x0066, 0x0072,
+                     0x0069, 0x20ac, 0x006e, 0x0064,
+                     0x002e, 0x0020, 0xfc00, 0x0020,
+                     0x0904, 0x0020, 0x10F7, 0x1435};
+
+    std::copy(text, text + sizeof(text)/ sizeof(Uint16), package.data);
+
+    // Wait for 1 Client, wait at max 10 sec
+    server.waitAccept(1, 10000);
+
+    server.send(package);
+
+    while(!server.receive(package))
+    {
+        SDL_Delay(200);
+    }
+
+    package.print();
+
+    return 0;
+}
+
+int client()
+{
+    TS::SDL sdl = TS::SDL();
+    sdl.initSDL(SDL_INIT_EVERYTHING);
+    sdl.initNET();
+
+
+    TN::TCPClient  client = TN::TCPClient("127.0.0.1", 13370);
+    TN::NetPackage package{};
+
+    while(!client.receive(package))
+    {
+        SDL_Delay(200);
+    }
+
+    package.print();
+
+    Uint16 text[] = {0x050A, 0x0065, 0x006C, 0x006C,
+                     0x006F, 0x0020, 0x15F7, 0x0020,
+                     0x15C6, 0x0020, 0x18B7, 0x0020,
+                     0x1729, 0x0000, 0x0000, 0x0000,
+                     0x0000, 0x0000, 0x0000, 0x0000,
+                     0x0000, 0x0000, 0x0000, 0x0000,
+                     0x0000, 0x0000, 0x0000, 0x0000,
+                     0x0000, 0x0000, 0x0000, 0x0000,
+                     0x0000, 0x0000, 0x0000, 0x0000,};
+
+
+    std::copy(text, text + sizeof(text)/ sizeof(Uint16), package.data);
+
+    client.send(package);
+
+
+    return 0;
+}
+
+int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
     //TI::KeyCombination comb = TI::KeyCombination({SDLK_LCTRL});
 
-    test6();
+    //test6();
+
 
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
