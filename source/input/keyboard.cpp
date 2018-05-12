@@ -18,7 +18,19 @@ namespace TURBO
 
         bool Key::operator<(const Key &other) const
         {
-            return code < other.code;
+            return code < other.getCode();
+        }
+
+        KeyCombination Key::operator&(Key other)
+        {
+            KeyCombination key_comb = KeyCombination(Key{other.getCode()});
+            return key_comb &= Key{code};
+        }
+
+        KeyCombination Key::operator|(Key other)
+        {
+            KeyCombination key_comb = KeyCombination(Key{other.getCode()});
+            return key_comb |= Key{code};
         }
 
         Sint64 Key::setCode(Sint64 code)
@@ -39,9 +51,15 @@ namespace TURBO
             return code;
         }
 
-        Sint64 Key::getCode()
+        Sint64 Key::getCode() const
         {
             return code;
+        }
+
+        KeyMod::KeyMod(SDL_Keymod mod)
+            : code(mod)
+        {
+
         }
 
         KeyMod::KeyMod(KEYMOD mod)
@@ -56,12 +74,6 @@ namespace TURBO
 
         }
 
-        KeyMod::KeyMod(KeyMod &mod)
-            : code(mod.getMod())
-        {
-
-        }
-
         Sint64 KeyMod::getMod()
         {
             return code;
@@ -72,82 +84,187 @@ namespace TURBO
             return Key{code};
         }
 
+        KeyCombination::KeyCombination(SDL_Keycode keycode)
+        {
+            combs.insert(std::set<Key>{Key{keycode}});
+        }
+
+        KeyCombination::KeyCombination(SDL_Keymod keymod)
+        {
+            combs.insert(std::set<Key>{KeyMod{keymod}.getKey()});
+        }
+
         KeyCombination::KeyCombination(Key key)
         {
-            keys.insert(key);
+            combs.insert(std::set<Key>{key});
         }
 
         KeyCombination::KeyCombination(KeyMod mod)
         {
-            keys.insert(mod.getKey());
+            combs.insert(std::set<Key>{mod.getKey()});
         }
 
-        KeyCombination::KeyCombination(KeyCombination &combination)
+        std::set<std::set<Key>> KeyCombination::getComb()
         {
-            setKeys(combination.getKeys());
+            return combs;
         }
 
-        KeyCombination::KeyCombination(Key key1, Key key2)
+        KeyCombination &KeyCombination::operator&(SDL_Keycode keycode)
         {
-            addKey(key1);
-            addKey(key2);
+            *this &= keycode;
+            return *this;
         }
 
-        KeyCombination::KeyCombination(std::set<Key> & keys)
+        KeyCombination &KeyCombination::operator&=(SDL_Keycode keycode)
         {
-            addKeys(keys);
+            for(auto & comb : combs)
+            {
+                auto c = comb;
+                c.insert(Key{keycode});
+                combs.erase(comb);
+                combs.insert(c);
+            }
+            return *this;
         }
 
-        std::set<Key> KeyCombination::setKeys(std::set<Key> keys)
+        KeyCombination &KeyCombination::operator&(SDL_Keymod keymod)
         {
-            this->keys = keys;
-            return keys;
+            *this &= keymod;
+            return *this;
         }
 
-        std::set<Key> KeyCombination::addKey(Key key)
+        KeyCombination &KeyCombination::operator&=(SDL_Keymod keymod)
         {
-            keys.insert(key);
-            return keys;
-        }
-
-        std::set<Key> KeyCombination::addKeys(std::set<Key> keys)
-        {
-            keys.insert(keys.begin(), keys.end());
-            return this->keys;
-        }
-
-        std::set<Key> KeyCombination::getKeys()
-        {
-            return keys;
+            for(auto & comb : combs)
+            {
+                auto c = comb;
+                c.insert(Key{keymod});
+                combs.erase(comb);
+                combs.insert(c);
+            }
+            return *this;
         }
 
         KeyCombination &KeyCombination::operator&(Key key)
         {
+            *this &= key;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator&=(Key key)
+        {
+            for(auto & comb : combs)
+            {
+                auto c = comb;
+                c.insert(key);
+                combs.erase(comb);
+                combs.insert(c);
+            }
             return *this;
         }
 
         KeyCombination &KeyCombination::operator&(KeyMod mod)
         {
+            *this &= mod;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator&=(KeyMod mod)
+        {
+            for(auto & comb : combs)
+            {
+                auto c = comb;
+                c.insert(mod.getKey());
+                combs.erase(comb);
+                combs.insert(c);
+            }
             return *this;
         }
 
         KeyCombination &KeyCombination::operator&(KeyCombination combination)
         {
+            *this &= combination;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator&=(KeyCombination combination)
+        {
+            for(auto & first : combs)
+            {
+                for(auto & second : combination.getComb())
+                {
+                    auto c = first;
+                    for(auto k : second)
+                    {
+                        c.insert(k);
+                    }
+                    combs.erase(first);
+                    combs.insert(c);
+                }
+            }
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator|(SDL_Keycode keycode)
+        {
+            *this |= keycode;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator|=(SDL_Keycode keycode)
+        {
+            combs.insert(std::set<Key>{Key{keycode}});
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator|(SDL_Keymod keymod)
+        {
+            *this |= keymod;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator|=(SDL_Keymod keymod)
+        {
+            combs.insert(std::set<Key>{Key{keymod}});
             return *this;
         }
 
         KeyCombination &KeyCombination::operator|(Key key)
         {
+            *this |= key;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator|=(Key key)
+        {
+            combs.insert(std::set<Key>{key});
             return *this;
         }
 
         KeyCombination &KeyCombination::operator|(KeyMod mod)
         {
+            *this |= mod;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator|=(KeyMod mod)
+        {
+            combs.insert(std::set<Key>{mod.getKey()});
             return *this;
         }
 
         KeyCombination &KeyCombination::operator|(KeyCombination combination)
         {
+            *this |= combination;
+            return *this;
+        }
+
+        KeyCombination &KeyCombination::operator|=(KeyCombination combination)
+        {
+            for(auto & second : combination.getComb())
+            {
+                combs.insert(second);
+            }
             return *this;
         }
 
@@ -199,19 +316,54 @@ namespace TURBO
             text.clear();
         }
 
+
+        bool Keyboard::pressed(KeyCombination comb)
+        {
+            for(auto c : comb.getComb())
+            {
+                bool pressed = true;
+                for(auto k : c)
+                {
+                    pressed = pressed && (key[k.getCode()] == KEY_STATE::PRESSED);
+                }
+                if(pressed)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         bool Keyboard::pressed(SDL_Keycode sym)
         {
             return (key[sym] == KEY_STATE::PRESSED);
         }
 
-//        bool Keyboard::pressed(Key key)
-//        {
-//            return false;
-//        }
+        bool Keyboard::pressed(Key k)
+        {
+            return (key[k.getCode()] == KEY_STATE::PRESSED);
+        }
+
+        bool Keyboard::down(KeyCombination comb)
+        {
+            for(auto c : comb.getComb())
+            {
+                bool pressed = true;
+                for(auto k : c)
+                {
+                    pressed = pressed && (key[k.getCode()] >= KEY_STATE::DOWN);
+                }
+                if(pressed)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         bool Keyboard::down(SDL_Keycode sym)
         {
-            return (key[sym] == KEY_STATE::DOWN);
+            return (key[sym] >= KEY_STATE::DOWN);
         }
 
         bool Keyboard::released(SDL_Keycode sym)

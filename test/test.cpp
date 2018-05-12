@@ -291,15 +291,11 @@ int client()
 
     package.print();
 
+    package.data[TN::PACKAGE_BUFFER] = {0};
     Uint16 text[] = {0x050A, 0x0065, 0x006C, 0x006C,
                      0x006F, 0x0020, 0x15F7, 0x0020,
                      0x15C6, 0x0020, 0x18B7, 0x0020,
-                     0x1729, 0x0000, 0x0000, 0x0000,
-                     0x0000, 0x0000, 0x0000, 0x0000,
-                     0x0000, 0x0000, 0x0000, 0x0000,
-                     0x0000, 0x0000, 0x0000, 0x0000,
-                     0x0000, 0x0000, 0x0000, 0x0000,
-                     0x0000, 0x0000, 0x0000, 0x0000,};
+                     0x1729};
 
 
     std::copy(text, text + sizeof(text)/ sizeof(Uint16), package.data);
@@ -310,15 +306,50 @@ int client()
     return 0;
 }
 
+int keyboard()
+{
+    TS::SDL sdl{};
+    sdl.initSDL(SDL_INIT_EVERYTHING);
+    TV::Window      window       = TV::Window();
+    TI::KeyCombination comb1 = TI::KeyCombination(SDLK_a);
+    TI::KeyCombination comb2 = TI::KeyCombination(TI::Key{SDLK_q});
+
+    comb1 &= SDLK_s;
+    comb1 &= TI::Key{SDLK_d} & TI::Key{SDLK_f};
+
+    comb2 |= TI::Key{SDLK_w};
+    comb2 &= TI::Key{SDLK_e} & TI::Key{SDLK_r};
+
+
+    while(TS::SYSTEM_RUNNING)
+    {
+        SDL_Event event = {};
+        while(SDL_PollEvent(&event))
+        {
+            TI::Keyboard::pollEvent(event);
+
+            if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
+            {
+                TS::SYSTEM_RUNNING = false;
+            }
+
+            if(TI::Keyboard::down(comb1))
+            {
+                LOG("Key combination 1");
+            }
+            if(TI::Keyboard::down(comb2))
+            {
+                LOG("Key combination 2");
+            }
+        }
+    }
+}
+
 int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
-    //TI::KeyCombination comb = TI::KeyCombination({SDLK_LCTRL});
-
-    //test6();
-
-
+    keyboard();
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;

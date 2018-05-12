@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <set>
+#include <iostream>
 
 #include "input/input_def.h"
 #include "system/time.h"
@@ -11,6 +12,8 @@ namespace TURBO
 {
     namespace INPUT
     {
+        class KeyCombination;
+
         class Key
         {
         private:
@@ -20,10 +23,12 @@ namespace TURBO
             explicit Key(SDL_Keycode code);
             explicit Key(Sint64 code);
             bool operator<(const Key & other) const;
+            KeyCombination operator&(Key other);
+            KeyCombination operator|(Key other);
             Sint64 setCode(Sint64 code);
             Sint64 setCode(SDL_Keycode code);
             Sint64 setCode(Key key);
-            Sint64 getCode();
+            Sint64 getCode() const;
         };
 
         class KeyMod
@@ -32,9 +37,9 @@ namespace TURBO
             Sint64 code = 0;
 
         public:
+            explicit KeyMod(SDL_Keymod mod);
             explicit KeyMod(KEYMOD mod);
             explicit KeyMod(Key & code);
-            explicit KeyMod(KeyMod & mod);
             Sint64 getMod();
             Key getKey();
         };
@@ -42,24 +47,34 @@ namespace TURBO
         class KeyCombination
         {
         private:
-            std::set<Key> keys;
+            std::set<std::set<Key>> combs;
 
         public:
+            explicit KeyCombination(SDL_Keycode keycode);
+            explicit KeyCombination(SDL_Keymod keymod);
             explicit KeyCombination(Key key);
             explicit KeyCombination(KeyMod mod);
-            explicit KeyCombination(KeyCombination &combination);
-            KeyCombination(Key key1, Key key2);
-            explicit KeyCombination(std::set<Key> &keys);
-            std::set<Key> setKeys(std::set<Key> keys);
-            std::set<Key> addKey(Key key);
-            std::set<Key> addKeys(std::set<Key> keys);
-            std::set<Key> getKeys();
+            std::set<std::set<Key>> getComb();
+            KeyCombination &operator&(SDL_Keycode keycode);
+            KeyCombination &operator&=(SDL_Keycode keycode);
+            KeyCombination &operator&(SDL_Keymod keymod);
+            KeyCombination &operator&=(SDL_Keymod keymod);
             KeyCombination &operator&(Key key);
+            KeyCombination &operator&=(Key key);
             KeyCombination &operator&(KeyMod mod);
+            KeyCombination &operator&=(KeyMod mod);
             KeyCombination &operator&(KeyCombination combination);
+            KeyCombination &operator&=(KeyCombination combination);
+            KeyCombination &operator|(SDL_Keycode keycode);
+            KeyCombination &operator|=(SDL_Keycode keycode);
+            KeyCombination &operator|(SDL_Keymod keymod);
+            KeyCombination &operator|=(SDL_Keymod keymod);
             KeyCombination &operator|(Key key);
+            KeyCombination &operator|=(Key key);
             KeyCombination &operator|(KeyMod mod);
+            KeyCombination &operator|=(KeyMod mod);
             KeyCombination &operator|(KeyCombination combination);
+            KeyCombination &operator|=(KeyCombination combination);
         };
 
         class Keyboard
@@ -74,8 +89,10 @@ namespace TURBO
             static std::string getText();
             static std::string reduceText();
             static void clearText();
+            static bool pressed(KeyCombination comb);
             static bool pressed(SDL_Keycode sym);
-            //static bool pressed(Key key);
+            static bool pressed(Key key);
+            static bool down(KeyCombination comb);
             static bool down(SDL_Keycode sym);
             static bool released(SDL_Keycode sym);
             static bool pressedAND(SDL_Keycode sym1, SDL_Keycode sym2);
