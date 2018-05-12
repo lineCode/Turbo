@@ -4,22 +4,26 @@ namespace TURBO
 {
     namespace UTIL
     {
-        bool IDB::createDatabase(std::string name)
+        template<typename T>
+        bool IDB<T>::createDatabase(std::string name)
         {
             return query("CREATE DATABASE " + name);
         }
 
-        bool IDB::selectDatabase(std::string name)
+        template<typename T>
+        bool IDB<T>::selectDatabase(std::string name)
         {
             return query("SELECT DATABASE " + name);
         }
 
-        bool IDB::dropDatabase(std::string name)
+        template<typename T>
+        bool IDB<T>::dropDatabase(std::string name)
         {
             return query("DROP DATABASE " + name);
         }
 
-        bool IDB::createTable(std::string name, std::vector<std::string> names, std::vector<std::string> types,
+        template<typename T>
+        bool IDB<T>::createTable(std::string name, std::vector<std::string> names, std::vector<std::string> types,
                               std::vector<std::string> nulls, std::vector<std::string> defaults,
                               std::vector<std::string> uniques, std::vector<std::string> keys)
         {
@@ -63,12 +67,14 @@ namespace TURBO
             return query(sql.str());
         }
 
-        bool IDB::existTable(std::string name)
+        template<typename T>
+        bool IDB<T>::existTable(std::string name)
         {
             return false;
         }
 
-        bool IDB::dropTable(std::string name)
+        template<typename T>
+        bool IDB<T>::dropTable(std::string name)
         {
             return false;
         }

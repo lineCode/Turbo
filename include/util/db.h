@@ -14,7 +14,7 @@ namespace TURBO
     namespace UTIL
     {
         template<typename T>
-        class IDB<T>
+        class IDB
         {
         protected:
             T *handle;
@@ -23,10 +23,10 @@ namespace TURBO
 
         public:
             virtual bool query(std::string query) = 0;
-            bool createDatabase(std::string name);
-            bool selectDatabase(std::string name);
+            virtual bool createDatabase(std::string name);
+            virtual bool selectDatabase(std::string name);
             virtual bool existDatabase(std::string name) = 0;
-            bool dropDatabase(std::string name);
+            virtual bool dropDatabase(std::string name);
             /**
              *
              * @note PRIMARY KEY can not be generically adjusted!
@@ -51,7 +51,7 @@ namespace TURBO
         {
         public:
             DB_MYSQL(std::string host, std::string user, std::string pw, std::string db = "", Uint32 port = 0,
-               std::string socket = "", Uint32 flags);
+               std::string socket = "", Uint32 flags = 0x0);
             ~DB_MYSQL();
             bool query(std::string query) override;
             bool existDatabase(std::string name) override;
