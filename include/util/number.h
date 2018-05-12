@@ -9,8 +9,15 @@ namespace TURBO
 {
     namespace UTIL
     {
-        unsigned                    digits(long number);
-        unsigned                    toNumber(std::string number);
+        unsigned digits(long number);
+
+        unsigned bits(long number);
+
+        unsigned bitTrue(long number);
+
+        unsigned bitsFalse(long number);
+
+        unsigned toNumber(std::string number);
     }
 }
 
