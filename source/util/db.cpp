@@ -5,6 +5,28 @@ namespace TURBO
     namespace UTIL
     {
         template<typename T>
+        T* IDB<T>::getHandle()
+        {
+            return handle;
+        }
+
+        template<typename T>
+        std::vector<std::string> IDB<T>::getQueryCache()
+        {
+            return query_cache;
+        }
+
+        template<typename T>
+        void IDB<T>::cacheQuery(std::string query)
+        {
+            if(query_cache.size() == QUERY_CACHE_SIZE)
+            {
+                query_cache.erase(query_cache.begin());
+            }
+            query_cache.push_back(query);
+        }
+
+        template<typename T>
         bool IDB<T>::createDatabase(std::string name)
         {
             return query("CREATE DATABASE " + name);
@@ -23,51 +45,6 @@ namespace TURBO
         }
 
         template<typename T>
-        bool IDB<T>::createTable(std::string name, std::vector<std::string> names, std::vector<std::string> types,
-                              std::vector<std::string> nulls, std::vector<std::string> defaults,
-                              std::vector<std::string> uniques, std::vector<std::string> keys)
-        {
-            std::stringstream sql;
-
-            sql << "CREATE TABLE " << name << " (";
-
-            if(name.size() == types.size())
-            {
-                for(int index = 0; index < names.size(); ++index)
-                {
-                    sql << names[index] << " (" << types[index] << ") ";
-                    if(index < nulls.size())
-                    {
-                        sql << nulls[index] << " ";
-                    }
-                    else
-                    {
-                        sql << "NOT NULL ";
-                    }
-
-                    if(index < defaults.size())
-                    {
-                        sql << "DEFAULT " << defaults[index] << " ";
-                    }
-
-                    if(index < uniques.size())
-                    {
-                        sql << "UNIQUE ";
-                    }
-
-                    if(index < keys.size())
-                    {
-                        sql << "PRIMARY KEY (" << names[index] << ")";
-                    }
-                }
-            }
-
-            sql << ")";
-
-            return query(sql.str());
-        }
-
-        template<typename T>
         bool IDB<T>::existTable(std::string name)
         {
             return false;
@@ -82,7 +59,7 @@ namespace TURBO
         DB_MYSQL::DB_MYSQL(std::string host, std::string user, std::string pw, std::string db, Uint32 port, std::string socket, Uint32 flags)
         {
             handle = mysql_init(nullptr);
-            mysql_real_connect(handle, host.c_str(), user.c_str(), pw.c_str(), db.c_str(), port, socket.c_str(), flags);
+            mysql_real_connect(handle, host.c_str(), user.c_str(), pw.c_str(), nullptr, port, nullptr, flags);
         }
 
         DB_MYSQL::~DB_MYSQL()
@@ -92,7 +69,13 @@ namespace TURBO
 
         bool DB_MYSQL::query(std::string query)
         {
+            cacheQuery(query);
             return (!mysql_query(handle, query.c_str()));
+        }
+
+        bool DB_MYSQL::useDatabase(std::string name)
+        {
+            return (query("USE " + name));
         }
 
         bool DB_MYSQL::existDatabase(std::string name)
@@ -123,6 +106,7 @@ namespace TURBO
 
         bool DB_SQLITE::query(std::string query)
         {
+            cacheQuery(query);
             return (!sqlite3_exec(handle, query.c_str(), nullptr, nullptr, nullptr));
         }
 

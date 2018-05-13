@@ -343,13 +343,41 @@ int keyboard()
             }
         }
     }
+    return 0;
+}
+
+int database()
+{
+    TU::DB_SQLITE sqlite{"resources/db.sqlite"};
+
+    TU::DB_MYSQL mysql{"localhost", "root", "root"};
+    mysql.dropDatabase("Turbo");
+    mysql.createDatabase("Turbo");
+    mysql.useDatabase("Turbo");
+
+    mysql.createTable("Cars",
+                       std::vector<std::string>{"Id", "Name", "Price"},
+                       std::vector<std::string>{"INT", "TEXT", "INT"},
+                       std::vector<std::string>{},
+                       std::vector<std::string>{},
+                       std::vector<std::string>{},
+                       std::vector<std::string>{},
+                       std::vector<std::string>{"PRIMARY KEY"});
+
+    mysql.insertEntry("Cars", std::vector<std::string>{"Id", "Name", "Price"}, std::vector<std::string>{"0", "Test", "100"});
+
+    for(auto & query : mysql.getQueryCache())
+    {
+        LOG(query);
+    }
+    return 0;
 }
 
 int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
-    keyboard();
+    database();
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;
