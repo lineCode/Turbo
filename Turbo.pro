@@ -6,10 +6,17 @@ TEMPLATE = app
 TARGET = Turbo
 CONFIG = console c++11
 
-LIBS += -lpthread \
-    -L/usr/lib/ \
+#LIBS += \
+# `mysql_config --cflags --libs`
+# `sdl2-config --cflags --libs`
+
+LIBS += -L/usr/lib/ \
+    -lpthread \
+    -lsqlite3 \
+    -lmysqlclient \
     -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2_net \
-    -llua5.2 -lpython3.5m \
+    -llua5.2 \
+    -lpython3.5m \
     -lGLEW -lGL
 
 INCLUDEPATH += include \
@@ -61,6 +68,7 @@ HEADERS += include/turbo.h \
            include/system/system.h \
            include/system/system_def.h \
            include/system/time.h \
+           include/util/db.h \
            include/util/dir.h \
            include/util/file.h \
            include/util/ini.h \
@@ -109,6 +117,7 @@ SOURCES += test/test.cpp \
            source/system/cmd.cpp \
            source/system/sdl.cpp \
            source/system/time.cpp \
+           source/util/db.cpp \
            source/util/dir.cpp \
            source/util/file.cpp \
            source/util/ini.cpp \
