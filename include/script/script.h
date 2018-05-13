@@ -2,6 +2,7 @@
 #define TURBO_SCRIPT_H
 
 #include "script/lua.h"
+#include "script/python.h"
 
 namespace TURBO
 {
