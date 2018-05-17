@@ -12,8 +12,8 @@ namespace TURBO
         class Texture
         {
         private:
-            SDL_Renderer * renderer;
-            SDL_Texture * texture;
+            SDL_Renderer *renderer;
+            SDL_Texture  *texture;
             Sint32 w;
             Sint32 h;
             Uint32 format;
@@ -21,7 +21,7 @@ namespace TURBO
 
         public:
             /**
-             * Creates an empty texture with the given parameters.
+             * Creates an empty texture.
              * @param renderer  a pointer to the renderer
              * @param w         width of the texture
              * @param h         height of the texture
@@ -30,11 +30,25 @@ namespace TURBO
              */
             Texture(SDL_Renderer *renderer, Sint32 w, Sint32 h, Uint32 format = TURBO_SDL_TEXTURE_FORMAT,
                     Sint32 access = TURBO_SDL_TEXTURE_ACCESS);
+
+            /**
+             * Creates an empty texture.
+             * @param renderer a pointer to the sdl renderer
+             * @param surface a pointer to the sdl surface
+             */
             Texture(SDL_Renderer *renderer, SDL_Surface *surface);
+
+            /**
+             * Reloads texture infos.
+             */
             void loadTextureInfo();
-            SDL_Texture * getTexture();
+
+            SDL_Texture *getTexture();
+
             Sint32 getWidth();
+
             Sint32 getHeight();
+
             SDL_Rect getSize();
         };
     }

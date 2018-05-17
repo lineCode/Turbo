@@ -17,13 +17,24 @@ namespace TURBO
         private:
             std::string path;
             SDL_Surface *surface;
-            Sint32 w;
-            Sint32 h;
+            Sint32      w;
+            Sint32      h;
 
         public:
+            /**
+             * Creates a surface.
+             * @param path      the path to the image.
+             * @param renderer  a pointer to the renderer
+             */
             Surface(std::string path, Renderer *renderer);
+
             ~Surface();
+
             SDL_Surface *getSurface();
+
+            /**
+             * Reloads the surface informations.
+             */
             void loadSurfaceInfo();
         };
     }
