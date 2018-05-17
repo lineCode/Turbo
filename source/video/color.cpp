@@ -10,6 +10,14 @@ namespace TURBO
 
         }
 
+        Color::Color(Uint32 color)
+        {
+            r = static_cast<Uint8>((color >> 24) & 0xFF);
+            g = static_cast<Uint8>((color >> 16) & 0xFF);
+            b = static_cast<Uint8>((color >> 8) & 0xFF);
+            a = static_cast<Uint8>(color & 0xFF);
+        }
+
         SDL_Color Color::toSDLColor()
         {
             return {r, g, b, a};

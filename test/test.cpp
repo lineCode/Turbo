@@ -56,13 +56,13 @@ void gui()
 
     renderer.getFont()->setFontSize(60);
 
-    b1.setBackgroundColor({255, 255, 0, 255});
-    b2.setBackgroundColor({255, 0, 0, 255});
+    b1.setBackgroundColor(TV::YELLOW);
+    b2.setBackgroundColor(TV::RED);
     b2.setBackgroundTexture("resources/image/mushroom.png", &renderer);
-    b3.setBackgroundColor({255, 0, 255, 255});
-    b4.setBackgroundColor({0, 0, 0, 255});
-    b4.setFontColor({255, 255, 255, 255});
-    b5.setBackgroundColor({0, 255, 255, 255});
+    b3.setBackgroundColor(TV::MAGENTA);
+    b4.setBackgroundColor(TV::BLACK);
+    b4.setFontColor(TV::WHITE);
+    b5.setBackgroundColor(0x00FFFFFF);
     b5.setFontColor({255, 0, 50, 100});
     b5.setBorderColor({0, 255, 0, 255});
     b6.setBackgroundColor({100, 100, 100, 255});
@@ -355,7 +355,7 @@ int database()
     mysql.createDatabase("Turbo");
     mysql.useDatabase("Turbo");
 
-    mysql.createTable("Cars",
+    mysql.createTable("Carsia",
                        std::vector<std::string>{"Id", "Name", "Price"},
                        std::vector<std::string>{"INT", "TEXT", "INT"},
                        std::vector<std::string>{},
@@ -364,7 +364,8 @@ int database()
                        std::vector<std::string>{},
                        std::vector<std::string>{"PRIMARY KEY"});
 
-    mysql.insertEntry("Cars", std::vector<std::string>{"Id", "Name", "Price"}, std::vector<std::string>{"0", "Test", "100"});
+    mysql.insertEntry("Carsia", std::vector<std::string>{"Id", "Name", "Price"},
+                      std::vector<std::string>{"0", "Test", "100"});
 
     for(auto & query : mysql.getQueryCache())
     {
@@ -377,7 +378,7 @@ int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
-    database();
+    gui();
 
     std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;
