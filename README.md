@@ -122,7 +122,7 @@ int main(int argc, char ** argv)
 
     LOG("Stop application");
 
-    std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%s %fms %uus %nns") << std::endl;
+    std::cout << TS::Clock::getPTicksToString(ptimer.getTime(), "%s %fms %uus %nns") << std::endl;
     return 0;
 }
 

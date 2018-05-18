@@ -60,9 +60,9 @@ namespace TURBO
 
         void Log::log(const std::string & message)
         {
-            std::cout << SYSTEM::Time::getTimestampToString(SYSTEM::Time::getTimestamp(), "%d.%m %H:%M") << " | "
+            std::cout << SYSTEM::Clock::getTimestampToString(SYSTEM::Clock::getTimestamp(), "%d.%m %H:%M") << " | "
                       << std::right << std::setw(12) << std::setfill(' ')
-                      << SYSTEM::Time::getTicksToString(SYSTEM::Time::getTicks(), "%H:%M:%S.%f") << ": "
+                      << SYSTEM::Clock::getTicksToString(SYSTEM::Clock::getTicks(), "%H:%M:%S.%f") << ": "
                       << message << std::endl;
         }
 

@@ -279,12 +279,12 @@ namespace TURBO
                 if(key[event.key.keysym.sym] == RELEASED)
                 {
                     key[event.key.keysym.sym]       = KEY_STATE::DOWN;
-                    timestamp[event.key.keysym.sym] = SYSTEM::Time::getTicks();
+                    timestamp[event.key.keysym.sym] = SYSTEM::Clock::getTicks();
                 }
                 else if(key[event.key.keysym.sym] == KEY_STATE::DOWN)
                 {
                     key[event.key.keysym.sym]       = KEY_STATE::PRESSED;
-                    timestamp[event.key.keysym.sym] = SYSTEM::Time::getTicks();
+                    timestamp[event.key.keysym.sym] = SYSTEM::Clock::getTicks();
                 }
             }
             else if(event.type == SDL_KEYUP)
@@ -292,7 +292,7 @@ namespace TURBO
                 if(key[event.key.keysym.sym])
                 {
                     key[event.key.keysym.sym]       = KEY_STATE::RELEASED;
-                    timestamp[event.key.keysym.sym] = SYSTEM::Time::getTicks();
+                    timestamp[event.key.keysym.sym] = SYSTEM::Clock::getTicks();
                 }
             }
         }

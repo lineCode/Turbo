@@ -15,7 +15,7 @@ namespace TURBO
 {
     namespace SYSTEM
     {
-        class Time
+        class Clock
         {
         public:
             /**

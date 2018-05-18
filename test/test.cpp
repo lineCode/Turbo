@@ -380,6 +380,6 @@ int main(int argc, char **argv)
 
     gui();
 
-    std::cout << TS::Time::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
+    std::cout << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;
 }

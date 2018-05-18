@@ -13,23 +13,23 @@ namespace TURBO
         typedef std::chrono::milliseconds milliseconds;
         typedef std::chrono::seconds      seconds;
 
-        Uint32 Time::getTicks()
+        Uint32 Clock::getTicks()
         {
             return SDL_GetTicks();
         }
 
-        Uint64 Time::getTimestamp()
+        Uint64 Clock::getTimestamp()
         {
             auto ns = std::chrono::duration_cast<nanoseconds>(std::chrono::system_clock::now().time_since_epoch());
             return static_cast<Uint64>(ns.count());
         }
 
-        void Time::sleep(Uint64 ns)
+        void Clock::sleep(Uint64 ns)
         {
             std::this_thread::sleep_for(std::chrono::nanoseconds(ns));
         }
 
-        std::string Time::getTicksToString(Uint32 ticks, std::string format)
+        std::string Clock::getTicksToString(Uint32 ticks, std::string format)
         {
             std::stringstream ss;
             Sint32            digits      = 0;
@@ -80,7 +80,7 @@ namespace TURBO
             return ss.str();
         }
 
-        std::string Time::getPTicksToString(Uint64 ticks, std::string format)
+        std::string Clock::getPTicksToString(Uint64 ticks, std::string format)
         {
             std::stringstream ss;
             Sint32            digits      = 0;
@@ -156,7 +156,7 @@ namespace TURBO
             return ss.str();
         }
 
-        std::string Time::getTimestampToString(Uint64 timestamp, std::string format)
+        std::string Clock::getTimestampToString(Uint64 timestamp, std::string format)
         {
             const auto                                  ns   = nanoseconds(timestamp);
             const std::chrono::time_point<system_clock> tp(ns);
@@ -284,7 +284,7 @@ namespace TURBO
 
         Uint32 Timer::getTicks()
         {
-            return Time::getTicks();
+            return Clock::getTicks();
         }
 
         Uint32 Timer::getTime()

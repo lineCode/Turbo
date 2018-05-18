@@ -137,12 +137,12 @@ namespace TURBO
          */
         bool TCPClient::waitResolve(Sint32 max_wait)
         {
-            Uint32 ticks = SYSTEM::Time::getTicks();
+            Uint32 ticks = SYSTEM::Clock::getTicks();
             while(!resolve(IPAddress::IPtoString(ip.host), ip.port))
             {
                 if(max_wait > 0)
                 {
-                    if(SYSTEM::Time::getTicks() > ticks + max_wait)
+                    if(SYSTEM::Clock::getTicks() > ticks + max_wait)
                     {
                         return false;
                     }
@@ -197,7 +197,7 @@ namespace TURBO
         {
             if(client_number < SERVER_MAX_CLIENTS)
             {
-                Uint32    ticks   = SYSTEM::Time::getTicks();
+                Uint32    ticks   = SYSTEM::Clock::getTicks();
                 TCPClient *client = new TCPClient();
                 while(clients.size() < client_number)
                 {
@@ -207,7 +207,7 @@ namespace TURBO
                     }
                     if(max_wait > 0)
                     {
-                        if(SYSTEM::Time::getTicks() > ticks + max_wait)
+                        if(SYSTEM::Clock::getTicks() > ticks + max_wait)
                         {
                             return false;
                         }
