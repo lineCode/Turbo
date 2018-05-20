@@ -35,6 +35,9 @@ HEADERS += include/turbo.h \
            include/audio/music.h \
            include/audio/chunk.h \
            include/audio/media_player.h \
+           include/chart/chart_def.h \
+           include/chart/bar_chart.h \
+           include/chart/chart.h \
            include/gui/button.h \
            include/gui/gui.h \
            include/gui/gui_def.h \
@@ -95,6 +98,8 @@ SOURCES += test/test.cpp \
            source/audio/music.cpp \
            source/audio/chunk.cpp \
            source/audio/media_player.cpp \
+           source/chart/bar_chart.cpp \
+           source/chart/chart.cpp \
            source/gui/button.cpp \
            source/gui/layout.cpp \
            source/gui/main_widget.cpp \

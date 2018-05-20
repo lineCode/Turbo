@@ -8,6 +8,7 @@
 #include "net/net.h"
 #include "video/video.h"
 #include "gui/gui.h"
+#include "chart/chart.h"
 #include "audio/audio.h"
 #include "util/util.h"
 

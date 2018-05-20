@@ -277,7 +277,50 @@ namespace TURBO
             return texture;
         }
 
-        void Renderer::drawRect(MATH::Rect rect, Color color, bool filled)
+        void Renderer::drawPoint(Sint32 x, Sint32 y, Uint8 size, Color color)
+        {
+            setDrawColor(color);
+            SDL_RenderDrawPoint(renderer, x, y);
+            setDrawColor(color_draw);
+        }
+
+        void Renderer::drawPoint(MATH::Point p, Uint8 size, Color color)
+        {
+            setDrawColor(color);
+            SDL_RenderDrawPoint(renderer, p.x, p.y);
+            setDrawColor(color_draw);
+        }
+
+        void Renderer::drawLine(Sint32 x1, Sint32 y1, Sint32 x2, Sint32 y2, Uint8 size, Color color)
+        {
+            setDrawColor(color);
+            SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+            setDrawColor(color_draw);
+        }
+
+        void Renderer::drawLine(MATH::Point p1, MATH::Point p2, Uint8 size, Color color)
+        {
+            setDrawColor(color);
+            SDL_RenderDrawLine(renderer, p1.x, p1.y, p2.x, p2.y);
+            setDrawColor(color_draw);
+        }
+
+        void Renderer::drawRect(Sint32 x, Sint32 y, Sint32 w, Sint32 h, Uint8 size, Color color, bool filled)
+        {
+            SDL_Rect r{x, y, w, h};
+            setDrawColor(color);
+            if(filled)
+            {
+                SDL_RenderFillRect(renderer, &r);
+            }
+            else
+            {
+                SDL_RenderDrawRect(renderer, &r);
+            }
+            setDrawColor(color_draw);
+        }
+
+        void Renderer::drawRect(MATH::Rect rect, Uint8 size, Color color, bool filled)
         {
             SDL_Rect r{rect.x, rect.y, rect.w, rect.h};
             setDrawColor(color);
@@ -290,6 +333,11 @@ namespace TURBO
                 SDL_RenderDrawRect(renderer, &r);
             }
             setDrawColor(color_draw);
+        }
+
+        void Renderer::drawCircle(MATH::Point, Uint8 size, Color color, bool filled)
+        {
+
         }
 
         void Renderer::drawPolygon(std::vector<MATH::Point> points, bool filled)

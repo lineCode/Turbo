@@ -87,7 +87,19 @@ namespace TURBO
 
             Texture *createUnicodeText(const Uint16 *text, Sint32 w, Sint32 h);
 
-            void drawRect(MATH::Rect rect, Color color = Color(255, 255, 255, 255), bool filled = false);
+            void drawPoint(Sint32 x, Sint32 y, Uint8 size = 1, Color color = Color(255, 255, 255, 255));
+
+            void drawPoint(MATH::Point p, Uint8 size = 1, Color color = Color(255, 255, 255, 255));
+
+            void drawLine(Sint32 x1, Sint32 y1, Sint32 x2, Sint32 y2, Uint8 size = 1, Color color = Color(255, 255, 255, 255));
+
+            void drawLine(MATH::Point p1, MATH::Point p2, Uint8 size = 1, Color color = Color(255, 255, 255, 255));
+
+            void drawRect(Sint32 x, Sint32 y, Sint32 w, Sint32 h, Uint8 size = 1, Color color = Color(255, 255, 255, 255), bool filled = false);
+
+            void drawRect(MATH::Rect rect, Uint8 size = 1, Color color = Color(255, 255, 255, 255), bool filled = false);
+
+            void drawCircle(MATH::Point, Uint8 size = 1, Color color = Color(255, 255, 255, 255), bool filled = false);
 
             void drawPolygon(std::vector<MATH::Point> points, bool filled = false);
         };

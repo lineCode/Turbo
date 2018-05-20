@@ -1,9 +1,8 @@
-#include <SDL_net.h>
-#include <locale>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
 namespace TG = TURBO::GUI;
+namespace TCH = TURBO::CHART;
 namespace TV = TURBO::VIDEO;
 namespace TI = TURBO::INPUT;
 namespace TU = TURBO::UTIL;
@@ -49,7 +48,7 @@ void gui()
     auto b2          = TG::Button("Bye");
     auto b3          = TG::Button("Today");
     auto b4          = TG::Button("Käse?");
-    auto b5          = TG::Button("Test");
+    auto b5          = TCH::BarChart(nullptr);
     auto b6          = TG::Button("Grid-Test");
     auto b7          = TG::Button("Grid-Test2");
     auto wi          = TG::Button("Black");
