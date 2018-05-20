@@ -6,7 +6,8 @@ namespace TURBO
     namespace GUI
     {
         Object::Object(Object *parent)
-            : parent(parent),
+            : StyleProperties(),
+              parent(parent),
               child(nullptr),
               geometry(),
               size(),
@@ -223,9 +224,9 @@ namespace TURBO
 
         void Object::draw(VIDEO::Renderer *renderer)
         {
-            renderer->drawRect(size, background_color, true);
+            renderer->drawRect(size, 1, background_color, true);
             renderer->drawTexture(background_texture, size);
-            renderer->drawRect(size, border_color, false);
+            renderer->drawRect(size, 1, border_color, false);
             if(child != nullptr)
             {
                 child->draw(renderer);

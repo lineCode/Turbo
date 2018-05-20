@@ -47,6 +47,25 @@ namespace TURBO
             HORIZONTAL = 0x0,
             VERTICAL = 0x1
         };
+
+        enum class ALIGNMENT : Uint8
+        {
+            LEFT          = 0x01,
+            CENTER        = 0x02,
+            RIGHT         = 0x03,
+            TOP           = 0x10,
+            MIDDLE        = 0x20,
+            BOTTOM        = 0x30,
+            TOP_LEFT      = 0x11,
+            TOP_CENTER    = 0x12,
+            TOP_RIGHT     = 0x13,
+            MIDDLE_LEFT   = 0x21,
+            MIDDLE_CENTER = 0x22,
+            MIDDLE_RIGHT  = 0x23,
+            BOTTOM_LEFT   = 0x31,
+            BOTTOM_CENTER = 0x32,
+            BOTTOM_RIGHT  = 0x33
+        };
     }
 }
 

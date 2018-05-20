@@ -19,14 +19,14 @@ namespace TURBO
         public:
             StyleProperties();
             virtual ~StyleProperties();
-            VIDEO::Texture *getBackgroundTexture();
-            VIDEO::Texture *setBackgroundTexture(std::string path, VIDEO::Renderer *renderer);
-            VIDEO::Color getBackgroundColor();
-            VIDEO::Color setBackgroundColor(VIDEO::Color color);
-            VIDEO::Color getFontColor();
-            VIDEO::Color setFontColor(VIDEO::Color color);
-            VIDEO::Color getBorderColor();
-            VIDEO::Color setBorderColor(VIDEO::Color color);
+            virtual VIDEO::Texture *getBackgroundTexture();
+            virtual VIDEO::Texture *setBackgroundTexture(std::string path, VIDEO::Renderer *renderer);
+            virtual VIDEO::Color getBackgroundColor();
+            virtual VIDEO::Color setBackgroundColor(VIDEO::Color color);
+            virtual VIDEO::Color getFontColor();
+            virtual VIDEO::Color setFontColor(VIDEO::Color color);
+            virtual VIDEO::Color getBorderColor();
+            virtual VIDEO::Color setBorderColor(VIDEO::Color color);
         };
     }
 }
