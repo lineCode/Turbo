@@ -5,19 +5,17 @@ namespace TURBO
     namespace VIDEO
     {
         Renderer::Renderer(Window &window, int index, Uint32 flags)
-            : window(window),
-              text_mode(TEXT_MODE::BLENDED),
-              color_text_fg(255, 255, 255, 255),
-              color_text_bg(0, 0, 0, 255),
-              color_draw(255, 255, 255, 255),
-              color_clear(0, 0, 0, 255)
+            : window(window)
         {
             if(SYSTEM::SDL::SDL_IS_INIT)
             {
                 renderer        = SDL_CreateRenderer(window.getWindow(), index, flags);
                 font            = new Font(TURBO_DEFAULT_FONT, TURBO_DEFAULT_FONT_SIZE, 0);
-                font_collection = new FontCollection(TURBO_DEFAULT_FONT, 10, 50, 10);
                 font_texture    = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
+                font_collection = new FontCollection(TURBO_DEFAULT_FONT, 8,
+                                                     std::vector<Uint8>{1, 1, 2, 2, 2, 4, 4, 6, 6, 8, 8});
+
+                setBlendMode(blend_mode);
 
                 if(renderer == nullptr)
                 {
@@ -57,6 +55,13 @@ namespace TURBO
         void Renderer::present()
         {
             SDL_RenderPresent(renderer);
+        }
+
+        SDL_BlendMode Renderer::setBlendMode(SDL_BlendMode mode)
+        {
+            blend_mode = mode;
+            SDL_SetRenderDrawBlendMode(renderer, blend_mode);
+            return blend_mode;
         }
 
         Color &Renderer::setTextColor(Color color)
@@ -184,33 +189,67 @@ namespace TURBO
             }
         }
 
-        Texture *Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h, TEXT_ALIGNMENT alignment)
+        Texture *Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h, Uint8 size, TEXT_ALIGNMENT alignment,
+                                          TEXT_WRAPPING wrapping)
         {
-            SDL_Surface *surface   = nullptr;
-            Texture     *texture   = nullptr;
-            TTF_Font    *font      = this->font->getFont();
-            Sint32      text_width = this->font->getUTF8TextSize(text).w;
-
-            //TODO split lines at line breaks
+            SDL_Surface *surface    = nullptr;
+            Texture     *texture    = nullptr;
+            Font        *font       = font_collection->getLTEFont(size);
+            Sint32      text_width  = font->getUTF8TextSize(text).w;
+            Sint32      text_height = font->getUTF8TextSize(text).h;
 
             if(text_width > w)
             {
-                auto rows              = static_cast<Uint8>((text_width / w) + 1);
-                auto optimal_font_size = static_cast<Uint8>((h / rows) * PX_TO_PT);
-                font = font_collection->getLTEFont(optimal_font_size)->getFont();
+                // auto rows              = static_cast<Uint8>((text_width / w) + 1);
+                // auto optimal_font_size = static_cast<Uint8>((h / rows) * PX_TO_PT);
+                if(wrapping == TEXT_WRAPPING::BREAK && text_mode != TEXT_MODE::BLENDED)
+                {
+
+                }
+
             }
 
-            if(text_mode == VIDEO::TEXT_MODE::SOLID)
+            while(text_height > h && size > 1)
             {
-                surface = TTF_RenderUTF8_Solid(font, text.c_str(), color_text_fg.toSDLColor());
+                size -= 1;
+                font        = font_collection->getLTEFont(size);
+                text_height = font->getUTF8TextSize(text).h;
             }
-            else if(text_mode == VIDEO::TEXT_MODE::BLENDED)
+
+            if((static_cast<Uint8>(alignment) & 0x1) == 1) // Left alignment
             {
-                surface = TTF_RenderUTF8_Blended(font, text.c_str(), color_text_fg.toSDLColor());
+
             }
-            else if(text_mode == VIDEO::TEXT_MODE::SHADED)
+            else if((static_cast<Uint8>(alignment) & 0x2) == 2) // Center alignment
             {
-                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(),
+
+            }
+            else if((static_cast<Uint8>(alignment) & 0x4) == 4) // Right alignment
+            {
+
+            }
+
+            TTF_Font *sdl_font = font->getFont();
+
+            if(text_mode == TEXT_MODE::SOLID)
+            {
+                surface = TTF_RenderUTF8_Solid(sdl_font, text.c_str(), color_text_fg.toSDLColor());
+            }
+            else if(text_mode == TEXT_MODE::BLENDED)
+            {
+                if(wrapping == TEXT_WRAPPING::BREAK)
+                {
+                    surface = TTF_RenderUTF8_Blended_Wrapped(sdl_font, text.c_str(), color_text_fg.toSDLColor(),
+                                                             static_cast<Uint32>(w));
+                }
+                else
+                {
+                    surface = TTF_RenderUTF8_Blended(sdl_font, text.c_str(), color_text_fg.toSDLColor());
+                }
+            }
+            else if(text_mode == TEXT_MODE::SHADED)
+            {
+                surface = TTF_RenderUTF8_Shaded(sdl_font, text.c_str(), color_text_fg.toSDLColor(),
                                                 color_text_bg.toSDLColor());
             }
 
@@ -253,7 +292,7 @@ namespace TURBO
         Texture *Renderer::createUnicodeText(const Uint16 *text, Sint32 w, Sint32 h)
         {
             SDL_Surface *surface = nullptr;
-            Texture *texture = nullptr;
+            Texture     *texture = nullptr;
 
             if(text_mode == VIDEO::TEXT_MODE::SOLID)
             {
@@ -335,20 +374,37 @@ namespace TURBO
             setDrawColor(color_draw);
         }
 
-        void Renderer::drawCircle(MATH::Point, Uint8 size, Color color, bool filled)
-        {
-
-        }
-
-        void Renderer::drawPolygon(std::vector<MATH::Point> points, bool filled)
+        void Renderer::drawCircle(MATH::Point p, Sint32 r, Uint8 size, Color color, bool filled)
         {
             if(filled)
             {
-                //filledPolygonColor(renderer, nullptr, nullptr, 0, color_draw.toHexColor());
+                filledCircleColor(renderer, static_cast<Sint16>(p.x), static_cast<Sint16>(p.y), static_cast<Sint16>(r),
+                                  color.toHexColor());
             }
             else
             {
-                //polygonColor(renderer, );
+                circleColor(renderer, static_cast<Sint16>(p.x), static_cast<Sint16>(p.y), static_cast<Sint16>(r),
+                            color.toHexColor());
+            }
+        }
+
+        void Renderer::drawPolygon(std::vector<MATH::Point> &points, Color color, bool filled)
+        {
+            Sint16  x[points.size()] = {0};
+            Sint16  y[points.size()] = {0};
+            for(int i                = 0; i < points.size(); ++i)
+            {
+                x[i] = static_cast<Sint16>(points[i].x);
+                y[i] = static_cast<Sint16>(points[i].y);
+            }
+
+            if(filled)
+            {
+                filledPolygonColor(renderer, x, y, static_cast<int>(points.size()), color.toHexColor());
+            }
+            if(filled)
+            {
+                polygonColor(renderer, x, y, static_cast<int>(points.size()), color.toHexColor());
             }
         }
     }

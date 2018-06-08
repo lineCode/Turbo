@@ -28,33 +28,40 @@ namespace TURBO
 
         Font::~Font()
         {
-            TTF_CloseFont(font);
+            if(font != nullptr)
+            {
+                TTF_CloseFont(font);
+            }
         }
 
         void Font::loadFontInfo()
         {
             font_family = TTF_FontFaceFamilyName(font);
-            font_style = TTF_FontFaceStyleName(font);
-            height = static_cast<Uint32>(TTF_FontHeight(font));
-            ascent = static_cast<Uint32>(TTF_FontAscent(font));
-            descent = TTF_FontDescent(font);
-            lineskip = static_cast<Uint32>(TTF_FontLineSkip(font));
-            faces = static_cast<Uint64>(TTF_FontFaces(font));
-            fixed = (TTF_FontFaceIsFixedWidth(font) > 0);
-            style = static_cast<FONT_STYLE>(TTF_GetFontStyle(font));
-            hinting = static_cast<FONT_HINTING>(TTF_GetFontHinting(font));
-            outline = static_cast<Uint32>(TTF_GetFontOutline(font));
-            kerning = static_cast<Uint32>(TTF_GetFontKerning(font));
+            font_style  = TTF_FontFaceStyleName(font);
+            height      = static_cast<Uint32>(TTF_FontHeight(font));
+            ascent      = static_cast<Uint32>(TTF_FontAscent(font));
+            descent     = TTF_FontDescent(font);
+            lineskip    = static_cast<Uint32>(TTF_FontLineSkip(font));
+            faces       = static_cast<Uint64>(TTF_FontFaces(font));
+            fixed       = (TTF_FontFaceIsFixedWidth(font) > 0);
+            style       = static_cast<FONT_STYLE>(TTF_GetFontStyle(font));
+            hinting     = static_cast<FONT_HINTING>(TTF_GetFontHinting(font));
+            outline     = static_cast<Uint32>(TTF_GetFontOutline(font));
+            kerning     = static_cast<Uint32>(TTF_GetFontKerning(font));
         }
 
-        TTF_Font * Font::getFont()
+        TTF_Font *Font::getFont()
         {
             return font;
         }
 
         Uint8 Font::setFontSize(Uint8 size)
         {
-            font = TTF_OpenFont(path.c_str(), size);
+            if(font != nullptr)
+            {
+                TTF_CloseFont(font);
+            }
+            font    = TTF_OpenFont(path.c_str(), size);
             pt_size = size;
             return pt_size;
         }
@@ -209,19 +216,43 @@ namespace TURBO
 
         FontCollection::FontCollection(std::string path, Uint8 from, Uint8 to, Uint8 step)
         {
-            for(Uint8 i = from; i <= to; i += step)
+            Uint8 min = 1;
+
+            for(Uint8 i = std::max(from, min); i <= std::max(to, min); i += std::max(step, min))
             {
-                Font *font = new Font(path, i);
-                fonts[i] = font;
+                if(fonts.count(i) == 0 && i > 0)
+                {
+                    Font *font = new Font(path, i);
+                    fonts[i] = font;
+                }
+            }
+        }
+
+        FontCollection::FontCollection(std::string path, Uint8 from, std::vector<Uint8> step)
+        {
+            Uint8 min = 1;
+            from = std::max(from, min);
+
+            for(const auto &s : step)
+            {
+                if(fonts.count(s) == 0 && s > 0)
+                {
+                    Font *font = new Font(path, from);
+                    fonts[from] = font;
+                    from += s;
+                }
             }
         }
 
         FontCollection::FontCollection(std::string path, std::vector<Uint8> sizes)
         {
-            for(const auto & size : sizes)
+            for(const auto &size : sizes)
             {
-                Font *font = new Font(path, size);
-                fonts[size] = font;
+                if(fonts.count(size) == 0 && size > 0)
+                {
+                    Font *font = new Font(path, size);
+                    fonts[size] = font;
+                }
             }
         }
 

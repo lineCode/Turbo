@@ -18,8 +18,8 @@ namespace TURBO
         /**
          * Rough transformation ratios.
          */
-        const float PX_TO_PT = 8 / 6; // 1.3
-        const float PT_TO_PX = 6 / 8; // 0.75
+        const float PX_TO_PT = 4 / 3; // 1.3
+        const float PT_TO_PX = 3 / 4; // 0.75
 
         /**
          * Font style defines the appearance of letters.
@@ -27,6 +27,7 @@ namespace TURBO
         enum class FONT_STYLE
             : Uint8
         {
+            NORMAL     = TTF_STYLE_NORMAL,
             BOLD       = TTF_STYLE_BOLD,
             ITALIC     = TTF_STYLE_ITALIC,
             UNDERLINED = TTF_STYLE_UNDERLINE,
@@ -79,29 +80,6 @@ namespace TURBO
             SOLID   = 0x0,
             BLENDED = 0x1,
             SHADED  = 0x2
-        };
-
-        /**
-         * Alignment of texts.
-         */
-        enum class TEXT_ALIGNMENT
-            : Uint8
-        {
-            LEFT          = 0x01,
-            CENTER        = 0x02,
-            RIGHT         = 0x03,
-            TOP           = 0x10,
-            MIDDLE        = 0x20,
-            BOTTOM        = 0x30,
-            TOP_LEFT      = 0x11,
-            TOP_CENTER    = 0x12,
-            TOP_RIGHT     = 0x13,
-            MIDDLE_LEFT   = 0x21,
-            MIDDLE_CENTER = 0x22,
-            MIDDLE_RIGHT  = 0x23,
-            BOTTOM_LEFT   = 0x31,
-            BOTTOM_CENTER = 0x32,
-            BOTTOM_RIGHT  = 0x33
         };
 
         /**
@@ -198,6 +176,7 @@ namespace TURBO
              * @param step
              */
             explicit FontCollection(std::string path, Uint8 from = 1, Uint8 to = 10, Uint8 step = 1);
+            explicit FontCollection(std::string path, Uint8 from = 1, std::vector<Uint8> step = {1});
 
             /**
              * Takes a path to the font and a vector of the sizes that should be created.
