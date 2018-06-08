@@ -33,7 +33,7 @@ namespace TURBO
         MediaPlayer::~MediaPlayer()
         {
             stop();
-            for(auto file : playlist)
+            for(auto & file : playlist)
             {
                 delete file;
             }

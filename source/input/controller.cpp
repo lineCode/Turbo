@@ -37,7 +37,7 @@ namespace TURBO
         {
             if(event.cdevice.which == controller_id)
             {
-                for(auto axis : controller_axis_moved)
+                for(auto & axis : controller_axis_moved)
                 {
                     controller_axis_moved[axis.first] = false;
                 }

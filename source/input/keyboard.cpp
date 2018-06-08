@@ -319,10 +319,10 @@ namespace TURBO
 
         bool Keyboard::pressed(KeyCombination comb)
         {
-            for(auto c : comb.getComb())
+            for(auto & c : comb.getComb())
             {
                 bool pressed = true;
-                for(auto k : c)
+                for(auto & k : c)
                 {
                     pressed = pressed && (key[k.getCode()] == KEY_STATE::PRESSED);
                 }
@@ -346,10 +346,10 @@ namespace TURBO
 
         bool Keyboard::down(KeyCombination comb)
         {
-            for(auto c : comb.getComb())
+            for(auto & c : comb.getComb())
             {
                 bool pressed = true;
-                for(auto k : c)
+                for(auto & k : c)
                 {
                     pressed = pressed && (key[k.getCode()] >= KEY_STATE::DOWN);
                 }
@@ -394,7 +394,7 @@ namespace TURBO
         bool Keyboard::pressedAND(std::vector<SDL_Keycode> syms)
         {
             bool     pressed = true;
-            for(auto sym : syms)
+            for(auto & sym : syms)
             {
                 pressed = pressed && key[sym];
                 if(!pressed)
@@ -408,7 +408,7 @@ namespace TURBO
         bool Keyboard::pressedOR(std::vector<SDL_Keycode> syms)
         {
             bool     pressed = false;
-            for(auto sym : syms)
+            for(auto & sym : syms)
             {
                 pressed = pressed || key[sym];
                 if(!pressed)
@@ -447,7 +447,7 @@ namespace TURBO
         bool Keyboard::pressedAND(std::vector<SDL_Keycode> syms, SDL_Keymod mod)
         {
             bool     pressed = true;
-            for(auto sym : syms)
+            for(auto & sym : syms)
             {
                 pressed = pressed && key[sym];
                 if(!pressed)
@@ -461,7 +461,7 @@ namespace TURBO
         bool Keyboard::pressedOR(std::vector<SDL_Keycode> syms, SDL_Keymod mod)
         {
             bool     pressed = false;
-            for(auto sym : syms)
+            for(auto & sym : syms)
             {
                 pressed = pressed || key[sym];
                 if(!pressed)

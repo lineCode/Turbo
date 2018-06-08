@@ -161,7 +161,7 @@ namespace TURBO
 
         TCPServer::~TCPServer()
         {
-            for(auto client : clients)
+            for(auto & client : clients)
             {
                 client->~TCPSocket();
             }
@@ -304,7 +304,7 @@ namespace TURBO
         TCPServerSocketSet::~TCPServerSocketSet()
         {
             SDLNet_FreeSocketSet(socket_set);
-            for(auto client : clients)
+            for(auto & client : clients)
             {
                 client->~TCPSocket();
             }

@@ -71,7 +71,7 @@ namespace TURBO
                     }
                 }
             }
-            for(auto option : options)
+            for(auto & option : options)
             {
                 if(option.second["required"] == "true")
                 {
@@ -170,7 +170,7 @@ namespace TURBO
         {
             std::ostringstream help;
             help << "\nUsage:\n    -command [parameter list]\n\nCommands:\n";
-            for(auto option : options)
+            for(auto & option : options)
             {
                 help << "  " << std::left << std::setfill(' ') << option.second["short"] << ' '
                      << std::setw(largest_option) << option.second["long"];
