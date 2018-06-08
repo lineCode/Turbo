@@ -1,3 +1,4 @@
+#include <gui/units.h>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
@@ -30,7 +31,8 @@ void gui()
 {
     LOG("Loading libraries");
 
-    TS::SDL sdl = TS::SDL(SDL_INIT_EVERYTHING);
+    TS::SDL sdl{};
+    sdl.initSDL(SDL_INIT_EVERYTHING);
     sdl.initIMG(IMG_INIT_PNG);
     sdl.initMIX(MIX_INIT_MP3 | MIX_INIT_FLAC);
     sdl.initTTF();
@@ -48,10 +50,12 @@ void gui()
     auto b2          = TG::Button("Bye");
     auto b3          = TG::Button("Today");
     auto b4          = TG::Button("Käse?");
-    auto b5          = TCH::BarChart(nullptr);
+    auto bchart      = TCH::BarChart(nullptr);
     auto b6          = TG::Button("Grid-Test");
     auto b7          = TG::Button("Grid-Test2");
     auto wi          = TG::Button("Black");
+
+    LOG("Configure");
 
     renderer.getFont()->setFontSize(60);
 
@@ -61,9 +65,8 @@ void gui()
     b3.setBackgroundColor(TV::MAGENTA);
     b4.setBackgroundColor(TV::BLACK);
     b4.setFontColor(TV::WHITE);
-    b5.setBackgroundColor(0x00FFFFFF);
-    b5.setFontColor({255, 0, 50, 100});
-    b5.setBorderColor({0, 255, 0, 255});
+    bchart.setBackgroundColor(0xEEEEEEFF);
+    bchart.setFontColor({255, 0, 50, 100});
     b6.setBackgroundColor({100, 100, 100, 255});
     b6.setBackgroundColor({50, 150, 50, 255});
     b7.setBackgroundColor({100, 100, 100, 255});
@@ -71,8 +74,10 @@ void gui()
     wi.setBackgroundColor({0, 0, 0, 0});
     wi.setFontColor({255, 0, 255, 255});
 
+    LOG("Insert Widgets");
+
     hbox.addWidget(&vbox1);
-    hbox.addWidget(&b5);
+    hbox.addWidget(&bchart);
     hbox.addWidget(&vbox2);
     vbox1.addWidget(&b1);
     vbox1.addWidget(&b2);
@@ -86,6 +91,11 @@ void gui()
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, over);
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_BUTTON_DOWN, quit);
+
+    using TURBO::GUI::operator""_pt;
+
+    auto px = 15_pt;
+    std::cout << px << std::endl;
 
     LOG("Start application");
 
@@ -105,13 +115,13 @@ void gui()
 
             renderer.clear();
             main_widget.draw(&renderer);
+            renderer.drawRect(20, 20, 200, 200, 1, TV::TRANSPARENT, true);
             renderer.present();
         }
         SDL_Delay(5);
     }
 
     LOG("Stop application");
-
 }
 
 void cmdParser(int argc, char **argv)
@@ -141,7 +151,7 @@ void cmdParser(int argc, char **argv)
 void luaScript()
 {
     TS::SDL sdl{};
-    sdl.initSDL();
+    sdl.initSDL(SDL_INIT_EVERYTHING);
     sdl.initTTF();
     TV::Window   win = TV::Window("Test", TM::Rect(20, 20, 400, 400), SDL_WINDOW_SHOWN);
     TV::Renderer ren = TV::Renderer(win, -1, SDL_RENDERER_ACCELERATED);
@@ -354,7 +364,7 @@ int database()
     mysql.createDatabase("Turbo");
     mysql.useDatabase("Turbo");
 
-    mysql.createTable("Carsia",
+    mysql.createTable("Cars",
                        std::vector<std::string>{"Id", "Name", "Price"},
                        std::vector<std::string>{"INT", "TEXT", "INT"},
                        std::vector<std::string>{},
@@ -363,7 +373,7 @@ int database()
                        std::vector<std::string>{},
                        std::vector<std::string>{"PRIMARY KEY"});
 
-    mysql.insertEntry("Carsia", std::vector<std::string>{"Id", "Name", "Price"},
+    mysql.insertEntry("Cars", std::vector<std::string>{"Id", "Name", "Price"},
                       std::vector<std::string>{"0", "Test", "100"});
 
     for(auto & query : mysql.getQueryCache())
@@ -372,6 +382,7 @@ int database()
     }
     return 0;
 }
+
 
 int main(int argc, char **argv)
 {

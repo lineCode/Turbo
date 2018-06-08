@@ -14,7 +14,7 @@ LIBS += -L/usr/lib/ \
     -lpthread \
     -lsqlite3 \
     -lmysqlclient \
-    -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2_net \
+    -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2_net -lSDL2_gfx\
     -llua5.2 \
     -lpython3.5m \
     -lGLEW -lGL
@@ -24,6 +24,8 @@ INCLUDEPATH += include \
     /usr/include/SDL2 \
     /usr/include/lua5.2 \
     /usr/include/python3.5
+
+DEPENDPATH += include
 
 OBJECTS_DIR = obj
 
@@ -47,6 +49,7 @@ HEADERS += include/turbo.h \
            include/gui/widget.h \
            include/gui/text_widget.h \
            include/gui/style_properties.h \
+           include/gui/units.h \
            include/input/controller.h \
            include/input/input.h \
            include/input/input_def.h \
@@ -107,6 +110,7 @@ SOURCES += test/test.cpp \
            source/gui/widget.cpp \
            source/gui/text_widget.cpp \
            source/gui/style_properties.cpp \
+           source/gui/units.cpp \
            source/input/controller.cpp \
            source/input/keyboard.cpp \
            source/input/mouse.cpp \
