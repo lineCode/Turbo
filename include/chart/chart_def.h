@@ -7,25 +7,22 @@ namespace TURBO
 {
     namespace CHART
     {
-        class IChart : public GUI::Widget
+        class IChart
+            : public GUI::Widget
         {
         private:
-            bool draw_background = true;
-            bool draw_border = true;
-            std::set<std::pair<MATH::Point, MATH::Point>> grid;
-            VIDEO::Color grid_color = {0, 0, 0, 128};
-            Uint8 grid_minor = 1;
-            Uint8 grid_major = 1;
-            bool draw_grid = true;
+            VIDEO::Color grid_minor_color = 0xAAAAAAFF;
+            VIDEO::Color grid_major_color = 0x55555555;
+            Uint8        grid_minor_size  = 1;
+            Uint8        grid_major_size  = 1;
+            Uint8        grid_minor_dist  = 30;
+            Uint8        grid_major_dist  = 100;
+            bool         draw_background  = true;
+            bool         draw_border      = true;
+            bool         draw_grid        = true;
 
         public:
             explicit IChart(GUI::Object *parent);
-
-            template <typename T>
-            bool setData(T data)
-            {
-                return false;
-            }
 
             virtual void drawChart(VIDEO::Renderer *renderer);
 
