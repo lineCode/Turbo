@@ -7,24 +7,15 @@ namespace TURBO
     {
         Object::Object(Object *parent)
             : StyleProperties(),
-              parent(parent),
-              child(nullptr),
-              geometry(),
-              size(),
-              object_type(OBJECT_TYPE::OBJECT),
-              visible(false),
-              mouse_on(false),
-              mouse_over(false),
-              mouse_out(false),
-              mouse_clicked(false)
+              parent(parent)
         {
             if(parent != nullptr)
             {
                 parent->setChild(this);
-                setGeometry(parent->getSize());
-                // TODO Set position from parent object
-                setPosition(parent->getGeometry().topLeft());
-                setSize(getGeometry());
+                setPosition(parent->getSize().topLeft());
+                setSpace(parent->getSize());
+                setSize(parent->getSize());
+                setContent(parent->getSize());
             }
         }
 
@@ -44,9 +35,8 @@ namespace TURBO
         void Object::pollEvent(SDL_Event &event)
         {
             MATH::Point p = INPUT::Mouse::getPosition();
-            // TODO geometry need reference to global coordinates
-            mouse_over    = MATH::pointInRect(p, geometry) && !mouse_on;
-            mouse_out     = !MATH::pointInRect(p, geometry) && mouse_on;
+            mouse_over    = MATH::pointInRect(p, space) && !mouse_on;
+            mouse_out     = !MATH::pointInRect(p, space) && mouse_on;
             mouse_clicked = INPUT::Mouse::pressed();
 
             if(child != nullptr)
@@ -66,7 +56,6 @@ namespace TURBO
             }
             if(mouse_clicked)
             {
-                std::cout << geometry.x << " " << INPUT::Mouse::getPosition().x << std::endl;
                 if(mouse_on)
                 {
                     fireCallback(EVENT_TYPE::ON_MOUSE_BUTTON_DOWN);
@@ -77,18 +66,6 @@ namespace TURBO
         void Object::registerCallback(Uint8 event, const std::function<void()> callback)
         {
             callbacks[event] = callback;
-        }
-
-        MATH::Rect &Object::setGeometry(MATH::Rect geometry)
-        {
-            this->geometry = geometry;
-            fireCallback(ON_GEOMETRY_CHANGED);
-            return this->geometry;
-        }
-
-        MATH::Rect &Object::getGeometry()
-        {
-            return geometry;
         }
 
         MATH::Point &Object::setPosition(MATH::Point position)
@@ -103,9 +80,21 @@ namespace TURBO
             return position;
         }
 
+        MATH::Rect &Object::setSpace(MATH::Rect space)
+        {
+            this->space = space;
+            fireCallback(ON_SPACE_CHANGED);
+            return this->space;
+        }
+
+        MATH::Rect &Object::getSpace()
+        {
+            return space;
+        }
+
         MATH::Rect &Object::setSize(MATH::Rect size)
         {
-            if(size <= geometry)
+            if(size <= space)
             {
                 this->size = size;
                 fireCallback(ON_SIZE_CHANGED);
@@ -116,6 +105,21 @@ namespace TURBO
         MATH::Rect &Object::getSize()
         {
             return size;
+        }
+
+        MATH::Rect &Object::setContent(MATH::Rect content)
+        {
+            if(content <= size)
+            {
+                this->content = content;
+                fireCallback(ON_CONTENT_CHANGED);
+            }
+            return this->content;
+        }
+
+        MATH::Rect &Object::getContent()
+        {
+            return this->content;
         }
 
         OBJECT_TYPE Object::getObjectType()
@@ -224,9 +228,9 @@ namespace TURBO
 
         void Object::draw(VIDEO::Renderer *renderer)
         {
-            renderer->drawRect(size, 1, background_color, true);
-            renderer->drawTexture(background_texture, size);
-            renderer->drawRect(size, 1, border_color, false);
+            renderer->drawRect(space, 1, background_color, true);
+            renderer->drawTexture(background_texture, space);
+            renderer->drawRect(space, 1, border_color, false);
             if(child != nullptr)
             {
                 child->draw(renderer);

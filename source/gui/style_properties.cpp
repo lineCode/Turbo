@@ -5,10 +5,6 @@ namespace TURBO
     namespace GUI
     {
         StyleProperties::StyleProperties()
-            : background_texture(nullptr),
-              background_color({0xFF, 0xFF, 0xFF, 0xFF}),
-              text_color({0x00, 0x00, 0x00, 0xFF}),
-              border_color({0x00, 0x00, 0x00, 0x00})
         {
 
         }
@@ -16,6 +12,50 @@ namespace TURBO
         StyleProperties::~StyleProperties()
         {
             delete background_texture;
+        }
+
+        Uint8 StyleProperties::setFontSize(Uint8 size)
+        {
+            font_size = size;
+            return font_size;
+        }
+
+        Uint8 StyleProperties::getFontSize()
+        {
+            return font_size;
+        }
+
+        VIDEO::FONT_STYLE StyleProperties::setFontStyle(VIDEO::FONT_STYLE style)
+        {
+            font_style = style;
+            return font_style;
+        }
+
+        VIDEO::FONT_STYLE StyleProperties::getFontStyle()
+        {
+            return font_style;
+        }
+
+        VIDEO::TEXT_WRAPPING StyleProperties::setTextWrapping(VIDEO::TEXT_WRAPPING wrapping)
+        {
+            text_wrapping = wrapping;
+            return text_wrapping;
+        }
+
+        VIDEO::TEXT_WRAPPING StyleProperties::getTextWrapping()
+        {
+            return text_wrapping;
+        }
+
+        VIDEO::TEXT_ALIGNMENT StyleProperties::setTextAlignment(VIDEO::TEXT_ALIGNMENT alignment)
+        {
+            text_alignment = alignment;
+            return text_alignment;
+        }
+
+        VIDEO::TEXT_ALIGNMENT StyleProperties::getTextAlignment()
+        {
+            return text_alignment;
         }
 
         VIDEO::Texture *StyleProperties::getBackgroundTexture()

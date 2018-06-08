@@ -8,14 +8,16 @@ namespace TURBO
 {
     namespace GUI
     {
-        class MainWidget : public Widget
+        class MainWidget final
+            : public Widget
         {
         protected:
-            VIDEO::Window &window;
+            VIDEO::Window   &window;
             VIDEO::Renderer &renderer;
 
         public:
             MainWidget(VIDEO::Window &window, VIDEO::Renderer &renderer);
+            VIDEO::Renderer &getRenderer();
         };
     }
 }

@@ -8,9 +8,14 @@ namespace TURBO
             : Widget(nullptr), window(window), renderer(renderer)
         {
             MATH::Rect window_size = window.getSize();
-            setGeometry(MATH::Rect(0, 0, window_size.w, window_size.h));
+            setSpace(MATH::Rect(0, 0, window_size.w, window_size.h));
             setPosition(MATH::Point(0, 0));
-            setSize(getGeometry());
+            setSize(getSpace());
+        }
+
+        VIDEO::Renderer &MainWidget::getRenderer()
+        {
+            return renderer;
         }
     }
 }

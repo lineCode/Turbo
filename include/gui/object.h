@@ -4,6 +4,7 @@
 #include <map>
 #include <functional>
 #include <algorithm>
+#include <memory>
 
 #include <SDL_types.h>
 #include <SDL_events.h>
@@ -21,22 +22,21 @@ namespace TURBO
             : public StyleProperties
         {
         protected:
-            Object                                 *parent;
-            Object                                 *child;
-            // The position relative to the parent object
-            MATH::Rect                             geometry;
-            // The position relative to the window object
-            MATH::Point                            position;
-            // The size of the object
-            MATH::Rect                             size;
+            Object      *parent       = nullptr;
+            Object      *child        = nullptr;
+            MATH::Point position      = MATH::Point();
+            MATH::Rect  space         = MATH::Rect();
+            MATH::Rect  size          = MATH::Rect();
+            MATH::Rect  content       = MATH::Rect();
+            OBJECT_TYPE object_type   = OBJECT_TYPE::OBJECT;
+            float       opacity       = 1.0;
+            bool        visible       = false;
+            bool        mouse_on      = false;
+            bool        mouse_over    = false;
+            bool        mouse_out     = false;
+            bool        mouse_clicked = false;
+
             std::map<Uint8, std::function<void()>> callbacks;
-            OBJECT_TYPE                            object_type;
-            bool                                   visible;
-            float                                  opacity;
-            bool                                   mouse_on;
-            bool                                   mouse_over;
-            bool                                   mouse_out;
-            bool                                   mouse_clicked;
 
             void fireCallback(Uint8 event);
 
@@ -49,17 +49,21 @@ namespace TURBO
 
             void registerCallback(Uint8 event, std::function<void()> callback);
 
-            MATH::Rect &setGeometry(MATH::Rect geometry);
-
-            MATH::Rect &getGeometry();
-
             MATH::Point &setPosition(MATH::Point position);
 
             MATH::Point &getPosition();
 
+            MATH::Rect &setSpace(MATH::Rect space);
+
+            MATH::Rect &getSpace();
+
             MATH::Rect &setSize(MATH::Rect size);
 
             MATH::Rect &getSize();
+
+            MATH::Rect &setContent(MATH::Rect content);
+
+            MATH::Rect &getContent();
 
             OBJECT_TYPE getObjectType();
 

@@ -38,10 +38,12 @@ namespace TURBO
                     Uint8 ideal_size = 12;
                     /*std::min(static_cast<Uint8>(16),
                       static_cast<Uint8>(text_size * (size.w/text_size) * VIDEO::PX_TO_PT));*/
+                    delete text_texture;
                     text_texture = renderer->createUTF8Text(text, ideal_size, size.w, size.h);
                 }
                 else
                 {
+                    delete text_texture;
                     text_texture = renderer->createUTF8Text(text, size.w, size.h);
                 }
             }

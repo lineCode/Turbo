@@ -59,27 +59,28 @@ namespace TURBO
 
         Box *Box::update()
         {
-            MATH::Rect children_size = size;
+            MATH::Rect children_space = space;
             if(orientation == ORIENTATION::HORIZONTAL)
             {
-                children_size.div(0, 0, children.size(), 0);
+                children_space.div(0, 0, static_cast<Sint32>(children.size()), 0);
             }
             else if(orientation == ORIENTATION::VERTICAL)
             {
-                children_size.div(0, 0, 0, children.size());
+                children_space.div(0, 0, 0, static_cast<Sint32>(children.size()));
             }
 
             for(auto & child : children)
             {
-                child->setGeometry(children_size);
-                child->setSize(child->getGeometry());
+                child->setSpace(children_space);
+                child->setSize(children_space);
+                child->setPosition(children_space.topLeft());
                 if(orientation == ORIENTATION::HORIZONTAL)
                 {
-                    children_size.add(children_size.w, 0, 0, 0);
+                    children_space.add(children_space.w, 0, 0, 0);
                 }
                 else if(orientation == ORIENTATION::VERTICAL)
                 {
-                    children_size.add(0, children_size.h, 0, 0);
+                    children_space.add(0, children_space.h, 0, 0);
                 }
                 child->update();
             }
@@ -95,10 +96,10 @@ namespace TURBO
         {
             children[std::pair<Uint8, Uint8>(x, y)] = object;
 
-            Sint32 x_pos = geometry.x + x * cell_width;
-            Sint32 y_pos = geometry.y + x * cell_height;
-            object->setGeometry(MATH::Rect(x_pos, y_pos, w * cell_width, h * cell_height));
-            object->setSize(object->getGeometry());
+            Sint32 x_pos = space.x + x * cell_width;
+            Sint32 y_pos = space.y + x * cell_height;
+            object->setSpace(MATH::Rect(x_pos, y_pos, w * cell_width, h * cell_height));
+            object->setSize(object->getSpace());
             return this;
         }
 
