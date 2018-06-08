@@ -53,6 +53,7 @@ namespace TURBO
             }
             else
             {
+                flags |= this->sdl_flags;
                 if(SDL_InitSubSystem(flags) == 0)
                 {
                     sdl_flags |= flags;

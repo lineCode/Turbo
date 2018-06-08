@@ -26,14 +26,15 @@ namespace TURBO
             static bool TTF_IS_INIT;
             static bool NET_IS_INIT;
 
-            explicit SDL(Uint32 flags = SDL_INIT_EVERYTHING);
+            SDL() = default;
+            explicit SDL(Uint32 flags);
             static std::string getBasePath();
             static std::string createPrefPath(std::string prefix, std::string dirname);
             static std::string getRevision();
             static std::string getVersion();
-            Uint32 initSDL(Uint32 flags = SDL_INIT_EVERYTHING);
-            Uint32 initIMG(Uint32 flags = IMG_INIT_PNG);
-            Uint32 initMIX(Uint32 flags = MIX_INIT_MP3);
+            Uint32 initSDL(Uint32 flags);
+            Uint32 initIMG(Uint32 flags);
+            Uint32 initMIX(Uint32 flags);
             Uint32 initTTF();
             Uint32 initNET();
             void quitSDL();
