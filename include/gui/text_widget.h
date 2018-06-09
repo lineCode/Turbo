@@ -14,6 +14,7 @@ namespace TURBO
         protected:
             std::string text;
             VIDEO::Texture *text_texture;
+            MATH::Rect text_rect;
 
         public:
             TextWidget(Object *parent, std::string text);

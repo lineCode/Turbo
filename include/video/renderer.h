@@ -43,6 +43,8 @@ namespace TURBO
             BOTTOM_RIGHT  = 0x44
         };
 
+        Uint8 operator&(TEXT_ALIGNMENT l, Uint8 r);
+
         /**
          * Wrapping behaviour of texts.
          */

@@ -65,6 +65,8 @@ void gui()
     b3.setBackgroundColor(TV::MAGENTA);
     b4.setBackgroundColor(TV::BLACK);
     b4.setFontColor(TV::WHITE);
+    b4.setTextAlignment(TV::TEXT_ALIGNMENT::RIGHT);
+    b4.setFontSize(18);
     bchart.setBackgroundColor(0xEEEEEEFF);
     bchart.setFontColor({255, 0, 50, 100});
     b6.setBackgroundColor({100, 100, 100, 255});
@@ -91,11 +93,6 @@ void gui()
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, over);
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_BUTTON_DOWN, quit);
-
-    using TURBO::GUI::operator""_pt;
-
-    auto px = 15_pt;
-    std::cout << px << std::endl;
 
     LOG("Start application");
 
@@ -390,6 +387,6 @@ int main(int argc, char **argv)
 
     gui();
 
-    std::cout << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
+    std::cout << "Execution took:" << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
     return 0;
 }

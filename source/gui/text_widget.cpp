@@ -5,7 +5,7 @@ namespace TURBO
     namespace GUI
     {
         TextWidget::TextWidget(Object *parent, const std::string text)
-            : Widget(parent), text(text), text_texture(nullptr)
+            : Widget(parent), text(text), text_texture(nullptr), text_rect()
         {
             object_type = OBJECT_TYPE::TEXT_WIDGET;
         }
@@ -31,24 +31,27 @@ namespace TURBO
             if(text_texture == nullptr)
             {
                 renderer->setTextColor(text_color);
-                int text_size = renderer->getFont()->getUTF8TextSize(text).w;
-                if(text_size > size.w)
+                delete text_texture;
+                text_texture = renderer->createUTF8Text(text, font_size, size.w, size.h);
+                text_rect = MATH::Rect(space.x, space.y, text_texture->getWidth(), text_texture->getHeight());
+
+                if((text_alignment & 0x1) == 1) // Left alignment
                 {
-                    //TODO get roughly the size of the optimal font size
-                    Uint8 ideal_size = 12;
-                    /*std::min(static_cast<Uint8>(16),
-                      static_cast<Uint8>(text_size * (size.w/text_size) * VIDEO::PX_TO_PT));*/
-                    delete text_texture;
-                    text_texture = renderer->createUTF8Text(text, ideal_size, size.w, size.h);
+
                 }
-                else
+                else if((text_alignment & 0x2) == 2) // Center alignment
                 {
-                    delete text_texture;
-                    text_texture = renderer->createUTF8Text(text, size.w, size.h);
+                    Sint32 align_space = (space.w - text_rect.w) / 2;
+                    text_rect.add(align_space, 0, 0, 0);
+                }
+                else if((text_alignment & 0x4) == 4) // Right alignment
+                {
+                    Sint32 align_space = space.w - text_rect.w;
+                    text_rect.add(align_space, 0, 0, 0);
                 }
             }
             Object::draw(renderer);
-            renderer->drawTexture(text_texture, size);
+            renderer->drawTexture(text_texture, text_rect);
         }
     }
 }

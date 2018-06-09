@@ -7,6 +7,7 @@
 #include "gui/object.h"
 #include "gui/style_properties.h"
 #include "gui/text_widget.h"
+#include "gui/units.h"
 #include "gui/widget.h"
 
 namespace TURBO

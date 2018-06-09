@@ -4,6 +4,11 @@ namespace TURBO
 {
     namespace VIDEO
     {
+        Uint8 operator&(TEXT_ALIGNMENT l, Uint8 r)
+        {
+            return static_cast<Uint8>(l) & r;
+        }
+
         Renderer::Renderer(Window &window, int index, Uint32 flags)
             : window(window)
         {
@@ -216,18 +221,7 @@ namespace TURBO
                 text_height = font->getUTF8TextSize(text).h;
             }
 
-            if((static_cast<Uint8>(alignment) & 0x1) == 1) // Left alignment
-            {
 
-            }
-            else if((static_cast<Uint8>(alignment) & 0x2) == 2) // Center alignment
-            {
-
-            }
-            else if((static_cast<Uint8>(alignment) & 0x4) == 4) // Right alignment
-            {
-
-            }
 
             TTF_Font *sdl_font = font->getFont();
 

@@ -2,6 +2,7 @@
 #define TURBO_STYLE_PROPERTIES_H
 
 #include "gui/gui_def.h"
+#include "gui/units.h"
 #include "video/surface.h"
 
 namespace TURBO
@@ -11,7 +12,7 @@ namespace TURBO
         class StyleProperties
         {
         protected:
-            Uint8                 font_size           = 12_px;
+            Uint8                 font_size           = 14_px;
             VIDEO::FONT_STYLE     font_style          = VIDEO::FONT_STYLE::NORMAL;
             VIDEO::TEXT_ALIGNMENT text_alignment      = VIDEO::TEXT_ALIGNMENT::TOP_LEFT;
             VIDEO::TEXT_WRAPPING  text_wrapping       = VIDEO::TEXT_WRAPPING::BREAK;
