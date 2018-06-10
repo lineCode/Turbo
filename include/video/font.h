@@ -16,49 +16,6 @@ namespace TURBO
     namespace VIDEO
     {
         /**
-         * Rough transformation ratios.
-         */
-        const float PX_TO_PT = 4 / 3; // 1.3
-        const float PT_TO_PX = 3 / 4; // 0.75
-
-        /**
-         * Font style defines the appearance of letters.
-         */
-        enum class FONT_STYLE
-            : Uint8
-        {
-            NORMAL     = TTF_STYLE_NORMAL,
-            BOLD       = TTF_STYLE_BOLD,
-            ITALIC     = TTF_STYLE_ITALIC,
-            UNDERLINED = TTF_STYLE_UNDERLINE,
-            STRIKED    = TTF_STYLE_STRIKETHROUGH
-        };
-
-
-        /**
-         * Hinting is responsible for edge smoothing and contrast
-         */
-        enum class FONT_HINTING
-            : Uint8
-        {
-            NORMAL = TTF_HINTING_NORMAL,
-            LIGHT  = TTF_HINTING_LIGHT,
-            MONO   = TTF_HINTING_MONO,
-            NONE   = TTF_HINTING_NONE
-        };
-
-        /**
-         * Describes the encoding type of the letter.
-         */
-        enum class FONT_TYPE
-            : Uint8
-        {
-            GLYPH   = 0x0,
-            UTF8    = 0x1,
-            UNICODE = 0x2
-        };
-
-        /**
          * Size information of a font.
          */
         struct FontMetrics
@@ -72,15 +29,111 @@ namespace TURBO
         };
 
         /**
+         * Font style defines the appearance of letters.
+         */
+        enum class FONT_STYLE
+            : Uint8
+        {
+            NORMAL                         = TTF_STYLE_NORMAL,
+            BOLD                           = TTF_STYLE_BOLD,
+            ITALIC                         = TTF_STYLE_ITALIC,
+            UNDERLINED                     = TTF_STYLE_UNDERLINE,
+            STRIKED                        = TTF_STYLE_STRIKETHROUGH,
+            BOLD_UNDERLINED                = 0x05,
+            BOLD_STRIKED                   = 0x09,
+            BOLD_UNDERLINED_STRIKED        = 0x0D,
+            BOLD_ITALIC                    = 0x03,
+            BOLD_ITALIC_UNDERLINED         = 0x07,
+            BOLD_ITALIC_STRIKED            = 0x0B,
+            BOLD_ITALIC_UNDERLINED_STRIKED = 0x0F,
+            ITALIC_UNDERLINED              = 0x06,
+            ITALIC_STRIKED                 = 0x0A,
+            ITALIC_UNDERLINED_STRIKED      = 0x0E,
+            UNDERLINED_STRIKED             = 0x0C
+        };
+
+
+        /**
+         * Hinting is responsible for edge smoothing and contrast
+         */
+        enum class FONT_HINTING
+            : Uint8
+        {
+            NORMAL = 0x00,
+            LIGHT  = 0x01,
+            MONO   = 0x02,
+            NONE   = 0x03
+        };
+
+        /**
+         * Describes the encoding type of the letter.
+         */
+        enum class FONT_TYPE
+            : Uint8
+        {
+            GLYPH   = 0x00,
+            UTF8    = 0x01,
+            UNICODE = 0x02
+        };
+
+        /**
          * Rendering method for texts.
          */
         enum class TEXT_MODE
             : Uint8
         {
-            SOLID   = 0x0,
-            BLENDED = 0x1,
-            SHADED  = 0x2
+            SOLID   = 0x00,
+            BLENDED = 0x01,
+            SHADED  = 0x02
         };
+
+        /**
+         * Alignment of texts.
+         */
+        enum class TEXT_ALIGNMENT
+            : Uint8
+        {
+            LEFT          = 0x01,
+            CENTER        = 0x02,
+            RIGHT         = 0x04,
+            TOP           = 0x10,
+            MIDDLE        = 0x20,
+            BOTTOM        = 0x40,
+            TOP_LEFT      = 0x11,
+            TOP_CENTER    = 0x12,
+            TOP_RIGHT     = 0x14,
+            MIDDLE_LEFT   = 0x21,
+            MIDDLE_CENTER = 0x22,
+            MIDDLE_RIGHT  = 0x24,
+            BOTTOM_LEFT   = 0x41,
+            BOTTOM_CENTER = 0x42,
+            BOTTOM_RIGHT  = 0x44
+        };
+
+        /**
+         * Wrapping behaviour of texts.
+         */
+        enum class TEXT_WRAPPING
+            : Uint8
+        {
+            OVERFLOW_RIGHT = 0x01,
+            OVERFLOW_LEFT  = 0x02,
+            CUT_RIGHT      = 0x04,
+            CUT_LEFT       = 0x08,
+            BREAK          = 0x0F
+        };
+
+        template<typename ENUM, typename VAL>
+        VAL operator&(ENUM l, VAL r)
+        {
+            return static_cast<VAL>(l) & r;
+        }
+
+        template<typename ENUM, typename VAL>
+        VAL operator|(ENUM l, VAL r)
+        {
+            return static_cast<VAL>(l) | r;
+        }
 
         /**
          *
@@ -135,7 +188,7 @@ namespace TURBO
 
             FONT_STYLE getFontStyle();
 
-            FONT_STYLE setFontSTyle(FONT_STYLE style);
+            FONT_STYLE setFontStyle(FONT_STYLE style);
 
             Uint32 getFontOutline();
 
@@ -176,6 +229,7 @@ namespace TURBO
              * @param step
              */
             explicit FontCollection(std::string path, Uint8 from = 1, Uint8 to = 10, Uint8 step = 1);
+
             explicit FontCollection(std::string path, Uint8 from = 1, std::vector<Uint8> step = {1});
 
             /**

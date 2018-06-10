@@ -4,20 +4,15 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        Uint8 operator&(TEXT_ALIGNMENT l, Uint8 r)
-        {
-            return static_cast<Uint8>(l) & r;
-        }
-
         Renderer::Renderer(Window &window, int index, Uint32 flags)
             : window(window)
         {
             if(SYSTEM::SDL::SDL_IS_INIT)
             {
                 renderer        = SDL_CreateRenderer(window.getWindow(), index, flags);
-                font            = new Font(TURBO_DEFAULT_FONT, TURBO_DEFAULT_FONT_SIZE, 0);
+                font            = new Font(TURBO_DEFAULT_FONT_NORMAL, TURBO_DEFAULT_FONT_SIZE, 0);
                 font_texture    = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
-                font_collection = new FontCollection(TURBO_DEFAULT_FONT, 8,
+                font_collection = new FontCollection(TURBO_DEFAULT_FONT_NORMAL, 8,
                                                      std::vector<Uint8>{1, 1, 2, 2, 2, 4, 4, 6, 6, 8, 8});
 
                 setBlendMode(blend_mode);
@@ -194,7 +189,7 @@ namespace TURBO
             }
         }
 
-        Texture *Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h, Uint8 size, TEXT_ALIGNMENT alignment,
+        Texture *Renderer::createUTF8Text(std::string &text, Uint8 size, Sint32 w, Sint32 h, FONT_STYLE style,
                                           TEXT_WRAPPING wrapping)
         {
             SDL_Surface *surface    = nullptr;
@@ -221,8 +216,7 @@ namespace TURBO
                 text_height = font->getUTF8TextSize(text).h;
             }
 
-
-
+            font->setFontStyle(style);
             TTF_Font *sdl_font = font->getFont();
 
             if(text_mode == TEXT_MODE::SOLID)
@@ -244,34 +238,6 @@ namespace TURBO
             else if(text_mode == TEXT_MODE::SHADED)
             {
                 surface = TTF_RenderUTF8_Shaded(sdl_font, text.c_str(), color_text_fg.toSDLColor(),
-                                                color_text_bg.toSDLColor());
-            }
-
-            if(surface != nullptr)
-            {
-                texture = new Texture(renderer, surface);
-                SDL_FreeSurface(surface);
-            }
-            return texture;
-        }
-
-        Texture *Renderer::createUTF8Text(std::string &text, Uint8 pt_size, Sint32 w, Sint32 h)
-        {
-            SDL_Surface *surface = nullptr;
-            Texture     *texture = nullptr;
-            TTF_Font    *font    = this->font_collection->getLTEFont(pt_size)->getFont();
-
-            if(text_mode == VIDEO::TEXT_MODE::SOLID)
-            {
-                surface = TTF_RenderUTF8_Solid(font, text.c_str(), color_text_fg.toSDLColor());
-            }
-            else if(text_mode == VIDEO::TEXT_MODE::BLENDED)
-            {
-                surface = TTF_RenderUTF8_Blended(font, text.c_str(), color_text_fg.toSDLColor());
-            }
-            else if(text_mode == VIDEO::TEXT_MODE::SHADED)
-            {
-                surface = TTF_RenderUTF8_Shaded(font, text.c_str(), color_text_fg.toSDLColor(),
                                                 color_text_bg.toSDLColor());
             }
 

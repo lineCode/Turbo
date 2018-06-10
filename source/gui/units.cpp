@@ -24,52 +24,52 @@ namespace TURBO
 
         long double operator ""_mm(unsigned long long size)
         {
-            return size * (127/480);
+            return size * PX_TO_MM;
         }
 
         long double operator ""_mm(long double size)
         {
-            return size * (127/480);
+            return size * PX_TO_MM;
         }
 
         long double operator ""_cm(unsigned long long size)
         {
-            return size * (127/4800);
+            return size * PX_TO_CM;
         }
 
         long double operator ""_cm(long double size)
         {
-            return size * (127/4800);
+            return size * PX_TO_CM;
         }
 
         long double operator ""_pt(unsigned long long size)
         {
-            return size * (4/3);
+            return size * PX_TO_PT;
         }
 
         long double operator ""_pt(long double size)
         {
-            return size * (4/3);
+            return size * PX_TO_PT;
         }
 
         long double operator ""_pc(unsigned long long size)
         {
-            return size * 16;
+            return size * PX_TO_PC;
         }
 
         long double operator ""_pc(long double size)
         {
-            return size * 16;
+            return size * PX_TO_PC;
         }
 
         long double operator ""_in(unsigned long long size)
         {
-            return size * (1/96);
+            return size * PX_TO_IN;
         }
 
         long double operator ""_in(long double size)
         {
-            return size * (1/96);
+            return size * PX_TO_IN;
         }
     }
 }

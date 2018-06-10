@@ -111,12 +111,12 @@ namespace TURBO
             return font_style;
         }
 
-        FONT_STYLE Font::getFontStyle()
+        VIDEO::FONT_STYLE Font::getFontStyle()
         {
             return style;
         }
 
-        FONT_STYLE Font::setFontSTyle(FONT_STYLE style)
+        VIDEO::FONT_STYLE Font::setFontStyle(VIDEO::FONT_STYLE style)
         {
             if(font != nullptr)
             {
@@ -141,12 +141,12 @@ namespace TURBO
             return this->outline;
         }
 
-        FONT_HINTING Font::getFontHinting()
+        VIDEO::FONT_HINTING Font::getFontHinting()
         {
             return hinting;
         }
 
-        FONT_HINTING Font::setFontHinting(FONT_HINTING hinting)
+        VIDEO::FONT_HINTING Font::setFontHinting(VIDEO::FONT_HINTING hinting)
         {
             if(font != nullptr)
             {

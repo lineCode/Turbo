@@ -20,44 +20,6 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        /**
-         * Alignment of texts.
-         */
-        enum class TEXT_ALIGNMENT
-            : Uint8
-        {
-            LEFT          = 0x01,
-            CENTER        = 0x02,
-            RIGHT         = 0x04,
-            TOP           = 0x10,
-            MIDDLE        = 0x20,
-            BOTTOM        = 0x40,
-            TOP_LEFT      = 0x11,
-            TOP_CENTER    = 0x12,
-            TOP_RIGHT     = 0x14,
-            MIDDLE_LEFT   = 0x21,
-            MIDDLE_CENTER = 0x22,
-            MIDDLE_RIGHT  = 0x24,
-            BOTTOM_LEFT   = 0x41,
-            BOTTOM_CENTER = 0x42,
-            BOTTOM_RIGHT  = 0x44
-        };
-
-        Uint8 operator&(TEXT_ALIGNMENT l, Uint8 r);
-
-        /**
-         * Wrapping behaviour of texts.
-         */
-        enum class TEXT_WRAPPING
-            : Uint8
-        {
-            OVERFLOW_RIGHT = 0x01,
-            OVERFLOW_LEFT  = 0x02,
-            CUT_RIGHT      = 0x04,
-            CUT_LEFT       = 0x08,
-            BREAK          = 0x0F
-        };
-
         class Renderer
         {
         private:
@@ -68,10 +30,10 @@ namespace TURBO
             Texture        *font_texture;
             SDL_BlendMode  blend_mode    = SDL_BlendMode::SDL_BLENDMODE_BLEND;
             TEXT_MODE      text_mode     = TEXT_MODE::BLENDED;
-            Color          color_text_fg = Color{255, 255, 255, 255};
-            Color          color_text_bg = Color{0, 0, 0, 255};
-            Color          color_draw    = Color{255, 255, 255, 255};
-            Color          color_clear   = Color{0, 0, 0, 255};
+            Color          color_text_fg = WHITE;
+            Color          color_text_bg = BLACK;
+            Color          color_draw    = WHITE;
+            Color          color_clear   = BLACK;
 
         public:
             Renderer(Window &window, int index, Uint32 flags);
@@ -122,11 +84,9 @@ namespace TURBO
 
             void drawTexture(Texture *texture, MATH::Rect dest);
 
-            Texture * createUTF8Text(std::string &text, Sint32 w, Sint32 h, Uint8 size,
-                                     TEXT_ALIGNMENT alignment = TEXT_ALIGNMENT::TOP_LEFT,
+            Texture * createUTF8Text(std::string &text, Uint8 size, Sint32 w, Sint32 h,
+                                     FONT_STYLE style = FONT_STYLE::NORMAL,
                                      TEXT_WRAPPING wrapping = TEXT_WRAPPING::BREAK);
-
-            Texture *createUTF8Text(std::string &text, Uint8 pt_size, Sint32 w, Sint32 h);
 
             Texture *createUnicodeText(const Uint16 *text, Sint32 w, Sint32 h);
 

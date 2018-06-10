@@ -27,8 +27,9 @@ namespace TURBO
     /**
      * TURBO Default Variables
      */
-    const std::string TURBO_DEFAULT_FONT      = TURBO_FONT_PATH + "OpenSans-Light.ttf";
-    const Uint8       TURBO_DEFAULT_FONT_SIZE = 32;
+    const std::string TURBO_DEFAULT_FONT             = TURBO_FONT_PATH + "OpenSans/";
+    const std::string TURBO_DEFAULT_FONT_NORMAL      = TURBO_DEFAULT_FONT + "OpenSans-Light.ttf";
+    const Uint8       TURBO_DEFAULT_FONT_SIZE        = 32;
 }
 
 #endif //TURBO_TURBO_DEF_H
