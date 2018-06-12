@@ -12,7 +12,7 @@
 #include "gui/gui_def.h"
 #include "math/math.h"
 #include "input/input.h"
-#include "style_properties.h"
+#include "gui/style_properties.h"
 
 namespace TURBO
 {
@@ -43,7 +43,7 @@ namespace TURBO
         public:
             explicit Object(Object *parent);
 
-            virtual ~Object();
+            ~Object() override;
 
             void pollEvent(SDL_Event &event);
 

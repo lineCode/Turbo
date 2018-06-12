@@ -24,13 +24,13 @@ namespace TURBO
         KeyCombination Key::operator&(Key other)
         {
             KeyCombination key_comb = KeyCombination(Key{other.getCode()});
-            return key_comb &= Key{code};
+            return key_comb &= Key(code);
         }
 
         KeyCombination Key::operator|(Key other)
         {
             KeyCombination key_comb = KeyCombination(Key{other.getCode()});
-            return key_comb |= Key{code};
+            return key_comb |= Key(code);
         }
 
         Sint64 Key::setCode(Sint64 code)
@@ -81,7 +81,7 @@ namespace TURBO
 
         Key KeyMod::getKey()
         {
-            return Key{code};
+            return Key(code);
         }
 
         KeyCombination::KeyCombination(SDL_Keycode keycode)

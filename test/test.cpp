@@ -59,7 +59,7 @@ void gui()
 
     LOG("Configure");
 
-    renderer.getFont()->setFontSize(60);
+    renderer.getFont()->setFontSize(14);
 
     b1.setBackgroundColor(TV::YELLOW);
     b2.setBackgroundColor(TV::RED);
@@ -118,7 +118,6 @@ void gui()
 
             renderer.clear();
             main_widget.draw(&renderer);
-            renderer.drawRect(20, 20, 200, 200, 1, TV::TRANSPARENT, true);
             renderer.present();
         }
         SDL_Delay(5);
@@ -385,7 +384,6 @@ int database()
     }
     return 0;
 }
-
 
 int main(int argc, char **argv)
 {

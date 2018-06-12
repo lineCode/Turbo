@@ -189,6 +189,12 @@ namespace TURBO
             }
         }
 
+        Texture * Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h, FONT_STYLE style,
+                                           TEXT_WRAPPING wrapping)
+        {
+            return createUTF8Text(text, font->getFontSize(), w, h, style, wrapping);
+        }
+
         Texture *Renderer::createUTF8Text(std::string &text, Uint8 size, Sint32 w, Sint32 h, FONT_STYLE style,
                                           TEXT_WRAPPING wrapping)
         {

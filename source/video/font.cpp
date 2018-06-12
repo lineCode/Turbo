@@ -200,7 +200,7 @@ namespace TURBO
                 TTF_SizeText(font, text.c_str(), &w, &h);
             }
 
-            return MATH::Rect{0, 0, w, h};
+            return {0, 0, w, h};
         }
 
         MATH::Rect Font::getUnicodeTextSize(const Uint16 *text)
@@ -211,7 +211,7 @@ namespace TURBO
             {
                 TTF_SizeUNICODE(font, text, &w, &h);
             }
-            return MATH::Rect{0, 0, w, h};
+            return {0, 0, w, h};
         }
 
         FontCollection::FontCollection(std::string path, Uint8 from, Uint8 to, Uint8 step)
