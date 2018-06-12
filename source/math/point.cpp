@@ -16,12 +16,9 @@ namespace TURBO
 
         }
 
-        Point& Point::operator+(const Point &other)
+        Point Point::operator+(const Point &other)
         {
-            x += other.x;
-            y += other.y;
-            z += other.z;
-            return *this;
+            return {x + other.x, y + other.y, z + other.z};
         }
 
         Point& Point::operator+=(const Point &other)
@@ -32,12 +29,9 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator-(const Point &other)
+        Point Point::operator-(const Point &other)
         {
-            x -= other.x;
-            y -= other.y;
-            z -= other.z;
-            return *this;
+            return {x - other.x, y - other.y, z - other.z};
         }
 
         Point& Point::operator-=(const Point &other)
@@ -48,12 +42,9 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator*(const Point &other)
+        Point Point::operator*(const Point &other)
         {
-            x *= other.x;
-            y *= other.y;
-            z *= other.z;
-            return *this;
+            return {x * other.x, y * other.y, z * other.z};
         }
 
         Point& Point::operator*=(const Point &other)
@@ -64,12 +55,9 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator/(const Point &other)
+        Point Point::operator/(const Point &other)
         {
-            x /= other.x;
-            y /= other.y;
-            z /= other.z;
-            return *this;
+            return {x / other.x, y / other.y, z / other.z};
         }
 
         Point& Point::operator/=(const Point &other)
@@ -80,12 +68,9 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator*(Sint32 scalar)
+        Point Point::operator*(Sint32 scalar)
         {
-            x *= scalar;
-            y *= scalar;
-            z *= scalar;
-            return *this;
+            return {x * scalar, y * scalar, z * scalar};
         }
 
         Point& Point::operator*=(Sint32 scalar)
@@ -96,12 +81,9 @@ namespace TURBO
             return *this;
         }
 
-        Point& Point::operator/(Sint32 scalar)
+        Point Point::operator/(Sint32 scalar)
         {
-            x /= scalar;
-            y /= scalar;
-            z /= scalar;
-            return *this;
+            return {x / scalar, y / scalar, z / scalar};
         }
 
         Point& Point::operator/=(Sint32 scalar)
@@ -117,9 +99,9 @@ namespace TURBO
             return (first.x == second.x && first.y == second.y && first.z == second.z);
         }
 
-        bool operator!=(const Point &p, const Point &q)
+        bool operator!=(const Point &first, const Point &second)
         {
-            return !(p == q);
+            return !(first == second);
         }
 
         bool operator<(const Point &first, const Point &second)

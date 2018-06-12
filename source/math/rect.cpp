@@ -34,10 +34,10 @@ namespace TURBO
 
         Rect &Rect::mul(Sint32 x, Sint32 y, Sint32 w, Sint32 h)
         {
-            this->x *= (x != 0) ? x : 1;
-            this->y *= (y != 0) ? y : 1;
-            this->w *= (w != 0) ? w : 1;
-            this->h *= (h != 0) ? h : 1;
+            this->x *= x;
+            this->y *= y;
+            this->w *= w;
+            this->h *= h;
         }
 
         Rect &Rect::div(Sint32 x, Sint32 y, Sint32 w, Sint32 h)
@@ -73,17 +73,99 @@ namespace TURBO
             return bottomRight() / 2;
         }
 
-        Rect &Rect::operator*(Sint32 scalar)
+        Rect Rect::operator+(const Rect &other)
         {
-            w *= scalar;
-            h *= scalar;
+            return {x + other.x, y + other.y, w + other.w, h + other.h};
+        }
+
+        Rect &Rect::operator+=(const Rect &other)
+        {
+            x += other.x;
+            y += other.y;
+            w += other.w;
+            h += other.h;
             return *this;
         }
 
-        Rect &Rect::operator/(Sint32 scalar)
+        Rect Rect::operator-(const Rect &other)
         {
-            w /= scalar;
-            h /= scalar;
+            return {x - other.x, y - other.y, w - other.w, h - other.h};
+        }
+
+        Rect &Rect::operator-=(const Rect &other)
+        {
+            x -= other.x;
+            y -= other.y;
+            w -= other.w;
+            h -= other.h;
+            return *this;
+        }
+
+        Rect Rect::operator*(const Rect &other)
+        {
+            return {x * other.x, 
+                    y * other.y, 
+                    w * other.w, 
+                    h * other.h};
+        }
+
+        Rect &Rect::operator*=(const Rect &other)
+        {
+            x *= other.x;
+            y *= other.y;
+            w *= other.w;
+            h *= other.h;
+            return *this;
+        }
+
+        Rect Rect::operator/(const Rect &other)
+        {
+            return {x / (other.x != 0) ? other.x : 1,
+                    y / (other.y != 0) ? other.y : 1,
+                    w / (other.w != 0) ? other.w : 1,
+                    h / (other.h != 0) ? other.h : 1};
+        }
+
+        Rect &Rect::operator/=(const Rect &other)
+        {
+            x /= (other.x != 0) ? other.x : 1;
+            y /= (other.y != 0) ? other.y : 1;
+            w /= (other.w != 0) ? other.w : 1;
+            h /= (other.h != 0) ? other.h : 1;
+            return *this;
+        }
+
+        Rect Rect::operator*(Sint32 scalar)
+        {
+            return {x * (scalar != 0) ? scalar : 1,
+                    y * (scalar != 0) ? scalar : 1,
+                    w * (scalar != 0) ? scalar : 1,
+                    h * (scalar != 0) ? scalar : 1};
+        }
+
+        Rect &Rect::operator*=(Sint32 scalar)
+        {
+            x *= (scalar != 0) ? scalar : 1;
+            y *= (scalar != 0) ? scalar : 1;
+            w *= (scalar != 0) ? scalar : 1;
+            h *= (scalar != 0) ? scalar : 1;
+            return *this;
+        }
+
+        Rect Rect::operator/(Sint32 scalar)
+        {
+            return {x / (scalar != 0) ? scalar : 1,
+                    y / (scalar != 0) ? scalar : 1,
+                    w / (scalar != 0) ? scalar : 1,
+                    h / (scalar != 0) ? scalar : 1};
+        }
+
+        Rect &Rect::operator/=(Sint32 scalar)
+        {
+            x /= (scalar != 0) ? scalar : 1;
+            y /= (scalar != 0) ? scalar : 1;
+            w /= (scalar != 0) ? scalar : 1;
+            h /= (scalar != 0) ? scalar : 1;
             return *this;
         }
 

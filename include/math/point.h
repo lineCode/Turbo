@@ -16,17 +16,17 @@ namespace TURBO
 
             Point();
             Point(Sint32 x, Sint32 y, Sint32 z = 0);
-            Point& operator+(const Point &other);
+            Point operator+(const Point &other);
             Point& operator+=(const Point &other);
-            Point& operator-(const Point &other);
+            Point operator-(const Point &other);
             Point& operator-=(const Point &other);
-            Point& operator*(const Point &other);
+            Point operator*(const Point &other);
             Point& operator*=(const Point &other);
-            Point& operator/(const Point &other);
+            Point operator/(const Point &other);
             Point& operator/=(const Point &other);
-            Point& operator*(Sint32 scalar);
+            Point operator*(Sint32 scalar);
             Point& operator*=(Sint32 scalar);
-            Point& operator/(Sint32 scalar);
+            Point operator/(Sint32 scalar);
             Point& operator/=(Sint32 scalar);
             friend bool operator==(const Point &first, const Point &second);
             friend bool operator!=(const Point &first, const Point &second);
@@ -34,7 +34,6 @@ namespace TURBO
             friend bool operator<=(const Point &first, const Point &second);
             friend bool operator>(const Point &first, const Point &second);
             friend bool operator>=(const Point &first, const Point &second);
-            friend bool operator>(const Point &first, const Point &second);
         };
     }
 }

@@ -1,6 +1,7 @@
 #ifndef TURBO_MATH_H
 #define TURBO_MATH_H
 
+#include "math/range.h"
 #include "math/point.h"
 #include "math/rect.h"
 #include "math/vector.h"
