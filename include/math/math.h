@@ -3,6 +3,7 @@
 
 #include "math/range.h"
 #include "math/point.h"
+#include "math/line.h"
 #include "math/rect.h"
 #include "math/vector.h"
 

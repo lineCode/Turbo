@@ -94,6 +94,36 @@ namespace TURBO
             return *this;
         }
 
+        Point Point::operator++(int)
+        {
+            Point result(*this);
+            ++(*this);
+            return result;
+        }
+
+        Point &Point::operator++()
+        {
+            x++;
+            y++;
+            z++;
+            return *this;
+        }
+
+        Point Point::operator--(int)
+        {
+            Point result(*this);
+            --(*this);
+            return result;
+        }
+
+        Point &Point::operator--()
+        {
+            x--;
+            y--;
+            z--;
+            return *this;
+        }
+
         bool operator==(const Point &first, const Point &second)
         {
             return (first.x == second.x && first.y == second.y && first.z == second.z);

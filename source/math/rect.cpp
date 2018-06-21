@@ -48,27 +48,27 @@ namespace TURBO
             this->h /= (h != 0) ? h : 1;
         }
 
-        Point Rect::topLeft()
+        Point Rect::topLeft() const
         {
             return {x, y};
         }
 
-        Point Rect::topRight()
+        Point Rect::topRight() const
         {
             return {x + w, y};
         }
 
-        Point Rect::bottomLeft()
+        Point Rect::bottomLeft() const
         {
             return {x, y + h};
         }
 
-        Point Rect::bottomRight()
+        Point Rect::bottomRight() const
         {
             return {x + w, y + h};
         }
 
-        Point Rect::center()
+        Point Rect::center() const
         {
             return bottomRight() / 2;
         }
@@ -169,7 +169,7 @@ namespace TURBO
             return *this;
         }
 
-        bool operator==(Rect &first, Rect &second)
+        bool operator==(const Rect &first, const Rect &second)
         {
             return (first.x == second.x)
                 && (first.y == second.y)
@@ -178,12 +178,12 @@ namespace TURBO
 
         }
 
-        bool operator!=(Rect &first, Rect &second)
+        bool operator!=(const Rect &first, const Rect &second)
         {
             return !(first == second);
         }
 
-        bool operator<(Rect &first, Rect &second)
+        bool operator<(const Rect &first, const Rect &second)
         {
             Point tl1 = first.topLeft();
             Point tl2 = second.topLeft();
@@ -195,7 +195,7 @@ namespace TURBO
                 && (first.h < second.h);
         }
 
-        bool operator<=(Rect &first, Rect &second)
+        bool operator<=(const Rect &first, const Rect &second)
         {
             Point tl1 = first.topLeft();
             Point tl2 = second.topLeft();
@@ -207,7 +207,7 @@ namespace TURBO
                 && (first.h <= second.h);
         }
 
-        bool operator>(Rect &first, Rect &second)
+        bool operator>(const Rect &first, const Rect &second)
         {
             Point tl1 = first.topLeft();
             Point tl2 = second.topLeft();
@@ -219,7 +219,7 @@ namespace TURBO
                    && (first.h > second.h);
         }
 
-        bool operator>=(Rect &first, Rect &second)
+        bool operator>=(const Rect &first, const Rect &second)
         {
             Point tl1 = first.topLeft();
             Point tl2 = second.topLeft();

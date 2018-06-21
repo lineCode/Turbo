@@ -25,11 +25,11 @@ namespace TURBO
             Rect& sub(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
             Rect& mul(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
             Rect& div(Sint32 x, Sint32 y, Sint32 w, Sint32 h);
-            Point topLeft();
-            Point topRight();
-            Point bottomLeft();
-            Point bottomRight();
-            Point center();
+            Point topLeft() const;
+            Point topRight() const;
+            Point bottomLeft() const;
+            Point bottomRight() const;
+            Point center() const;
             Rect operator+(const Rect &other);
             Rect& operator+=(const Rect &other);
             Rect operator-(const Rect &other);
@@ -42,12 +42,12 @@ namespace TURBO
             Rect& operator*=(Sint32 scalar);
             Rect operator/(Sint32 scalar);
             Rect& operator/=(Sint32 scalar);
-            friend bool operator==(Rect & first, Rect &second);
-            friend bool operator!=(Rect & first, Rect &second);
-            friend bool operator<(Rect & first, Rect &second);
-            friend bool operator<=(Rect & first, Rect &second);
-            friend bool operator>(Rect & first, Rect &second);
-            friend bool operator>=(Rect & first, Rect &second);
+            friend bool operator==(const Rect & first, const Rect &second);
+            friend bool operator!=(const Rect & first, const Rect &second);
+            friend bool operator<(const Rect & first, const Rect &second);
+            friend bool operator<=(const Rect & first, const Rect &second);
+            friend bool operator>(const Rect & first, const Rect &second);
+            friend bool operator>=(const Rect & first, const Rect &second);
 
             static void registerToLuaScript(lua_State *state);
         };

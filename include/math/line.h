@@ -33,12 +33,16 @@ namespace TURBO
             Line& operator*=(Sint32 scalar);
             Line operator/(Sint32 scalar);
             Line& operator/=(Sint32 scalar);
-            friend bool operator==(Line & first, Line &second);
-            friend bool operator!=(Line & first, Line &second);
-            friend bool operator<(Line & first, Line &second);
-            friend bool operator<=(Line & first, Line &second);
-            friend bool operator>(Line & first, Line &second);
-            friend bool operator>=(Line & first, Line &second);
+            Line operator++(int);
+            Line& operator++();
+            Line operator--(int);
+            Line& operator--();
+            friend bool operator==(const Line &first, const Line &second);
+            friend bool operator!=(const Line &first, const Line &second);
+            friend bool operator<(const Line &first, const Line &second);
+            friend bool operator<=(const Line &first, const Line &second);
+            friend bool operator>(const Line &first, const Line &second);
+            friend bool operator>=(const Line &first, const Line &second);
         };
     }
 }

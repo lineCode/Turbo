@@ -84,13 +84,13 @@ namespace TURBO
 
             void drawTexture(Texture *texture, MATH::Rect dest);
 
-            Texture * createUTF8Text(std::string &text, Sint32 w, Sint32 h,
-                                     FONT_STYLE style = FONT_STYLE::NORMAL,
-                                     TEXT_WRAPPING wrapping = TEXT_WRAPPING::BREAK);
+            Texture *createUTF8Text(std::string &text, Sint32 w, Sint32 h,
+                                    FONT_STYLE style = FONT_STYLE::NORMAL,
+                                    TEXT_WRAPPING wrapping = TEXT_WRAPPING::BREAK);
 
-            Texture * createUTF8Text(std::string &text, Uint8 size, Sint32 w, Sint32 h,
-                                     FONT_STYLE style = FONT_STYLE::NORMAL,
-                                     TEXT_WRAPPING wrapping = TEXT_WRAPPING::BREAK);
+            Texture *createUTF8Text(std::string &text, Uint8 size, Sint32 w, Sint32 h,
+                                    FONT_STYLE style = FONT_STYLE::NORMAL,
+                                    TEXT_WRAPPING wrapping = TEXT_WRAPPING::BREAK);
 
             Texture *createUnicodeText(const Uint16 *text, Sint32 w, Sint32 h);
 

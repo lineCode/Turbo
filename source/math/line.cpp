@@ -116,32 +116,64 @@ namespace TURBO
             return *this;
         }
 
-        bool MATH::operator==(Line &first, Line &second)
+        Line Line::operator++(int)
+        {
+            Line result(*this);
+            ++(*this);
+            return result;
+        }
+
+        Line &Line::operator++()
+        {
+            x1++;
+            y1++;
+            x2++;
+            y2++;
+            return *this;
+        }
+
+        Line Line::operator--(int)
+        {
+            Line result(*this);
+            --(*this);
+            return result;
+        }
+
+        Line &Line::operator--()
+        {
+            x1--;
+            y1--;
+            x2--;
+            y2--;
+            return *this;
+        }
+
+        bool operator==(const Line &first, const Line &second)
         {
             return first.first() == second.first() && first.second() == second.second();
         }
 
-        bool MATH::operator!=(Line &first, Line &second)
+        bool operator!=(const Line &first, const Line &second)
         {
             return !(first == second);
         }
 
-        bool MATH::operator<(Line &first, Line &second)
+        bool operator<(const Line &first, const Line &second)
         {
             return (first.first() < second.first()) && (first.second() < second.second());
         }
 
-        bool MATH::operator<=(Line &first, Line &second)
+        bool operator<=(const Line &first, const Line &second)
         {
             return (first.first() <= second.first()) && (first.second() <= second.second());
         }
 
-        bool MATH::operator>(Line &first, Line &second)
+        bool operator>(const Line &first, const Line &second)
         {
             return (first.first() > second.first()) && (first.second() > second.second());
         }
 
-        bool MATH::operator>=(Line &first, Line &second)
+        bool operator>=(const Line &first, const Line &second)
         {
             return (first.first() >= second.first()) && (first.second() >= second.second());
         }

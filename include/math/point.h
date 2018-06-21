@@ -28,6 +28,10 @@ namespace TURBO
             Point& operator*=(Sint32 scalar);
             Point operator/(Sint32 scalar);
             Point& operator/=(Sint32 scalar);
+            Point operator++(int);
+            Point& operator++();
+            Point operator--(int);
+            Point& operator--();
             friend bool operator==(const Point &first, const Point &second);
             friend bool operator!=(const Point &first, const Point &second);
             friend bool operator<(const Point &first, const Point &second);
