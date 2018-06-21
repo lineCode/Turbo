@@ -22,6 +22,16 @@ void out()
     std::cout << "out" << std::endl;
 }
 
+int unique(int a)
+{
+    return a;
+}
+
+double add(int a, float b)
+{
+    return a + b;
+}
+
 void quit()
 {
     TS::SYSTEM_RUNNING = false;
@@ -29,7 +39,7 @@ void quit()
 
 void gui()
 {
-    using TG::operator""_pt;
+    using TG::operator ""_pt;
 
     LOG("Loading libraries");
 
@@ -118,6 +128,13 @@ void gui()
 
             renderer.clear();
             main_widget.draw(&renderer);
+            for(auto i : TM::range(TM::Point{275,280}, TM::Point{325,280}, TM::Point{25,0}))
+            {
+                for(auto j : TM::range(TM::Point{250,350}, TM::Point{350,350}, TM::Point{10,0}))
+                {
+                    renderer.drawLine(i, j, 10, TURBO::VIDEO::RED);
+                }
+            }
             renderer.present();
         }
         SDL_Delay(5);
@@ -255,7 +272,7 @@ int server()
 
     LOG("START SERVER");
 
-    TN::TCPServer server = TN::TCPServer(13370);
+    TN::TCPServer  server = TN::TCPServer(13370);
     TN::NetPackage package{};
 
     Uint16 text[] = {0x050a, 0x0065, 0x006c, 0x006c,
@@ -268,7 +285,7 @@ int server()
                      0x002e, 0x0020, 0xfc00, 0x0020,
                      0x0904, 0x0020, 0x10F7, 0x1435};
 
-    std::copy(text, text + sizeof(text)/ sizeof(Uint16), package.data);
+    std::copy(text, text + sizeof(text) / sizeof(Uint16), package.data);
 
     // Wait for 1 Client, wait at max 10 sec
     server.waitAccept(1, 10000);
@@ -309,7 +326,7 @@ int client()
                      0x1729};
 
 
-    std::copy(text, text + sizeof(text)/ sizeof(Uint16), package.data);
+    std::copy(text, text + sizeof(text) / sizeof(Uint16), package.data);
 
     client.send(package);
 
@@ -321,9 +338,9 @@ int keyboard()
 {
     TS::SDL sdl{};
     sdl.initSDL(SDL_INIT_EVERYTHING);
-    TV::Window      window       = TV::Window();
-    TI::KeyCombination comb1 = TI::KeyCombination(SDLK_a);
-    TI::KeyCombination comb2 = TI::KeyCombination(TI::Key{SDLK_q});
+    TV::Window         window = TV::Window();
+    TI::KeyCombination comb1  = TI::KeyCombination(SDLK_a);
+    TI::KeyCombination comb2  = TI::KeyCombination(TI::Key{SDLK_q});
 
     comb1 &= SDLK_s;
     comb1 &= TI::Key{SDLK_d} & TI::Key{SDLK_f};
@@ -367,18 +384,18 @@ int database()
     mysql.useDatabase("Turbo");
 
     mysql.createTable("Cars",
-                       std::vector<std::string>{"Id", "Name", "Price"},
-                       std::vector<std::string>{"INT", "TEXT", "INT"},
-                       std::vector<std::string>{},
-                       std::vector<std::string>{},
-                       std::vector<std::string>{},
-                       std::vector<std::string>{},
-                       std::vector<std::string>{"PRIMARY KEY"});
+                      std::vector<std::string>{"Id", "Name", "Price"},
+                      std::vector<std::string>{"INT", "TEXT", "INT"},
+                      std::vector<std::string>{},
+                      std::vector<std::string>{},
+                      std::vector<std::string>{},
+                      std::vector<std::string>{},
+                      std::vector<std::string>{"PRIMARY KEY"});
 
     mysql.insertEntry("Cars", std::vector<std::string>{"Id", "Name", "Price"},
                       std::vector<std::string>{"0", "Test", "100"});
 
-    for(auto & query : mysql.getQueryCache())
+    for(auto &query : mysql.getQueryCache())
     {
         LOG(query);
     }
@@ -391,6 +408,8 @@ int main(int argc, char **argv)
 
     gui();
 
-    std::cout << "Execution took: " << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns") << std::endl;
+    std::cout << "Execution took: "
+              << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")
+              << std::endl;
     return 0;
 }
