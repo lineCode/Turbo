@@ -4,8 +4,6 @@
 #include <SDL_events.h>
 #include <SDL_video.h>
 
-#include "script/lua.h"
-
 #include "video/video_def.h"
 #include "math/math.h"
 #include "system/sdl.h"
@@ -15,7 +13,7 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        class Window// : public SCRIPT::LuaObject
+        class Window
         {
         private:
             SDL_Window *window;
@@ -67,8 +65,6 @@ namespace TURBO
             bool isFocus() const;
 
             bool isClosed() const;
-
-            static void registerObject(lua_State *state);
         };
     }
 }

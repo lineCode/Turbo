@@ -189,8 +189,8 @@ namespace TURBO
             }
         }
 
-        Texture * Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h, FONT_STYLE style,
-                                           TEXT_WRAPPING wrapping)
+        Texture *Renderer::createUTF8Text(std::string &text, Sint32 w, Sint32 h, FONT_STYLE style,
+                                          TEXT_WRAPPING wrapping)
         {
             return createUTF8Text(text, font->getFontSize(), w, h, style, wrapping);
         }
@@ -310,6 +310,13 @@ namespace TURBO
             setDrawColor(color_draw);
         }
 
+        void Renderer::drawLine(MATH::Line l, Uint8 size, Color color)
+        {
+            setDrawColor(color);
+            SDL_RenderDrawLine(renderer, l.x1, l.y1, l.x2, l.y2);
+            setDrawColor(color_draw);
+        }
+
         void Renderer::drawRect(Sint32 x, Sint32 y, Sint32 w, Sint32 h, Uint8 size, Color color, bool filled)
         {
             SDL_Rect r{x, y, w, h};
@@ -356,9 +363,10 @@ namespace TURBO
 
         void Renderer::drawPolygon(std::vector<MATH::Point> &points, Color color, bool filled)
         {
-            Sint16  x[points.size()] = {0};
-            Sint16  y[points.size()] = {0};
-            for(int i                = 0; i < points.size(); ++i)
+            Sint16 x[points.size()] = {0};
+            Sint16 y[points.size()] = {0};
+
+            for(int i = 0; i < points.size(); ++i)
             {
                 x[i] = static_cast<Sint16>(points[i].x);
                 y[i] = static_cast<Sint16>(points[i].y);

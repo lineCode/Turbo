@@ -69,6 +69,10 @@ HEADERS += include/turbo.h \
            include/script/python.h \
            include/script/script.h \
            include/script/script_def.h \
+           include/script/python_def.h \
+           include/script/lua_def.h \
+           include/script/py_turbo.h \
+           include/script/py_rect.h \
            include/system/cmd.h \
            include/system/sdl.h \
            include/system/system.h \
@@ -116,6 +120,7 @@ SOURCES += test/test.cpp \
            source/input/mouse.cpp \
            source/math/math.cpp \
            source/math/point.cpp \
+           source/math/line.cpp \
            source/math/rect.cpp \
            source/math/vector.cpp \
            source/net/socket.cpp \
@@ -133,6 +138,7 @@ SOURCES += test/test.cpp \
            source/util/json.cpp \
            source/util/log.cpp \
            source/util/number.cpp \
+           source/util/notify.cpp \
            source/util/save.cpp \
            source/util/string.cpp \
            source/util/xml.cpp \

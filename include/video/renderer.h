@@ -103,6 +103,8 @@ namespace TURBO
 
             void drawLine(MATH::Point p1, MATH::Point p2, Uint8 size = 1, Color color = Color(255, 255, 255, 255));
 
+            void drawLine(MATH::Line l, Uint8 size = 1, Color color = Color(255, 255, 255, 255));
+
             void
             drawRect(Sint32 x, Sint32 y, Sint32 w, Sint32 h, Uint8 size = 1, Color color = Color(255, 255, 255, 255),
                      bool filled = false);

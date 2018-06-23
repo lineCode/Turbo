@@ -5,7 +5,7 @@ namespace TURBO
     namespace VIDEO
     {
         Window::Window(const std::string &title, MATH::Rect geometry, Uint32 flags)
-            : geometry(geometry)//, SCRIPT::LuaObject(__FUNCTION__)
+            : geometry(geometry)
         {
             if(SYSTEM::SDL::SDL_IS_INIT)
             {
@@ -179,17 +179,6 @@ namespace TURBO
         bool Window::isClosed() const
         {
             return closed;
-        }
-
-        void Window::registerObject(lua_State *state)
-        {
-            luabridge::getGlobalNamespace(state)
-                .beginNamespace("VIDEO")
-                    .beginClass<Window>("Window")
-                    .addConstructor<void(*)(std::string, MATH::Rect, Uint32)>()
-                    .addFunction("setGeometry", &Window::setGeometry)
-                    .endClass()
-                .endNamespace();
         }
     }
 }

@@ -1,5 +1,5 @@
-#ifndef TURBO_TIMER_H
-#define TURBO_TIMER_H
+#ifndef TURBO_TIME_H
+#define TURBO_TIME_H
 
 #include <thread>
 #include <chrono>
@@ -190,4 +190,4 @@ namespace TURBO
     }
 }
 
-#endif //TURBO_TIMER_H
+#endif //TURBO_TIME_H

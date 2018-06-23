@@ -230,15 +230,5 @@ namespace TURBO
                    && (first.w >= second.w)
                    && (first.h >= second.h);
         }
-
-        void Rect::registerToLuaScript(lua_State *state)
-        {
-            luabridge::getGlobalNamespace(state)
-                .beginNamespace("MATH")
-                    .beginClass<MATH::Rect>("Rect")
-                    .addConstructor<void(*)(int, int, int, int)>()
-                    .endClass()
-                .endNamespace();
-        }
     }
 }
