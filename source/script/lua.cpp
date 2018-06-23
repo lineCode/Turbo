@@ -69,14 +69,6 @@ namespace TURBO
             return lua_tostring(lua_state, -1);
         }
 
-        void Lua::addVariable(LuaObject &object)
-        {
-            luabridge::getGlobalNamespace(lua_state)
-                .beginNamespace("Global")
-                .addVariable(object.getClassName().c_str(), &object)
-                .endNamespace();
-        }
-
         void Lua::getGlobal(std::string name)
         {
             lua_getglobal(lua_state, name.c_str());

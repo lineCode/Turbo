@@ -5,19 +5,7 @@
 #include <sstream>
 #include <functional>
 
-#ifdef __cplusplus
-
-# include <lua.hpp>
-
-#else
-# include <lua.h>
-# include <lualib.h>
-# include <lauxlib.h>
-#endif
-
-#include "script/LuaBridge/LuaBridge.h"
-
-#include "script/script_def.h"
+#include "script/lua_def.h"
 #include "util/dir.h"
 
 namespace TURBO
@@ -60,8 +48,6 @@ namespace TURBO
             std::string getError();
 
             void printError(std::string function = "");
-
-            void addVariable(LuaObject &object);
 
             void getGlobal(std::string name);
 

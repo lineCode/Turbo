@@ -3,7 +3,11 @@
 
 #include "turbo_def.h"
 
-#define NAME(obj) #obj
+#define NAME(...) #__VA_ARGS__
+#define VALUE(...) __VA_ARGS__
+#define CONCAT(...) __VA_ARGS__
+#define CONCAT2(first, second) first ## second
+#define CONCAT2S(first, second) CONCAT2(first, ) ## second
 
 namespace TURBO
 {

@@ -5,9 +5,9 @@
 #include <cmath>
 #include <fstream>
 
-#include <Python.h>
-
-#include "script/script_def.h"
+#include "script/python_def.h"
+#include "script/py_rect.h"
+#include "script/py_turbo.h"
 
 namespace TURBO
 {
