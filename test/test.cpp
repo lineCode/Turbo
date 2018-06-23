@@ -22,16 +22,6 @@ void out()
     std::cout << "out" << std::endl;
 }
 
-int unique(int a)
-{
-    return a;
-}
-
-double add(int a, float b)
-{
-    return a + b;
-}
-
 void quit()
 {
     TS::SYSTEM_RUNNING = false;
@@ -128,12 +118,16 @@ void gui()
 
             renderer.clear();
             main_widget.draw(&renderer);
-            for(auto i : TM::range(TM::Point{275,280}, TM::Point{325,280}, TM::Point{25,0}))
+            for(auto i : TM::range(TM::Point(275,280), TM::Point(325,280), TM::Point(25,0)))
             {
-                for(auto j : TM::range(TM::Point{250,350}, TM::Point{350,350}, TM::Point{10,0}))
+                for(auto j : TM::range(TM::Point(250,350), TM::Point(350,350), TM::Point(10,0)))
                 {
                     renderer.drawLine(i, j, 10, TURBO::VIDEO::RED);
                 }
+            }
+            for(auto i : TM::range(TM::Line(400,280,375,350), TM::Line(475,280,525,350), TM::Line(25, 0, 50, 0)))
+            {
+                renderer.drawLine(i, 10, TURBO::VIDEO::RED);
             }
             renderer.present();
         }
@@ -143,270 +137,48 @@ void gui()
     LOG("Stop application");
 }
 
-void cmdParser(int argc, char **argv)
+PyMODINIT_FUNC PyInit_Turbo(void)
 {
-    TS::CMDParser cmd_parser = TS::CMDParser(argc, argv);
+    Py_Initialize();
+    PyObject *m = PyModule_Create(&TURBO::SCRIPT::Turbo_definition);
 
-    cmd_parser.setOption("-w", "--wasp", 2, false, {}, "bzzz");
-    cmd_parser.setOption("-o", "--ouch", 99, false, {}, "muh");
-    cmd_parser.setOption("-l", "--loop", 1, false, {}, "sets level of looping");
-    cmd_parser.setOption("-p", "--pressure", 1, true, {}, "dummy");
+    if(PyType_Ready(&TURBO::SCRIPT::RectType) < 0)
+        return nullptr;
 
-    if(!cmd_parser.checkArgs())
-    {
-        std::cout << TU::Log::format(TU::LOG_FORMAT::FG_YELLOW, "Trace:\n" + cmd_parser.getTrace())
-                  << std::endl;
-    }
-    if(cmd_parser.isSet("-h"))
-        cmd_parser.printHelp();
+    Py_INCREF(&TURBO::SCRIPT::RectType);
+    PyModule_AddObject(m, "Rect", (PyObject * ) & TURBO::SCRIPT::RectType);
 
-    for(const auto &arg : cmd_parser.getArgument("-w"))
-    {
-        std::cout << arg << " ";
-    }
-    std::cout << "\n";
+    return m;
 }
 
-void luaScript()
+void python(int argc, char ** argv)
 {
-    TS::SDL sdl{};
-    sdl.initSDL(SDL_INIT_EVERYTHING);
-    sdl.initTTF();
-    TV::Window   win = TV::Window("Test", TM::Rect(20, 20, 400, 400), SDL_WINDOW_SHOWN);
-    TV::Renderer ren = TV::Renderer(win, -1, SDL_RENDERER_ACCELERATED);
-    ren.setDrawColor({255, 0, 0, 255});
-    ren.setClearColor({0, 255, 0, 255});
-    ren.present();
-    ren.clear();
-
-    TC::Lua l = TC::Lua();
-    auto    L = l.getState();
-//    win.registerObject(L);
-    l.registerObject<TV::Window>(L);
-
-    std::string input;
-    std::getline(std::cin, input);
-
-    while(input != "exit")
-    {
-        l.callString(input);
-        ren.present();
-        ren.clear();
-        std::getline(std::cin, input);
-    }
-};
-
-void musicPlayer()
-{
-    TS::SDL sdl{};
-    sdl.initSDL(SDL_INIT_EVERYTHING);
-    sdl.initMIX(MIX_INIT_FLAC | MIX_INIT_MP3);
-
-    TV::Window      window       = TV::Window();
-    TA::MediaPlayer media_player = TA::MediaPlayer(TURBO::TURBO_AUDIO_PATH);
-    media_player.play();
-    media_player.setVolume(0);
-
-    while(media_player.isPlaying() && TS::SYSTEM_RUNNING)
-    {
-        SDL_Event event = {};
-        while(SDL_PollEvent(&event))
-        {
-            TI::Keyboard::pollEvent(event);
-
-            if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
-            {
-                TS::SYSTEM_RUNNING = false;
-            }
-
-            if(TI::Keyboard::pressedOR(SDLK_PLUS, SDLK_KP_PLUS, SDLK_UP))
-            {
-                media_player.setVolume(media_player.getVolume() + 5);
-            }
-            else if(TI::Keyboard::pressedOR(SDLK_MINUS, SDLK_KP_MINUS, SDLK_DOWN))
-            {
-                media_player.setVolume(media_player.getVolume() - 5);
-            }
-
-            if(TI::Keyboard::pressed(SDLK_RIGHT, KMOD_LCTRL))
-            {
-                media_player.next();
-            }
-            else if(TI::Keyboard::pressed(SDLK_LEFT, KMOD_LCTRL))
-            {
-                media_player.previous();
-            }
-            else if(TI::Keyboard::pressedOR(SDLK_RIGHT, SDLK_l))
-            {
-                media_player.setPosition(media_player.getPosition() + 100);
-            }
-            else if(TI::Keyboard::pressedOR(SDLK_LEFT, SDLK_k))
-            {
-                media_player.setPosition(media_player.getPosition() - 100);
-            }
-
-            if(TI::Keyboard::down(SDLK_SPACE))
-            {
-                if(media_player.isPaused())
-                {
-                    LOG("PLAY");
-                    media_player.resume();
-                }
-                else
-                {
-                    LOG("PAUSE");
-                    media_player.pause();
-                }
-            }
-        }
-        SDL_Delay(5);
-    }
-}
-
-int server()
-{
-    TS::SDL sdl = TS::SDL();
-    sdl.initSDL(SDL_INIT_EVERYTHING);
-    sdl.initNET();
-
-
-    LOG("START SERVER");
-
-    TN::TCPServer  server = TN::TCPServer(13370);
-    TN::NetPackage package{};
-
-    Uint16 text[] = {0x050a, 0x0065, 0x006c, 0x006c,
-                     0x006f, 0x0020, 0x02ac, 0x006f,
-                     0x0072, 0x006c, 0x0064, 0x0020,
-                     0x0074, 0x006f, 0x0020, 0x03a8,
-                     0x006f, 0x0075, 0x0020, 0x006d,
-                     0x0079, 0x0020, 0x0066, 0x0072,
-                     0x0069, 0x20ac, 0x006e, 0x0064,
-                     0x002e, 0x0020, 0xfc00, 0x0020,
-                     0x0904, 0x0020, 0x10F7, 0x1435};
-
-    std::copy(text, text + sizeof(text) / sizeof(Uint16), package.data);
-
-    // Wait for 1 Client, wait at max 10 sec
-    server.waitAccept(1, 10000);
-
-    server.send(package);
-
-    while(!server.receive(package))
-    {
-        SDL_Delay(200);
+    wchar_t *program = Py_DecodeLocale(argv[0], nullptr);
+    if (program == nullptr) {
+        fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
+        exit(1);
     }
 
-    package.print();
+    /* Add a built-in module, before Py_Initialize */
+    PyImport_AppendInittab("Turbo", PyInit_Turbo);
 
-    return 0;
-}
+    /* Pass argv[0] to the Python interpreter */
+    Py_SetProgramName(program);
 
-int client()
-{
-    TS::SDL sdl = TS::SDL();
-    sdl.initSDL(SDL_INIT_EVERYTHING);
-    sdl.initNET();
+    /* Initialize the Python interpreter.  Required. */
+    Py_Initialize();
 
+    PyRun_SimpleString("import Turbo \nb = Turbo.Rect(4, 3, 4, 5)\nprint(b.x)");
 
-    TN::TCPClient  client = TN::TCPClient("127.0.0.1", 13370);
-    TN::NetPackage package{};
-
-    while(!client.receive(package))
-    {
-        SDL_Delay(200);
-    }
-
-    package.print();
-
-    package.data[TN::PACKAGE_BUFFER] = {0};
-    Uint16 text[] = {0x050A, 0x0065, 0x006C, 0x006C,
-                     0x006F, 0x0020, 0x15F7, 0x0020,
-                     0x15C6, 0x0020, 0x18B7, 0x0020,
-                     0x1729};
-
-
-    std::copy(text, text + sizeof(text) / sizeof(Uint16), package.data);
-
-    client.send(package);
-
-
-    return 0;
-}
-
-int keyboard()
-{
-    TS::SDL sdl{};
-    sdl.initSDL(SDL_INIT_EVERYTHING);
-    TV::Window         window = TV::Window();
-    TI::KeyCombination comb1  = TI::KeyCombination(SDLK_a);
-    TI::KeyCombination comb2  = TI::KeyCombination(TI::Key{SDLK_q});
-
-    comb1 &= SDLK_s;
-    comb1 &= TI::Key{SDLK_d} & TI::Key{SDLK_f};
-
-    comb2 |= TI::Key{SDLK_w};
-    comb2 &= TI::Key{SDLK_e} & TI::Key{SDLK_r};
-
-
-    while(TS::SYSTEM_RUNNING)
-    {
-        SDL_Event event = {};
-        while(SDL_PollEvent(&event))
-        {
-            TI::Keyboard::pollEvent(event);
-
-            if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
-            {
-                TS::SYSTEM_RUNNING = false;
-            }
-
-            if(TI::Keyboard::down(comb1))
-            {
-                LOG("Key combination 1");
-            }
-            if(TI::Keyboard::down(comb2))
-            {
-                LOG("Key combination 2");
-            }
-        }
-    }
-    return 0;
-}
-
-int database()
-{
-    TU::DB_SQLITE sqlite{"resources/db.sqlite"};
-
-    TU::DB_MYSQL mysql{"localhost", "root", "root"};
-    mysql.dropDatabase("Turbo");
-    mysql.createDatabase("Turbo");
-    mysql.useDatabase("Turbo");
-
-    mysql.createTable("Cars",
-                      std::vector<std::string>{"Id", "Name", "Price"},
-                      std::vector<std::string>{"INT", "TEXT", "INT"},
-                      std::vector<std::string>{},
-                      std::vector<std::string>{},
-                      std::vector<std::string>{},
-                      std::vector<std::string>{},
-                      std::vector<std::string>{"PRIMARY KEY"});
-
-    mysql.insertEntry("Cars", std::vector<std::string>{"Id", "Name", "Price"},
-                      std::vector<std::string>{"0", "Test", "100"});
-
-    for(auto &query : mysql.getQueryCache())
-    {
-        LOG(query);
-    }
-    return 0;
+    PyMem_RawFree(program);
 }
 
 int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
-    gui();
+    //gui();
+    python(argc, argv);
 
     std::cout << "Execution took: "
               << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")
