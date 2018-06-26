@@ -11,6 +11,7 @@
 #include "util/parser.h"
 #include "util/save.h"
 #include "util/string.h"
+#include "util/type.h"
 #include "util/xml.h"
 
 namespace TURBO
