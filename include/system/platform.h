@@ -1,6 +1,8 @@
 #ifndef TURBO_PLATFORM_H
 #define TURBO_PLATFORM_H
 
+#include <cstdlib>
+
 #include "system/system_def.h"
 
 namespace TURBO
@@ -11,6 +13,7 @@ namespace TURBO
         {
         public:
             Platform() = delete;
+            static void setEnvironment(std::string var, std::string path, int override);
             static std::string getPlatform();
             static Sint32 getAudioDevices();
             static Sint32 getAudioDrivers();

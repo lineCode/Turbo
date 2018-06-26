@@ -4,6 +4,7 @@
 #include "system/time.h"
 #include "system/sdl.h"
 #include "system/cmd.h"
+#include "system/platform.h"
 
 namespace TURBO
 {
