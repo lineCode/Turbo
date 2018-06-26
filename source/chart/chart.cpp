@@ -23,22 +23,26 @@ namespace TURBO
             }
             if(draw_grid)
             {
+                /* Minor Grid */
+
                 for(int i = size.x; i < size.x + size.w; i += grid_minor_dist)
                 {
-                    renderer->drawLine(i, size.y, i, size.y + size.h, grid_minor_size, grid_minor_color);
+                    renderer->drawLine(MATH::Line(i, size.y, i, size.y + size.h), grid_minor_size, grid_minor_color);
                 }
                 for(int i = size.y; i < size.y + size.h; i += grid_minor_dist)
                 {
-                    renderer->drawLine(size.x, i, size.x + size.w, i, grid_minor_size, grid_minor_color);
+                    renderer->drawLine(MATH::Line(size.x, i, size.x + size.w, i), grid_minor_size, grid_minor_color);
                 }
+
+                /* Major Grid */
 
                 for(int i = size.x; i < size.x + size.w; i += grid_major_dist)
                 {
-                    renderer->drawLine(i, size.y, i, size.y + size.h, grid_major_size, grid_major_color);
+                    renderer->drawLine(MATH::Line(i, size.y, i, size.y + size.h), grid_major_size, grid_major_color);
                 }
                 for(int i = size.y; i < size.y + size.h; i += grid_major_dist)
                 {
-                    renderer->drawLine(size.x, i, size.x + size.w, i, grid_major_size, grid_major_color);
+                    renderer->drawLine(MATH::Line(size.x, i, size.x + size.w, i), grid_major_size, grid_major_color);
                 }
             }
         }
