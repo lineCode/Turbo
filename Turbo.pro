@@ -72,10 +72,12 @@ HEADERS += include/turbo.h \
            include/script/python_def.h \
            include/script/lua_def.h \
            include/script/py_turbo.h \
+           include/script/py_point.h \
            include/script/py_rect.h \
            include/system/cmd.h \
            include/system/sdl.h \
            include/system/system.h \
+           include/system/platform.h \
            include/system/system_def.h \
            include/system/time.h \
            include/util/db.h \
@@ -128,6 +130,7 @@ SOURCES += test/test.cpp \
            source/net/udp.cpp \
            source/script/lua.cpp \
            source/script/python.cpp \
+           source/system/platform.cpp \
            source/system/cmd.cpp \
            source/system/sdl.cpp \
            source/system/time.cpp \

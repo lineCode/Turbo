@@ -107,6 +107,7 @@ void gui()
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
+            std::cout << event.type << std::endl;
             TI::Mouse::pollEvent(event);
             TI::Keyboard::pollEvent(event);
             main_widget.pollEvent(event);
@@ -131,46 +132,38 @@ void gui()
             }
             renderer.present();
         }
-        SDL_Delay(5);
+        TS::Clock::sleep(1);
     }
 
     LOG("Stop application");
 }
 
-PyMODINIT_FUNC PyInit_Turbo(void)
-{
-    Py_Initialize();
-    PyObject *m = PyModule_Create(&TURBO::SCRIPT::Turbo_definition);
-
-    if(PyType_Ready(&TURBO::SCRIPT::RectType) < 0)
-        return nullptr;
-
-    Py_INCREF(&TURBO::SCRIPT::RectType);
-    PyModule_AddObject(m, "Rect", (PyObject * ) & TURBO::SCRIPT::RectType);
-
-    return m;
-}
-
 void python(int argc, char ** argv)
 {
-    wchar_t *program = Py_DecodeLocale(argv[0], nullptr);
-    if (program == nullptr) {
-        fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
-        exit(1);
-    }
+    PyImport_AppendInittab("Turbo", TC::PyInit_Turbo);
+//    TC::Python::addModule("Turbo", TC::PyInit_Turbo);
+    TC::Python::setProgramName(argv[0]);
+    TC::Python::initialize();
+    TS::Platform::setEnvironment("PYTHONPATH", "./resources/script/python/", 1);
 
-    /* Add a built-in module, before Py_Initialize */
-    PyImport_AppendInittab("Turbo", PyInit_Turbo);
+    PyObject *moduleMain = TC::Python::importModule(TC::Python::toUnicode("__main__"));
 
-    /* Pass argv[0] to the Python interpreter */
-    Py_SetProgramName(program);
+    PyRun_SimpleString(
+        "def mul(a, b):\n"
+        "    return a * b\n");
 
-    /* Initialize the Python interpreter.  Required. */
-    Py_Initialize();
+    PyRun_SimpleString(
+        "import Turbo \n"
+        "c = Turbo.Point(x=99,y=16)\n"
+        "print(c.x, c.y)\n");
 
-    PyRun_SimpleString("import Turbo \nb = Turbo.Rect(4, 3, 4, 5)\nprint(b.x)");
+    PyObject *f = PyObject_GetAttrString(moduleMain, "mul");
+    PyObject *args = TC::Python::toTuple(2, TC::Python::toFloat(3.0), TC::Python::toFloat(4.0));
 
-    PyMem_RawFree(program);
+    PyObject *result = PyObject_CallObject(f, args);
+
+    printf("mul(3,4): %.2f\n", TC::Python::asDouble(result));
+    TC::Python::freeProgram(argv[0]);
 }
 
 int main(int argc, char **argv)

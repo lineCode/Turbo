@@ -129,40 +129,35 @@ static PyTypeObject BookType = {
     Book_new,                               /* tp_new */
 };
 
-//PyMODINIT_FUNC PyInit_Turbo(void) {
-//    Py_Initialize();
-//    PyObject *m = PyModule_Create(&Turbo_definition);
-//
-//    if (PyType_Ready(&BookType) < 0)
-//        return nullptr;
-//
-//    Py_INCREF(&BookType);
-//    PyModule_AddObject(m, "Book", (PyObject *)&BookType);
-//
-//    return m;
-//}
-//
-///* Python call */
-//
-//void python(int argc, char ** argv)
-//{
-//    wchar_t *program = Py_DecodeLocale(argv[0], nullptr);
-//    if (program == nullptr) {
-//        fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
-//        exit(1);
-//    }
-//
-//    /* Add a built-in module, before Py_Initialize */
-//    PyImport_AppendInittab("Turbo", PyInit_Turbo);
-//
-//    /* Pass argv[0] to the Python interpreter */
-//    Py_SetProgramName(program);
-//
-//    /* Initialize the Python interpreter.  Required. */
-//    Py_Initialize();
-//
-//    PyRun_SimpleString("import Turbo \nprint(Turbo.square(2))");
-//    PyRun_SimpleString("import Turbo \nb = Turbo.Book()\nb.inc()\nprint(b.id)");
-//
-//    PyMem_RawFree(program);
-//}
+PyMODINIT_FUNC PyInit_Turbo(void) {
+    Py_Initialize();
+    PyObject *m = PyModule_Create(&Turbo_definition);
+
+    if (PyType_Ready(&BookType) < 0)
+        return nullptr;
+
+    Py_INCREF(&BookType);
+    PyModule_AddObject(m, "Book", (PyObject *)&BookType);
+
+    return m;
+}
+
+/* Python call */
+
+void python(int argc, char ** argv)
+{
+    wchar_t *program = Py_DecodeLocale(argv[0], nullptr);
+    if (program == nullptr) {
+        fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
+        exit(1);
+    }
+
+    PyImport_AppendInittab("Turbo", PyInit_Turbo);
+    Py_SetProgramName(program);
+    Py_Initialize();
+
+    PyRun_SimpleString("import Turbo \nprint(Turbo.square(2))");
+    PyRun_SimpleString("import Turbo \nb = Turbo.Book()\nb.inc()\nprint(b.id)");
+
+    PyMem_RawFree(program);
+}
