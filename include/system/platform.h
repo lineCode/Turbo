@@ -13,7 +13,7 @@ namespace TURBO
         {
         public:
             Platform() = delete;
-            static void setEnvironment(std::string var, std::string path, int override);
+            static void setEnvironment(std::string var, std::string path, bool override);
             static std::string getPlatform();
             static Sint32 getAudioDevices();
             static Sint32 getAudioDrivers();

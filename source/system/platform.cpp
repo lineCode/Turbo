@@ -4,9 +4,9 @@ namespace TURBO
 {
     namespace SYSTEM
     {
-        void Platform::setEnvironment(std::string var, std::string path, int override)
+        void Platform::setEnvironment(std::string var, std::string path, bool override)
         {
-            setenv(var.c_str(), path.c_str(), override);
+            setenv(var.c_str(), path.c_str(), override ? 1 : 0);
         }
 
         std::string Platform::getPlatform()
