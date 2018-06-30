@@ -1,3 +1,4 @@
+#include <util/file.h>
 #include "script/python.h"
 
 namespace TURBO
@@ -11,48 +12,7 @@ namespace TURBO
 
         void Python::runScript(std::string filename)
         {
-            std::ifstream ifs(filename);
-            std::string content((std::istreambuf_iterator<char>(ifs)),
-                                (std::istreambuf_iterator<char>()   ));
-            PyRun_SimpleString(content.c_str());
-        }
-
-        void Python::registerFunction(const std::string name, PyObject * function)
-        {
-            static struct PyMethodDef methods[] =
-                {
-                    {name.c_str(), (PyCFunction)function, METH_VARARGS, "description"},
-                    {nullptr, nullptr, 0, nullptr}
-                };
-
-            static struct PyModuleDef module =
-                {
-                    PyModuleDef_HEAD_INIT,
-                    "module",
-                    "description",
-                    -1,
-                    methods,
-                    nullptr,
-                    nullptr,
-                    nullptr,
-                    nullptr
-                };
-            PyModule_Create(&module);
-        }
-
-        PyMODINIT_FUNC PyInit_Turbo(void)
-        {
-            Py_Initialize();
-            PyObject *module = PyModule_Create(&TURBO::SCRIPT::Turbo_definition);
-
-            if(PyType_Ready(&PointType) < 0)
-                return nullptr;
-
-            Py_INCREF(&TURBO::SCRIPT::PointType);
-
-            PyModule_AddObject(module, "Point", (PyObject * ) &PointType);
-
-            return module;
+            PyRun_SimpleString(UTIL::File::getFileContents(filename).c_str());
         }
 
         void Python::initialize(int init_signals)
@@ -112,11 +72,11 @@ namespace TURBO
             return std::to_wstring(0);
         }
 
-        bool Python::addModule(std::string name, PyObject* (*f)())
+        bool Python::addModule(const char *name, PyObject* (*f)())
         {
             if(!Python::isInitialized())
             {
-                if(PyImport_AppendInittab(name.c_str(), f) >= 0)
+                if(PyImport_AppendInittab(name, f) >= 0)
                 {
                     return true;
                 }
@@ -135,6 +95,31 @@ namespace TURBO
         PyObject *Python::importModule(PyObject *name)
         {
             return PyImport_Import(name);
+        }
+
+        PyObject *Python::callObject(PyObject *func, PyObject *args)
+        {
+            return PyObject_CallObject(func, args);
+        }
+
+        PyObject *Python::getAttritbuteFromString(PyObject *obj, std::string attr)
+        {
+            return PyObject_GetAttrString(obj, attr.c_str());
+        }
+
+        bool Python::setAttritbuteFromString(PyObject *obj, std::string attr, PyObject *val)
+        {
+            return PyObject_SetAttrString(obj, attr.c_str(), val);
+        }
+
+        PyObject *Python::getAttritbuteFromObject(PyObject *obj, PyObject *attr)
+        {
+            return PyObject_GetAttr(obj, attr);
+        }
+
+        bool Python::setAttritbuteFromObject(PyObject *obj, PyObject *attr, PyObject *val)
+        {
+            return PyObject_SetAttr(obj, attr, val);
         }
 
         PyObject *Python::toUnicode(std::string value)

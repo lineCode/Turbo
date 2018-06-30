@@ -32,6 +32,12 @@ namespace TURBO
             luaL_openlibs(lua_state);
         }
 
+        Lua::Lua(lua_State * state)
+            : lua_state(state)
+        {
+
+        }
+
         Lua::~Lua()
         {
             lua_close(lua_state);
@@ -42,9 +48,9 @@ namespace TURBO
             return lua_state;
         }
 
-        void Lua::pop()
+        void Lua::checkStack(int size)
         {
-            lua_pop(lua_state, -1);
+            lua_checkstack(lua_state, size);
         }
 
         std::string Lua::getError()
@@ -62,21 +68,6 @@ namespace TURBO
             {
                 std::cout << getError() << std::endl;
             }
-        }
-
-        std::string Lua::getString()
-        {
-            return lua_tostring(lua_state, -1);
-        }
-
-        void Lua::getGlobal(std::string name)
-        {
-            lua_getglobal(lua_state, name.c_str());
-        }
-
-        bool Lua::getGlobalFunction(std::string name)
-        {
-            return false;
         }
 
         int Lua::callString(std::string content)
@@ -120,6 +111,171 @@ namespace TURBO
         {
             lua_register(lua_state, name.c_str(), function);
             return 0;
+        }
+
+        bool Lua::isFunction(int index)
+        {
+            return lua_isfunction(lua_state, index) > 0;
+        }
+
+        void Lua::pushCFunction(lua_CFunction func)
+        {
+            lua_pushcfunction(lua_state, func);
+        }
+
+        bool Lua::isCFunction(int index)
+        {
+            return lua_iscfunction(lua_state, index) > 0;
+        };
+
+        void Lua::pop()
+        {
+            lua_pop(lua_state, -1);
+        }
+
+        void Lua::push(int index)
+        {
+            lua_pushvalue(lua_state, index);
+        }
+
+        int Lua::getType(int index)
+        {
+            return lua_type(lua_state, index);
+        }
+
+        std::string Lua::getTypeName(int type)
+        {
+            return lua_typename(lua_state, type);
+        }
+
+        int Lua::getTop()
+        {
+            return lua_gettop(lua_state);
+        }
+
+        void Lua::setTop(int index)
+        {
+            lua_settop(lua_state, index);
+        }
+
+        void Lua::remove(int index)
+        {
+            lua_remove(lua_state, index);
+        }
+
+        void Lua::insert(int index)
+        {
+            lua_insert(lua_state, index);
+        }
+
+        void Lua::replace(int index)
+        {
+            lua_replace(lua_state, index);
+        }
+
+        void Lua::getGlobal(std::string name)
+        {
+            lua_getglobal(lua_state, name.c_str());
+        }
+
+        bool Lua::getGlobalFunction(std::string name)
+        {
+            return false;
+        }
+
+        void Lua::pushNil()
+        {
+            lua_pushnil(lua_state);
+        }
+
+        bool Lua::isNil(int index)
+        {
+            return lua_isnil(lua_state, index) > 0;
+        }
+
+        bool Lua::isNone(int index)
+        {
+            return lua_isnone(lua_state, index) > 0;
+        }
+
+        bool Lua::isNoneOrNil(int index)
+        {
+            return lua_isnoneornil(lua_state, index) > 0;
+        }
+
+        void Lua::pushBool(bool val)
+        {
+            lua_pushboolean(lua_state, val);
+        }
+
+        bool Lua::isBool(int index)
+        {
+            return lua_isboolean(lua_state, index) > 0;
+        }
+
+        bool Lua::getBool(int index)
+        {
+            return lua_toboolean(lua_state, index) > 0;
+        }
+
+        void Lua::pushNumber(double val)
+        {
+            lua_pushnumber(lua_state, val);
+        }
+
+        bool Lua::isNumber(int index)
+        {
+            return lua_isnumber(lua_state, index) > 0;
+        }
+
+        double Lua::getNumber(int index)
+        {
+            return lua_tonumber(lua_state, index);
+        }
+
+        double Lua::checkNumber(int arg)
+        {
+            return luaL_checknumber(lua_state, arg);
+        }
+
+        void Lua::pushString(std::string val)
+        {
+            lua_pushstring(lua_state, val.c_str());
+        }
+
+        bool Lua::isString(int index)
+        {
+            return lua_isstring(lua_state, index) > 0;
+        }
+
+        std::string Lua::checkString(int arg)
+        {
+            return luaL_checkstring(lua_state, arg);
+        }
+
+        std::string Lua::getString(int index)
+        {
+            return lua_tostring(lua_state, -1);
+        }
+
+        void Lua::newTable()
+        {
+            lua_newtable(lua_state);
+        }
+
+        void Lua::newUserTable(int size)
+        {
+            lua_newuserdata(lua_state, size);
+        }
+
+        lua_State * Lua::newThread()
+        {
+            return lua_newthread(lua_state);
+        }
+
+        bool Lua::isThread(int index)
+        {
+            return lua_isthread(lua_state, index) > 0;
         }
     }
 }

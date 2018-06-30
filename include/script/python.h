@@ -6,8 +6,6 @@
 #include <fstream>
 
 #include "script/python_def.h"
-#include "script/py_point.h"
-#include "script/py_rect.h"
 #include "script/py_turbo.h"
 
 #include "util/type.h"
@@ -22,8 +20,6 @@ namespace TURBO
             static void runString(std::string content);
 
             static void runScript(std::string filename);
-
-            static void registerFunction(std::string name, PyObject *function);
 
             static void initialize(int init_signals = -1);
 
@@ -43,9 +39,19 @@ namespace TURBO
 
             static std::wstring getVersion();
 
-            static bool addModule(std::string name, PyObject* (*f)());
+            static bool addModule(const char *name, PyObject* (*f)());
 
             static PyObject *importModule(PyObject *name);
+
+            static PyObject *callObject(PyObject * f, PyObject *args);
+
+            static PyObject *getAttritbuteFromString(PyObject *o, std::string attr);
+
+            static bool setAttritbuteFromString(PyObject *o, std::string attr, PyObject *val);
+
+            static PyObject *getAttritbuteFromObject(PyObject *o, PyObject *attr);
+
+            static bool setAttritbuteFromObject(PyObject *o, PyObject *attr, PyObject * val);
 
             static PyObject *toUnicode(std::string value);
 
@@ -53,15 +59,12 @@ namespace TURBO
 
             static PyObject *toLong(size_t value);
 
-            template<typename T>
+            template<typename T = float>
             static double asDouble(PyObject *value)
             {
                 auto type = UTIL::typeName<T>();
-                if(type == "float")
-                {
-                    return PyFloat_AsDouble(value);
-                }
-                else if(type == "long")
+
+                if(type == "long")
                 {
                     return PyLong_AsDouble(value);
                 }

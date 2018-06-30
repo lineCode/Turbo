@@ -60,7 +60,7 @@ namespace TURBO
             };
         }
 
-        static PyTypeObject PointType = {
+        static PyTypeObject Point_definition = {
             PyVarObject_HEAD_INIT(nullptr, 0)
             "Turbo.Point",
             sizeof(Point),

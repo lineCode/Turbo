@@ -53,7 +53,7 @@ namespace TURBO
             {nullptr}
         };
 
-        static PyTypeObject RectType = {
+        static PyTypeObject Rect_defintion = {
             PyVarObject_HEAD_INIT(nullptr, 0)
             "Turbo.Rect",
             sizeof(Rect),
