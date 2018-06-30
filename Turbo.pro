@@ -130,6 +130,7 @@ SOURCES += test/test.cpp \
            source/net/udp.cpp \
            source/script/lua.cpp \
            source/script/python.cpp \
+           source/script/py_turbo.cpp \
            source/system/platform.cpp \
            source/system/cmd.cpp \
            source/system/sdl.cpp \
