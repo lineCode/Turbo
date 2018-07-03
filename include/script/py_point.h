@@ -21,14 +21,14 @@ namespace TURBO
         {
             static int __init__(SCRIPT::Point *self, PyObject *args, PyObject *kwds)
             {
-                static char *kwlist[] = {"x", "y", "z", nullptr};
+                static char *kwlist[] = {(char *)"x", (char *)"y", (char *)"z", nullptr};
                 int x = 0;
                 int y = 0;
                 int z = 0;
 
                 if(kwlist == nullptr)
                 {
-                    std::cout << "empty" << std::endl;
+                    std::cout << "empty" << "\n";
                 }
 
                 if(!PyArg_ParseTupleAndKeywords(args, kwds, "|iii", kwlist, &x, &y, &z))
@@ -48,9 +48,9 @@ namespace TURBO
             }
 
             static PyMemberDef members[] = {
-                {"x", T_INT, offsetof(Point, x), 0, ""},
-                {"y", T_INT, offsetof(Point, y), 0, ""},
-                {"z", T_INT, offsetof(Point, z), 0, ""},
+                {(char *)"x", T_INT, offsetof(Point, x), 0, (char *)""},
+                {(char *)"y", T_INT, offsetof(Point, y), 0, (char *)""},
+                {(char *)"z", T_INT, offsetof(Point, z), 0, (char *)""},
                 {nullptr}
             };
 

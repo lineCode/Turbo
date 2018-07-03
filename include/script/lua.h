@@ -119,7 +119,21 @@ namespace TURBO
 
             void newTable();
 
-            void newUserTable(int size);
+            int newMetaTable(std::string name);
+
+            void getMetaTable(std::string name);
+
+            void *newUserData(size_t size);
+
+            void *checkUserData(std::string name, int index = -1);
+
+            void pushLightUserData(void *data);
+
+            template<typename T>
+            void *getLightUserData(int index = -1)
+            {
+                return (T *)lua_touserdata(lua_state, index);
+            }
 
             lua_State *newThread();
 

@@ -41,10 +41,10 @@ namespace TURBO
         }
 
         static PyMemberDef Rect_members[] = {
-            {"x", T_INT, offsetof(Rect, x), 0, ""},
-            {"y", T_INT, offsetof(Rect, y), 0, ""},
-            {"w", T_INT, offsetof(Rect, w), 0, ""},
-            {"h", T_INT, offsetof(Rect, h), 0, ""},
+            {(char *)"x", T_INT, offsetof(Rect, x), 0, (char *)""},
+            {(char *)"y", T_INT, offsetof(Rect, y), 0, (char *)""},
+            {(char *)"w", T_INT, offsetof(Rect, w), 0, (char *)""},
+            {(char *)"h", T_INT, offsetof(Rect, h), 0, (char *)""},
             {nullptr}
         };
 
