@@ -162,7 +162,7 @@ namespace TURBO
             if(!trace.empty())
             {
                 std::string head = "Issues while parsing arguments for ";
-                std::cout << head << app_name << "\n" << getTrace() << std::endl;
+                std::cout << head << app_name << "\n" << getTrace() << "\n";
             }
         }
 
@@ -217,7 +217,7 @@ namespace TURBO
 
         void CMDParser::printHelp()
         {
-            std::cout << getHelp() << std::endl;
+            std::cout << getHelp() << "\n";
         }
     }
 }

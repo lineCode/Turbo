@@ -316,7 +316,7 @@ namespace TURBO
                 << "\nTimer state:      " << states.at(static_cast<Uint8>(state))
                 << "\nTime active:      " << active_time << " ms"
                 << "\nTime paused:      " << paused_time << " ms"
-                << "\nTime since start: " << elapsed_time << std::endl;
+                << "\nTime since start: " << elapsed_time << "\n";
             return oss.str();
         }
 
@@ -481,7 +481,7 @@ namespace TURBO
                 << "\nTimer state:      " << states.at(static_cast<Uint8>(state))
                 << "\nTime active:      " << active_time << " ms"
                 << "\nTime paused:      " << paused_time << " ms"
-                << "\nTime since start: " << elapsed_time << std::endl;
+                << "\nTime since start: " << elapsed_time << "\n";
             return oss.str();
         }
 

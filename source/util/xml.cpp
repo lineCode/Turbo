@@ -111,19 +111,19 @@ namespace TURBO
         {
             if(!isEmpty())
             {
-                std::cout << prefix << "+---------------" << std::endl;
-                std::cout << prefix << "|Tagname: " << tag << std::endl;
-                std::cout << prefix << "|Attributes: " << std::endl;
+                std::cout << prefix << "+---------------" << "\n";
+                std::cout << prefix << "|Tagname: " << tag << "\n";
+                std::cout << prefix << "|Attributes: " << "\n";
                 for(auto &entry : kvp)
                 {
-                    std::cout << prefix << "|  " << entry.first << " = " << entry.second << std::endl;
+                    std::cout << prefix << "|  " << entry.first << " = " << entry.second << "\n";
                 }
                 if(!content.empty())
                 {
-                    std::cout << prefix << "|Content: " << std::endl;
-                    std::cout << prefix << "|  \"" << content << "\"" << std::endl;
+                    std::cout << prefix << "|Content: " << "\n";
+                    std::cout << prefix << "|  \"" << content << "\"" << "\n";
                 }
-                std::cout << prefix << "+---------------" << std::endl;
+                std::cout << prefix << "+---------------" << "\n";
                 for(XML *child : children)
                 {
                     child->printXML(prefix + "  ");
@@ -190,7 +190,7 @@ namespace TURBO
         
         bool XMLParser::readComment()
         {
-//            std::cout << "readComm" << std::endl;
+//            std::cout << "readComm" << "\n";
             while(*buffer_pos)
             {
                 if(Parser::isMinusChar(*buffer_pos))
@@ -220,7 +220,7 @@ namespace TURBO
 
         bool XMLParser::readName()
         {
-//            std::cout << "readName" << std::endl;
+//            std::cout << "readName" << "\n";
             skipWhiteSpaces();
 
             std::string name;
@@ -262,7 +262,7 @@ namespace TURBO
 
         bool XMLParser::readAttribute()
         {
-//            std::cout << "readAtt" << std::endl;
+//            std::cout << "readAtt" << "\n";
             std::string key;
             std::string value;
 
@@ -317,7 +317,7 @@ namespace TURBO
 
         bool XMLParser::readTag()
         {
-//            std::cout << "readTag" << std::endl;
+//            std::cout << "readTag" << "\n";
             skipWhiteSpaces();
 
             if(!Parser::isLTChar(*buffer_pos))
@@ -464,7 +464,7 @@ namespace TURBO
 
                 // add new buffer
                 strncpy(temp + (BUFFER_SIZE - buffer_diff), new_buffer, buffer_diff);
-                std::cout << temp << std::endl;
+                std::cout << temp << "\n";
 
                 buffer = temp;
                 buffer[BUFFER_SIZE - 1] = '\0';
@@ -490,7 +490,7 @@ namespace TURBO
             file_size = (in.tellg()-begin);
             in.seekg(0, std::ios::beg);
 
-            std::cout << " size " << file_size << std::endl;
+            std::cout << " size " << file_size << "\n";
 
             in.read(buffer, BUFFER_SIZE);
 
@@ -504,17 +504,17 @@ namespace TURBO
                         buffer_pos--;
                     for (int i = 0; i < 20; ++i)
                         std::cout << *buffer_pos++;
-                    std::cout << buffer_offset << std::endl;
+                    std::cout << buffer_offset << "\n";
                     Log::war("error");
                     in.close();
                     delete[] buffer;
                     free(head);
                     return xml;
                 }
-                std::cout << buffer_offset << std::endl;
+                std::cout << buffer_offset << "\n";
             }
 
-            std::cout << "ebd" << std::endl;
+            std::cout << "ebd" << "\n";
             in.close();
             xml = *head;
             delete[] buffer;
@@ -547,20 +547,20 @@ namespace TURBO
                 {
                     if(xml->head)
                     {
-                        out << "?>" << std::endl;
+                        out << "?>" << "\n";
                     }
                     else if(!xml->content.empty())
                     {
-                        out << '>' << xml->content << "</" << xml->tag << '>' << std::endl;
+                        out << '>' << xml->content << "</" << xml->tag << '>' << "\n";
                     }
                     else
                     {
-                        out << "/>" << std::endl;
+                        out << "/>" << "\n";
                     }
                 }
                 else if(!xml->line_tag)
                 {
-                    out << '>' << std::endl;
+                    out << '>' << "\n";
                     if(xml->child != nullptr)
                     {
                         XML child = *xml->child;
@@ -569,9 +569,9 @@ namespace TURBO
                     std::ofstream os(file, std::ios::app | std::ios::ate);
                     if(xml->child == nullptr)
                     {
-                        os << prepend << "    " << xml->content << std::endl;
+                        os << prepend << "    " << xml->content << "\n";
                     }
-                    os << prepend << "</" << xml->tag << '>' << std::endl;
+                    os << prepend << "</" << xml->tag << '>' << "\n";
                     os.close();
                 }
                 xml = xml->next;

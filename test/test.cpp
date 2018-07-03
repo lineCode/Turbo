@@ -14,12 +14,12 @@ namespace TC = TURBO::SCRIPT;
 
 void over()
 {
-    std::cout << "hover" << std::endl;
+    std::cout << "hover" << "\n";
 }
 
 void out()
 {
-    std::cout << "out" << std::endl;
+    std::cout << "out" << "\n";
 }
 
 void quit()
@@ -107,7 +107,7 @@ void gui()
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
-            std::cout << event.type << std::endl;
+            std::cout << event.type << "\n";
             TI::Mouse::pollEvent(event);
             TI::Keyboard::pollEvent(event);
             main_widget.pollEvent(event);
@@ -143,7 +143,7 @@ void python(int argc, char ** argv)
     TC::Python::addModule("Turbo", TC::PyInit_Turbo);
     TC::Python::setProgramName(argv[0]);
     TC::Python::initialize();
-    TS::Platform::setEnvironment("PYTHONPATH", "./resources/script/python/", 1);
+    TS::Platform::setEnvironment("PYTHONPATH", "./resources/script/python/", true);
 
     PyObject *moduleMain = TC::Python::importModule(TC::Python::toUnicode("__main__"));
 
@@ -165,20 +165,98 @@ void python(int argc, char ** argv)
     TC::Python::freeProgram(argv[0]);
 }
 
+class LuaPoint
+{
+public:
+    LuaPoint(int x, int y) : x(x), y(y)
+    {
+        std::cout << "LuaPoint is born " << x+y << "\n";
+    }
+
+    ~LuaPoint()
+    {
+        std::cout << "LuaPoint is gone" << "\n";
+    }
+
+private:
+    int x;
+    int y;
+};
+
+int l_LuaPoint_constructor(lua_State * l)
+{
+    int x = luaL_checknumber(l, 1);
+    int y = luaL_checknumber(l, 2);
+
+    auto udata = (LuaPoint **)lua_newuserdata(l, sizeof(LuaPoint *));
+    *udata = new LuaPoint(x, y);
+
+    luaL_newmetatable(l, "LuaPoint");
+
+    lua_setmetatable(l, -2);
+
+    lua_pushnumber(l, 15);
+
+    lua_setfield(l, -1, "myvar");
+
+    lua_setmetatable(l, -2);
+
+    return 1;
+}
+
+LuaPoint * l_CheckLuaPoint(lua_State * l, int n)
+{
+    return *(LuaPoint **)luaL_checkudata(l, n, "LuaPoint");
+}
+
+int l_LuaPoint_destructor(lua_State * l)
+{
+    LuaPoint * foo = l_CheckLuaPoint(l, 1);
+    delete foo;
+
+    return 0;
+}
+
+void RegisterLuaPoint(lua_State * l)
+{
+    luaL_Reg sLuaPointRegs[] =
+                 {
+                     { "new", l_LuaPoint_constructor },
+                     { "__gc", l_LuaPoint_destructor },
+                     { NULL, NULL }
+                 };
+
+    luaL_newmetatable(l, "LuaPoint");
+
+    luaL_setfuncs(l, sLuaPointRegs, 0);
+
+    lua_pushvalue(l, -1);
+
+    lua_setfield(l, -1, "__index");
+
+    lua_setglobal(l, "LuaPoint");
+}
+
 void lua(int argc, char ** argv)
 {
     TC::Lua l{};
+    lua_State *L = l.getState();
+    RegisterLuaPoint(L);
+
+    l.callScript("resources/script/lua/test.lua");
 }
 
 int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
-    //gui();
+    std::cout << "Executing Python Script:\n" << "\n";
     python(argc, argv);
+    std::cout << "Executing Lua Script:\n" << "\n";
+    lua(argc, argv);
 
     std::cout << "Execution took: "
               << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")
-              << std::endl;
+              << "\n";
     return 0;
 }

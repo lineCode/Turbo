@@ -62,11 +62,11 @@ namespace TURBO
         {
             if(!function.empty())
             {
-                std::cout << "Error in '" << function << "': " << getError() << std::endl;
+                std::cout << "Error in '" << function << "': " << getError() << "\n";
             }
             else
             {
-                std::cout << getError() << std::endl;
+                std::cout << getError() << "\n";
             }
         }
 
@@ -263,9 +263,29 @@ namespace TURBO
             lua_newtable(lua_state);
         }
 
-        void Lua::newUserTable(int size)
+        int Lua::newMetaTable(std::string name)
         {
-            lua_newuserdata(lua_state, size);
+            return luaL_newmetatable(lua_state, name.c_str());
+        }
+
+        void Lua::getMetaTable(std::string name)
+        {
+            luaL_getmetatable(lua_state, name.c_str());
+        }
+
+        void *Lua::newUserData(size_t size)
+        {
+            return lua_newuserdata(lua_state, size);
+        }
+
+        void *Lua::checkUserData(std::string name, int index)
+        {
+            return luaL_checkudata(lua_state, index, name.c_str());
+        }
+
+        void Lua::pushLightUserData(void *data)
+        {
+            lua_pushlightuserdata(lua_state, data);
         }
 
         lua_State * Lua::newThread()

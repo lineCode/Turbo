@@ -23,7 +23,7 @@ void cmdParser(int argc, char **argv)
     if(!cmd_parser.checkArgs())
     {
         std::cout << TU::Log::format(TU::LOG_FORMAT::FG_YELLOW, "Trace:\n" + cmd_parser.getTrace())
-                  << std::endl;
+                  << "\n";
     }
     if(cmd_parser.isSet("-h"))
         cmd_parser.printHelp();

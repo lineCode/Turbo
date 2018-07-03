@@ -24,7 +24,7 @@ namespace TURBO
             file_size = in.tellg();
             in.seekg(std::ios::beg);
 
-            std::cout << "file size " << file_size << std::endl;
+            std::cout << "file size " << file_size << "\n";
 
             if(file_size > 0)
             {
@@ -42,12 +42,12 @@ namespace TURBO
                     }
                     catch(std::exception & ex)
                     {
-                        std::cout << "exception while reading" << std::endl;
+                        std::cout << "exception while reading" << "\n";
                     }
 
                     if (std::distance(buffer.begin(), buffer_pos) > BUFFER_SIZE - BUFFER_REFILL_SIZE)
                     {
-                        std::cout << "fill buffer " << std::endl;
+                        std::cout << "fill buffer " << "\n";
                         std::vector<char> temp(BUFFER_SIZE);
                         in.read(temp.data(), BUFFER_SIZE);
                         temp.insert(temp.begin(), buffer_pos, buffer.end());

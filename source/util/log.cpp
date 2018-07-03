@@ -63,7 +63,7 @@ namespace TURBO
             std::cout << SYSTEM::Clock::getTimestampToString(SYSTEM::Clock::getTimestamp(), "%d.%m %H:%M") << " | "
                       << std::right << std::setw(12) << std::setfill(' ')
                       << SYSTEM::Clock::getTicksToString(SYSTEM::Clock::getTicks(), "%H:%M:%S.%f") << ": "
-                      << message << std::endl;
+                      << message << "\n";
         }
 
         void Log::info(const std::string &message)

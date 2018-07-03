@@ -35,7 +35,7 @@ namespace TURBO
             {
                 if(!caption.first.empty())
                 {
-                    std::cout << '[' << caption.first << ']' << std::endl;
+                    std::cout << '[' << caption.first << ']' << "\n";
                 }
                 for(const auto & kvp : caption.second)
                 {
@@ -104,7 +104,7 @@ namespace TURBO
             {
                 if(!caption.first.empty())
                 {
-                    out << '[' << caption.first << ']' << std::endl;
+                    out << '[' << caption.first << ']' << "\n";
                 }
                 for(const auto & kvp : caption.second)
                 {

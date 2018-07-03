@@ -21,12 +21,12 @@ namespace TC = TURBO::SCRIPT;
 
 void over()
 {
-    std::cout << "hover" << std::endl;
+    std::cout << "hover" << "\n";
 }
 
 void out()
 {
-    std::cout << "out" << std::endl;
+    std::cout << "out" << "\n";
 }
 
 void quit()
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 
     std::cout << "Execution took: "
               << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")
-              << std::endl;
+              << "\n";
     return 0;
 }
 
