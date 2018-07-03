@@ -1,4 +1,5 @@
 #include <gui/units.h>
+#include <util/notify.h>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
@@ -195,10 +196,6 @@ int l_LuaPoint_constructor(lua_State * l)
 
     lua_setmetatable(l, -2);
 
-    lua_pushnumber(l, 15);
-
-    lua_setfield(l, -1, "myvar");
-
     lua_setmetatable(l, -2);
 
     return 1;
@@ -250,10 +247,12 @@ int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
-    std::cout << "Executing Python Script:\n" << "\n";
-    python(argc, argv);
-    std::cout << "Executing Lua Script:\n" << "\n";
-    lua(argc, argv);
+//    std::cout << "Executing Python Script:\n" << "\n";
+//    python(argc, argv);
+//    std::cout << "Executing Lua Script:\n" << "\n";
+//    lua(argc, argv);
+
+
 
     std::cout << "Execution took: "
               << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")
