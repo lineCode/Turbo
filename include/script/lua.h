@@ -5,31 +5,13 @@
 #include <sstream>
 #include <functional>
 
-#include "script/lua_def.h"
+#include "script/lua_point.h"
 #include "util/dir.h"
 
 namespace TURBO
 {
     namespace SCRIPT
     {
-        class LuaObject
-        {
-        private:
-            std::string class_name;
-
-        public:
-            explicit LuaObject(std::string class_name);
-
-            std::string getClassName();
-            static void registerObject(lua_State *state);
-        };
-
-        class TestObject
-            : public LuaObject
-        {
-        public:
-            TestObject();
-        };
 
         class Lua
         {

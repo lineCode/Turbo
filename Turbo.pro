@@ -71,6 +71,7 @@ HEADERS += include/turbo.h \
            include/script/script_def.h \
            include/script/python_def.h \
            include/script/lua_def.h \
+           include/script/lua_point.h \
            include/script/py_turbo.h \
            include/script/py_point.h \
            include/script/py_rect.h \

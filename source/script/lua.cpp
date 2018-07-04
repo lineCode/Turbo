@@ -4,28 +4,6 @@ namespace TURBO
 {
     namespace SCRIPT
     {
-        LuaObject::LuaObject(std::string class_name)
-            : class_name(class_name)
-        {
-
-        }
-
-        std::string LuaObject::getClassName()
-        {
-            return class_name;
-        }
-
-        void LuaObject::registerObject(lua_State *state)
-        {
-
-        }
-
-        TestObject::TestObject()
-            : LuaObject(__FUNCTION__)
-        {
-
-        }
-
         Lua::Lua()
         {
             lua_state = luaL_newstate();
