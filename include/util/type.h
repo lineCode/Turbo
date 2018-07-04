@@ -18,6 +18,14 @@ namespace TURBO
             std::string type = type_name.substr(temp_start + temp_offset, temp_end - temp_start - temp_offset);
             return type;
         }
+
+        template<typename T>
+        std::string rawTypeName()
+        {
+            std::string type_name = typeName<T>();
+            std::string type = type_name.substr(type_name.find_last_of(':') + 1);
+            return type;
+        }
     }
 }
 
