@@ -25,8 +25,12 @@ void luaScript()
 
     TC::Lua l = TC::Lua();
     auto    L = l.getState();
+    TC::LuaPoint::Register(L);
+
 //    win.registerObject(L);
     l.registerObject<TV::Window>(L);
+
+    l.callScript("resources/script/lua/test.lua");
 
     std::string input;
     std::getline(std::cin, input);

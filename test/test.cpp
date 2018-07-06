@@ -139,6 +139,11 @@ void gui()
     LOG("Stop application");
 }
 
+void quit(int s)
+{
+    exit(1);
+}
+
 void python(int argc, char ** argv)
 {
     TC::Python::addModule("Turbo", TC::PyInit_Turbo);
@@ -148,34 +153,32 @@ void python(int argc, char ** argv)
 
     PyObject *moduleMain = TC::Python::importModule(TC::Python::toUnicode("__main__"));
 
-    TC::Python::runString(
-        "def mul(a, b):\n"
-        "    return a * b\n");
+    struct sigaction handler;
 
-    TC::Python::runString(
-        "import Turbo \n"
-        "c = Turbo.Point(x=99,y=16)\n"
-        "print(c.x, c.y)\n");
+    handler.sa_handler = quit;
+    sigemptyset(&handler.sa_mask);
+    handler.sa_flags = 0;
 
-    PyObject *f = TC::Python::getAttritbuteFromString(moduleMain, "mul");
-    PyObject *args = TC::Python::toTuple(2, TC::Python::toFloat(3.0), TC::Python::toFloat(4.0));
+    sigaction(SIGINT, &handler, nullptr);
 
-    PyObject *result = TC::Python::callObject(f, args);
+    std::string input;
+    getline(std::cin, input);
 
-    printf("mul(3,4): %.2f\n", TC::Python::asDouble(result));
+    while(input != "exit")
+    {
+        TU::Log::startFormat(TU::LOG_FORMAT::BOLD_ON);
+        TU::Log::startFormat(TU::LOG_FORMAT::FG_LIGHT_RED);
+        TC::Python::runString(input);
+        TU::Log::clearFormat();
+        getline(std::cin, input);
+    }
+
     TC::Python::freeProgram(argv[0]);
 }
 
 /************************************************/
 
-void lua(int argc, char ** argv)
-{
-    TC::Lua l{};
-    lua_State *L = l.getState();
-    TC::LuaPoint::Register(L);
 
-    l.callScript("resources/script/lua/test.lua");
-}
 
 int main(int argc, char **argv)
 {
@@ -183,10 +186,6 @@ int main(int argc, char **argv)
 
     std::cout << "Executing Python Script:\n" << "\n";
     python(argc, argv);
-    std::cout << "Executing Lua Script:\n" << "\n";
-    lua(argc, argv);
-
-
 
     std::cout << "Execution took: "
               << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")
