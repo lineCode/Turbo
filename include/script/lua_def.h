@@ -21,9 +21,6 @@ namespace TURBO
         class LuaObject
         {
         public:
-
-            virtual luaL_Reg* methods() = 0;
-
             static std::string getClassName()
             {
                 return UTIL::rawTypeName<T>();
