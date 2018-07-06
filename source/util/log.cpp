@@ -17,6 +17,16 @@ namespace TURBO
             return Log::log_mode;
         }
 
+        void Log::clearFormat()
+        {
+            std::cout << "\033[0m";
+        }
+
+        void Log::startFormat(LOG_FORMAT format)
+        {
+            std::cout << "\033[" << format << "m";
+        }
+
         std::string Log::format(LOG_FORMAT format, std::string message)
         {
             std::stringstream result;
