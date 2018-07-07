@@ -8,6 +8,7 @@
 #include "util/json.h"
 #include "util/log.h"
 #include "util/number.h"
+#include "util/notify.h"
 #include "util/parser.h"
 #include "util/save.h"
 #include "util/string.h"

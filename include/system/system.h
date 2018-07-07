@@ -5,6 +5,7 @@
 #include "system/sdl.h"
 #include "system/cmd.h"
 #include "system/platform.h"
+#include "system/signal.h"
 
 namespace TURBO
 {
