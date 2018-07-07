@@ -78,6 +78,7 @@ HEADERS += include/turbo.h \
            include/system/cmd.h \
            include/system/sdl.h \
            include/system/system.h \
+           include/system/signal.h \
            include/system/platform.h \
            include/system/system_def.h \
            include/system/time.h \
@@ -132,6 +133,7 @@ SOURCES += test/test.cpp \
            source/script/lua.cpp \
            source/script/python.cpp \
            source/script/py_turbo.cpp \
+           source/system/signal.cpp \
            source/system/platform.cpp \
            source/system/cmd.cpp \
            source/system/sdl.cpp \

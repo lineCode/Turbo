@@ -1,5 +1,6 @@
 #include <gui/units.h>
 #include <util/notify.h>
+#include <system/signal.h>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
@@ -139,7 +140,7 @@ void gui()
     LOG("Stop application");
 }
 
-void quit(int s)
+void my_quit(int s)
 {
     exit(1);
 }
@@ -153,13 +154,7 @@ void python(int argc, char ** argv)
 
     PyObject *moduleMain = TC::Python::importModule(TC::Python::toUnicode("__main__"));
 
-    struct sigaction handler;
-
-    handler.sa_handler = quit;
-    sigemptyset(&handler.sa_mask);
-    handler.sa_flags = 0;
-
-    sigaction(SIGINT, &handler, nullptr);
+    TS::SignalHandler::addSignal(SIGINT, my_quit);
 
     std::string input;
     getline(std::cin, input);
