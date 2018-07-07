@@ -137,6 +137,11 @@ namespace TURBO
             return PyLong_FromSize_t(value);
         }
 
+        std::string asUnicode(PyObject *value)
+        {
+            return PyUnicode_AsUTF8(value);
+        }
+
         long Python::asLong(PyObject *value)
         {
             return PyLong_AsLong(value);

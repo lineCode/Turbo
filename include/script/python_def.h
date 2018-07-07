@@ -74,12 +74,7 @@ namespace TURBO
 
             static PyObject *toLong(size_t value);
 
-            static std::string asUnicode(PyObject *value)
-            {
-                char * msg = PyUnicode_AsUTF8(value);
-                std::cout <<  msg << std::endl;
-                return "";
-            }
+            static std::string asUnicode(PyObject *value);
 
             template<typename T = float>
             static double asDouble(PyObject *value)
