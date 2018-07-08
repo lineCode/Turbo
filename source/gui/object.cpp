@@ -5,9 +5,12 @@ namespace TURBO
 {
     namespace GUI
     {
+        int Object::objects = 0;
+
         Object::Object(Object *parent)
             : StyleProperties(),
-              parent(parent)
+              parent(parent),
+              id(Object::objects++)
         {
             if(parent != nullptr)
             {
@@ -39,11 +42,6 @@ namespace TURBO
             mouse_out     = !MATH::pointInRect(p, space) && mouse_on;
             mouse_clicked = INPUT::Mouse::pressed();
 
-            if(child != nullptr)
-            {
-                child->pollEvent(event);
-            }
-
             if(mouse_over)
             {
                 mouse_on = true;
@@ -60,6 +58,11 @@ namespace TURBO
                 {
                     fireCallback(EVENT_TYPE::ON_MOUSE_BUTTON_DOWN);
                 }
+            }
+
+            if(child != nullptr)
+            {
+                child->pollEvent(event);
             }
         }
 
@@ -151,6 +154,11 @@ namespace TURBO
         bool Object::mouseClicked()
         {
             return mouse_clicked;
+        }
+
+        int Object::getId()
+        {
+            return id;
         }
 
         Object *Object::getParent()

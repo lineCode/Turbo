@@ -23,6 +23,16 @@ namespace TURBO
             }
         }
 
+        void LayoutContainer::pollEvent(SDL_Event &event)
+        {
+            Object::pollEvent(event);
+
+            for(auto & child : children)
+            {
+                child->pollEvent(event);
+            }
+        }
+
         Box::Box(Object *parent, ORIENTATION orientation)
             : LayoutContainer(parent), orientation(orientation)
         {
@@ -126,6 +136,16 @@ namespace TURBO
             for(auto const & child : children)
             {
                 child.second->draw(renderer);
+            }
+        }
+
+        void Grid::pollEvent(SDL_Event &event)
+        {
+            Object::pollEvent(event);
+
+            for(auto & child : children)
+            {
+                child.second->pollEvent(event);
             }
         }
     }

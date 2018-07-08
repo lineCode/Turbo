@@ -1,6 +1,3 @@
-#include <gui/units.h>
-#include <util/notify.h>
-#include <system/signal.h>
 #include "turbo.h"
 
 namespace TA = TURBO::AUDIO;
@@ -26,6 +23,8 @@ void out()
 
 void quit()
 {
+    std::cout << "exit" << "\n";
+
     TS::SYSTEM_RUNNING = false;
 }
 
@@ -102,6 +101,13 @@ void gui()
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
     b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_BUTTON_DOWN, quit);
 
+    std::cout << b1.getId() << std::endl;
+    std::cout << b2.getId() << std::endl;
+    std::cout << b3.getId() << std::endl;
+    std::cout << b4.getId() << std::endl;
+    std::cout << b6.getId() << std::endl;
+    std::cout << b7.getId() << std::endl;
+
     LOG("Start application");
 
     while(TS::SYSTEM_RUNNING)
@@ -109,7 +115,6 @@ void gui()
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
-            std::cout << event.type << "\n";
             TI::Mouse::pollEvent(event);
             TI::Keyboard::pollEvent(event);
             main_widget.pollEvent(event);
@@ -140,47 +145,11 @@ void gui()
     LOG("Stop application");
 }
 
-void my_quit(int s)
-{
-    exit(1);
-}
-
-void python(int argc, char ** argv)
-{
-    TC::Python::addModule("Turbo", TC::PyInit_Turbo);
-    TC::Python::setProgramName(argv[0]);
-    TC::Python::initialize();
-    TS::Platform::setEnvironment("PYTHONPATH", "./resources/script/python/", true);
-
-    PyObject *moduleMain = TC::Python::importModule(TC::Python::toUnicode("__main__"));
-
-    TS::SignalHandler::addSignal(SIGINT, my_quit);
-
-    std::string input;
-    getline(std::cin, input);
-
-    while(input != "exit")
-    {
-        TU::Log::startFormat(TU::LOG_FORMAT::BOLD_ON);
-        TU::Log::startFormat(TU::LOG_FORMAT::FG_LIGHT_RED);
-        TC::Python::runString(input);
-        TU::Log::clearFormat();
-        getline(std::cin, input);
-    }
-
-    TC::Python::freeProgram(argv[0]);
-}
-
-/************************************************/
-
-
-
 int main(int argc, char **argv)
 {
     TS::PTimer ptimer{};
 
-    std::cout << "Executing Python Script:\n" << "\n";
-    python(argc, argv);
+    gui();
 
     std::cout << "Execution took: "
               << TS::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")

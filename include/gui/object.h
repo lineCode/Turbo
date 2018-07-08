@@ -21,7 +21,11 @@ namespace TURBO
         class Object
             : public StyleProperties
         {
+        private:
+            static int objects;
+
         protected:
+            int         id            = 0;
             Object      *parent       = nullptr;
             Object      *child        = nullptr;
             MATH::Point position      = MATH::Point();
@@ -45,7 +49,7 @@ namespace TURBO
 
             ~Object() override;
 
-            void pollEvent(SDL_Event &event);
+            virtual void pollEvent(SDL_Event &event);
 
             void registerCallback(Uint8 event, std::function<void()> callback);
 
@@ -76,6 +80,8 @@ namespace TURBO
             bool mouseOut();
 
             bool mouseClicked();
+
+            int getId();
 
             Object *getParent();
 
