@@ -3,6 +3,8 @@
 
 #include "math/math_def.h"
 
+#include <iostream>
+
 namespace TURBO
 {
     namespace MATH
@@ -14,76 +16,76 @@ namespace TURBO
             class Iterator
             {
             public:
-                T v;
-                T b;
-                T e;
-                T s;
+                T current;
+                T start;
+                T stop;
+                T step;
 
-                Iterator(T v, T b, T e, T s)
-                    : v(v), b(b), e(e), s(s)
+                Iterator(T current, T start, T stop, T step)
+                    : current(current), start(start), stop(stop), step(step)
                 {
 
                 }
 
                 T operator*() const
                 {
-                    return v;
+                    return current;
                 }
 
                 operator T& ()
                 {
-                    return v;
+                    return current;
                 }
 
                 Iterator &operator++()
                 {
-                    if(b <= e)
+                    if(start <= stop)
                     {
-                        v += s;
+                        current += step;
                     }
                     else
                     {
-                        v -= s;
+                        current -= step;
                     }
                     return *this;
                 }
 
                 bool operator==(const T &other) const
                 {
-                    if(b <= e)
+                    if(start <= stop)
                     {
-                        return v >= other;
+                        return current >= other;
                     }
-                    else if(b > e)
+                    else if(start > stop)
                     {
-                        return v <= other;
+                        return current <= other;
                     }
                 }
 
                 bool operator!=(const T &other) const
                 {
-                    return v != other;
+                    return current != other;
                 }
             };
 
-            T b;
-            T e;
-            T s;
+            T start;
+            T stop;
+            T step;
 
             Range(T from, T to, T step)
-                : b(from), e(to), s(step)
+                : start(from), stop(to), step(step)
             {
 
             }
 
             Iterator begin() const
             {
-                return Iterator(b, b, e, s);
+                return Iterator(start, start, stop, step);
             };
 
             Iterator end() const
             {
-                return Iterator(e, b, e, s);
+                return Iterator(stop, start, stop, step);
             };
         };
 
