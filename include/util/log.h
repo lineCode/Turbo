@@ -97,15 +97,46 @@ namespace TURBO
 
             static void clearLine();
 
-            static void log(const std::string &message, LOG_MODE mode);
+            static void log(const std::string & message, const LOG_MODE mode)
+            {
+                if(mode <= Log::log_mode)
+                {
+                    Log::log(message);
+                }
+            }
 
-            static void log(const std::string &message);
+            template<typename T>
+            static void log(const T &message)
+            {
+                std::cout << SYSTEM::Clock::getTimestampToString(SYSTEM::Clock::getTimestamp(), "%d.%m %H:%M") << " | "
+                          << std::right << std::setw(12) << std::setfill(' ')
+                          << SYSTEM::Clock::getTicksToString(SYSTEM::Clock::getTicks(), "%H:%M:%S.%f") << ": "
+                          << message << "\n";
+            }
 
-            static void info(const std::string &message);
+            template<typename T>
+            static void info(const T &message)
+            {
+                std::stringstream ss;
+                ss << "\033[1;36m[INFO] " << message << "\033[0m";
+                Log::log(ss.str(), LOG_MODE::LOG_INFO);
+            }
 
-            static void war(const std::string &message);
+            template<typename T>
+            static void war(const T &message)
+            {
+                std::stringstream ss;
+                ss << "\033[1;33m[WARNING] " << message << "\033[0m";
+                Log::log(ss.str(), LOG_MODE::LOG_WARNING);
+            }
 
-            static void err(const std::string &message);
+            template<typename T>
+            static void err(const T &message)
+            {
+                std::stringstream ss;
+                ss << "\033[1;31m[ERROR] " << message << "\033[0m";
+                Log::log(ss.str(), LOG_MODE::LOG_ERROR);
+            }
         };
 
 #define LOG(message) TURBO::UTIL::Log::log(message)
