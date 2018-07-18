@@ -2,13 +2,14 @@
 #define TURBO_CHART_DEF_H
 
 #include "gui/main_widget.h"
+#include "chart/series.h"
 
 namespace TURBO
 {
     namespace CHART
     {
         class IChart
-            : public GUI::Widget
+            : public GUI::Widget, public Series
         {
         private:
             VIDEO::Color grid_minor_color = 0xAAAAAAFF;
@@ -22,7 +23,7 @@ namespace TURBO
             bool         draw_grid        = true;
 
         public:
-            explicit IChart(GUI::Object *parent);
+            explicit IChart(GUI::Object *parent = nullptr);
 
             virtual void drawChart(VIDEO::Renderer *renderer);
 

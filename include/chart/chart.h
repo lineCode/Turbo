@@ -2,6 +2,7 @@
 #define TURBO_CHART_H
 
 #include "chart/bar_chart.h"
+#include "chart/line_chart.h"
 
 namespace TURBO
 {
