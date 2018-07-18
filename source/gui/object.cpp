@@ -170,6 +170,7 @@ namespace TURBO
         {
             parent = object;
             fireCallback(ON_PARENT_CHANGED);
+            update();
             return this;
         }
 
@@ -181,7 +182,9 @@ namespace TURBO
         Object *Object::setChild(Object *object)
         {
             this->child = object;
+            object->setParent(this);
             fireCallback(ON_CHILD_CHANGED);
+            update();
             return this;
         }
 
@@ -247,6 +250,14 @@ namespace TURBO
 
         Object *Object::update()
         {
+            if(parent != nullptr)
+            {
+                setPosition(parent->getSize().topLeft());
+                setSpace(parent->getSize());
+                setSize(parent->getSize());
+                setContent(parent->getSize());
+            }
+
             if(child != nullptr)
             {
                 child->update();

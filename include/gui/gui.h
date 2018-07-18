@@ -9,6 +9,7 @@
 #include "gui/text_widget.h"
 #include "gui/units.h"
 #include "gui/widget.h"
+#include "gui/app.h"
 
 namespace TURBO
 {
