@@ -39,7 +39,9 @@ HEADERS += include/turbo.h \
            include/audio/media_player.h \
            include/chart/chart_def.h \
            include/chart/bar_chart.h \
+           include/chart/line_chart.h \
            include/chart/chart.h \
+           include/chart/series.h \
            include/gui/button.h \
            include/gui/gui.h \
            include/gui/gui_def.h \
@@ -50,6 +52,7 @@ HEADERS += include/turbo.h \
            include/gui/text_widget.h \
            include/gui/style_properties.h \
            include/gui/units.h \
+           include/gui/app.h \
            include/input/controller.h \
            include/input/input.h \
            include/input/input_def.h \
@@ -110,7 +113,9 @@ SOURCES += test/test.cpp \
            source/audio/chunk.cpp \
            source/audio/media_player.cpp \
            source/chart/bar_chart.cpp \
+           source/chart/line_chart.cpp \
            source/chart/chart.cpp \
+           source/chart/series.cpp \
            source/gui/button.cpp \
            source/gui/layout.cpp \
            source/gui/main_widget.cpp \
@@ -119,6 +124,7 @@ SOURCES += test/test.cpp \
            source/gui/text_widget.cpp \
            source/gui/style_properties.cpp \
            source/gui/units.cpp \
+           source/gui/app.cpp \
            source/input/controller.cpp \
            source/input/keyboard.cpp \
            source/input/mouse.cpp \
