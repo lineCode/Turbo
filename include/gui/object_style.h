@@ -9,7 +9,19 @@ namespace TURBO
 {
     namespace GUI
     {
-        class StyleProperties
+        struct Space
+        {
+            Uint32 top;
+            Uint32 right;
+            Uint32 bottom;
+            Uint32 left;
+
+            Space();
+            Space(Uint32 top, Uint32 right, Uint32 bottom, Uint32 left);
+            void setSpace(Uint32 top, Uint32 right, Uint32 bottom, Uint32 left);
+        };
+
+        class ObjectStyle
         {
         protected:
             Uint8                 font_size           = 12_pt;
@@ -20,11 +32,13 @@ namespace TURBO
             VIDEO::Color          background_color    = VIDEO::WHITE;
             VIDEO::Color          text_color          = VIDEO::BLACK;
             VIDEO::Color          border_color        = VIDEO::TRANSPARENT;
+            Space                 margin;
+            Space                 padding;
 
         public:
-            StyleProperties();
+            ObjectStyle();
 
-            virtual ~StyleProperties();
+            virtual ~ObjectStyle();
 
             virtual Uint8 setFontSize(Uint8 size);
 

@@ -5,7 +5,7 @@
 #include "gui/layout.h"
 #include "gui/main_widget.h"
 #include "gui/object.h"
-#include "gui/style_properties.h"
+#include "gui/object_style.h"
 #include "gui/text_widget.h"
 #include "gui/units.h"
 #include "gui/widget.h"

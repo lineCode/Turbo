@@ -12,14 +12,14 @@
 #include "gui/gui_def.h"
 #include "math/math.h"
 #include "input/input.h"
-#include "gui/style_properties.h"
+#include "gui/object_style.h"
 
 namespace TURBO
 {
     namespace GUI
     {
         class Object
-            : public StyleProperties
+            : public ObjectStyle
         {
         private:
             static int objects;

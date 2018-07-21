@@ -8,7 +8,7 @@ namespace TURBO
         int Object::objects = 0;
 
         Object::Object(Object *parent)
-            : StyleProperties(),
+            : ObjectStyle(),
               parent(parent),
               id(Object::objects++)
         {

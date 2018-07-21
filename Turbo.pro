@@ -32,16 +32,20 @@ OBJECTS_DIR = obj
 # Input
 HEADERS += include/turbo.h \
            include/turbo_def.h \
+#
            include/audio/audio.h \
            include/audio/audio_def.h \
            include/audio/music.h \
            include/audio/chunk.h \
            include/audio/media_player.h \
+#
            include/chart/chart_def.h \
            include/chart/bar_chart.h \
            include/chart/line_chart.h \
+           include/chart/chart_style.h \
            include/chart/chart.h \
            include/chart/series.h \
+#
            include/gui/button.h \
            include/gui/gui.h \
            include/gui/gui_def.h \
@@ -50,24 +54,28 @@ HEADERS += include/turbo.h \
            include/gui/object.h \
            include/gui/widget.h \
            include/gui/text_widget.h \
-           include/gui/style_properties.h \
+           include/gui/object_style.h \
            include/gui/units.h \
            include/gui/app.h \
+#
            include/input/controller.h \
            include/input/input.h \
            include/input/input_def.h \
            include/input/keyboard.h \
            include/input/mouse.h \
+#
            include/math/math.h \
            include/math/math_def.h \
            include/math/point.h \
            include/math/rect.h \
            include/math/vector.h \
+#
            include/net/net.h \
            include/net/net_def.h \
            include/net/socket.h \
            include/net/tcp.h \
            include/net/udp.h \
+#
            include/script/lua.h \
            include/script/python.h \
            include/script/script.h \
@@ -78,6 +86,7 @@ HEADERS += include/turbo.h \
            include/script/py_turbo.h \
            include/script/py_point.h \
            include/script/py_rect.h \
+#
            include/system/cmd.h \
            include/system/sdl.h \
            include/system/system.h \
@@ -85,6 +94,7 @@ HEADERS += include/turbo.h \
            include/system/platform.h \
            include/system/system_def.h \
            include/system/time.h \
+#
            include/util/db.h \
            include/util/dir.h \
            include/util/file.h \
@@ -98,6 +108,7 @@ HEADERS += include/turbo.h \
            include/util/util_def.h \
            include/util/xml.h \
            include/util/parser.h \
+#
            include/video/color.h \
            include/video/font.h \
            include/video/opengl.h \
@@ -107,6 +118,7 @@ HEADERS += include/turbo.h \
            include/video/video.h \
            include/video/video_def.h \
            include/video/window.h
+
 SOURCES += test/test.cpp \
            source/turbo.cpp \
            source/audio/music.cpp \
@@ -114,6 +126,7 @@ SOURCES += test/test.cpp \
            source/audio/media_player.cpp \
            source/chart/bar_chart.cpp \
            source/chart/line_chart.cpp \
+           source/chart/chart_style.cpp \
            source/chart/chart.cpp \
            source/chart/series.cpp \
            source/gui/button.cpp \
@@ -122,7 +135,7 @@ SOURCES += test/test.cpp \
            source/gui/object.cpp \
            source/gui/widget.cpp \
            source/gui/text_widget.cpp \
-           source/gui/style_properties.cpp \
+           source/gui/object_style.cpp \
            source/gui/units.cpp \
            source/gui/app.cpp \
            source/input/controller.cpp \
