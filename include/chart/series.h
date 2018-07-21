@@ -27,6 +27,7 @@ namespace TURBO
         {
         private:
             std::map<unsigned, std::map<float, float>> data;
+            unsigned series_count = 0;
 
         public:
             Series();
@@ -64,42 +65,42 @@ namespace TURBO
             /*
              * Multiple series and x and y coordinates
              */
-            void addSeries(std::map<unsigned, std::map<float, float>> data);
+            Series &addSeries(std::map<unsigned, std::map<float, float>> data);
 
             /*
             * Multiple series and x and y coordinates
             */
-            void addSeries(std::vector<std::map<float, float>> data);
+            Series &addSeries(std::vector<std::map<float, float>> data);
 
             /*
              * Multiple series with y coordinates
              */
-            void addSeries(std::map<unsigned, std::vector<float>> data);
+            Series &addSeries(std::map<unsigned, std::vector<float>> data);
 
             /*
              * Multiple series with y coordinates
              */
-            void addSeries(std::vector<std::vector<float>> data);
+            Series &addSeries(std::vector<std::vector<float>> data);
 
             /*
              * One series with x and y coordinates and index
              */
-            void addSeries(unsigned index, std::map<float, float> data);
+            Series &addSeries(unsigned index, std::map<float, float> data);
 
             /*
              * One series with x and y coordinates and index
              */
-            void addSeries(unsigned index, std::vector<float> data);
+            Series &addSeries(unsigned index, std::vector<float> data);
 
             /*
              * One series with x and y coordinates
              */
-            void addSeries(std::map<float, float> data);
+            Series &addSeries(std::map<float, float> data);
 
             /*
              * One series with < coordinates
              */
-            void addSeries(std::vector<float> data);
+            Series &addSeries(std::vector<float> data);
             
             /*
              * Returns all series
@@ -110,6 +111,11 @@ namespace TURBO
              * Returns one series at given index
              */
             std::map<float, float> getSeries(unsigned index);
+
+            /*
+             * Returns the number of series
+             */
+            unsigned getSeriesCount();
         };
     }
 }

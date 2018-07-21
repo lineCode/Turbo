@@ -32,6 +32,18 @@ namespace TURBO
 
         public:
             ChartStyle();
+
+            ChartStyle &setChartPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l);
+
+            ChartStyle &setChartPadding(Uint32 padding);
+
+            ChartStyle &setPlotPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l);
+
+            ChartStyle &setPlotPadding(Uint32 padding);
+
+            ChartStyle &setMinorGrid(VIDEO::COLOR color, Uint8 x_dist, Uint8 y_dist, Uint8 x_size, Uint8 y_size);
+
+            ChartStyle &setMajorGrid(VIDEO::COLOR color, Uint8 x_dist, Uint8 y_dist, Uint8 x_size, Uint8 y_size);
         };
     }
 }

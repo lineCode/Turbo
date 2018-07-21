@@ -33,10 +33,6 @@ namespace TURBO
 
             IChart &setTickFormat(std::string format);
 
-            IChart &setChartPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l);
-
-            IChart &setPlotPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l);
-
             virtual void drawChart(VIDEO::Renderer *renderer);
 
             virtual void draw(VIDEO::Renderer *renderer) = 0;

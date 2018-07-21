@@ -7,7 +7,8 @@ namespace TURBO
         IChart::IChart(GUI::Object *parent)
             : GUI::Widget(parent)
         {
-
+            setMinorGrid(VIDEO::GREY5, 30, 40, 1, 1);
+            setMajorGrid(VIDEO::GREYA, 40, 50, 1, 1);
         }
 
         IChart &IChart::setTitle(std::string title)
@@ -37,18 +38,6 @@ namespace TURBO
 
         IChart &IChart::setTickFormat(std::string format)
         {
-            return *this;
-        }
-
-        IChart &IChart::setChartPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l)
-        {
-            chart_padding.setSpace(t, r, b, l);
-            return *this;
-        }
-
-        IChart &IChart::setPlotPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l)
-        {
-            plot_padding.setSpace(t, r, b, l);
             return *this;
         }
 

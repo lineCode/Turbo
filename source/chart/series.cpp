@@ -124,7 +124,7 @@ namespace TURBO
         {
             for(auto &series : data)
             {
-                addSeries(static_cast<unsigned>(this->data.size()), series);
+                addSeries(this->series_count++, series);
             }
         }
 
@@ -140,61 +140,63 @@ namespace TURBO
         {
             for(auto &series : data)
             {
-                addSeries(static_cast<unsigned>(this->data.size()), series);
+                addSeries(this->series_count++, series);
             }
         }
 
         Series::Series(std::map<float, float> data)
         {
-            addSeries(static_cast<unsigned>(this->data.size()), data);
+            addSeries(this->series_count++, data);
         }
 
         Series::Series(std::vector<float> data)
         {
-            addSeries(static_cast<unsigned>(this->data.size()), data);
+            addSeries(this->series_count++, data);
         }
 
-        void Series::addSeries(std::map<unsigned, std::map<float, float>> data)
+        Series &Series::addSeries(std::map<unsigned, std::map<float, float>> data)
         {
             for(auto &series : data)
             {
                 addSeries(series.first, series.second);
             }
+            return *this;
         }
 
-        void Series::addSeries(std::vector<std::map<float, float>> data)
+        Series &Series::addSeries(std::vector<std::map<float, float>> data)
         {
             for(auto &series : data)
             {
-                addSeries(static_cast<unsigned>(this->data.size()), series);
+                addSeries(this->series_count++, series);
             }
+            return *this;
         }
 
-        void Series::addSeries(std::map<unsigned, std::vector<float>> data)
+        Series &Series::addSeries(std::map<unsigned, std::vector<float>> data)
         {
             for(auto &series : data)
             {
                 addSeries(series.first, series.second);
             }
+            return *this;
         }
 
-        void Series::addSeries(std::vector<std::vector<float>> data)
+        Series &Series::addSeries(std::vector<std::vector<float>> data)
         {
-            auto series_index = static_cast<unsigned>(data.size());
-
             for(auto &series : data)
             {
-                addSeries(series_index, series);
-                series_index++;
+                addSeries(series_count++, series);
             }
+            return *this;
         }
 
-        void Series::addSeries(unsigned index, std::map<float, float> data)
+        Series &Series::addSeries(unsigned index, std::map<float, float> data)
         {
             this->data[index] = data;
+            return *this;
         }
 
-        void Series::addSeries(unsigned index, std::vector<float> data)
+        Series &Series::addSeries(unsigned index, std::vector<float> data)
         {
             unsigned entry_index = 0;
 
@@ -202,21 +204,24 @@ namespace TURBO
             {
                 this->data[index][entry_index++] = entry;
             }
+            return *this;
         }
 
-        void Series::addSeries(std::map<float, float> data)
+        Series &Series::addSeries(std::map<float, float> data)
         {
-            this->data[this->data.size()] = data;
+            this->data[series_count++] = data;
+            return *this;
         }
 
-        void Series::addSeries(std::vector<float> data)
+        Series &Series::addSeries(std::vector<float> data)
         {
             float index = 0;
-
             for(auto &entry : data)
             {
-                this->data[this->data.size()][index++] = entry;
+                this->data[series_count][index++] = entry;
             }
+            series_count++;
+            return *this;
         }
 
         std::map<unsigned, std::map<float, float>> Series::getSeries()
@@ -227,6 +232,11 @@ namespace TURBO
         std::map<float, float> Series::getSeries(unsigned index)
         {
             return this->data[index];
+        }
+
+        unsigned Series::getSeriesCount()
+        {
+            return series_count;
         }
     }
 }
