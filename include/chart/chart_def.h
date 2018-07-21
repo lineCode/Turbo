@@ -3,27 +3,39 @@
 
 #include "gui/main_widget.h"
 #include "chart/series.h"
+#include "chart/chart_style.h"
 
 namespace TURBO
 {
     namespace CHART
     {
         class IChart
-            : public GUI::Widget, public Series
+            : public GUI::Widget, public Series, public ChartStyle
         {
         private:
-            VIDEO::Color grid_minor_color = 0xAAAAAAFF;
-            VIDEO::Color grid_major_color = 0x55555555;
-            Uint8        grid_minor_size  = 1;
-            Uint8        grid_major_size  = 1;
-            Uint8        grid_minor_dist  = 30;
-            Uint8        grid_major_dist  = 100;
-            bool         draw_background  = true;
-            bool         draw_border      = true;
-            bool         draw_grid        = true;
+            std::string chart_title     = "";
+            std::string x_axis_title    = "";
+            std::string y_axis_title    = "";
+            bool        draw_minor_grid = true;
+            bool        draw_major_grid = true;
+            bool        draw_grid       = true;
 
         public:
             explicit IChart(GUI::Object *parent = nullptr);
+
+            IChart &setTitle(std::string title);
+
+            IChart &setXAxisTitle(std::string title);
+
+            IChart &setYAxisTitle(std::string title);
+
+            IChart &setAxisTitle(std::string x_axis, std::string y_axis);
+
+            IChart &setTickFormat(std::string format);
+
+            IChart &setChartPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l);
+
+            IChart &setPlotPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l);
 
             virtual void drawChart(VIDEO::Renderer *renderer);
 

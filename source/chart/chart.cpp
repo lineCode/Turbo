@@ -8,41 +8,76 @@ namespace TURBO
             : GUI::Widget(parent)
         {
 
+        }
 
+        IChart &IChart::setTitle(std::string title)
+        {
+            chart_title = std::move(title);
+            return *this;
+        }
+
+        IChart &IChart::setXAxisTitle(std::string title)
+        {
+            x_axis_title = std::move(title);
+            return *this;
+        }
+
+        IChart &IChart::setYAxisTitle(std::string title)
+        {
+            y_axis_title = std::move(title);
+            return *this;
+        }
+
+        IChart &IChart::setAxisTitle(std::string x_axis, std::string y_axis)
+        {
+            setXAxisTitle(std::move(x_axis));
+            setYAxisTitle(std::move(y_axis));
+            return *this;
+        }
+
+        IChart &IChart::setTickFormat(std::string format)
+        {
+            return *this;
+        }
+
+        IChart &IChart::setChartPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l)
+        {
+            chart_padding.setSpace(t, r, b, l);
+            return *this;
+        }
+
+        IChart &IChart::setPlotPadding(Uint32 t, Uint32 r, Uint32 b, Uint32 l)
+        {
+            plot_padding.setSpace(t, r, b, l);
+            return *this;
         }
 
         void IChart::drawChart(VIDEO::Renderer *renderer)
         {
-            if(draw_background)
+            /* Minor Grid */
+            if(draw_grid || draw_minor_grid)
             {
-                renderer->drawRect(size, 1, background_color, true);
+                for(int i = size.x; i < size.x + size.w; i += minor_grid.x_dist)
+                {
+                    renderer->drawLine(MATH::Line(i, size.y, i, size.y + size.h), minor_grid.x_size, minor_grid.color);
+                }
+                for(int i = size.y; i < size.y + size.h; i += minor_grid.y_dist)
+                {
+                    renderer->drawLine(MATH::Line(size.x, i, size.x + size.w, i), minor_grid.y_size, minor_grid.color);
+                }
+
             }
-            if(draw_border)
+
+            /* Major Grid */
+            if(draw_grid || draw_major_grid)
             {
-                renderer->drawRect(size, 1, border_color, false);
-            }
-            if(draw_grid)
-            {
-                /* Minor Grid */
-
-                for(int i = size.x; i < size.x + size.w; i += grid_minor_dist)
+                for(int i = size.x; i < size.x + size.w; i += major_grid.x_dist)
                 {
-                    renderer->drawLine(MATH::Line(i, size.y, i, size.y + size.h), grid_minor_size, grid_minor_color);
+                    renderer->drawLine(MATH::Line(i, size.y, i, size.y + size.h), major_grid.x_size, major_grid.color);
                 }
-                for(int i = size.y; i < size.y + size.h; i += grid_minor_dist)
+                for(int i = size.y; i < size.y + size.h; i += major_grid.y_dist)
                 {
-                    renderer->drawLine(MATH::Line(size.x, i, size.x + size.w, i), grid_minor_size, grid_minor_color);
-                }
-
-                /* Major Grid */
-
-                for(int i = size.x; i < size.x + size.w; i += grid_major_dist)
-                {
-                    renderer->drawLine(MATH::Line(i, size.y, i, size.y + size.h), grid_major_size, grid_major_color);
-                }
-                for(int i = size.y; i < size.y + size.h; i += grid_major_dist)
-                {
-                    renderer->drawLine(MATH::Line(size.x, i, size.x + size.w, i), grid_major_size, grid_major_color);
+                    renderer->drawLine(MATH::Line(size.x, i, size.x + size.w, i), major_grid.y_size, major_grid.color);
                 }
             }
         }

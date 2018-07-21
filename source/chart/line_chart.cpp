@@ -29,16 +29,14 @@ namespace TURBO
 
             drawChart(renderer);
 
-            renderer->drawRect({20, 20, 200, 200}, 1, VIDEO::GREEN, true);
-
             for(auto &series : data)
             {
-                auto x = static_cast<int>((*series.second.begin()).first + padding_x / 2);
-                auto y = static_cast<int>((*series.second.begin()).second - padding_y / 2);
+                auto x = (int)std::round((*series.second.begin()).first * factor_x) + padding_x / 2;
+                auto y = (int)std::round((*series.second.begin()).second * factor_y) + padding_y / 2;
                 for(auto &entry : series.second)
                 {
-                    auto x_val = (int)std::round(entry.first * factor_x);
-                    auto y_val = (int)std::round(entry.second * factor_y);
+                    auto x_val = (int)std::round(entry.first * factor_x) + padding_x / 2;
+                    auto y_val = (int)std::round(entry.second * factor_y) + padding_y / 2;
 
                     MATH::Line l(x, space.h - y, x_val, space.h - y_val);
                     renderer->drawLine(l, 1, colors[index]);
