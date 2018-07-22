@@ -11,6 +11,7 @@ namespace TURBO
             setSpace(MATH::Rect(0, 0, window_size.w, window_size.h));
             setPosition(MATH::Point(0, 0));
             setSize(getSpace());
+            setContent(getSpace());
         }
 
         VIDEO::Renderer &MainWidget::getRenderer()

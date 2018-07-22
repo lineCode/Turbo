@@ -89,7 +89,7 @@ namespace TURBO
 
             Object *getChild();
 
-            Object *setChild(Object *object);
+            virtual Object *setChild(Object *object);
 
             Object *hide();
 

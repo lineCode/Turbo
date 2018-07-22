@@ -33,10 +33,22 @@ namespace TURBO
             }
         }
 
+        Object *LayoutContainer::setChild(Object *object)
+        {
+            return this;
+        }
+
         Box::Box(Object *parent, ORIENTATION orientation)
             : LayoutContainer(parent), orientation(orientation)
         {
 
+        }
+
+        Box *Box::setOrientation(ORIENTATION orientation)
+        {
+            this->orientation = orientation;
+            update();
+            return this;
         }
 
         Box *Box::addWidget(Object *object, int index)
@@ -69,6 +81,8 @@ namespace TURBO
 
         Box *Box::update()
         {
+            Object::update();
+
             MATH::Rect children_space = space;
             if(orientation == ORIENTATION::HORIZONTAL)
             {
@@ -107,7 +121,7 @@ namespace TURBO
             children[std::pair<Uint8, Uint8>(x, y)] = object;
 
             Sint32 x_pos = space.x + x * cell_width;
-            Sint32 y_pos = space.y + x * cell_height;
+            Sint32 y_pos = space.y + y * cell_height;
             object->setSpace(MATH::Rect(x_pos, y_pos, w * cell_width, h * cell_height));
             object->setSize(object->getSpace());
             return this;
@@ -127,6 +141,8 @@ namespace TURBO
 
         Grid *Grid::update()
         {
+            Object::update();
+
             cell_width = size.w / cols;
             cell_height = size.h / rows;
         }

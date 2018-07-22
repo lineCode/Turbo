@@ -17,7 +17,9 @@ namespace TURBO
             Uint32 left;
 
             Space();
+
             Space(Uint32 top, Uint32 right, Uint32 bottom, Uint32 left);
+
             void setSpace(Uint32 top, Uint32 right, Uint32 bottom, Uint32 left);
         };
 

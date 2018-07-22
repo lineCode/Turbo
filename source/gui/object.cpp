@@ -15,10 +15,10 @@ namespace TURBO
             if(parent != nullptr)
             {
                 parent->setChild(this);
-                setPosition(parent->getSize().topLeft());
-                setSpace(parent->getSize());
-                setSize(parent->getSize());
-                setContent(parent->getSize());
+            }
+            else
+            {
+                update();
             }
         }
 
@@ -253,9 +253,9 @@ namespace TURBO
             if(parent != nullptr)
             {
                 setPosition(parent->getSize().topLeft());
-                setSpace(parent->getSize());
-                setSize(parent->getSize());
-                setContent(parent->getSize());
+                setSpace(parent->getSpace());
+                setSize(parent->getSpace());
+                setContent(parent->getSpace());
             }
 
             if(child != nullptr)

@@ -20,6 +20,7 @@ namespace TURBO
             std::vector<Object*> getChildren();
             void draw(VIDEO::Renderer *renderer) override;
             void pollEvent(SDL_Event &event) override;
+            Object* setChild(Object *object) override;
         };
         
         class Box : public LayoutContainer
@@ -29,6 +30,7 @@ namespace TURBO
 
         public:
             explicit Box(Object *parent, ORIENTATION orientation = ORIENTATION::HORIZONTAL);
+            Box *setOrientation(ORIENTATION orientation);
             Box *addWidget(Object *object, int index = -1);
             Box *removeWidget(Object *object);
             Box *removeWidget(int index);

@@ -32,7 +32,8 @@ namespace TURBO
             {
                 renderer->setTextColor(text_color);
                 delete text_texture;
-                text_texture = renderer->createUTF8Text(text, font_size, size.w, size.h, font_style, text_wrapping);
+                auto pt_size = static_cast<Uint8>(font_size * PT_TO_PX);
+                text_texture = renderer->createUTF8Text(text, pt_size, size.w, size.h, font_style, text_wrapping);
                 text_rect = MATH::Rect(space.x, space.y, text_texture->getWidth(), text_texture->getHeight());
 
                 if((text_alignment & 0x1) == 0x1) // Left alignment
