@@ -28,7 +28,7 @@ void luaScript()
     TC::LuaPoint::Register(L);
 
 //    win.registerObject(L);
-    l.registerObject<TV::Window>(L);
+    //l.registerObject<TV::Window>(L);
 
     l.callScript("resources/script/lua/test.lua");
 

@@ -42,7 +42,7 @@ std::string getLine()
     return command;
 }
 
-void python(int argc, char ** argv)
+void python2(int argc, char ** argv)
 {
     TC::Python::addModule("Turbo", TC::PyInit_Turbo);
     TC::Python::setProgramName(argv[0]);
