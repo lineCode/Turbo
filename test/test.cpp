@@ -6,24 +6,31 @@ int main(int argc, char **argv)
 {
     SYSTEM::PTimer ptimer{};
 
-    SYSTEM::SDL sdl{};
+    using namespace TURBO;
+    using GUI::operator""_pt;
 
-    sdl.initSDL(SDL_INIT_EVERYTHING);
-    sdl.initTTF();
+    auto app = GUI::App("My App", MATH::Rect(20, 20, 1024, 768));
+    auto w = GUI::Widget(nullptr);
+    auto grid = GUI::Grid(nullptr, 3, 3);
+    auto b = GUI::Button("asdasd");
+    auto s = GUI::Button("asdaaa");
 
-    GUI::App app = GUI::App("MyApp", {50, 50, 500, 500});
-    auto b_chart = CHART::LineChart();
-    b_chart.addSeries({{1,2,4,8,16}, {2,8,16,32,64}});
+    app.attach(&w);
 
-    b_chart.setTitle("asd")
-           .setAxisTitle("X", "Y")
-           .setChartPadding(0, 0, 0, 0)
-           .setPlotPadding(0, 0, 0, 0);
+    w.setChild(&grid);
 
-    app.attach(b_chart);
+    grid.addWidget(&b, 0, 0, 1, 1);
+    grid.addWidget(&s, 0, 1, 2, 1);
+
+    b.setBackgroundColor(VIDEO::RED);
+    b.setFontSize(51_pt);
+    b.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);
+
+    s.setBackgroundColor(VIDEO::GREY5);
+    s.setFontSize(53_pt);
+    s.setTextAlignment(VIDEO::TEXT_ALIGNMENT::BOTTOM_RIGHT);
 
     app.run();
-
 
     std::cout << "Execution took: "
               << SYSTEM::Clock::getPTicksToString(ptimer.getTime(), "%Mm %Ss %fms %uus %nns")

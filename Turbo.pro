@@ -120,15 +120,18 @@ HEADERS += include/turbo.h \
            include/video/window.h
 
 SOURCES += test/test.cpp \
+#
            source/turbo.cpp \
            source/audio/music.cpp \
            source/audio/chunk.cpp \
            source/audio/media_player.cpp \
+#
            source/chart/bar_chart.cpp \
            source/chart/line_chart.cpp \
            source/chart/chart_style.cpp \
            source/chart/chart.cpp \
            source/chart/series.cpp \
+#
            source/gui/button.cpp \
            source/gui/layout.cpp \
            source/gui/main_widget.cpp \
@@ -138,25 +141,31 @@ SOURCES += test/test.cpp \
            source/gui/object_style.cpp \
            source/gui/units.cpp \
            source/gui/app.cpp \
+#
            source/input/controller.cpp \
            source/input/keyboard.cpp \
            source/input/mouse.cpp \
+#
            source/math/math.cpp \
            source/math/point.cpp \
            source/math/line.cpp \
            source/math/rect.cpp \
            source/math/vector.cpp \
+#
            source/net/socket.cpp \
            source/net/tcp.cpp \
            source/net/udp.cpp \
+#
            source/script/lua.cpp \
            source/script/python.cpp \
            source/script/py_turbo.cpp \
+#
            source/system/signal.cpp \
            source/system/platform.cpp \
            source/system/cmd.cpp \
            source/system/sdl.cpp \
            source/system/time.cpp \
+#
            source/util/db.cpp \
            source/util/dir.cpp \
            source/util/file.cpp \
@@ -169,6 +178,7 @@ SOURCES += test/test.cpp \
            source/util/string.cpp \
            source/util/xml.cpp \
            source/util/parser.cpp \
+#
            source/video/color.cpp \
            source/video/font.cpp \
            source/video/opengl.cpp \
