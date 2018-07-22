@@ -199,7 +199,6 @@ namespace TURBO
             {
                 TTF_SizeText(font, text.c_str(), &w, &h);
             }
-
             return {0, 0, w, h};
         }
 
@@ -233,13 +232,19 @@ namespace TURBO
             Uint8 min = 1;
             from = std::max(from, min);
 
+            if(fonts.count(from) == 0)
+            {
+                Font *font = new Font(path, from);
+                fonts[from] = font;
+            }
+
             for(const auto &s : step)
             {
-                if(fonts.count(s) == 0 && s > 0)
+                from += s;
+                if(fonts.count(from) == 0)
                 {
                     Font *font = new Font(path, from);
                     fonts[from] = font;
-                    from += s;
                 }
             }
         }
@@ -279,23 +284,16 @@ namespace TURBO
             {
                 return fonts[size];
             }
-
-            auto it = --fonts.lower_bound(size);
-
-            if(it->first < size)
-            {
-                return fonts.lower_bound(size)->second;
-            }
             else
             {
-                if(!fonts.empty())
+                for(auto i = fonts.begin(); i != fonts.end(); ++i)
                 {
-                    return fonts.begin()->second;
+                    if(i->first > size)
+                    {
+                        return (--i)->second;
+                    }
                 }
-                else
-                {
-                    return nullptr;
-                }
+                return fonts.end()->second;
             }
         }
 
@@ -305,23 +303,16 @@ namespace TURBO
             {
                 return fonts[size];
             }
-
-            auto it = fonts.upper_bound(size);
-
-            if(it->first > size)
-            {
-                return fonts.upper_bound(size)->second;
-            }
             else
             {
-                if(!fonts.empty())
+                for(auto i = fonts.begin(); i != fonts.end(); ++i)
                 {
-                    return fonts.begin()->second;
+                    if(i->first > size)
+                    {
+                        return i->second;
+                    }
                 }
-                else
-                {
-                    return nullptr;
-                }
+                return fonts.end()->second;
             }
         }
     }
