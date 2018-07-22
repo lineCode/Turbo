@@ -40,7 +40,12 @@ namespace TURBO
         {
             MAXIMUM = 0x0,
             MINIMUM = 0x1
+        };
 
+        enum class SIZE_ADJUSTMENT : Uint8
+        {
+            ORIGINAL = 0x00,
+            SCALED = 0x01
         };
 
         enum class ORIENTATION : Uint8

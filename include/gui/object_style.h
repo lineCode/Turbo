@@ -26,14 +26,19 @@ namespace TURBO
         class ObjectStyle
         {
         protected:
-            Uint8                 font_size           = 12_pt;
-            VIDEO::FONT_STYLE     font_style          = VIDEO::FONT_STYLE::NORMAL;
-            VIDEO::TEXT_ALIGNMENT text_alignment      = VIDEO::TEXT_ALIGNMENT::TOP_LEFT;
-            VIDEO::TEXT_WRAPPING  text_wrapping       = VIDEO::TEXT_WRAPPING::BREAK;
-            VIDEO::Texture        *background_texture = nullptr;
-            VIDEO::Color          background_color    = VIDEO::WHITE;
-            VIDEO::Color          text_color          = VIDEO::BLACK;
-            VIDEO::Color          border_color        = VIDEO::TRANSPARENT;
+            MATH::Point           position                = MATH::Point();
+            MATH::Rect            space                   = MATH::Rect();
+            MATH::Rect            size                    = MATH::Rect();
+            MATH::Rect            content                 = MATH::Rect();
+            Uint8                 font_size               = 12_pt;
+            VIDEO::FONT_STYLE     font_style              = VIDEO::FONT_STYLE::NORMAL;
+            VIDEO::TEXT_ALIGNMENT text_alignment          = VIDEO::TEXT_ALIGNMENT::TOP_LEFT;
+            VIDEO::TEXT_WRAPPING  text_wrapping           = VIDEO::TEXT_WRAPPING::BREAK;
+            VIDEO::Texture        *background_texture     = nullptr;
+            MATH::Rect            background_texture_rect = MATH::Rect();
+            VIDEO::Color          background_color        = VIDEO::WHITE;
+            VIDEO::Color          text_color              = VIDEO::BLACK;
+            VIDEO::Color          border_color            = VIDEO::TRANSPARENT;
             Space                 margin;
             Space                 padding;
 
@@ -41,6 +46,22 @@ namespace TURBO
             ObjectStyle();
 
             virtual ~ObjectStyle();
+
+            MATH::Point &setPosition(MATH::Point position);
+
+            MATH::Point &getPosition();
+
+            MATH::Rect &setSpace(MATH::Rect space);
+
+            MATH::Rect &getSpace();
+
+            MATH::Rect &setSize(MATH::Rect size);
+
+            MATH::Rect &getSize();
+
+            MATH::Rect &setContent(MATH::Rect content);
+
+            MATH::Rect &getContent();
 
             virtual Uint8 setFontSize(Uint8 size);
 

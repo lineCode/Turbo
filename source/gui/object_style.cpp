@@ -36,6 +36,64 @@ namespace TURBO
             delete background_texture;
         }
 
+        MATH::Point &ObjectStyle::setPosition(MATH::Point position)
+        {
+            this->position = position;
+            return this->position;
+        }
+
+        MATH::Point &ObjectStyle::getPosition()
+        {
+            return position;
+        }
+
+        MATH::Rect &ObjectStyle::setSpace(MATH::Rect space)
+        {
+            this->space = space;
+            return this->space;
+        }
+
+        MATH::Rect &ObjectStyle::getSpace()
+        {
+            return space;
+        }
+
+        MATH::Rect &ObjectStyle::setSize(MATH::Rect size)
+        {
+            if(size <= space)
+            {
+                this->size = size;
+            }
+            return this->size;
+        }
+
+        MATH::Rect &ObjectStyle::getSize()
+        {
+            return size;
+        }
+
+        MATH::Rect &ObjectStyle::setContent(MATH::Rect content)
+        {
+            if(content <= size)
+            {
+                this->content = content;
+            }
+
+            if(background_texture != nullptr)
+            {
+                SDL_Rect tex = background_texture->getSize();
+                MATH::Rect tex_rect(0, 0, tex.w, tex.h);
+
+                background_texture_rect = MATH::Rect(content.x, content.y, tex_rect.w, tex_rect.h);
+            }
+            return this->content;
+        }
+
+        MATH::Rect &ObjectStyle::getContent()
+        {
+            return this->content;
+        }
+
         Uint8 ObjectStyle::setFontSize(Uint8 size)
         {
             font_size = size;
@@ -89,6 +147,14 @@ namespace TURBO
         {
             VIDEO::Surface surface = VIDEO::Surface(path, renderer);
             background_texture = new VIDEO::Texture(renderer->getRenderer(), surface.getSurface());
+
+            if(background_texture != nullptr)
+            {
+                SDL_Rect tex = background_texture->getSize();
+                MATH::Rect tex_rect(0, 0, tex.w, tex.h);
+
+                background_texture_rect = MATH::Rect(content.x, content.y, tex_rect.w, tex_rect.h);
+            }
             return background_texture;
         }
 

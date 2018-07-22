@@ -28,10 +28,6 @@ namespace TURBO
             int         id            = 0;
             Object      *parent       = nullptr;
             Object      *child        = nullptr;
-            MATH::Point position      = MATH::Point();
-            MATH::Rect  space         = MATH::Rect();
-            MATH::Rect  size          = MATH::Rect();
-            MATH::Rect  content       = MATH::Rect();
             OBJECT_TYPE object_type   = OBJECT_TYPE::OBJECT;
             float       opacity       = 1.0;
             bool        visible       = false;
@@ -52,22 +48,6 @@ namespace TURBO
             virtual void pollEvent(SDL_Event &event);
 
             void registerCallback(Uint8 event, std::function<void()> callback);
-
-            MATH::Point &setPosition(MATH::Point position);
-
-            MATH::Point &getPosition();
-
-            MATH::Rect &setSpace(MATH::Rect space);
-
-            MATH::Rect &getSpace();
-
-            MATH::Rect &setSize(MATH::Rect size);
-
-            MATH::Rect &getSize();
-
-            MATH::Rect &setContent(MATH::Rect content);
-
-            MATH::Rect &getContent();
 
             OBJECT_TYPE getObjectType();
 

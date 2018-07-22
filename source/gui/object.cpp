@@ -71,60 +71,6 @@ namespace TURBO
             callbacks[event] = callback;
         }
 
-        MATH::Point &Object::setPosition(MATH::Point position)
-        {
-            this->position = position;
-            fireCallback(ON_POSITION_CHANGED);
-            return this->position;
-        }
-
-        MATH::Point &Object::getPosition()
-        {
-            return position;
-        }
-
-        MATH::Rect &Object::setSpace(MATH::Rect space)
-        {
-            this->space = space;
-            fireCallback(ON_SPACE_CHANGED);
-            return this->space;
-        }
-
-        MATH::Rect &Object::getSpace()
-        {
-            return space;
-        }
-
-        MATH::Rect &Object::setSize(MATH::Rect size)
-        {
-            if(size <= space)
-            {
-                this->size = size;
-                fireCallback(ON_SIZE_CHANGED);
-            }
-            return this->size;
-        }
-
-        MATH::Rect &Object::getSize()
-        {
-            return size;
-        }
-
-        MATH::Rect &Object::setContent(MATH::Rect content)
-        {
-            if(content <= size)
-            {
-                this->content = content;
-                fireCallback(ON_CONTENT_CHANGED);
-            }
-            return this->content;
-        }
-
-        MATH::Rect &Object::getContent()
-        {
-            return this->content;
-        }
-
         OBJECT_TYPE Object::getObjectType()
         {
             return object_type;
@@ -240,7 +186,7 @@ namespace TURBO
         void Object::draw(VIDEO::Renderer *renderer)
         {
             renderer->drawRect(space, 1, background_color, true);
-            renderer->drawTexture(background_texture, space);
+            renderer->drawTexture(background_texture, background_texture_rect);
             renderer->drawRect(space, 1, border_color, false);
             if(child != nullptr)
             {

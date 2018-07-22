@@ -38,7 +38,7 @@ namespace TURBO
 
                 if((text_alignment & 0x1) == 0x1) // Left alignment
                 {
-
+                    // default
                 }
                 else if((text_alignment & 0x2) == 0x2) // Center alignment
                 {
@@ -53,7 +53,7 @@ namespace TURBO
 
                 if((text_alignment & 0x10) == 0x10) // Top alignment
                 {
-
+                    // default
                 }
                 else if((text_alignment & 0x20) == 0x20) // Middle alignment
                 {
