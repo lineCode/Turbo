@@ -169,6 +169,11 @@ namespace TURBO
             return *this;
         }
 
+        Rect &Rect::max(Rect &first, Rect &second)
+        {
+            return first > second ? first : second;
+        }
+
         bool operator==(const Rect &first, const Rect &second)
         {
             return (first.x == second.x)

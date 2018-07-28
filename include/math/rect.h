@@ -39,6 +39,7 @@ namespace TURBO
             Rect& operator*=(Sint32 scalar);
             Rect operator/(Sint32 scalar);
             Rect& operator/=(Sint32 scalar);
+            static Rect& max(Rect &first, Rect &second);
             friend bool operator==(const Rect & first, const Rect &second);
             friend bool operator!=(const Rect & first, const Rect &second);
             friend bool operator<(const Rect & first, const Rect &second);
