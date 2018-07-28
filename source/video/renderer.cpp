@@ -204,6 +204,11 @@ namespace TURBO
             Sint32      text_width  = font->getUTF8TextSize(text).w;
             Sint32      text_height = font->getUTF8TextSize(text).h;
 
+            if(text.empty())
+            {
+                text = " ";
+            }
+
             if(text_width > w)
             {
                 // auto rows              = static_cast<Uint8>((text_width / w) + 1);

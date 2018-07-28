@@ -12,12 +12,12 @@ namespace TURBO
         class Texture
         {
         private:
-            SDL_Renderer *renderer;
-            SDL_Texture  *texture;
-            Sint32 w;
-            Sint32 h;
-            Uint32 format;
-            Sint32 access;
+            SDL_Renderer *renderer = nullptr;
+            SDL_Texture  *texture  = nullptr;
+            Sint32       w         = 0;
+            Sint32       h         = 0;
+            Uint32       format    = 0;
+            Sint32       access    = 0;
 
         public:
             /**
