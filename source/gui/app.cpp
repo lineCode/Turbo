@@ -7,6 +7,7 @@ namespace TURBO
         App::App(std::string app_name, MATH::Rect size, Uint32 window_flags, Uint32 renderer_flags)
         {
             sdl.initSDL(SDL_INIT_EVERYTHING);
+            sdl.initIMG(IMG_INIT_PNG);
             sdl.initTTF();
 
             window = new VIDEO::Window(app_name, size, window_flags);
@@ -55,6 +56,10 @@ namespace TURBO
                     if(event.type == SDL_QUIT || INPUT::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
                     {
                         SYSTEM::SYSTEM_RUNNING = false;
+                    }
+                    if(event.type == SDL_MOUSEMOTION)
+                    {
+                        std::cout << event.motion.x << " " << event.motion.y << std::endl;
                     }
 
                     renderer->clear();

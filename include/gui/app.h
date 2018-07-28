@@ -17,7 +17,7 @@ namespace TURBO
 
         public:
             App(std::string app_name, MATH::Rect size, Uint32 window_flags = SDL_WINDOW_SHOWN,
-                Uint32 renderer_flags = SDL_RENDERER_SOFTWARE);
+                Uint32 renderer_flags = SDL_RENDERER_ACCELERATED);
 
             ~App();
 
