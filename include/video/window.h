@@ -16,16 +16,18 @@ namespace TURBO
         class Window
         {
         private:
-            SDL_Window *window;
-            MATH::Rect geometry;
-            bool       shown       = false;
-            bool       exposed     = false;
-            bool       restored    = false;
-            bool       minimized   = false;
-            bool       maximized   = false;
-            bool       mouse_focus = false;
-            bool       focus       = false;
-            bool       closed      = false;
+            SDL_Window  *window     = nullptr;
+            MATH::Rect  geometry    = MATH::Rect();
+            Uint32      flags       = 0x0;
+            std::string title;
+            bool        shown       = false;
+            bool        exposed     = false;
+            bool        restored    = false;
+            bool        minimized   = false;
+            bool        maximized   = false;
+            bool        mouse_focus = false;
+            bool        focus       = false;
+            bool        closed      = false;
 
         public:
             explicit Window(const std::string &title = "Window Title",
@@ -47,6 +49,10 @@ namespace TURBO
             MATH::Rect getSize();
 
             MATH::Rect setSize(MATH::Rect rect);
+
+            Uint32 setWindowFlags(Uint32 flags);
+
+            Uint32 getWindowFlags();
 
             void pollEvent(SDL_Event &event);
 

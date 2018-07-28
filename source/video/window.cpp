@@ -5,7 +5,9 @@ namespace TURBO
     namespace VIDEO
     {
         Window::Window(const std::string &title, MATH::Rect geometry, Uint32 flags)
-            : geometry(geometry)
+            : geometry(geometry),
+              title(title),
+              flags(flags)
         {
             if(SYSTEM::SDL::SDL_IS_INIT)
             {
@@ -74,6 +76,28 @@ namespace TURBO
         {
             geometry = MATH::Rect(geometry.x, geometry.y, rect.w, rect.h);
             SDL_SetWindowSize(window, geometry.w, geometry.h);
+        }
+
+        Uint32 Window::setWindowFlags(Uint32 flags)
+        {
+            this->flags = flags;
+
+            if(window != nullptr)
+            {
+                SDL_DestroyWindow(window);
+            }
+
+            if(SYSTEM::SDL::SDL_IS_INIT)
+            {
+                window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
+            }
+
+            return this->flags;
+        }
+
+        Uint32 Window::getWindowFlags()
+        {
+            return flags;
         }
 
         void Window::pollEvent(SDL_Event &event)
