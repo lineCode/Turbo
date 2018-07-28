@@ -233,6 +233,17 @@ Download the tarball/zip and extract the library files into your library directo
 ### qmake
 
 - Get a functioning version of qmake (comes with QT, but is available as standalone as well)
+
+#### Linux
+
+- qt5-default
+
+#### Windows
+
+
+
+#### Building
+
 - create a .pro file
     - execute `qmake -project` in the working directory
 - execute `qmake`

@@ -7,28 +7,32 @@ int main(int argc, char **argv)
     SYSTEM::PTimer ptimer{};
 
     using namespace TURBO;
-    using GUI::operator""_pt;
+    using GUI::operator ""_pt;
 
-    auto app = GUI::App("My App", MATH::Rect(20, 20, 1024, 768));
-    auto w = GUI::Widget(nullptr);
-    auto grid = GUI::Grid(nullptr, 3, 3);
-    auto b = GUI::Button("asdasd");
-    auto s = GUI::Button("asdaaa");
+    auto app = GUI::App("My App", MATH::Rect(20, 20, 1024, 768), SDL_WINDOW_SKIP_TASKBAR | SDL_WINDOW_BORDERLESS, SDL_RENDERER_ACCELERATED);
 
-    app.attach(&w);
+    SDL_SetWindowOpacity(app.getWindow().getWindow(), 0.2);
 
-    w.setChild(&grid);
+    auto grid          = GUI::Grid(nullptr, 12, 12);
+    auto char_icon     = GUI::Button("");
+    auto char_stat_box = GUI::Box(nullptr, GUI::ORIENTATION::VERTICAL);
+    auto life_bar      = GUI::Button("Life");
+    auto stamina_bar   = GUI::Button("Stamina");
 
-    grid.addWidget(&b, 0, 0, 1, 1);
-    grid.addWidget(&s, 0, 1, 2, 1);
+    grid.setBackgroundColor(VIDEO::TRANSPARENT);
+    char_icon.setBackgroundTexture("resources/image/icon.png", &app.getRenderer());
+    life_bar.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);
+    life_bar.setBackgroundColor(VIDEO::RED);
+    stamina_bar.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);
+    stamina_bar.setBackgroundColor(VIDEO::LIME);
 
-    b.setBackgroundColor(VIDEO::RED);
-    b.setFontSize(51_pt);
-    b.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);
+    app.getMainWidget().setChild(&grid);
 
-    s.setBackgroundColor(VIDEO::GREY5);
-    s.setFontSize(53_pt);
-    s.setTextAlignment(VIDEO::TEXT_ALIGNMENT::BOTTOM_RIGHT);
+    grid.addWidget(&char_icon, 0, 0, 1, 1);
+    grid.addWidget(&char_stat_box, 1, 0, 2, 1);
+
+    char_stat_box.addWidget(&life_bar);
+    char_stat_box.addWidget(&stamina_bar);
 
     app.run();
 
