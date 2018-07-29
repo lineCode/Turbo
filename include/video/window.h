@@ -17,42 +17,81 @@ namespace TURBO
         {
         private:
             SDL_Window  *window     = nullptr;
-            MATH::Rect  geometry    = MATH::Rect();
             Uint32      flags       = 0x0;
-            std::string title;
-            bool        shown       = false;
+            MATH::Point position    = MATH::Point();
+            MATH::Rect  size        = MATH::Rect();
+            std::string title       = "";
             bool        exposed     = false;
-            bool        restored    = false;
+            bool        shown       = false;
             bool        minimized   = false;
             bool        maximized   = false;
+            bool        restored    = false;
             bool        mouse_focus = false;
             bool        focus       = false;
             bool        closed      = false;
 
         public:
             explicit Window(const std::string &title = "Window Title",
-                            MATH::Rect geometry = MATH::Rect(50, 50, 640, 480),
+                            MATH::Rect size = MATH::Rect(50, 50, 640, 480),
                             Uint32 flags = SDL_WINDOW_SHOWN);
 
             ~Window();
 
             SDL_Window *getWindow();
 
-            MATH::Rect &getGeometry();
-
-            MATH::Rect &setGeometry(MATH::Rect rect);
-
             MATH::Point getPosition();
 
-            MATH::Point setPosition(MATH::Point point);
+            Window &setPosition(MATH::Point pos);
 
             MATH::Rect getSize();
 
-            MATH::Rect setSize(MATH::Rect rect);
+            Window &setSize(MATH::Rect size);
 
-            Uint32 setWindowFlags(Uint32 flags);
+            MATH::Rect getBorderSize();
 
-            Uint32 getWindowFlags();
+            MATH::Rect getMinimumSize();
+
+            Window &setMinimumSize(Sint32 w, Sint32 h);
+
+            MATH::Rect getMaximumSize();
+
+            Window &setMaximumSize(Sint32 w, Sint32 h);
+
+            Uint32 getFlags();
+
+            Window &setFlags(Uint32 flags);
+
+            bool getGrab();
+
+            Window &setGrab(bool grabbed);
+
+            Window &setInputFocus();
+
+            Window &setHitTest(SDL_HitTest callback, void *data);
+
+            Window &show();
+
+            Window &hide();
+
+            Window &setBordered(bool bordered);
+
+            Window &setBrightness(float brightness);
+
+            float getBrightness();
+
+            Window &setOpacity(float opacity);
+
+            float getOpacity();
+
+            Window &setFullScreen(Uint32 flag);
+
+            Window &setGammaRamp(Uint16 r, Uint16 g, Uint16 b);
+
+            Sint32 getID();
+
+            std::string getTitle();
+
+            Window &setIcon(SDL_Surface *icon);
 
             void pollEvent(SDL_Event &event);
 

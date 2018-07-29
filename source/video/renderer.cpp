@@ -15,7 +15,7 @@ namespace TURBO
                 font_collection = new FontCollection(TURBO_DEFAULT_FONT_NORMAL, 8,
                                                      std::vector<Uint8>{1, 1, 2, 2, 2, 4, 4, 6, 6, 8, 8});
 
-                setBlendMode(blend_mode);
+                setBlendMode(SDL_BLENDMODE_BLEND);
 
                 if(renderer == nullptr)
                 {
@@ -45,29 +45,35 @@ namespace TURBO
             return renderer;
         }
 
-        void Renderer::clear()
+        Renderer &Renderer::clear()
         {
             setDrawColor(color_clear);
             SDL_RenderClear(renderer);
             setDrawColor(color_draw);
         }
 
-        void Renderer::present()
+        Renderer &Renderer::present()
         {
             SDL_RenderPresent(renderer);
         }
 
-        SDL_BlendMode Renderer::setBlendMode(SDL_BlendMode mode)
+        Renderer &Renderer::setBlendMode(SDL_BlendMode mode)
         {
-            blend_mode = mode;
-            SDL_SetRenderDrawBlendMode(renderer, blend_mode);
-            return blend_mode;
+            SDL_SetRenderDrawBlendMode(renderer, mode);
+            return *this;
         }
 
-        Color &Renderer::setTextColor(Color color)
+        SDL_BlendMode Renderer::getBlendMode()
+        {
+            SDL_BlendMode mode;
+            SDL_GetRenderDrawBlendMode(renderer, &mode);
+            return mode;
+        }
+
+        Renderer &Renderer::setTextColor(Color color)
         {
             color_text_fg = color;
-            return color_text_fg;
+            return *this;
         }
 
         Color &Renderer::getTextColor()
@@ -75,10 +81,10 @@ namespace TURBO
             return color_text_fg;
         }
 
-        Color &Renderer::setTextbackgroundColor(Color color)
+        Renderer &Renderer::setTextbackgroundColor(Color color)
         {
             color_text_bg = color;
-            return color_text_bg;
+            return *this;
         }
 
         Color &Renderer::getTextbackgroundColor()
@@ -86,11 +92,11 @@ namespace TURBO
             return color_text_bg;
         }
 
-        Color &Renderer::setDrawColor(Color color)
+        Renderer &Renderer::setDrawColor(Color color)
         {
             color_draw = color;
             SDL_SetRenderDrawColor(renderer, color_draw.r, color_draw.g, color_draw.b, color_draw.a);
-            return color_draw;
+            return *this;
         }
 
         Color &Renderer::getDrawColor()
@@ -98,10 +104,10 @@ namespace TURBO
             return color_draw;
         }
 
-        Color &Renderer::setClearColor(Color color)
+        Renderer &Renderer::setClearColor(Color color)
         {
             color_clear = color;
-            return color_clear;
+            return *this;
         }
 
         Color &Renderer::getClearColor()
@@ -114,13 +120,13 @@ namespace TURBO
             return font;
         }
 
-        Font *Renderer::setFont(Font *font)
+        Renderer &Renderer::setFont(Font *font)
         {
             if(font != nullptr)
             {
                 this->font = font;
             }
-            return this->font;
+            return *this;
         }
 
         FontCollection *Renderer::getFontCollection()
@@ -128,24 +134,24 @@ namespace TURBO
             return font_collection;
         }
 
-        FontCollection *Renderer::setFontCollection(FontCollection *font_collection)
+        Renderer &Renderer::setFontCollection(FontCollection *font_collection)
         {
             if(font_collection == nullptr)
             {
                 this->font_collection = font_collection;
             }
-            return this->font_collection;
-        }
-
-        TEXT_MODE Renderer::setTextMode(TEXT_MODE mode)
-        {
-            text_mode = mode;
-            return text_mode;
+            return *this;
         }
 
         TEXT_MODE Renderer::getTextMode() const
         {
             return text_mode;
+        }
+
+        Renderer &Renderer::setTextMode(TEXT_MODE mode)
+        {
+            text_mode = mode;
+            return *this;
         }
 
         void Renderer::drawSDLSurface(SDL_Surface *surface, Sint32 x, Sint32 y)

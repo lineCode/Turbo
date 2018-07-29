@@ -4,14 +4,15 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        Window::Window(const std::string &title, MATH::Rect geometry, Uint32 flags)
-            : geometry(geometry),
+        Window::Window(const std::string &title, MATH::Rect size, Uint32 flags)
+            : flags(flags),
               title(title),
-              flags(flags)
+              position(size.topLeft()),
+              size(size)
         {
             if(SYSTEM::SDL::SDL_IS_INIT)
             {
-                window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
+                window = SDL_CreateWindow(title.c_str(), size.x, size.y, size.w, size.h, flags);
 
                 if(window != nullptr)
                 {
@@ -44,60 +45,179 @@ namespace TURBO
             return window;
         }
 
-        MATH::Rect &Window::getGeometry()
-        {
-            return geometry;
-        }
-
-        MATH::Rect &Window::setGeometry(MATH::Rect rect)
-        {
-            setPosition(rect.topLeft());
-            setSize(rect);
-            return geometry;
-        }
-
         MATH::Point Window::getPosition()
         {
-            return {geometry.x, geometry.y};
+            MATH::Point p;
+            SDL_GetWindowPosition(window, &p.x, &p.y);
+            return p;
         }
 
-        MATH::Point Window::setPosition(MATH::Point point)
+        Window &Window::setPosition(MATH::Point pos)
         {
-            geometry = MATH::Rect(point.x, point.y, geometry.w, geometry.h);
-            SDL_SetWindowPosition(window, geometry.x, geometry.y);
+            position = pos;
+            SDL_SetWindowPosition(window, pos.x, pos.y);
+            return *this;
         }
 
         MATH::Rect Window::getSize()
         {
-            return {0, 0, geometry.w, geometry.h};
+            MATH::Rect r;
+            SDL_GetWindowSize(window, &r.w, &r.h);
+            return r;
         }
 
-        MATH::Rect Window::setSize(MATH::Rect rect)
+        Window &Window::setSize(MATH::Rect size)
         {
-            geometry = MATH::Rect(geometry.x, geometry.y, rect.w, rect.h);
-            SDL_SetWindowSize(window, geometry.w, geometry.h);
+            size = MATH::Rect(position.x, position.y, size.w, size.h);
+            SDL_SetWindowSize(window, size.w, size.h);
+            return *this;
         }
 
-        Uint32 Window::setWindowFlags(Uint32 flags)
+        MATH::Rect Window::getBorderSize()
+        {
+            MATH::Rect borders;
+            SDL_GetWindowBordersSize(window, &borders.x, &borders.y, &borders.w, &borders.h);
+            return borders;
+        }
+
+        MATH::Rect Window::getMinimumSize()
+        {
+            MATH::Rect r;
+            SDL_GetWindowMinimumSize(window, &r.w, &r.h);
+            return r;
+        }
+
+        Window &Window::setMinimumSize(Sint32 w, Sint32 h)
+        {
+            SDL_SetWindowMinimumSize(window, w, h);
+            return *this;
+        }
+
+        MATH::Rect Window::getMaximumSize()
+        {
+            MATH::Rect r;
+            SDL_GetWindowMaximumSize(window, &r.w, &r.h);
+            return r;
+        }
+
+        Window &Window::setMaximumSize(Sint32 w, Sint32 h)
+        {
+            SDL_SetWindowMaximumSize(window, w, h);
+            return *this;
+        }
+
+        Window &Window::setFlags(Uint32 flags)
         {
             this->flags = flags;
 
-            if(window != nullptr)
+            if(this->flags != flags)
             {
-                SDL_DestroyWindow(window);
+                if(SYSTEM::SDL::SDL_IS_INIT)
+                {
+                    if(window != nullptr)
+                    {
+                        SDL_DestroyWindow(window);
+                    }
+                    window = SDL_CreateWindow(title.c_str(), position.x, position.y, size.w, size.h, flags);
+                }
             }
-
-            if(SYSTEM::SDL::SDL_IS_INIT)
-            {
-                window = SDL_CreateWindow(title.c_str(), geometry.x, geometry.y, geometry.w, geometry.h, flags);
-            }
-
-            return this->flags;
+            return *this;
         }
 
-        Uint32 Window::getWindowFlags()
+        Uint32 Window::getFlags()
         {
             return flags;
+        }
+
+        bool Window::getGrab()
+        {
+            return SDL_GetWindowGrab(window);
+        }
+
+        Window &Window::setGrab(bool grabbed)
+        {
+            SDL_SetWindowGrab(window, static_cast<SDL_bool>(grabbed));
+            return *this;
+        }
+
+        Window &Window::setInputFocus()
+        {
+            SDL_SetWindowInputFocus(window);
+            return *this;
+        }
+
+        Window &Window::setHitTest(SDL_HitTest callback, void *data)
+        {
+            SDL_SetWindowHitTest(window, callback, data);
+            return *this;
+        }
+
+        Window &Window::show()
+        {
+            SDL_ShowWindow(window);
+            return *this;
+        }
+
+        Window &Window::hide()
+        {
+            SDL_HideWindow(window);
+            return *this;
+        }
+
+        Window &Window::setBordered(bool bordered)
+        {
+            SDL_SetWindowBordered(window, static_cast<SDL_bool>(bordered));
+            return *this;
+        }
+
+        Window &Window::setBrightness(float brightness)
+        {
+            SDL_SetWindowBrightness(window, brightness);
+            return *this;
+        }
+
+        float Window::getBrightness()
+        {
+            return SDL_GetWindowBrightness(window);
+        }
+
+        Window &Window::setOpacity(float opacity)
+        {
+            SDL_SetWindowOpacity(window, opacity);
+            return *this;
+        }
+
+        float Window::getOpacity()
+        {
+            float opacity;
+            SDL_GetWindowOpacity(window, &opacity);
+            return opacity;
+        }
+
+        Window &Window::setFullScreen(Uint32 flag)
+        {
+            SDL_SetWindowFullscreen(window, flag);
+            return *this;
+        }
+
+        Window &Window::setGammaRamp(Uint16 r, Uint16 g, Uint16 b)
+        {
+
+        }
+
+        Sint32 Window::getID()
+        {
+            return 0;
+        }
+
+        std::string Window::getTitle()
+        {
+            return std::__cxx11::string();
+        }
+
+        Window &Window::setIcon(SDL_Surface *icon)
+        {
+
         }
 
         void Window::pollEvent(SDL_Event &event)

@@ -29,7 +29,6 @@ namespace TURBO
             Font           *font;
             FontCollection *font_collection;
             Texture        *font_texture;
-            SDL_BlendMode  blend_mode    = SDL_BlendMode::SDL_BLENDMODE_BLEND;
             TEXT_MODE      text_mode     = TEXT_MODE::BLENDED;
             Color          color_text_fg = WHITE;
             Color          color_text_bg = BLACK;
@@ -43,39 +42,41 @@ namespace TURBO
 
             SDL_Renderer *getRenderer();
 
-            void clear();
+            Renderer &clear();
 
-            void present();
+            Renderer &present();
 
-            SDL_BlendMode setBlendMode(SDL_BlendMode mode);
+            Renderer &setBlendMode(SDL_BlendMode mode);
 
-            Color &setTextColor(Color color);
+            SDL_BlendMode getBlendMode();
+
+            Renderer &setTextColor(Color color);
 
             Color &getTextColor();
 
-            Color &setTextbackgroundColor(Color color);
+            Renderer &setTextbackgroundColor(Color color);
 
             Color &getTextbackgroundColor();
 
-            Color &setDrawColor(Color color);
+            Renderer &setDrawColor(Color color);
 
             Color &getDrawColor();
 
-            Color &setClearColor(Color color);
+            Renderer &setClearColor(Color color);
 
             Color &getClearColor();
 
             Font *getFont();
 
-            Font *setFont(Font *font);
+            Renderer &setFont(Font *font);
 
             FontCollection *getFontCollection();
 
-            FontCollection *setFontCollection(FontCollection *font_collection);
-
-            TEXT_MODE setTextMode(TEXT_MODE mode);
+            Renderer &setFontCollection(FontCollection *font_collection);
 
             TEXT_MODE getTextMode() const;
+
+            Renderer &setTextMode(TEXT_MODE mode);
 
             void drawSDLSurface(SDL_Surface *surface, Sint32 x, Sint32 y);
 
