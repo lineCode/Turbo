@@ -18,10 +18,10 @@ namespace TURBO
 
         void Space::setSpace(Uint32 top, Uint32 right, Uint32 bottom, Uint32 left)
         {
-            this->top = top;
-            this->right = right;
+            this->top    = top;
+            this->right  = right;
             this->bottom = bottom;
-            this->left = left;
+            this->left   = left;
         }
 
         ObjectStyle::ObjectStyle()
@@ -81,7 +81,7 @@ namespace TURBO
 
             if(background_texture != nullptr)
             {
-                SDL_Rect tex = background_texture->getSize();
+                SDL_Rect   tex = background_texture->getSize();
                 MATH::Rect tex_rect(0, 0, tex.w, tex.h);
 
                 background_texture_rect = MATH::Rect(content.x, content.y, tex_rect.w, tex_rect.h);
@@ -150,10 +150,20 @@ namespace TURBO
 
             if(background_texture != nullptr)
             {
-                SDL_Rect tex = background_texture->getSize();
+                SDL_Rect   tex = background_texture->getSize();
                 MATH::Rect tex_rect(0, 0, tex.w, tex.h);
 
-                background_texture_rect = MATH::Rect(content.x, content.y, tex_rect.w, tex_rect.h);
+                Sint32 max_width  = std::max(tex.w, std::max(space.w, 1));
+                Sint32 max_height = std::max(tex.h, std::max(space.h, 1));
+
+                float width_factor  = tex.w / std::max(space.w, 1);
+                float height_factor = tex.h / std::max(space.h, 1);
+
+                float factor = (width_factor > height_factor) ? width_factor : height_factor;
+
+                background_texture_rect = MATH::Rect(content.x, content.y,
+                                                     static_cast<Sint32>(tex_rect.w / factor),
+                                                     static_cast<Sint32>(tex_rect.h / factor));
             }
             return background_texture;
         }
