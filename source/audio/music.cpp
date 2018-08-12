@@ -90,7 +90,7 @@ namespace TURBO
 
         MEDIUM_STATE Music::rewind()
         {
-            if(music_type >= Mix_MusicType::MUS_MOD && music_type <= Mix_MusicType::MUS_MP3_MAD)
+            if(music_type >= Mix_MusicType::MUS_MOD && music_type <= Mix_MusicType::MUS_MP3)
             {
                 if(music != nullptr)
                 {
