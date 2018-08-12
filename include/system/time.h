@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
+#include <functional>
 #include <sstream>
 
 #include "system/system_def.h"
