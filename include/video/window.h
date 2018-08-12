@@ -5,6 +5,7 @@
 #include <SDL_video.h>
 
 #include "video/video_def.h"
+#include "video/color.h"
 #include "math/math.h"
 #include "system/sdl.h"
 #include "util/log.h"
@@ -13,9 +14,9 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        class Window
+        class IWindow
         {
-        private:
+        protected:
             SDL_Window  *window     = nullptr;
             Uint32      flags       = 0x0;
             MATH::Point position    = MATH::Point();
@@ -31,67 +32,65 @@ namespace TURBO
             bool        closed      = false;
 
         public:
-            explicit Window(const std::string &title = "Window Title",
-                            MATH::Rect size = MATH::Rect(50, 50, 640, 480),
-                            Uint32 flags = SDL_WINDOW_SHOWN);
+            IWindow(const std::string &title, MATH::Rect size, Uint32 flags);
 
-            ~Window();
+            ~IWindow();
 
             SDL_Window *getWindow();
 
             MATH::Point getPosition();
 
-            Window &setPosition(MATH::Point pos);
+            IWindow &setPosition(MATH::Point pos);
 
             MATH::Rect getSize();
 
-            Window &setSize(MATH::Rect size);
+            IWindow &setSize(MATH::Rect size);
 
             MATH::Rect getBorderSize();
 
             MATH::Rect getMinimumSize();
 
-            Window &setMinimumSize(Sint32 w, Sint32 h);
+            IWindow &setMinimumSize(Sint32 w, Sint32 h);
 
             MATH::Rect getMaximumSize();
 
-            Window &setMaximumSize(Sint32 w, Sint32 h);
+            IWindow &setMaximumSize(Sint32 w, Sint32 h);
 
             Uint32 getFlags();
 
-            Window &setFlags(Uint32 flags);
+            IWindow &setFlags(Uint32 flags);
 
             bool getGrab();
 
-            Window &setGrab(bool grabbed);
+            IWindow &setGrab(bool grabbed);
 
-            Window &setInputFocus();
+            IWindow &setInputFocus();
 
-            Window &setHitTest(SDL_HitTest callback, void *data);
+            IWindow &setHitTest(SDL_HitTest callback, void *data);
 
-            Window &show();
+            IWindow &show();
 
-            Window &hide();
+            IWindow &hide();
 
-            Window &setBordered(bool bordered);
+            IWindow &setBordered(bool bordered);
 
-            Window &setBrightness(float brightness);
+            IWindow &setBrightness(float brightness);
 
             float getBrightness();
 
-            Window &setOpacity(float opacity);
+            IWindow &setOpacity(float opacity);
 
             float getOpacity();
 
-            Window &setFullScreen(Uint32 flag);
+            IWindow &setFullScreen(Uint32 flag);
 
-            Window &setGammaRamp(Uint16 r, Uint16 g, Uint16 b);
+            IWindow &setGammaRamp(Uint16 r, Uint16 g, Uint16 b);
 
             Sint32 getID();
 
             std::string getTitle();
 
-            Window &setIcon(SDL_Surface *icon);
+            IWindow &setIcon(SDL_Surface *icon);
 
             void pollEvent(SDL_Event &event);
 
@@ -110,6 +109,28 @@ namespace TURBO
             bool isFocus() const;
 
             bool isClosed() const;
+        };
+
+        class Window
+            : public IWindow
+        {
+        public:
+            Window(const std::string &title, MATH::Rect size, Uint32 flags);
+        };
+
+        class ShapedWindow
+            : public IWindow
+        {
+        private:
+            SDL_Surface         *shape = nullptr;
+            SDL_WindowShapeMode mode   = {};
+
+        public:
+            ShapedWindow(const std::string &title, MATH::Rect size, SDL_Surface *shape, Uint32 flags);
+
+            SDL_Surface *getShape();
+
+            ShapedWindow &setShape(SDL_Surface *shape, Color color_key = BLACK);
         };
     }
 }

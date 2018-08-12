@@ -4,7 +4,7 @@ namespace TURBO
 {
     namespace VIDEO
     {
-        Renderer::Renderer(Window &window, int index, Uint32 flags)
+        Renderer::Renderer(IWindow &window, int index, Uint32 flags)
             : window(window)
         {
             if(SYSTEM::SDL::SDL_IS_INIT)
@@ -55,6 +55,17 @@ namespace TURBO
         Renderer &Renderer::present()
         {
             SDL_RenderPresent(renderer);
+        }
+
+        Renderer &Renderer::setRenderTarget(SDL_Texture *texture)
+        {
+            SDL_SetRenderTarget(renderer, texture);
+            return *this;
+        }
+
+        SDL_Texture *Renderer::getRenderTarget()
+        {
+            return SDL_GetRenderTarget(renderer);
         }
 
         Renderer &Renderer::setBlendMode(SDL_BlendMode mode)
@@ -154,7 +165,7 @@ namespace TURBO
             return *this;
         }
 
-        void Renderer::drawSDLSurface(SDL_Surface *surface, Sint32 x, Sint32 y)
+        void Renderer::drawSurface(SDL_Surface *surface, Sint32 x, Sint32 y)
         {
             if(surface != nullptr)
             {
@@ -162,7 +173,7 @@ namespace TURBO
             }
         }
 
-        void Renderer::drawSDLTexture(SDL_Texture *texture, Sint32 x, Sint32 y)
+        void Renderer::drawTexture(SDL_Texture *texture, Sint32 x, Sint32 y)
         {
             if(texture != nullptr)
             {

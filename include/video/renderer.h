@@ -25,7 +25,7 @@ namespace TURBO
         {
         private:
             SDL_Renderer   *renderer;
-            Window         &window;
+            IWindow         &window;
             Font           *font;
             FontCollection *font_collection;
             Texture        *font_texture;
@@ -36,7 +36,7 @@ namespace TURBO
             Color          color_clear   = BLACK;
 
         public:
-            Renderer(Window &window, int index, Uint32 flags);
+            Renderer(IWindow &window, int index = -1, Uint32 flags = SDL_RENDERER_ACCELERATED);
 
             ~Renderer();
 
@@ -45,6 +45,10 @@ namespace TURBO
             Renderer &clear();
 
             Renderer &present();
+
+            Renderer &setRenderTarget(SDL_Texture *texture);
+
+            SDL_Texture *getRenderTarget();
 
             Renderer &setBlendMode(SDL_BlendMode mode);
 
@@ -78,9 +82,9 @@ namespace TURBO
 
             Renderer &setTextMode(TEXT_MODE mode);
 
-            void drawSDLSurface(SDL_Surface *surface, Sint32 x, Sint32 y);
+            void drawSurface(SDL_Surface *surface, Sint32 x, Sint32 y);
 
-            void drawSDLTexture(SDL_Texture *texture, Sint32 x, Sint32 y);
+            void drawTexture(SDL_Texture *texture, Sint32 x, Sint32 y);
 
             void drawTexture(Texture *texture, Sint32 x, Sint32 y);
 

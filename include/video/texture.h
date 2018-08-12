@@ -50,6 +50,18 @@ namespace TURBO
             Sint32 getHeight();
 
             SDL_Rect getSize();
+
+            Texture &setBlendMode(SDL_BlendMode mode);
+
+            SDL_BlendMode getBlendMode();
+
+            Texture &setAlphaMod(Uint8 alpha_mod);
+
+            Uint8 getAlphaMod();
+
+            Texture &setColorMod(SDL_Color color_mod);
+
+            SDL_Color getColorMod();
         };
     }
 }

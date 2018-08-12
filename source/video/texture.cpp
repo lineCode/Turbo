@@ -85,5 +85,44 @@ namespace TURBO
             r.h = h;
             return r;
         }
+
+        Texture &Texture::setBlendMode(SDL_BlendMode mode)
+        {
+            SDL_SetTextureBlendMode(texture, mode);
+            return *this;
+        }
+
+        SDL_BlendMode Texture::getBlendMode()
+        {
+            SDL_BlendMode mode;
+            SDL_GetTextureBlendMode(texture, &mode);
+            return mode;
+        }
+
+        Texture &Texture::setAlphaMod(Uint8 alpha_mod)
+        {
+            SDL_SetTextureAlphaMod(texture, alpha_mod);
+            return *this;
+        }
+
+        Uint8 Texture::getAlphaMod()
+        {
+            Uint8 mod;
+            SDL_GetTextureAlphaMod(texture, &mod);
+            return mod;
+        }
+
+        Texture &Texture::setColorMod(SDL_Color color_mod)
+        {
+            SDL_SetTextureColorMod(texture, color_mod.r, color_mod.g, color_mod.r);
+            return *this;
+        }
+
+        SDL_Color Texture::getColorMod()
+        {
+            SDL_Color mod;
+            SDL_GetTextureColorMod(texture, &mod.r, &mod.g, &mod.b);
+            return mod;
+        }
     }
 }

@@ -1,38 +1,19 @@
+#include <SDL_shape.h>
 #include "video/window.h"
 
 namespace TURBO
 {
     namespace VIDEO
     {
-        Window::Window(const std::string &title, MATH::Rect size, Uint32 flags)
-            : flags(flags),
-              title(title),
-              position(size.topLeft()),
-              size(size)
+        IWindow::IWindow(const std::string &title, MATH::Rect size, Uint32 flags)
+            : title(title),
+              size(size),
+              flags(flags)
         {
-            if(SYSTEM::SDL::SDL_IS_INIT)
-            {
-                window = SDL_CreateWindow(title.c_str(), size.x, size.y, size.w, size.h, flags);
 
-                if(window != nullptr)
-                {
-                    if(flags & SDL_WINDOW_OPENGL)
-                    {
-                        SYSTEM::SDL::OPENGL_IS_INIT = true;
-                    }
-                }
-                else
-                {
-                    UTIL::Log::err(SDL_GetError());
-                }
-            }
-            else
-            {
-                UTIL::Log::err("SDL is not initialized");
-            }
         }
 
-        Window::~Window()
+        IWindow::~IWindow()
         {
             if(window != nullptr)
             {
@@ -40,73 +21,73 @@ namespace TURBO
             }
         }
 
-        SDL_Window * Window::getWindow()
+        SDL_Window *IWindow::getWindow()
         {
             return window;
         }
 
-        MATH::Point Window::getPosition()
+        MATH::Point IWindow::getPosition()
         {
             MATH::Point p;
             SDL_GetWindowPosition(window, &p.x, &p.y);
             return p;
         }
 
-        Window &Window::setPosition(MATH::Point pos)
+        IWindow &IWindow::setPosition(MATH::Point pos)
         {
             position = pos;
             SDL_SetWindowPosition(window, pos.x, pos.y);
             return *this;
         }
 
-        MATH::Rect Window::getSize()
+        MATH::Rect IWindow::getSize()
         {
             MATH::Rect r;
             SDL_GetWindowSize(window, &r.w, &r.h);
             return r;
         }
 
-        Window &Window::setSize(MATH::Rect size)
+        IWindow &IWindow::setSize(MATH::Rect size)
         {
             size = MATH::Rect(position.x, position.y, size.w, size.h);
             SDL_SetWindowSize(window, size.w, size.h);
             return *this;
         }
 
-        MATH::Rect Window::getBorderSize()
+        MATH::Rect IWindow::getBorderSize()
         {
             MATH::Rect borders;
             SDL_GetWindowBordersSize(window, &borders.x, &borders.y, &borders.w, &borders.h);
             return borders;
         }
 
-        MATH::Rect Window::getMinimumSize()
+        MATH::Rect IWindow::getMinimumSize()
         {
             MATH::Rect r;
             SDL_GetWindowMinimumSize(window, &r.w, &r.h);
             return r;
         }
 
-        Window &Window::setMinimumSize(Sint32 w, Sint32 h)
+        IWindow &IWindow::setMinimumSize(Sint32 w, Sint32 h)
         {
             SDL_SetWindowMinimumSize(window, w, h);
             return *this;
         }
 
-        MATH::Rect Window::getMaximumSize()
+        MATH::Rect IWindow::getMaximumSize()
         {
             MATH::Rect r;
             SDL_GetWindowMaximumSize(window, &r.w, &r.h);
             return r;
         }
 
-        Window &Window::setMaximumSize(Sint32 w, Sint32 h)
+        IWindow &IWindow::setMaximumSize(Sint32 w, Sint32 h)
         {
             SDL_SetWindowMaximumSize(window, w, h);
             return *this;
         }
 
-        Window &Window::setFlags(Uint32 flags)
+        IWindow &IWindow::setFlags(Uint32 flags)
         {
             this->flags = flags;
 
@@ -124,103 +105,103 @@ namespace TURBO
             return *this;
         }
 
-        Uint32 Window::getFlags()
+        Uint32 IWindow::getFlags()
         {
             return flags;
         }
 
-        bool Window::getGrab()
+        bool IWindow::getGrab()
         {
             return SDL_GetWindowGrab(window);
         }
 
-        Window &Window::setGrab(bool grabbed)
+        IWindow &IWindow::setGrab(bool grabbed)
         {
             SDL_SetWindowGrab(window, static_cast<SDL_bool>(grabbed));
             return *this;
         }
 
-        Window &Window::setInputFocus()
+        IWindow &IWindow::setInputFocus()
         {
             SDL_SetWindowInputFocus(window);
             return *this;
         }
 
-        Window &Window::setHitTest(SDL_HitTest callback, void *data)
+        IWindow &IWindow::setHitTest(SDL_HitTest callback, void *data)
         {
             SDL_SetWindowHitTest(window, callback, data);
             return *this;
         }
 
-        Window &Window::show()
+        IWindow &IWindow::show()
         {
             SDL_ShowWindow(window);
             return *this;
         }
 
-        Window &Window::hide()
+        IWindow &IWindow::hide()
         {
             SDL_HideWindow(window);
             return *this;
         }
 
-        Window &Window::setBordered(bool bordered)
+        IWindow &IWindow::setBordered(bool bordered)
         {
             SDL_SetWindowBordered(window, static_cast<SDL_bool>(bordered));
             return *this;
         }
 
-        Window &Window::setBrightness(float brightness)
+        IWindow &IWindow::setBrightness(float brightness)
         {
             SDL_SetWindowBrightness(window, brightness);
             return *this;
         }
 
-        float Window::getBrightness()
+        float IWindow::getBrightness()
         {
             return SDL_GetWindowBrightness(window);
         }
 
-        Window &Window::setOpacity(float opacity)
+        IWindow &IWindow::setOpacity(float opacity)
         {
             SDL_SetWindowOpacity(window, opacity);
             return *this;
         }
 
-        float Window::getOpacity()
+        float IWindow::getOpacity()
         {
             float opacity;
             SDL_GetWindowOpacity(window, &opacity);
             return opacity;
         }
 
-        Window &Window::setFullScreen(Uint32 flag)
+        IWindow &IWindow::setFullScreen(Uint32 flag)
         {
             SDL_SetWindowFullscreen(window, flag);
             return *this;
         }
 
-        Window &Window::setGammaRamp(Uint16 r, Uint16 g, Uint16 b)
+        IWindow &IWindow::setGammaRamp(Uint16 r, Uint16 g, Uint16 b)
         {
 
         }
 
-        Sint32 Window::getID()
+        Sint32 IWindow::getID()
         {
             return 0;
         }
 
-        std::string Window::getTitle()
+        std::string IWindow::getTitle()
         {
             return std::__cxx11::string();
         }
 
-        Window &Window::setIcon(SDL_Surface *icon)
+        IWindow &IWindow::setIcon(SDL_Surface *icon)
         {
 
         }
 
-        void Window::pollEvent(SDL_Event &event)
+        void IWindow::pollEvent(SDL_Event &event)
         {
             exposed = false;
 
@@ -240,7 +221,7 @@ namespace TURBO
             {
                 minimized = true;
                 maximized = false;
-                restored = false;
+                restored  = false;
             }
             else if(event.type == SDL_WINDOWEVENT_MAXIMIZED)
             {
@@ -285,44 +266,127 @@ namespace TURBO
             }
         }
 
-        bool Window::isShown() const
+        bool IWindow::isShown() const
         {
             return shown;
         }
 
-        bool Window::isExposed() const
+        bool IWindow::isExposed() const
         {
             return exposed;
         }
 
-        bool Window::isRestored() const
+        bool IWindow::isRestored() const
         {
             return restored;
         }
 
-        bool Window::isMinimized() const
+        bool IWindow::isMinimized() const
         {
             return minimized;
         }
 
-        bool Window::isMaximized() const
+        bool IWindow::isMaximized() const
         {
             return maximized;
         }
 
-        bool Window::hasMouseFocus() const
+        bool IWindow::hasMouseFocus() const
         {
             return mouse_focus;
         }
 
-        bool Window::isFocus() const
+        bool IWindow::isFocus() const
         {
             return focus;
         }
 
-        bool Window::isClosed() const
+        bool IWindow::isClosed() const
         {
             return closed;
+        }
+
+        Window::Window(const std::string &title, MATH::Rect size, Uint32 flags)
+            : IWindow(title, size, flags)
+        {
+            if(SYSTEM::SDL::SDL_IS_INIT)
+            {
+                window = SDL_CreateWindow(title.c_str(), size.x, size.y, size.w, size.h, flags);
+
+                if(window != nullptr)
+                {
+                    if(flags & SDL_WINDOW_OPENGL)
+                    {
+                        SYSTEM::SDL::OPENGL_IS_INIT = true;
+                    }
+                }
+                else
+                {
+                    UTIL::Log::err(SDL_GetError());
+                }
+            }
+            else
+            {
+                UTIL::Log::err("SDL is not initialized");
+            }
+        }
+
+
+        ShapedWindow::ShapedWindow(const std::string &title, MATH::Rect size, SDL_Surface *shape, Uint32 flags)
+            : IWindow(title, size, flags),
+              shape(shape)
+        {
+            if(SYSTEM::SDL::SDL_IS_INIT)
+            {
+                if(shape != nullptr)
+                {
+                    window = SDL_CreateShapedWindow(title.c_str(), size.x, size.y, size.w, size.h, flags);
+                    SDL_SetWindowPosition(window, size.x, size.y);
+                    SDL_SetWindowSize(window, shape->w, shape->h);
+
+                    if(window == nullptr)
+                    {
+                        UTIL::Log::err(SDL_GetError());
+                    }
+                }
+            }
+            else
+            {
+                UTIL::Log::err("SDL is not initialized");
+            }
+        }
+
+        SDL_Surface *VIDEO::ShapedWindow::getShape()
+        {
+            return shape;
+        }
+
+        VIDEO::ShapedWindow &VIDEO::ShapedWindow::setShape(SDL_Surface *shape, Color color_key)
+        {
+            if(SDL_GetRenderer(window) != nullptr)
+            {
+                if(SDL_ISPIXELFORMAT_ALPHA(shape->format->format))
+                {
+                    mode.mode                          = ShapeModeBinarizeAlpha;
+                    mode.parameters.binarizationCutoff = 0xFF;
+                }
+                else
+                {
+                    mode.mode                = ShapeModeColorKey;
+                    mode.parameters.colorKey = {
+                        color_key.r,
+                        color_key.g,
+                        color_key.b,
+                        color_key.a
+                    };
+                }
+                SDL_SetWindowShape(window, shape, &mode);
+            }
+            else
+            {
+                UTIL::Log::err("Shape can only set after the renderer is connected with the window.");
+            }
+            return *this;
         }
     }
 }
