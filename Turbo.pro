@@ -16,14 +16,14 @@ LIBS += -L/usr/lib/ \
     -lmysqlclient \
     -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2_net -lSDL2_gfx\
     -llua5.2 \
-    -lpython3.5m \
+    -lpython3.6m \
     -lGLEW -lGL
 
-INCLUDEPATH += include \
-    /usr/include \
+INCLUDEPATH += \
+    include \
     /usr/include/SDL2 \
     /usr/include/lua5.2 \
-    /usr/include/python3.5
+    /usr/include/python3.6
 
 DEPENDPATH += include
 
