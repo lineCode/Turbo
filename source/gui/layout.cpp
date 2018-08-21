@@ -118,12 +118,22 @@ namespace TURBO
 
         Grid *Grid::addWidget(Object *object, Uint8 x, Uint8 y, Uint8 w, Uint8 h)
         {
+            for(auto i : MATH::range<Uint8>(x, x+w, 1))
+            {
+                for(auto j : MATH::range<Uint8>(y, y+h, 1))
+                {
+                    removeWidget(i, j);
+                }
+            }
+
             children[std::pair<Uint8, Uint8>(x, y)] = object;
 
             Sint32 x_pos = space.x + x * cell_width;
             Sint32 y_pos = space.y + y * cell_height;
             object->setSpace(MATH::Rect(x_pos, y_pos, w * cell_width, h * cell_height));
             object->setSize(object->getSpace());
+            object->setContent(object->getSpace());
+            object->setBackgroundTextureRect(object->getSpace());
             return this;
         }
 
@@ -135,7 +145,7 @@ namespace TURBO
 
         Grid *Grid::removeWidget(Uint8 x, Uint8 y)
         {
-            //children.erase(children.begin(), std::pair<Uint8, Uint8>(x, y));
+            children.erase(std::pair<Uint8, Uint8>(x, y));
             return this;
         }
 

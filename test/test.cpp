@@ -26,6 +26,8 @@ int main(int argc, char **argv)
     auto stamina_bar   = GUI::Button("Stamina");
 
     grid.setBackgroundColor(VIDEO::TRANSPARENT);
+    char_icon.setBackgroundColor(VIDEO::TRANSPARENT);
+    char_icon.setBackgroundTexture("resources/image/icon.png", &app.getRenderer());
     life_bar.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);
     life_bar.setBackgroundColor(VIDEO::RED);
     stamina_bar.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);
@@ -38,8 +40,6 @@ int main(int argc, char **argv)
 
     char_stat_box.addWidget(&life_bar);
     char_stat_box.addWidget(&stamina_bar);
-
-    char_icon.setBackgroundTexture("resources/image/icon.png", &app.getRenderer());
 
     app.run();
 

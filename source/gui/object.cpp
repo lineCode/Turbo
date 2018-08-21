@@ -202,12 +202,14 @@ namespace TURBO
                 setSpace(parent->getSpace());
                 setSize(parent->getSpace());
                 setContent(parent->getSpace());
+                setBackgroundTextureRect(parent->getSpace());
             }
 
             if(child != nullptr)
             {
                 child->update();
             }
+            return this;
         }
     }
 }

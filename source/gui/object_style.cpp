@@ -153,8 +153,8 @@ namespace TURBO
                 SDL_Rect   tex = background_texture->getSize();
                 MATH::Rect tex_rect(0, 0, tex.w, tex.h);
 
-                Sint32 max_width  = std::max(tex.w, std::max(space.w, 1));
-                Sint32 max_height = std::max(tex.h, std::max(space.h, 1));
+                Sint32 max_width  = std::max(tex.w, space.w);
+                Sint32 max_height = std::max(tex.h, space.h);
 
                 float width_factor  = tex.w / std::max(space.w, 1);
                 float height_factor = tex.h / std::max(space.h, 1);
@@ -164,8 +164,37 @@ namespace TURBO
                 background_texture_rect = MATH::Rect(content.x, content.y,
                                                      static_cast<Sint32>(tex_rect.w / factor),
                                                      static_cast<Sint32>(tex_rect.h / factor));
+
+                std::cout << tex_rect.w << " " << factor;
             }
             return background_texture;
+        }
+
+        MATH::Rect ObjectStyle::getBackgroundTextureRect()
+        {
+            return background_texture_rect;
+        }
+
+        MATH::Rect ObjectStyle::setBackgroundTextureRect(MATH::Rect rect)
+        {
+            if(background_texture != nullptr)
+            {
+                SDL_Rect   tex = background_texture->getSize();
+                MATH::Rect tex_rect(0, 0, tex.w, tex.h);
+
+                Sint32 max_width  = std::max(tex.w, std::max(rect.w, 1));
+                Sint32 max_height = std::max(tex.h, std::max(rect.h, 1));
+
+                float width_factor  = tex.w / std::max(rect.w, 1);
+                float height_factor = tex.h / std::max(rect.h, 1);
+
+                float factor = (width_factor > height_factor) ? width_factor : height_factor;
+
+                background_texture_rect = MATH::Rect(rect.x, rect.y,
+                                                     static_cast<Sint32>(tex_rect.w / factor),
+                                                     static_cast<Sint32>(tex_rect.h / factor));
+            }
+            return background_texture_rect;
         }
 
         VIDEO::Color ObjectStyle::getBackgroundColor()

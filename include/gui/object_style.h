@@ -83,6 +83,10 @@ namespace TURBO
 
             virtual VIDEO::Texture *setBackgroundTexture(std::string path, VIDEO::Renderer *renderer);
 
+            virtual MATH::Rect getBackgroundTextureRect();
+
+            virtual MATH::Rect setBackgroundTextureRect(MATH::Rect rect);
+
             virtual VIDEO::Color getBackgroundColor();
 
             virtual VIDEO::Color setBackgroundColor(VIDEO::Color color);
