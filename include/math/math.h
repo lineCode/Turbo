@@ -6,6 +6,7 @@
 #include "math/line.h"
 #include "math/rect.h"
 #include "math/vector.h"
+#include "math/space.h"
 
 namespace TURBO
 {
