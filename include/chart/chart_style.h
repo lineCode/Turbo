@@ -1,7 +1,10 @@
 #ifndef TURBO_CHART_STYLE_H
 #define TURBO_CHART_STYLE_H
 
-#include "gui/object_style.h"
+#include "gui/units.h"
+#include "math/space.h"
+#include "video/texture.h"
+#include "video/color.h"
 
 namespace TURBO
 {
@@ -23,8 +26,8 @@ namespace TURBO
         class ChartStyle
         {
         protected:
-            GUI::Space     chart_padding;
-            GUI::Space     plot_padding;
+            MATH::Space     chart_padding;
+            MATH::Space     plot_padding;
             Grid           minor_grid;
             Grid           major_grid;
             VIDEO::Texture *plot_background_texture = nullptr;

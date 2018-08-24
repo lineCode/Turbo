@@ -123,12 +123,30 @@ namespace TURBO
             BREAK          = 0x0F
         };
 
+        /**
+         * Used to modify an enum value with a value of the corresponding type.
+         * @example auto alignment = TEXT_ALIGNMENT::MIDDLE_LEFT & 0x20; (equals TEXT_ALIGNMENT::MIDDLE)
+         * @tparam ENUM
+         * @tparam VAL
+         * @param l
+         * @param r
+         * @return
+         */
         template<typename ENUM, typename VAL>
         VAL operator&(ENUM l, VAL r)
         {
             return static_cast<VAL>(l) & r;
         }
 
+        /**
+         * Used to modify an enum value with a value of the corresponding type.
+         * @example auto alignment = TEXT_ALIGNMENT::MIDDLE & 0x04; (equals TEXT_ALIGNMENT::MIDDLE_CENTER)
+         * @tparam ENUM
+         * @tparam VAL
+         * @param l
+         * @param r
+         * @return
+         */
         template<typename ENUM, typename VAL>
         VAL operator|(ENUM l, VAL r)
         {
