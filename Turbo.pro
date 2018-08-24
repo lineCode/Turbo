@@ -54,7 +54,6 @@ HEADERS += include/turbo.h \
            include/gui/object.h \
            include/gui/widget.h \
            include/gui/text_widget.h \
-           include/gui/object_style.h \
            include/gui/units.h \
            include/gui/app.h \
 #
@@ -67,6 +66,7 @@ HEADERS += include/turbo.h \
            include/math/math.h \
            include/math/math_def.h \
            include/math/point.h \
+           include/math/space.h \
            include/math/rect.h \
            include/math/vector.h \
 #
@@ -138,7 +138,6 @@ SOURCES += test/test.cpp \
            source/gui/object.cpp \
            source/gui/widget.cpp \
            source/gui/text_widget.cpp \
-           source/gui/object_style.cpp \
            source/gui/units.cpp \
            source/gui/app.cpp \
 #
@@ -149,6 +148,7 @@ SOURCES += test/test.cpp \
            source/math/math.cpp \
            source/math/point.cpp \
            source/math/line.cpp \
+           source/math/space.cpp \
            source/math/rect.cpp \
            source/math/vector.cpp \
 #

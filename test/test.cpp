@@ -28,6 +28,7 @@ int main(int argc, char **argv)
     grid.setBackgroundColor(VIDEO::TRANSPARENT);
     char_icon.setBackgroundColor(VIDEO::TRANSPARENT);
     char_icon.setBackgroundTexture("resources/image/icon.png", &app.getRenderer());
+    char_icon.setOpacity(0.5);
     life_bar.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);
     life_bar.setBackgroundColor(VIDEO::RED);
     stamina_bar.setTextAlignment(VIDEO::TEXT_ALIGNMENT::MIDDLE_CENTER);

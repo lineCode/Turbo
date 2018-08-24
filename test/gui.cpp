@@ -67,18 +67,33 @@ void gui()
     b2.setBackgroundTexture("resources/image/mushroom.png", &renderer);
     b3.setBackgroundColor(TV::MAGENTA);
     b4.setBackgroundColor(TV::BLACK);
-    b4.setFontColor(TV::WHITE);
+    b4.setTextColor(TV::WHITE);
     b4.setTextAlignment(TV::TEXT_ALIGNMENT::MIDDLE_CENTER);
     b4.setFontSize(18_pt);
     bchart.setBackgroundColor(0xEEEEEEFF);
-    bchart.setFontColor({255, 0, 50, 100});
+    bchart.setTextColor({
+                            255,
+                            0,
+                            50,
+                            100
+                        });
     b6.setBackgroundColor({100, 100, 100, 255});
     b6.setBackgroundColor({50, 150, 50, 255});
     b6.setTextAlignment(TV::TEXT_ALIGNMENT::BOTTOM_RIGHT);
     b7.setBackgroundColor({100, 100, 100, 255});
-    b7.setFontColor({100, 200, 255, 255});
+    b7.setTextColor({
+                        100,
+                        200,
+                        255,
+                        255
+                    });
     wi.setBackgroundColor({0, 0, 0, 0});
-    wi.setFontColor({255, 0, 255, 255});
+    wi.setTextColor({
+                        255,
+                        0,
+                        255,
+                        255
+                    });
     wi.setFontStyle(TV::FONT_STYLE::BOLD_ITALIC);
     wi.setTextAlignment(TV::TEXT_ALIGNMENT::BOTTOM_CENTER);
     wi.setFontSize(14_pt);

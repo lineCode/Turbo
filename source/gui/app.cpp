@@ -59,7 +59,7 @@ namespace TURBO
                     }
                     if(event.type == SDL_MOUSEMOTION)
                     {
-                        std::cout << event.motion.x << " " << event.motion.y << std::endl;
+
                     }
 
                     renderer->clear();

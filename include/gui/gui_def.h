@@ -13,6 +13,7 @@ namespace TURBO
         enum EVENT_TYPE : Uint8
         {
             ON_MOUSE_OVER = 0x0,
+            ON_MOUSE_MOVING,
             ON_MOUSE_OUT,
             ON_MOUSE_BUTTON_DOWN,
             ON_MOUSE_BUTTON_UP,
