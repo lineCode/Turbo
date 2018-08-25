@@ -77,7 +77,7 @@ namespace TURBO
 
         void Object::addEventListener(Uint8 event, std::function<void()> callback)
         {
-            callbacks[event] = callback;
+            callbacks[event] = std::move(callback);
         }
 
         OBJECT_TYPE Object::getObjectType()
@@ -180,6 +180,7 @@ namespace TURBO
         MATH::Point &Object::setPosition(MATH::Point position)
         {
             this->position = position;
+            dispatchEvent(EVENT_TYPE::ON_POSITION_CHANGED);
             return this->position;
         }
 
@@ -191,6 +192,7 @@ namespace TURBO
         MATH::Rect &Object::setSpace(MATH::Rect space)
         {
             this->space = space;
+            dispatchEvent(EVENT_TYPE::ON_SPACE_CHANGED);
             return this->space;
         }
 
@@ -203,6 +205,7 @@ namespace TURBO
         {
             if(size <= space)
             {
+                dispatchEvent(EVENT_TYPE::ON_SIZE_CHANGED);
                 this->size = size;
             }
             return this->size;
@@ -217,6 +220,7 @@ namespace TURBO
         {
             if(content <= size)
             {
+                dispatchEvent(EVENT_TYPE::ON_CONTENT_CHANGED);
                 this->content = content;
             }
 
@@ -305,8 +309,6 @@ namespace TURBO
                 background_texture_rect = MATH::Rect(content.x, content.y,
                                                      static_cast<Sint32>(tex_rect.w / factor),
                                                      static_cast<Sint32>(tex_rect.h / factor));
-
-                std::cout << tex_rect.w << " " << factor;
             }
             return background_texture;
         }
