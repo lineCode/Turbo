@@ -12,32 +12,32 @@ namespace TURBO
         bool Mouse::mouse_moved = false;
         bool Mouse::mouse_wheel_moved = false;
 
-        void Mouse::pollEvent(SDL_Event &event)
+        void Mouse::pollEvent(SDL_Event *event)
         {
             mouse_moved = false;
             mouse_wheel_moved = false;
 
-            if(event.type == SDL_MOUSEBUTTONDOWN)
+            if(event->type == SDL_MOUSEBUTTONDOWN)
             {
                 mouse_pressed = true;
-                if(!mouse_button_pressed[event.button.button])
+                if(!mouse_button_pressed[event->button.button])
                 {
-                    mouse_button_pressed[event.button.button] = true;
+                    mouse_button_pressed[event->button.button] = true;
                 }
             }
-            else if(event.type == SDL_MOUSEBUTTONUP)
+            else if(event->type == SDL_MOUSEBUTTONUP)
             {
                 mouse_pressed = false;
-                if(mouse_button_pressed[event.button.button])
+                if(mouse_button_pressed[event->button.button])
                 {
-                    mouse_button_pressed[event.button.button] = false;
+                    mouse_button_pressed[event->button.button] = false;
                 }
             }
-            else if(event.type == SDL_MOUSEMOTION)
+            else if(event->type == SDL_MOUSEMOTION)
             {
                 mouse_moved = true;
             }
-            else if(event.type == SDL_MOUSEWHEEL)
+            else if(event->type == SDL_MOUSEWHEEL)
             {
                 mouse_wheel_moved = true;
             }

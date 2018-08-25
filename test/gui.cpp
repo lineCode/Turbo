@@ -112,9 +112,9 @@ void gui()
     grid.addWidget(&b6, 0, 0, 1, 2);
     grid.addWidget(&b7, 1, 1, 2, 1);
 
-    b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OVER, over);
-    b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
-    b7.registerCallback(TG::EVENT_TYPE::ON_MOUSE_BUTTON_DOWN, quit);
+    b7.addEventListener(TG::EVENT_TYPE::ON_MOUSE_OVER, over);
+    b7.addEventListener(TG::EVENT_TYPE::ON_MOUSE_OUT, out);
+    b7.addEventListener(TG::EVENT_TYPE::ON_MOUSE_BUTTON_DOWN, quit);
 
     LOG("Start application");
 
@@ -123,9 +123,9 @@ void gui()
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
-            TI::Mouse::pollEvent(event);
-            TI::Keyboard::pollEvent(event);
-            main_widget.pollEvent(event);
+            TI::Mouse::pollEvent(&event);
+            TI::Keyboard::pollEvent(&event);
+            main_widget.pollEvent(&event);
 
             if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
             {

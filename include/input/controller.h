@@ -22,7 +22,7 @@ namespace TURBO
 
             Controller();
             ~Controller();
-            void            pollEvent(SDL_Event &event);
+            void            pollEvent(SDL_Event *event);
             bool            pressed(Uint8 controller_button);
             bool            axisMoved(Uint8 axis);
             Sint16          axisValue(Uint8 axis);

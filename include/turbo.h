@@ -23,21 +23,6 @@ namespace TURBO
 
         static Uint8 TURBO_FRAME_LIMIT;
     };
-
-    class Turbo
-    {
-    private:
-        Uint8 frame_limit;
-
-    public:
-        SYSTEM::SDL         sdl;
-
-        explicit Turbo();
-        void    setFrameLimit(Uint8 limit);
-        Uint8   getFrameLimit();
-        int     run();
-        void    quit();
-    };
 }
 
 #endif //TURBO_TURBO_H

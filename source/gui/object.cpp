@@ -26,7 +26,7 @@ namespace TURBO
 
         }
 
-        void Object::fireCallback(Uint8 event)
+        void Object::dispatchEvent(Uint8 event)
         {
             if(callbacks.count(event))
             {
@@ -34,34 +34,39 @@ namespace TURBO
             }
         }
 
-        void Object::pollEvent(SDL_Event &event)
+        void Object::pollEvent(SDL_Event *event)
         {
             MATH::Point p = INPUT::Mouse::getPosition();
             mouse_over    = MATH::pointInRect(p, space) && !mouse_on;
             mouse_out     = !MATH::pointInRect(p, space) && mouse_on;
             mouse_clicked = false;
-            mouse_moving = false;
+            mouse_moving  = false;
+            wheel_moving  = false;
 
             if(mouse_over)
             {
                 mouse_on = true;
-                fireCallback(EVENT_TYPE::ON_MOUSE_OVER);
+                dispatchEvent(EVENT_TYPE::ON_MOUSE_OVER);
             }
             if(mouse_out)
             {
                 mouse_on = false;
-                fireCallback(EVENT_TYPE::ON_MOUSE_OUT);
+                dispatchEvent(EVENT_TYPE::ON_MOUSE_OUT);
             }
             if(mouse_on)
             {
-                if(event.type == SDL_MOUSEMOTION)
+                if(event->type == SDL_MOUSEMOTION)
                 {
                     mouse_moving = true;
-                    fireCallback(EVENT_TYPE::ON_MOUSE_MOVING);
+                    dispatchEvent(EVENT_TYPE::ON_MOUSE_MOVING);
+                }
+                else if(event->type == SDL_MOUSEWHEEL)
+                {
+                    wheel_moving = true;
                 }
 
                 mouse_clicked = INPUT::Mouse::pressed();
-                fireCallback(EVENT_TYPE::ON_MOUSE_BUTTON_DOWN);
+                dispatchEvent(EVENT_TYPE::ON_MOUSE_BUTTON_DOWN);
             }
 
             if(child != nullptr)
@@ -70,7 +75,7 @@ namespace TURBO
             }
         }
 
-        void Object::registerCallback(Uint8 event, const std::function<void()> callback)
+        void Object::addEventListener(Uint8 event, std::function<void()> callback)
         {
             callbacks[event] = callback;
         }
@@ -106,6 +111,11 @@ namespace TURBO
             return mouse_clicked;
         }
 
+        bool Object::wheelMoving()
+        {
+            return wheel_moving;
+        }
+
         int Object::getId()
         {
             return id;
@@ -119,7 +129,7 @@ namespace TURBO
         Object *Object::setParent(Object *object)
         {
             parent = object;
-            fireCallback(ON_PARENT_CHANGED);
+            dispatchEvent(ON_PARENT_CHANGED);
             update();
             return this;
         }
@@ -133,7 +143,7 @@ namespace TURBO
         {
             this->child = object;
             object->setParent(this);
-            fireCallback(ON_CHILD_CHANGED);
+            dispatchEvent(ON_CHILD_CHANGED);
             update();
             return this;
         }
@@ -395,7 +405,7 @@ namespace TURBO
             {
                 child->hide();
             }
-            fireCallback(ON_VISIBILITY_CHANGED);
+            dispatchEvent(ON_VISIBILITY_CHANGED);
             return this;
         }
 
@@ -406,7 +416,7 @@ namespace TURBO
             {
                 child->show();
             }
-            fireCallback(ON_VISIBILITY_CHANGED);
+            dispatchEvent(ON_VISIBILITY_CHANGED);
             return this;
         }
 
@@ -430,7 +440,7 @@ namespace TURBO
                 this->opacity = alpha;
                 auto opacity = static_cast<Uint8>(alpha * 255);
 
-                std::cout << (int)opacity << " " << (int)static_cast<Uint8>(text_opacity * 255) << std::endl;
+                std::cout << (int) opacity << " " << (int) static_cast<Uint8>(text_opacity * 255) << std::endl;
 
                 setBorderColor(border_color.toHexColor() & (0xFFFFFF00 | opacity));
                 setBackgroundColor(background_color.toHexColor() & (0xFFFFFF00 | opacity));

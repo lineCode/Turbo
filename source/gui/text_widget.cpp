@@ -1,11 +1,19 @@
+#include <utility>
+
 #include "gui/text_widget.h"
 
 namespace TURBO
 {
     namespace GUI
     {
-        TextWidget::TextWidget(Object *parent, const std::string text)
-            : Widget(parent), text(text), text_texture(nullptr), text_rect()
+        TextWidget::TextWidget(std::string text)
+        : Widget(nullptr), text(std::move(text))
+        {
+
+        }
+
+        TextWidget::TextWidget(Object *parent, std::string text)
+            : Widget(parent), text(std::move(text))
         {
             object_type = OBJECT_TYPE::TEXT_WIDGET;
         }

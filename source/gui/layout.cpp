@@ -23,7 +23,7 @@ namespace TURBO
             }
         }
 
-        void LayoutContainer::pollEvent(SDL_Event &event)
+        void LayoutContainer::pollEvent(SDL_Event *event)
         {
             Object::pollEvent(event);
 
@@ -165,7 +165,7 @@ namespace TURBO
             }
         }
 
-        void Grid::pollEvent(SDL_Event &event)
+        void Grid::pollEvent(SDL_Event *event)
         {
             Object::pollEvent(event);
 

@@ -201,66 +201,66 @@ namespace TURBO
 
         }
 
-        void IWindow::pollEvent(SDL_Event &event)
+        void IWindow::pollEvent(SDL_Event *event)
         {
             exposed = false;
 
-            if(event.type == SDL_WINDOWEVENT_SHOWN)
+            if(event->type == SDL_WINDOWEVENT_SHOWN)
             {
                 shown = true;
             }
-            else if(event.type == SDL_WINDOWEVENT_HIDDEN)
+            else if(event->type == SDL_WINDOWEVENT_HIDDEN)
             {
                 shown = false;
             }
-            else if(event.type == SDL_WINDOWEVENT_EXPOSED)
+            else if(event->type == SDL_WINDOWEVENT_EXPOSED)
             {
                 exposed = true;
             }
-            else if(event.type == SDL_WINDOWEVENT_MINIMIZED)
+            else if(event->type == SDL_WINDOWEVENT_MINIMIZED)
             {
                 minimized = true;
                 maximized = false;
                 restored  = false;
             }
-            else if(event.type == SDL_WINDOWEVENT_MAXIMIZED)
+            else if(event->type == SDL_WINDOWEVENT_MAXIMIZED)
             {
                 maximized = true;
                 minimized = false;
             }
-            else if(event.type == SDL_WINDOWEVENT_RESTORED)
+            else if(event->type == SDL_WINDOWEVENT_RESTORED)
             {
                 restored = true;
             }
-            else if(event.type == SDL_WINDOWEVENT_ENTER)
+            else if(event->type == SDL_WINDOWEVENT_ENTER)
             {
                 mouse_focus = true;
             }
-            else if(event.type == SDL_WINDOWEVENT_LEAVE)
+            else if(event->type == SDL_WINDOWEVENT_LEAVE)
             {
                 mouse_focus = false;
             }
-            else if(event.type == SDL_WINDOWEVENT_FOCUS_GAINED)
+            else if(event->type == SDL_WINDOWEVENT_FOCUS_GAINED)
             {
                 focus = true;
             }
-            else if(event.type == SDL_WINDOWEVENT_FOCUS_LOST)
+            else if(event->type == SDL_WINDOWEVENT_FOCUS_LOST)
             {
                 focus = false;
             }
-            else if(event.type == SDL_WINDOWEVENT_CLOSE)
+            else if(event->type == SDL_WINDOWEVENT_CLOSE)
             {
                 closed = true;
             }
-            else if(event.type == SDL_WINDOWEVENT_MOVED)
+            else if(event->type == SDL_WINDOWEVENT_MOVED)
             {
 
             }
-            else if(event.type == SDL_WINDOWEVENT_RESIZED)
+            else if(event->type == SDL_WINDOWEVENT_RESIZED)
             {
 
             }
-            else if(event.type == SDL_WINDOWEVENT_SIZE_CHANGED)
+            else if(event->type == SDL_WINDOWEVENT_SIZE_CHANGED)
             {
 
             }

@@ -36,6 +36,7 @@ namespace TURBO
             bool mouse_over    = false;
             bool mouse_out     = false;
             bool mouse_clicked = false;
+            bool wheel_moving  = false;
 
             MATH::Point           position                   = MATH::Point();
             MATH::Rect            space                      = MATH::Rect();
@@ -59,16 +60,16 @@ namespace TURBO
 
             std::map<Uint8, std::function<void()>> callbacks;
 
-            void fireCallback(Uint8 event);
+            void dispatchEvent(Uint8 event);
 
         public:
             explicit Object(Object *parent);
 
             virtual ~Object();
 
-            virtual void pollEvent(SDL_Event &event);
+            virtual void pollEvent(SDL_Event *event);
 
-            void registerCallback(Uint8 event, std::function<void()> callback);
+            void addEventListener(Uint8 event, std::function<void()> callback);
 
             OBJECT_TYPE getObjectType();
 
@@ -81,6 +82,8 @@ namespace TURBO
             bool mouseOut();
 
             bool mouseClicked();
+
+            bool wheelMoving();
 
             int getId();
 

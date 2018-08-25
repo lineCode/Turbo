@@ -92,7 +92,7 @@ namespace TURBO
 
             IWindow &setIcon(SDL_Surface *icon);
 
-            void pollEvent(SDL_Event &event);
+            void pollEvent(SDL_Event *event);
 
             bool isShown() const;
 

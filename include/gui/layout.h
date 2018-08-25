@@ -19,7 +19,7 @@ namespace TURBO
             explicit LayoutContainer(Object *parent);
             std::vector<Object*> getChildren();
             void draw(VIDEO::Renderer *renderer) override;
-            void pollEvent(SDL_Event &event) override;
+            void pollEvent(SDL_Event *event) override;
             Object* setChild(Object *object) override;
         };
         
@@ -53,7 +53,7 @@ namespace TURBO
             Grid *removeWidget(Uint8 x, Uint8 y);
             Grid *update() override;
             void draw(VIDEO::Renderer *renderer) override;
-            void pollEvent(SDL_Event &event) override;
+            void pollEvent(SDL_Event *event) override;
         };
     }
 }

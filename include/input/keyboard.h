@@ -85,7 +85,7 @@ namespace TURBO
             static std::string text;
 
         public:
-            static void pollEvent(SDL_Event &event);
+            static void pollEvent(SDL_Event *event);
             static std::string getText();
             static std::string reduceText();
             static void clearText();

@@ -49,9 +49,9 @@ namespace TURBO
                 SDL_Event event = {};
                 while(SDL_PollEvent(&event))
                 {
-                    INPUT::Mouse::pollEvent(event);
-                    INPUT::Keyboard::pollEvent(event);
-                    main_widget->pollEvent(event);
+                    INPUT::Mouse::pollEvent(&event);
+                    INPUT::Keyboard::pollEvent(&event);
+                    main_widget->pollEvent(&event);
 
                     if(event.type == SDL_QUIT || INPUT::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
                     {

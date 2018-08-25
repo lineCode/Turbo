@@ -46,16 +46,17 @@ HEADERS += include/turbo.h \
            include/chart/chart.h \
            include/chart/series.h \
 #
+           include/gui/app.h \
            include/gui/button.h \
            include/gui/gui.h \
            include/gui/gui_def.h \
            include/gui/layout.h \
            include/gui/main_widget.h \
            include/gui/object.h \
-           include/gui/widget.h \
+           include/gui/scroll_area.h \
            include/gui/text_widget.h \
            include/gui/units.h \
-           include/gui/app.h \
+           include/gui/widget.h \
 #
            include/input/controller.h \
            include/input/input.h \
@@ -132,14 +133,15 @@ SOURCES += test/test.cpp \
            source/chart/chart.cpp \
            source/chart/series.cpp \
 #
+           source/gui/app.cpp \
            source/gui/button.cpp \
            source/gui/layout.cpp \
            source/gui/main_widget.cpp \
            source/gui/object.cpp \
-           source/gui/widget.cpp \
+           source/gui/scroll_area.cpp \
            source/gui/text_widget.cpp \
            source/gui/units.cpp \
-           source/gui/app.cpp \
+           source/gui/widget.cpp \
 #
            source/input/controller.cpp \
            source/input/keyboard.cpp \

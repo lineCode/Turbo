@@ -12,10 +12,12 @@ namespace TURBO
         {
         protected:
             std::string    text;
-            VIDEO::Texture *text_texture;
-            MATH::Rect     text_rect;
+            VIDEO::Texture *text_texture = nullptr;
+            MATH::Rect     text_rect     = MATH::Rect();
 
         public:
+            TextWidget(std::string text);
+
             TextWidget(Object *parent, std::string text);
 
             ~TextWidget() override;

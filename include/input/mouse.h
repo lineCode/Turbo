@@ -20,7 +20,7 @@ namespace TURBO
             static bool mouse_wheel_moved;
 
         public:
-            static void pollEvent(SDL_Event &event);
+            static void pollEvent(SDL_Event *event);
             static MATH::Point getPosition();
             static MATH::Point getLastPosition();
             static MATH::Point getGlobalPosition();

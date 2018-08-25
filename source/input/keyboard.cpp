@@ -272,27 +272,27 @@ namespace TURBO
         std::map<Sint32, Uint32>    Keyboard::timestamp = {};
         std::string                 Keyboard::text;
 
-        void Keyboard::pollEvent(SDL_Event &event)
+        void Keyboard::pollEvent(SDL_Event *event)
         {
-            if(event.type == SDL_KEYDOWN)
+            if(event->type == SDL_KEYDOWN)
             {
-                if(key[event.key.keysym.sym] == RELEASED)
+                if(key[event->key.keysym.sym] == RELEASED)
                 {
-                    key[event.key.keysym.sym]       = KEY_STATE::DOWN;
-                    timestamp[event.key.keysym.sym] = SYSTEM::Clock::getTicks();
+                    key[event->key.keysym.sym]       = KEY_STATE::DOWN;
+                    timestamp[event->key.keysym.sym] = SYSTEM::Clock::getTicks();
                 }
-                else if(key[event.key.keysym.sym] == KEY_STATE::DOWN)
+                else if(key[event->key.keysym.sym] == KEY_STATE::DOWN)
                 {
-                    key[event.key.keysym.sym]       = KEY_STATE::PRESSED;
-                    timestamp[event.key.keysym.sym] = SYSTEM::Clock::getTicks();
+                    key[event->key.keysym.sym]       = KEY_STATE::PRESSED;
+                    timestamp[event->key.keysym.sym] = SYSTEM::Clock::getTicks();
                 }
             }
-            else if(event.type == SDL_KEYUP)
+            else if(event->type == SDL_KEYUP)
             {
-                if(key[event.key.keysym.sym])
+                if(key[event->key.keysym.sym])
                 {
-                    key[event.key.keysym.sym]       = KEY_STATE::RELEASED;
-                    timestamp[event.key.keysym.sym] = SYSTEM::Clock::getTicks();
+                    key[event->key.keysym.sym]       = KEY_STATE::RELEASED;
+                    timestamp[event->key.keysym.sym] = SYSTEM::Clock::getTicks();
                 }
             }
         }

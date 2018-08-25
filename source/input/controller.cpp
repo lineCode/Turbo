@@ -33,33 +33,33 @@ namespace TURBO
             }
         }
 
-        void Controller::pollEvent(SDL_Event &event)
+        void Controller::pollEvent(SDL_Event *event)
         {
-            if(event.cdevice.which == controller_id)
+            if(event->cdevice.which == controller_id)
             {
                 for(auto & axis : controller_axis_moved)
                 {
                     controller_axis_moved[axis.first] = false;
                 }
 
-                if(event.type == SDL_CONTROLLERBUTTONDOWN)
+                if(event->type == SDL_CONTROLLERBUTTONDOWN)
                 {
-                    if(!controller_button_pressed[event.cbutton.button])
+                    if(!controller_button_pressed[event->cbutton.button])
                     {
-                        controller_button_pressed[event.cbutton.button] = true;
+                        controller_button_pressed[event->cbutton.button] = true;
                     }
                 }
-                else if(event.type == SDL_CONTROLLERBUTTONUP)
+                else if(event->type == SDL_CONTROLLERBUTTONUP)
                 {
-                    if(!controller_button_pressed[event.cbutton.button])
+                    if(!controller_button_pressed[event->cbutton.button])
                     {
-                        controller_button_pressed[event.cbutton.button] = true;
+                        controller_button_pressed[event->cbutton.button] = true;
                     }
                 }
-                else if(event.type == SDL_CONTROLLERAXISMOTION)
+                else if(event->type == SDL_CONTROLLERAXISMOTION)
                 {
-                    controller_axis_moved[event.caxis.axis] = true;
-                    controller_axis_value[event.caxis.axis] = event.caxis.value;
+                    controller_axis_moved[event->caxis.axis] = true;
+                    controller_axis_value[event->caxis.axis] = event->caxis.value;
                 }
             }
         }
