@@ -9,7 +9,7 @@ namespace TURBO
         {
             if(SYSTEM::SDL::TTF_IS_INIT)
             {
-                font = TTF_OpenFontIndex(filepath.c_str(), ptsize, index);
+                font = TTF_OpenFontIndex(filepath.c_str(), pt_size, index);
 
                 if(font != nullptr)
                 {
@@ -186,7 +186,10 @@ namespace TURBO
             if(font != nullptr)
             {
                 m.c = c;
-                TTF_GlyphMetrics(font, m.c, &m.min_x, &m.max_x, &m.min_y, &m.max_y, &m.advance);
+                if(TTF_GlyphMetrics(font, m.c, &m.min_x, &m.max_x, &m.min_y, &m.max_y, &m.advance) == -1)
+                {
+                    ERR(TTF_GetError());
+                }
             }
             return m;
         }
@@ -197,7 +200,10 @@ namespace TURBO
 
             if(font != nullptr)
             {
-                TTF_SizeText(font, text.c_str(), &w, &h);
+                if(TTF_SizeText(font, text.c_str(), &w, &h) == -1)
+                {
+                    ERR(TTF_GetError());
+                }
             }
             return {0, 0, w, h};
         }
@@ -208,7 +214,10 @@ namespace TURBO
 
             if(font != nullptr)
             {
-                TTF_SizeUNICODE(font, text, &w, &h);
+                if(TTF_SizeUNICODE(font, text, &w, &h) == -1)
+                {
+                    ERR(TTF_GetError());
+                }
             }
             return {0, 0, w, h};
         }
@@ -269,6 +278,11 @@ namespace TURBO
             }
         }
 
+        std::map<Uint8, Font *> FontCollection::getFonts()
+        {
+            return fonts;
+        }
+
         Font *FontCollection::getFont(Uint8 size)
         {
             if(fonts.count(size) > 0)
@@ -290,10 +304,17 @@ namespace TURBO
                 {
                     if(i->first > size)
                     {
-                        return (--i)->second;
+                        if(i == fonts.begin())
+                        {
+                            return i->second;
+                        }
+                        else
+                        {
+                            return (--i)->second;
+                        }
                     }
                 }
-                return fonts.end()->second;
+                return fonts.rbegin()->second;
             }
         }
 
@@ -305,14 +326,14 @@ namespace TURBO
             }
             else
             {
-                for(auto i = fonts.begin(); i != fonts.end(); ++i)
+                for(auto &font : fonts)
                 {
-                    if(i->first > size)
+                    if(font.first > size)
                     {
-                        return i->second;
+                        return font.second;
                     }
                 }
-                return fonts.end()->second;
+                return fonts.rbegin()->second;
             }
         }
     }

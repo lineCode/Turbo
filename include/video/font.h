@@ -264,6 +264,12 @@ namespace TURBO
             ~FontCollection();
 
             /**
+             * Returns all fonts from the container.
+             * @return A map of all fonts.
+             */
+            std::map<Uint8, Font*> getFonts();
+
+            /**
              * Searches for a font that has the requested  size
              * @param size the requested size
              * @return A pointer to a font saved in the fonts, or nullptr if non available

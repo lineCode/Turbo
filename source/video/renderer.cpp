@@ -13,7 +13,7 @@ namespace TURBO
                 font            = new Font(TURBO_DEFAULT_FONT_NORMAL, TURBO_DEFAULT_FONT_SIZE, 0);
                 font_texture    = new Texture(this->getRenderer(), window.getSize().w, window.getSize().h);
                 font_collection = new FontCollection(TURBO_DEFAULT_FONT_NORMAL, 8,
-                                                     std::vector<Uint8>{1, 1, 2, 2, 2, 4, 4, 6, 6, 8, 8});
+                                                     std::vector<Uint8>{1,1,2,2,2,4,4,6,6,8,8,8,10,10,10,10,25,25});
 
                 setBlendMode(SDL_BLENDMODE_BLEND);
 
@@ -179,7 +179,12 @@ namespace TURBO
             {
                 Sint32 w = 0, h = 0;
                 SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
-                SDL_Rect dest = {x, y, w, h};
+                SDL_Rect dest = {
+                    x,
+                    y,
+                    w,
+                    h
+                };
                 SDL_RenderCopyEx(renderer, texture, nullptr, &dest, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
             }
         }
@@ -188,7 +193,12 @@ namespace TURBO
         {
             if(texture != nullptr)
             {
-                SDL_Rect dest = {x, y, texture->getWidth(), texture->getHeight()};
+                SDL_Rect dest = {
+                    x,
+                    y,
+                    texture->getWidth(),
+                    texture->getHeight()
+                };
                 SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest, 0, nullptr,
                                  SDL_RendererFlip::SDL_FLIP_NONE);
             }
@@ -198,9 +208,12 @@ namespace TURBO
         {
             if(texture != nullptr)
             {
-                SDL_Rect dest_rect = {dest.x, dest.y,
-                                      std::min(texture->getWidth(), dest.w),
-                                      std::min(texture->getHeight(), dest.h)};
+                SDL_Rect dest_rect = {
+                    dest.x,
+                    dest.y,
+                    std::min(texture->getWidth(), dest.w),
+                    std::min(texture->getHeight(), dest.h)
+                };
                 SDL_RenderCopyEx(renderer, texture->getTexture(), nullptr, &dest_rect, 0, nullptr,
                                  SDL_RendererFlip::SDL_FLIP_NONE);
             }
@@ -215,11 +228,12 @@ namespace TURBO
         Texture *Renderer::createUTF8Text(std::string &text, Uint8 size, Sint32 w, Sint32 h, FONT_STYLE style,
                                           TEXT_WRAPPING wrapping)
         {
-            SDL_Surface *surface    = nullptr;
-            Texture     *texture    = nullptr;
-            Font        *font       = font_collection->getLTEFont(size);
-            Sint32      text_width  = font->getUTF8TextSize(text).w;
-            Sint32      text_height = font->getUTF8TextSize(text).h;
+            SDL_Surface *surface       = nullptr;
+            Texture     *texture       = nullptr;
+            Font        *font          = font_collection->getLTEFont(size);
+            MATH::Rect  font_dimension = font->getUTF8TextSize(text);
+            Sint32      text_width     = font_dimension.w;
+            Sint32      text_height    = font_dimension.h;
 
             if(text.empty())
             {
@@ -247,28 +261,30 @@ namespace TURBO
             font->setFontStyle(style);
             TTF_Font *sdl_font = font->getFont();
 
-            if(text_mode == TEXT_MODE::SOLID)
+            if(sdl_font != nullptr)
             {
-                surface = TTF_RenderUTF8_Solid(sdl_font, text.c_str(), color_text_fg.toSDLColor());
-            }
-            else if(text_mode == TEXT_MODE::BLENDED)
-            {
-                if(wrapping == TEXT_WRAPPING::BREAK)
+                if(text_mode == TEXT_MODE::SOLID)
                 {
-                    surface = TTF_RenderUTF8_Blended_Wrapped(sdl_font, text.c_str(), color_text_fg.toSDLColor(),
-                                                             static_cast<Uint32>(w));
+                    surface = TTF_RenderUTF8_Solid(sdl_font, text.c_str(), color_text_fg.toSDLColor());
                 }
-                else
+                else if(text_mode == TEXT_MODE::BLENDED)
                 {
-                    surface = TTF_RenderUTF8_Blended(sdl_font, text.c_str(), color_text_fg.toSDLColor());
+                    if(wrapping == TEXT_WRAPPING::BREAK)
+                    {
+                        surface = TTF_RenderUTF8_Blended_Wrapped(sdl_font, text.c_str(), color_text_fg.toSDLColor(),
+                                                                 static_cast<Uint32>(w));
+                    }
+                    else
+                    {
+                        surface = TTF_RenderUTF8_Blended(sdl_font, text.c_str(), color_text_fg.toSDLColor());
+                    }
+                }
+                else if(text_mode == TEXT_MODE::SHADED)
+                {
+                    surface = TTF_RenderUTF8_Shaded(sdl_font, text.c_str(), color_text_fg.toSDLColor(),
+                                                    color_text_bg.toSDLColor());
                 }
             }
-            else if(text_mode == TEXT_MODE::SHADED)
-            {
-                surface = TTF_RenderUTF8_Shaded(sdl_font, text.c_str(), color_text_fg.toSDLColor(),
-                                                color_text_bg.toSDLColor());
-            }
-
             if(surface != nullptr)
             {
                 texture = new Texture(renderer, surface);
@@ -341,7 +357,12 @@ namespace TURBO
 
         void Renderer::drawRect(Sint32 x, Sint32 y, Sint32 w, Sint32 h, Uint8 size, Color color, bool filled)
         {
-            SDL_Rect r{x, y, w, h};
+            SDL_Rect r{
+                x,
+                y,
+                w,
+                h
+            };
             setDrawColor(color);
             if(filled)
             {
@@ -356,7 +377,12 @@ namespace TURBO
 
         void Renderer::drawRect(MATH::Rect rect, Uint8 size, Color color, bool filled)
         {
-            SDL_Rect r{rect.x, rect.y, rect.w, rect.h};
+            SDL_Rect r{
+                rect.x,
+                rect.y,
+                rect.w,
+                rect.h
+            };
             setDrawColor(color);
             if(filled)
             {
