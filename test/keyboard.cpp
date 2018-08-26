@@ -15,7 +15,7 @@ void keyboard()
 {
     TS::SDL sdl{};
     sdl.initSDL(SDL_INIT_EVERYTHING);
-    TV::Window         window = TV::Window();
+    TV::Window         window = TV::Window("Test", {0, 0, 200, 200}, 0);
     TI::KeyCombination comb1  = TI::KeyCombination(SDLK_a);
     TI::KeyCombination comb2  = TI::KeyCombination(TI::Key{SDLK_q});
 
@@ -31,7 +31,7 @@ void keyboard()
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
-            TI::Keyboard::pollEvent(event);
+            TI::Keyboard::pollEvent(&event);
 
             if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
             {

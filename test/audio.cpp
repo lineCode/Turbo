@@ -17,7 +17,7 @@ void musicPlayer()
     sdl.initSDL(SDL_INIT_EVERYTHING);
     sdl.initMIX(MIX_INIT_FLAC | MIX_INIT_MP3);
 
-    TV::Window      window       = TV::Window();
+    TV::Window      window       = TV::Window("test", {0, 0, 200, 200}, 0);
     TA::MediaPlayer media_player = TA::MediaPlayer(TURBO::TURBO_AUDIO_PATH);
     media_player.play();
     media_player.setVolume(0);
@@ -27,7 +27,7 @@ void musicPlayer()
         SDL_Event event = {};
         while(SDL_PollEvent(&event))
         {
-            TI::Keyboard::pollEvent(event);
+            TI::Keyboard::pollEvent(&event);
 
             if(event.type == SDL_QUIT || TI::Keyboard::pressed(SDLK_ESCAPE, KMOD_LCTRL))
             {

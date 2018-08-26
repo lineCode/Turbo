@@ -45,13 +45,14 @@ int main(int argc, char **argv)
 //
 //    app.run();
 
-    auto window = VIDEO::Window("auto", {200, 200, 20, 20}, 0);
+
+    auto window = VIDEO::Window("auto", {200, 200, 600, 600}, 0);
     auto renderer = VIDEO::Renderer(window, -1, 0);
     auto main_widget = GUI::MainWidget(window, renderer);
     auto scroll_widget = GUI::ScrollArea();
     auto label = GUI::TextWidget(&scroll_widget, "adsd");
 
-    label.setFontSize(44_pt);
+    label.setFontSize(200);
     label.setBackgroundColor(VIDEO::RED);
 
     main_widget.setChild(&scroll_widget);
