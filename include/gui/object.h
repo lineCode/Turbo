@@ -11,7 +11,7 @@
 
 #include "gui/gui_def.h"
 #include "gui/units.h"
-#include "math/math.h"
+#include "math/rect.h"
 #include "input/input.h"
 #include "video/surface.h"
 #include "video/texture.h"
@@ -42,6 +42,7 @@ namespace TURBO
             MATH::Rect            space                      = MATH::Rect();
             MATH::Rect            size                       = MATH::Rect();
             MATH::Rect            content                    = MATH::Rect();
+            MATH::Rect            content_clip               = MATH::Rect();
             Uint8                 font_size                  = 12_pt;
             VIDEO::FONT_STYLE     font_style                 = VIDEO::FONT_STYLE::NORMAL;
             VIDEO::TEXT_ALIGNMENT text_alignment             = VIDEO::TEXT_ALIGNMENT::TOP_LEFT;
