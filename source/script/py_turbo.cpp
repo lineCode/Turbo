@@ -24,9 +24,14 @@ namespace TURBO
             if(PyType_Ready(&Point_definition) < 0)
                 return nullptr;
 
+            if(PyType_Ready(&Rect_defintion) < 0)
+                return nullptr;
+
             Py_INCREF(&TURBO::SCRIPT::Point_definition);
+            Py_INCREF(&TURBO::SCRIPT::Rect_defintion);
 
             PyModule_AddObject(module, "Point", (PyObject * ) &Point_definition);
+            PyModule_AddObject(module, "Rect", (PyObject * ) &Rect_defintion);
 
             return module;
         }

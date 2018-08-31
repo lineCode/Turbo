@@ -13,7 +13,21 @@ namespace TURBO
 {
     namespace SCRIPT
     {
+        template <typename T1, typename T2>
+        struct offset_of_impl {
+            static T2 object;
+            static constexpr size_t offset(T1 T2::*member) {
+                return size_t(&(offset_of_impl<T1, T2>::object.*member)) -
+                       size_t(&offset_of_impl<T1, T2>::object);
+            }
+        };
+        template <typename T1, typename T2>
+        T2 offset_of_impl<T1, T2>::object;
 
+        template <typename T1, typename T2>
+        inline constexpr size_t offset_of(T1 T2::*member) {
+            return offset_of_impl<T1, T2>::offset(member);
+        }
     }
 }
 

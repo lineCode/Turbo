@@ -48,9 +48,9 @@ namespace TURBO
             }
 
             static PyMemberDef members[] = {
-                {(char *)"x", T_INT, offsetof(Point, x), 0, (char *)""},
-                {(char *)"y", T_INT, offsetof(Point, y), 0, (char *)""},
-                {(char *)"z", T_INT, offsetof(Point, z), 0, (char *)""},
+                {(char *)"x", T_INT, offset_of(&Point::x), 0, (char *)""},
+                {(char *)"y", T_INT, offset_of(&Point::y), 0, (char *)""},
+                {(char *)"z", T_INT, offset_of(&Point::z), 0, (char *)""},
                 {nullptr}
             };
 

@@ -9,10 +9,13 @@ namespace TURBO
 {
     namespace SCRIPT
     {
-        struct Rect
-            : public MATH::Rect
+        struct Rect : public PyClass<Rect>
         {
             PyObject_HEAD
+            int x = 0;
+            int y = 0;
+            int w = 0;
+            int h = 0;
         };
 
         static PyObject * Rect_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
@@ -40,11 +43,12 @@ namespace TURBO
             return PyLong_FromLong((long) 0);
         }
 
+
         static PyMemberDef Rect_members[] = {
-            {(char *)"x", T_INT, offsetof(Rect, x), 0, (char *)""},
-            {(char *)"y", T_INT, offsetof(Rect, y), 0, (char *)""},
-            {(char *)"w", T_INT, offsetof(Rect, w), 0, (char *)""},
-            {(char *)"h", T_INT, offsetof(Rect, h), 0, (char *)""},
+            {(char *)"x", T_INT, offset_of(&Rect::x), 0, (char *)""},
+            {(char *)"y", T_INT, offset_of(&Rect::y), 0, (char *)""},
+            {(char *)"w", T_INT, offset_of(&Rect::w), 0, (char *)""},
+            {(char *)"h", T_INT, offset_of(&Rect::h), 0, (char *)""},
             {nullptr}
         };
 
